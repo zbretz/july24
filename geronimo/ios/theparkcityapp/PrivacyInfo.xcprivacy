@@ -39,7 +39,14 @@
 				<string>85F4.1</string>
 			</array>
 		</dict>
-		
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSFileModificationDate</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>C617.1</string>
+			</array>
+		</dict>
 	</array>
 	<key>NSPrivacyCollectedDataTypes</key>
 	<array/>
