@@ -8,7 +8,7 @@ const { db__, db_locals } = require('./mongoConnection.js')
 
 
 let onDemandActive = true
-let live_versions = ['6.0.0', '6.0.1']
+let live_versions = ['6.0.1', '6.1.0']
 
 router.get('/populateData', async (req, res) => {
 
