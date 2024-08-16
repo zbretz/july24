@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "pcadmin",
+    "slug": "pcadmin",
+    "version": "6.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/driver-app-icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.zbretz.pcadmin"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/driver-app-icon.png",
+        "backgroundColor": "#000000"
+      },
+      "package": "com.zbretz.pcadmin",
+      "googleServicesFile": "./google-services.json"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}

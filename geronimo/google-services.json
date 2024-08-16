@@ -1,0 +1,39 @@
+{
+    "project_info": {
+      "project_number": "257034131131",
+      "project_id": "rideshare-9bd0f",
+      "storage_bucket": "rideshare-9bd0f.appspot.com"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:257034131131:android:bcb1eeccd08b47fbba3b9e",
+          "android_client_info": {
+            "package_name": "com.zbretz.theparkcityapp"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "257034131131-71fc4qi8drkqgp1bd57qomfe4pu2v93j.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyAgKRaXF8vuVakV8uCYK9bIN9pLNaEB5lk"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "257034131131-71fc4qi8drkqgp1bd57qomfe4pu2v93j.apps.googleusercontent.com",
+                "client_type": 3
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }

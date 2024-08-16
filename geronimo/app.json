@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "theparkcityapp",
+    "slug": "theparkcityapp",
+    "version": "6.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/yellow-icon-bold.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/yellow-splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFCF56"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.zbretz.theparkcityapp"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/yellow-icon-bold.png",
+        "backgroundColor": "#FFCF56"
+      },
+      "package": "com.zbretz.theparkcityapp",
+      "googleServicesFile": "./google-services.json"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ef351239-8922-4a5d-ac35-a9d64e9afd73"
+      }
+    }
+  }
+}
