@@ -19,6 +19,19 @@ const moment = require('moment-timezone');
 
 const { db__, db_locals } = require('./mongoConnection.js')
 
+
+router.get('/test', async (req, res) => {
+
+
+    try {
+       console.log('test')
+    } catch (e) {
+        console.log('fetchchatlog error: ', e)
+    }
+
+});
+
+
 router.get('/validateAddress', async (req, res) => {
 
     let param = "address=2100+Canyons+Resort+D"//"address=1600+Amphitheatre+Parkway,+Mountain+View,+CA"
@@ -57,7 +70,7 @@ router.get('/determineFare', async (req, res) => {
     console.log('date time: ', dateTime)
     let dt = moment(new Date(dateTime))
     // let hours = dt.hours()
-    // console.log(dt.hours() == 23 || dt.hours() < 5)
+    console.log(dt.hours() == 23 || dt.hours() < 5)
     let timeCharge = dt.hours() == 23 || dt.hours() < 5
 
     let combined_locations = pickup.toLowerCase() + dropoff.toLowerCase()

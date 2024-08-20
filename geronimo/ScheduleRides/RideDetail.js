@@ -84,10 +84,18 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, }) =
                     padding: 20
                 }}>
 
-                    <View style={{}}>
-                        <Text style={{ marginVertical: 0, fontSize: 21, fontFamily: 'PointSoftSemiBold', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "eee',' MMMM d")}</Text>
-                        <Text style={{ marginVertical: 0, fontSize: 21, fontFamily: 'PointSoftLight', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "h':'mm aa")}</Text>
-                    </View>
+
+                    {rideDetail.enRoute ?
+                        <View style={{ alignItems: 'center', }}>
+                            <Text numberOfLines={1} adjustsFontSizeToFit={true} style={{  fontSize: 36, fontFamily: 'Aristotelica-Regular', textAlign: 'center' }}>Status: Driver En Route</Text>
+                        </View>
+                        :
+                        <View style={{}}>
+                            <Text style={{ marginVertical: 0, fontSize: 26, fontFamily: 'PointSoftSemiBold', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "eee',' MMMM d")}</Text>
+                            <Text style={{ marginVertical: 0, fontSize: 26, fontFamily: 'PointSoftLight', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "h':'mm aa")}</Text>
+                        </View>
+                    }
+
 
                     {rideDetail.driver &&
                         <View style={{ borderTopRightRadius: 30, borderBottomRightRadius: 30, justifyContent: 'center', marginVertical: 10 }}>
@@ -102,6 +110,7 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, }) =
                             </View>
                         </View>
                     }
+
 
                     <View style={{ borderTopRightRadius: 30, borderBottomRightRadius: 30, justifyContent: 'center' }}>
                         <View style={{ backgroundColor: '#fff', borderRadius: 20, padding: 20, }}>
@@ -160,13 +169,7 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, }) =
                 }
 
 
-                {rideDetail.enRoute &&
 
-                    <View style={{ backgroundColor: '#ffcf56', height: 56, borderRadius: 10, borderWidth: 0, margin: 10, alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }} >
-                        <FontAwesome5 name="check-circle" size={16} style={{ marginRight: 4 }} color="black" />
-                        <Text style={{ color: '#000', fontSize: 18, }}>Your Driver is On The Way!</Text>
-                    </View>
-                }
 
             </View>
 
