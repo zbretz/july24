@@ -19,8 +19,8 @@ export default function LocalsCheckout(basket, setBasket, masterState, navigatio
     const fetchPaymentSheetParams = async () => {
         console.log('INITTT', basket)
 
-        const response = await fetch(`https://summer.theparkcityapp.com:7100/locals/payment-sheet2?price=${checkoutTotal}&user=${JSON.stringify(masterState.user)}`, {
-        // const response = await fetch(`http://10.0.0.135:7100/locals/payment-sheet2?price=${checkoutTotal}&user=${JSON.stringify(masterState.user)}`, {
+        // const response = await fetch(`https://summer.theparkcityapp.com:7100/locals/payment-sheet2?price=${checkoutTotal}&user=${JSON.stringify(masterState.user)}`, {
+        const response = await fetch(`http://10.0.0.135:7100/locals/payment-sheet2?price=${checkoutTotal}&user=${JSON.stringify(masterState.user)}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

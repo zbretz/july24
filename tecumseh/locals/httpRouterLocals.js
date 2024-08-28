@@ -16,7 +16,7 @@ const stripe = require('stripe')(stripe_private_key);
 // This example sets up an endpoint using the Express framework.
 // Watch this video to get started: https://youtu.be/rPR2aJ6XnAc.
 
-const { db_locals } = require('../mongoConnection.js')
+const { db_locals, db__ } = require('../mongoConnection.js')
 
 
 console.log('stripe private key: ', stripe_private_key)
