@@ -17,6 +17,8 @@ var ObjectId = require('mongodb').ObjectId;
 const axios = require("axios");
 const moment = require('moment-timezone');
 
+moment.tz.setDefault('America/Denver');
+
 const { db__, db_locals } = require('./mongoConnection.js')
 
 
@@ -221,7 +223,7 @@ router.post('/payment-sheet', async (req, res) => {
     let rideDetail = JSON.parse(req.query.ride)
 
     // let rideDetail = JSON.parse(req.query.ride)
-    // console.log('active ride: ', rideDetail)
+    console.log('active ride: ', rideDetail)
 
     let ride_id = rideDetail._id
 
@@ -233,16 +235,19 @@ router.post('/payment-sheet', async (req, res) => {
         // new ObjectId(String(rideRequest._id))
         const user = await db__.collection('users').findOne({ _id: new ObjectId(String(rideDetail.user._id)) });
 
+        console.log('stripe customer id user: ', user)
 
         if (!user.stripe_customer_id) {
             console.log('stripe2')
             customer = await stripe.customers.create({
-                name: `${rideDetail.firstName} ${rideDetail.lastName}`,
+                name: `${rideDetail.user.firstName} ${rideDetail.user.lastName}`,
                 phone: rideDetail.phone,
                 metadata: { userUUID: rideDetail.userUUID }
             })
 
             stripe_customer_id = customer.id
+
+            console.log('new stripe customer: ', customer)
 
             await db__.collection('riders').findOneAndUpdate({ phone: rideDetail.phone }, { $set: { stripe_customer_id: stripe_customer_id } }, { returnDocument: "after" });
         } else {
