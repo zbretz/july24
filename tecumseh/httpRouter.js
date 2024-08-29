@@ -241,15 +241,15 @@ router.post('/payment-sheet', async (req, res) => {
             console.log('stripe2')
             customer = await stripe.customers.create({
                 name: `${rideDetail.user.firstName} ${rideDetail.user.lastName}`,
-                phone: rideDetail.phone,
-                metadata: { userUUID: rideDetail.userUUID }
+                phone: rideDetail.user.phone,
+                metadata: { user_id: rideDetail.user._id }
             })
 
             stripe_customer_id = customer.id
 
             console.log('new stripe customer: ', customer)
 
-            await db__.collection('riders').findOneAndUpdate({ phone: rideDetail.phone }, { $set: { stripe_customer_id: stripe_customer_id } }, { returnDocument: "after" });
+            await db__.collection('users').findOneAndUpdate({ phone: rideDetail.user.phone }, { $set: { stripe_customer_id: stripe_customer_id } }, { returnDocument: "after" });
         } else {
             console.log('stripe1')
             stripe_customer_id = user.stripe_customer_id

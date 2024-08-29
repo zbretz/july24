@@ -26,6 +26,8 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
 
     const { user } = masterState
 
+    console.log('user: ', user)
+
     const [rideType, setRideType] = useState(1)
     const [date, setDate] = useState(new Date());
     const carouselRef = useRef(null)
@@ -95,7 +97,7 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
         driverHasArrived: false,
         paid: false,
         datetimeOfRequest: Date.now(),
-        user: user ? { _id: masterState.user._id, firstName: masterState.user.firstName, lastName: masterState.user.lastName, phone: masterState.user.phone } : null,
+        user: user ? { _id: user._id, firstName: user.firstName, lastName: user.lastName, phone: user.phone, stripe_customer_id: user.stripe_customer_id } : null,
         chatLog: []
     }
 
