@@ -81,7 +81,9 @@ export default PaymentPage = ({ masterState, setMasterState, navigation, route }
                             <Text style={{ fontSize: 17 }}>If you'd like to tip:</Text>
 
                             <TextInput style={{ backgroundColor: '#fff', padding: 10, marginTop: 6, borderRadius: 20, width: 60, }} textAlign='center' onChangeText={(text) => {setTipAmount(Number(text)) }}
-                                placeholderTextColor={'#737373'} value={tipAmount}
+                                placeholderTextColor={'#737373'}
+                                value={tipAmount}
+                                keyboardType='numeric'
                                 onFocus={() => setKeyboardFocused(true)} onBlur={() => setKeyboardFocused(false)}
                             />
                         </View>
