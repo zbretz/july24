@@ -18,6 +18,8 @@ export default MyAccount = ({ navigation, masterState, setMasterState }) => {
 
     const { user } = masterState
 
+    let walletBalance = user.wallet ? user.wallet.reduce((accumulator, deposit) => accumulator + deposit.depositAmount, 0) : null
+
     return (
         <SafeAreaView style={{ height: '100%', backgroundColor: '#fff', }}>
 
@@ -26,31 +28,33 @@ export default MyAccount = ({ navigation, masterState, setMasterState }) => {
             <View style={{ padding: 40, flex: 1 }}>
                 <View style={{ flex: 1, flexDirection: 'row', }}>
 
-                    <TouchableOpacity onPress={null} style={{ flex: 1, backgroundColor: '#eee', borderRadius: 20, margin: 10 }}>
-                        <Image style={{ height: '80%', width: '100%', backgroundColor: null, }} source={require('./assets/banking.png')} resizeMode='contain' />
-                        <Text style={{ textAlign: 'center' }}>Banking</Text>
+
+                    <TouchableOpacity disabled={true} onPress={null} style={{ flex: 1, backgroundColor: '#eee', borderRadius: 20, margin: 10 }}>
+                        <Image style={{ height: '80%', width: '100%', backgroundColor: null, }} source={require('./assets/wallet.png')} resizeMode='contain' />
+                        <Text style={{ textAlign: 'center' }}>Wallet Balance ${walletBalance}</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={null} style={{ flex: 1, backgroundColor: '#eee', borderRadius: 20, margin: 10 }}>
-                        <Image style={{ height: '80%', width: '100%', backgroundColor: null, }} source={require('./assets/pie-chart.png')} resizeMode='contain' />
-                        <Text style={{ textAlign: 'center' }}>Equity</Text>
+                    <TouchableOpacity disabled={true} onPress={null} style={{ flex: 1, backgroundColor: '#eee', borderRadius: 20, margin: 10 }}>
+                        <View style={{ backgroundColor: 'rgba(255,255,255,.7)', height: '100%', width: '100%', position: 'absolute', zIndex: 99 }} />
+                        <Image style={{ height: '80%', width: '100%', backgroundColor: null, }} source={require('./assets/profile.png')} resizeMode='contain' />
+                        <Text style={{ textAlign: 'center' }}>My Info</Text>
                     </TouchableOpacity>
+
+
                 </View>
 
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
 
                     <View style={{ flex: 1, flexDirection: 'row' }}>
-
-                        <TouchableOpacity onPress={null} style={{ flex: 1, backgroundColor: '#eee', borderRadius: 20, margin: 10 }}>
-                            <Image style={{ height: '80%', width: '100%', backgroundColor: null, }} source={require('./assets/profile.png')} resizeMode='contain' />
-                            <Text style={{ textAlign: 'center' }}>My Info</Text>
+                        {/* <TouchableOpacity onPress={null} style={{ flex: 1, backgroundColor: '#eee', borderRadius: 20, margin: 10 }}>
+                            <Image style={{ height: '80%', width: '100%', backgroundColor: null, }} source={require('./assets/banking.png')} resizeMode='contain' />
+                            <Text style={{ textAlign: 'center' }}>Banking</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={null} style={{ flex: 1, backgroundColor: '#eee', borderRadius: 20, margin: 10 }}>
-                            <Image style={{ height: '80%', width: '100%', backgroundColor: null, }} source={require('./assets/wallet.png')} resizeMode='contain' />
-                            <Text style={{ textAlign: 'center' }}>Locals Wallet</Text>
-                        </TouchableOpacity>
-
+                            <Image style={{ height: '80%', width: '100%', backgroundColor: null, }} source={require('./assets/pie-chart.png')} resizeMode='contain' />
+                            <Text style={{ textAlign: 'center' }}>Equity</Text>
+                        </TouchableOpacity> */}
                     </View>
 
 

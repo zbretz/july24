@@ -214,6 +214,14 @@ completeScheduledRide = async (io, rideRequest) => {
             await db__.collection('rides').updateOne({ _id: new ObjectId(String(completedRide._id)) }, { $set: { paymentSentToDriver: true } })
         }
 
+        //Driver Wallet
+        let walletDeposit = (completedRide.fare *.04) * 100
+
+        db__.collection('drivers').updateOne(
+            { _id: new ObjectId(String(rideRequest.driver._id)) },
+            { $inc: { walletBalance: walletDeposit } },
+        )
+
     }
 
 
