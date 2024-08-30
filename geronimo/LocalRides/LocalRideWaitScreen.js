@@ -1,10 +1,5 @@
-import MapView, { Marker } from 'react-native-maps';
-import * as Location from 'expo-location';
 import { useState, useEffect, useRef, useId, version } from 'react';
-import { AppState, Text, View, StyleSheet, TouchableOpacity, Dimensions, Image, StatusBar, LayoutAnimation, ActivityIndicator, } from 'react-native';
-import { socket } from "../CoreNav/socket";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as uuid from 'uuid'
+import { AppState, Text, View, StyleSheet, TouchableOpacity, Dimensions, Image, StatusBar, LayoutAnimation, ActivityIndicator, Linking } from 'react-native';
 import axios from 'axios';
 import { Feather, FontAwesome5, FontAwesome6, MaterialIcons } from '@expo/vector-icons';
 import { formatInTimeZone } from "date-fns-tz";
@@ -20,6 +15,7 @@ export default function LocalRideWaitScreen({ navigation, requestLocal, masterSt
 
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     const { localRide } = masterState.user
+    // localRide = {}
     //it'll be cool to have a "complete ride" process that transitions screens and shows tip input etc
 
     return (
@@ -34,13 +30,19 @@ export default function LocalRideWaitScreen({ navigation, requestLocal, masterSt
                 {!localRide.driver ?
                     <View style={{}}>
 
-                        <View style={{ backgroundColor: '#FFCF56', padding: 20, borderRadius: 20, }}>
-                            <Text style={{ marginBottom: 20, fontFamily: 'Aristotelica-Regular', fontSize: 30, textAlign: 'center' }} >Locating your driver</Text>
-                            <Text style={{ fontSize: 16, }}>From: {localRide.pickupAddress}</Text>
-                            <Text style={{ fontSize: 16, marginTop: 10 }}>Destination: {localRide.dropoffAddress}</Text>
+                        <View style={{ borderRadius: 30, }}>
+                            <Text style={{ marginBottom: 20, fontFamily: 'Aristotelica-Regular', fontSize: 30, textAlign: 'center', }} adjustsFontSizeToFit={true} numberOfLines={1} >Locating your driver</Text>
+                        </View>
+                        <View style={{ backgroundColor: '#e6e6e6', padding: 20, borderRadius: 20, }}>
+
+                            <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 16, }}>From: {localRide.pickupAddress}</Text>
+                            <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 16, marginTop: 10 }}>Destination: {localRide.dropoffAddress}</Text>
                             <LottieView speed={.4} style={{ height: 70, width: 70, alignSelf: 'center', margin: 20 }} source={require('../assets/loading.json')} autoPlay loop />
 
-                            <Text style={{ fontSize: 12, marginTop: 10, textAlign: 'center' }}>For immediate help, call Zach at 917-575-1955</Text>
+                            <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18, marginTop: 10, textAlign: 'center' }}>For a more prompt response, please call Zach at:</Text>
+                            <TouchableOpacity onPress={() => { Linking.openURL(`tel:${9175751955}`) }} style={{ backgroundColor: '#f2f2f2', padding: 10, marginTop: 10, borderRadius: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                <Feather style={{ position: 'absolute', left: 20 }} name="phone" size={24} color="#000" /><Text style={{ textAlign: 'center', fontFamily: 'PointSoftSemiBold', fontSize: 14 }}>917-575-1955</Text>
+                            </TouchableOpacity>
 
                         </View>
 
@@ -52,7 +54,7 @@ export default function LocalRideWaitScreen({ navigation, requestLocal, masterSt
                     :
 
 
-                    <View  style={{ backgroundColor: '#FFCF56', padding: 20, borderRadius: 20, }}>
+                    <View style={{ backgroundColor: '#FFCF56', padding: 20, borderRadius: 20, }}>
                         <Text style={{ fontSize: 28, textAlign: 'center', marginBottom: 20, fontFamily: 'Aristotelica-Regular', }}>Driver is En Route</Text>
 
                         <View style={{ backgroundColor: null, marginBottom: 20, borderRadius: 20, alignItems: 'center' }}>
