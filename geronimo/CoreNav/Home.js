@@ -102,6 +102,11 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => navigation.navigate('ScheduleRide')} style={{ backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, alignItems: 'center', paddingVertical: 20 }}>
+                        {masterState.user?.activeRides?.length &&
+                            <>
+                                <Image style={{ width: '24%', height:'24%', position:'absolute', bottom:20, right:10, zIndex:10 }} resizeMode='contain' source={require('../assets/success.png')} />
+                            </>
+                        }
                         <Image style={{ flex: 1, width: '100%' }} resizeMode='contain' source={require('../assets/car-schedule.png')} />
                         <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center' }}>
                             <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Schedule</Text>
