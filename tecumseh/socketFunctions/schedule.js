@@ -3,8 +3,8 @@ var ObjectId = require('mongodb').ObjectId;
 const { notifyUser, notifyDriver, notifyAllDrivers } = require('../notify.js');
 
 let stripe_private_key = process.env.STRIPE_PRIVATE_KEY
-const stripe = require('stripe')(stripe_private_key);
-// const stripe = require('stripe')('sk_test_51Nj9WRAUREUmtjLCN8G4QqEEVvYoPpWKX82iY5lDX3dZxnaOGDDhqkyVpIFgg63FvXaAE3FmZ1p0btPM9s1De3m200uOIKI70O'); // pc app test key
+// const stripe = require('stripe')(stripe_private_key);
+const stripe = require('stripe')('sk_test_51Nj9WRAUREUmtjLCN8G4QqEEVvYoPpWKX82iY5lDX3dZxnaOGDDhqkyVpIFgg63FvXaAE3FmZ1p0btPM9s1De3m200uOIKI70O'); // pc app test key
 // const stripe = require('stripe')('sk_test_51Ov1U9JhmMKAiBpVczAh3RA7hEZfa4VRmOmyseADv5sY225uLcYlpfH4dYup6tMLkhC8YhUAt754dTmwNsLa23mo00P2T8WqN0'); // pc payments test key
 
 message = async (io, data) => {
@@ -194,10 +194,20 @@ completeScheduledRide = async (io, rideRequest) => {
         let fare = completedRide.fare
         let tipAmount = completedRide.tipAmount ? completedRide.tipAmount : 0
         console.log('tipAmount: ', tipAmount)
-        let app_fee = fare > 55 ? .10 * fare > 10 ? .10 * fare : 10 : fare * .10
+
+
+        // let app_fee = fare > 55 ? .10 * fare > 10 ? .10 * fare : 10 : fare * .10
+        let app_fee = fare > 99 || fare < 50 ? .10 * fare : 8
+        let depositAmount = fare *.05 > 5 ? 5 : Number((fare *.05).toFixed(2)) 
+        // depositAmount *= 100
+        console.log('depositAmount: ', depositAmount)
+
+
+
         let charges = .30 + (.029 * fare) + app_fee + (.029 * tipAmount)
         console.log('charges: ', charges)
-        let transfer_amount = (fare + tipAmount - charges) * 100
+        let transfer_amount = (fare + tipAmount - charges - depositAmount) * 100
+
         transfer_amount = Math.floor(transfer_amount)
         console.log('transfer amount: ', transfer_amount)
         let driverStripeAccount = completedRide.driver.stripe_account
@@ -212,15 +222,20 @@ completeScheduledRide = async (io, rideRequest) => {
             });
             console.log('stripe transfer: ', transfer)
             await db__.collection('rides').updateOne({ _id: new ObjectId(String(completedRide._id)) }, { $set: { paymentSentToDriver: true } })
-        }
+       
 
         //Driver Wallet
-        let walletDeposit = (completedRide.fare *.04) * 100
-
         db__.collection('drivers').updateOne(
             { _id: new ObjectId(String(rideRequest.driver._id)) },
-            { $inc: { walletBalance: walletDeposit } },
+            // { $inc: { walletBalance: walletDeposit } },
+            {
+                $push: {
+                   wallet: {depositAmount, ...rideRequest}
+                },
+            },
         )
+
+    }
 
     }
 

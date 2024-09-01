@@ -131,7 +131,7 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, }) =
                         {rideDetail.driver ?
                             <>
                                 {chatLog.length ?
-                                    <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId: rideDetail._id }) }} style={{ backgroundColor: '#e6e6e6', borderRadius: 20, borderColor: '#c4a73b', padding: 10, paddingVertical: 20, }} >
+                                    <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId: rideDetail._id }) }} style={{ backgroundColor: '#ffcf56', borderRadius: 20, borderColor: '#c4a73b', padding: 10, paddingVertical: 20, }} >
                                         <Text style={{ marginHorizontal: 10, fontSize: 24, color: "#000", fontFamily: 'AristotelicaSmallCaps-Regular' }}>Driver Chat</Text>
                                         <View style={{ marginHorizontal: 10, backgroundColor: '#fff', borderRadius: 20, padding: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                             <Text style={{ fontFamily: 'PointSoftLight', fontSize: 18, backgroundColor: '#fff', }} numberOfLines={2}>{chatLog[chatLog.length - 1].text}</Text>

@@ -3,8 +3,8 @@ dotenv.config({ path: './.env' })
 
 let stripe_public_key = process.env.STRIPE_PUBLIC_KEY
 let stripe_private_key = process.env.STRIPE_PRIVATE_KEY
-const stripe = require('stripe')(stripe_private_key);
-// const stripe = require('stripe')('sk_test_51Nj9WRAUREUmtjLCN8G4QqEEVvYoPpWKX82iY5lDX3dZxnaOGDDhqkyVpIFgg63FvXaAE3FmZ1p0btPM9s1De3m200uOIKI70O'); // pc app test key
+// const stripe = require('stripe')(stripe_private_key);
+const stripe = require('stripe')('sk_test_51Nj9WRAUREUmtjLCN8G4QqEEVvYoPpWKX82iY5lDX3dZxnaOGDDhqkyVpIFgg63FvXaAE3FmZ1p0btPM9s1De3m200uOIKI70O'); // pc app test key
 
 // const stripe = require('stripe')('sk_test_51Ov1U9JhmMKAiBpVczAh3RA7hEZfa4VRmOmyseADv5sY225uLcYlpfH4dYup6tMLkhC8YhUAt754dTmwNsLa23mo00P2T8WqN0'); // pc payments test key
 
@@ -228,7 +228,7 @@ router.post('/payment-sheet', async (req, res) => {
     let ride_id = rideDetail._id
 
     // let stripe_customer_id = 'cus_PaPI1VLGHW6olo'//rideDetail.stripe_customer_id
-    let stripe_customer_id = rideDetail.user.stripe_customer_id
+    let stripe_customer_id = 'cus_PaVZC6DadyHv7A'//rideDetail.user.stripe_customer_id
     let customer
 
     if (!stripe_customer_id) {
@@ -257,7 +257,7 @@ router.post('/payment-sheet', async (req, res) => {
 
 
     } else {
-        console.log('stripe customer exists')
+        console.log('stripe customer exists', stripe_customer_id)
     }
 
     // 'cus_PaPI1VLGHW6olo'

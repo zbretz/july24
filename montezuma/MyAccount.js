@@ -18,7 +18,7 @@ export default MyAccount = ({ navigation, masterState, setMasterState }) => {
 
     const { user } = masterState
 
-    let walletBalance = user.wallet ? user.wallet.reduce((accumulator, deposit) => accumulator + deposit.depositAmount, 0) : null
+    let walletBalance = user.wallet ? user.wallet.reduce((accumulator, deposit) => accumulator + deposit.depositAmount, 0).toFixed(2) : null
 
     return (
         <SafeAreaView style={{ height: '100%', backgroundColor: '#fff', }}>

@@ -45,8 +45,8 @@ export default PaymentPage = ({ masterState, setMasterState, navigation, route }
 
         <StripeProvider
             // publishableKey='pk_test_51Ov1U9JhmMKAiBpVk0Yi4caz54y15SeJmshn5treNiYIEK5hB9z5z0CoOcqTUccG6pSifKP3cvLThjXJKzwq7egw00zhn8XsAI' // pc payments
-            // publishableKey="pk_test_51Nj9WRAUREUmtjLCVtihPOMA6K9A28JW0goEfBW14Poj6Y6AJJUBBXcHhwUfrTsEQEJ15S26FBGDGbkVjm84x8f900VG5onWlT"  //pc app
-            publishableKey="pk_live_51Nj9WRAUREUmtjLCliIgWk6tgmUXBHSOGsmmaNIC6Tb9UT4BVNEAK40DNXsrljEJHLHxJsj0CyU0qdU5ozO4I1Eb00SdEyvrQ9"  //pc app
+            publishableKey="pk_test_51Nj9WRAUREUmtjLCVtihPOMA6K9A28JW0goEfBW14Poj6Y6AJJUBBXcHhwUfrTsEQEJ15S26FBGDGbkVjm84x8f900VG5onWlT"  //pc app
+            // publishableKey="pk_live_51Nj9WRAUREUmtjLCliIgWk6tgmUXBHSOGsmmaNIC6Tb9UT4BVNEAK40DNXsrljEJHLHxJsj0CyU0qdU5ozO4I1Eb00SdEyvrQ9"  //pc app
             urlScheme="your-url-scheme"
         >
             <SafeAreaView style={{ height: '100%', backgroundColor: '#f2f2f2' }}>

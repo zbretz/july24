@@ -98,7 +98,7 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                                     <View style={{ padding: 20, paddingLeft: 0, flex: 1, borderTopRightRadius: 30, borderBottomRightRadius: 30, justifyContent: 'center' }}>
 
                                         <View style={{ backgroundColor: '#fff', borderRadius: 20, padding: 20, }}>
-                                            <Text style={{ marginVertical: 0, fontSize: 21, fontFamily: 'PointSoftSemiBold', }}>{formatInTimeZone(upcomingRide.pickupDateTime, 'America/Denver', "eee',' MMMM d")}</Text>
+                                            <Text  adjustsFontSizeToFit={true} numberOfLines={1} style={{ marginVertical: 0, fontSize: 21, fontFamily: 'PointSoftSemiBold', }}>{formatInTimeZone(upcomingRide.pickupDateTime, 'America/Denver', "eee',' MMMM d")}</Text>
                                             <Text style={{ marginVertical: 0, fontSize: 21, fontFamily: 'PointSoftLight', }}>{formatInTimeZone(upcomingRide.pickupDateTime, 'America/Denver', "h':'mm aa")}</Text>
                                             <Text numberOfLines={1} style={{ marginTop: 10, fontSize: 12, fontFamily: 'PointSoftLight', }}>{upcomingRide.pickupAddress}</Text>
                                             <Text numberOfLines={1} style={{ marginVertical: 0, fontSize: 12, fontFamily: 'PointSoftLight', }}>{upcomingRide.dropoffAddress}</Text>
