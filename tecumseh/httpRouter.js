@@ -3,8 +3,8 @@ dotenv.config({ path: './.env' })
 
 let stripe_public_key = process.env.STRIPE_PUBLIC_KEY
 let stripe_private_key = process.env.STRIPE_PRIVATE_KEY
-// const stripe = require('stripe')(stripe_private_key);
-const stripe = require('stripe')('sk_test_51Nj9WRAUREUmtjLCN8G4QqEEVvYoPpWKX82iY5lDX3dZxnaOGDDhqkyVpIFgg63FvXaAE3FmZ1p0btPM9s1De3m200uOIKI70O'); // pc app test key
+const stripe = require('stripe')(stripe_private_key);
+// const stripe = require('stripe')('sk_test_51Nj9WRAUREUmtjLCN8G4QqEEVvYoPpWKX82iY5lDX3dZxnaOGDDhqkyVpIFgg63FvXaAE3FmZ1p0btPM9s1De3m200uOIKI70O'); // pc app test key
 
 // const stripe = require('stripe')('sk_test_51Ov1U9JhmMKAiBpVczAh3RA7hEZfa4VRmOmyseADv5sY225uLcYlpfH4dYup6tMLkhC8YhUAt754dTmwNsLa23mo00P2T8WqN0'); // pc payments test key
 
@@ -181,21 +181,21 @@ router.get('/determineFare', async (req, res) => {
                 if (distance > 55) base_fare += 8
 
                 fareObj['1'] = base_fare
-                fareObj['2'] = base_fare + 20
+                fareObj['2'] = base_fare + 25
                 fareObj['3'] = base_fare + 36
-                fareObj['4'] = base_fare + 45
+                fareObj['4'] = base_fare + 48
 
                 if (is_airport_ride) fareObj['4'] = 165
 
 
                 if (distance < 15.1) {
 
-                    if (distance > 10) base_fare += 6
+                    if (distance > 10) base_fare += 8
 
                     fareObj['1'] = base_fare
-                    fareObj['2'] = base_fare + 8
-                    fareObj['3'] = base_fare + 20
-                    fareObj['4'] = base_fare + 31
+                    fareObj['2'] = base_fare + 14
+                    fareObj['3'] = base_fare + 22
+                    fareObj['4'] = base_fare + 33
                 }
 
                 res.status(200).send(fareObj);
@@ -228,7 +228,7 @@ router.post('/payment-sheet', async (req, res) => {
     let ride_id = rideDetail._id
 
     // let stripe_customer_id = 'cus_PaPI1VLGHW6olo'//rideDetail.stripe_customer_id
-    let stripe_customer_id = 'cus_PaVZC6DadyHv7A'//rideDetail.user.stripe_customer_id
+    let stripe_customer_id = rideDetail.user.stripe_customer_id // 'cus_PaVZC6DadyHv7A'//
     let customer
 
     if (!stripe_customer_id) {

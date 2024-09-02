@@ -3,8 +3,8 @@ var ObjectId = require('mongodb').ObjectId;
 const { notifyUser, notifyDriver, notifyAllDrivers } = require('../notify.js');
 
 let stripe_private_key = process.env.STRIPE_PRIVATE_KEY
-// const stripe = require('stripe')(stripe_private_key);
-const stripe = require('stripe')('sk_test_51Nj9WRAUREUmtjLCN8G4QqEEVvYoPpWKX82iY5lDX3dZxnaOGDDhqkyVpIFgg63FvXaAE3FmZ1p0btPM9s1De3m200uOIKI70O'); // pc app test key
+const stripe = require('stripe')(stripe_private_key);
+// const stripe = require('stripe')('sk_test_51Nj9WRAUREUmtjLCN8G4QqEEVvYoPpWKX82iY5lDX3dZxnaOGDDhqkyVpIFgg63FvXaAE3FmZ1p0btPM9s1De3m200uOIKI70O'); // pc app test key
 // const stripe = require('stripe')('sk_test_51Ov1U9JhmMKAiBpVczAh3RA7hEZfa4VRmOmyseADv5sY225uLcYlpfH4dYup6tMLkhC8YhUAt754dTmwNsLa23mo00P2T8WqN0'); // pc payments test key
 
 message = async (io, data) => {
