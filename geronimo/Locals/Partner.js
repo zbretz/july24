@@ -186,7 +186,7 @@ export default Partner = ({ route, isConnected, masterState, navigation, item, s
                         >
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <Text style={styles.title}>{item.name}</Text>
-                                <Text style={{ fontSize: 17, marginBottom: 0, padding: 0, borderRadius: 20, fontFamily: 'PointSoftSemiBold' }}>{item.is_drink ? item.price.small : item.price}</Text>
+                                <Text style={{ fontSize: 17, marginBottom: 0, padding: 0, borderRadius: 20, fontFamily: 'PointSoftSemiBold' }}>{item.is_drink ? item.price.small.toFixed(2) : item.price}</Text>
                             </View>
                             <Text style={{ fontSize: 12, fontFamily: 'Aristotelica-Regular', color: '#333' }}>{item.description}</Text>
                         </TouchableOpacity>

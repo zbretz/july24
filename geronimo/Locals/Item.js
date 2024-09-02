@@ -330,7 +330,7 @@ export default Item = ({ route, isConnected, masterState, navigation, basket, se
                         {/* <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 24, marginBottom: -6, alignSelf: 'center', padding: 20, }}>Add to Basket</Text>
                         <Text style={{ fontSize: 20, borderRadius: 20, fontFamily: 'PointSoftSemiBold', position: 'absolute', left: 0, bottom: 1, padding: 20, }}> <Text style={{ fontSize: 18 }}>$</Text>{item.is_drink ? item.price[size] : item.price}</Text> */}
                         <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 24, marginBottom: -6, alignSelf: 'center', padding: 20, }}>Add to Basket</Text>
-                        <Text style={{ fontSize: 20, borderRadius: 20, fontFamily: 'PointSoftSemiBold', bottom: 1, padding: 20, }}> <Text style={{ fontSize: 18 }}>$</Text>{item.is_drink ? item.price[size] : item.price}</Text>
+                        <Text style={{ fontSize: 20, borderRadius: 20, fontFamily: 'PointSoftSemiBold', bottom: 1, padding: 20, }}> <Text style={{ fontSize: 18 }}>$</Text>{item.is_drink ? item.price[size].toFixed(2) : item.price}</Text>
                     </TouchableOpacity>
                 }
 

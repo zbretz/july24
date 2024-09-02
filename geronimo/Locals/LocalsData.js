@@ -8,32 +8,32 @@ const partnerData = {
             {
                 title: 'Espresso Drinks',
                 data: [
-                    { choice: 0, name: 'Latte', description: 'Espresso with steamed milk', is_drink: true, price: { 'small': 4.95, 'medium': 5.95, 'large': 6.95 } },
-                    { choice: 0, name: 'Mocha', description: 'Espresso with steamed milk', is_drink: true, price: { 'small': 4.95, 'medium': 5.95, 'large': 6.95 } },
+                    { choice: 0, name: 'Latte', description: 'Espresso with steamed milk', is_drink: true, price: { 'small': 4.20, 'medium': 5.10, 'large': 5.90 } },
+                    { choice: 0, name: 'Mocha', description: 'Espresso with steamed milk', is_drink: true, price: { 'small': 4.20, 'medium': 5.10, 'large': 5.90 } },
                 ],
             },
             {
                 title: 'Chai',
                 data:
                     [
-                        { choice: 0, name: 'Chai Latte', description: 'Chai tea with steamed milk', is_drink: true, price: { 'small': 4.95, 'medium': 5.95, 'large': 6.95 } },
-                        { choice: 1, name: 'Chai Charger', description: 'Chai Latte with Espresso', is_drink: true, price: { 'small': 4.95, 'medium': 5.95, 'large': 6.95 } },
-                        { choice: 2, name: 'Sugar Free Chai Latte', description: 'Chai - but sugar free!', is_drink: true, price: { 'small': 4.95, 'medium': 5.95, 'large': 6.95 } },
-                        { choice: 3, name: 'Sugar Free Chai Charger', description: '', is_drink: true, price: { 'small': 4.95, 'medium': 5.95, 'large': 6.95 } },
-                        { choice: 4, name: 'Mountain Chiller Chai Charger', description: '', is_drink: true, price: { 'small': 4.95, 'medium': 5.95, 'large': 6.95 } },
-                        { choice: 5, name: 'Mountain Chiller Chai Latte', description: '', is_drink: true, price: { 'small': 4.95, 'medium': 5.95, 'large': 6.95 } },
+                        { choice: 0, name: 'Chai Latte', description: 'Chai tea with steamed milk', is_drink: true, price: { 'small': 4.20, 'medium': 5.10, 'large': 5.90 } },
+                        { choice: 1, name: 'Chai Charger', description: 'Chai Latte with Espresso', is_drink: true, price: { 'small': 4.80, 'medium': 5.50, 'large': 6.55 } },
+                        { choice: 2, name: 'Sugar Free Chai Latte', description: 'Chai - but sugar free!', is_drink: true, price: { 'small': 4.20, 'medium': 5.10, 'large': 5.90 } },
+                        { choice: 3, name: 'Sugar Free Chai Charger', description: '', is_drink: true, price: { 'small': 4.80, 'medium': 5.50, 'large': 6.55  } },
+                        { choice: 4, name: 'Mountain Chiller Chai Charger', description: '', is_drink: true, price: { 'small': 4.80, 'medium': 5.50, 'large': 6.55 } },
+                        { choice: 5, name: 'Mountain Chiller Chai Latte', description: '', is_drink: true, price: { 'small': 4.80, 'medium': 5.50, 'large': 6.55 } },
                     ],
             },
             {
                 title: 'Coffee, Cocoa, & Tea',
                 data:
                     [
-                        { choice: 0, name: 'Cold Brew', description: '', is_drink: true, price: { 'small': 4.95, 'medium': 5.95, 'large': 6.95 } },
-                        { choice: 1, name: 'Drip Coffee', description: '', is_drink: true, price: { 'small': 4.95, 'medium': 5.95, 'large': 6.95 } },
-                        { choice: 2, name: 'Hot Chocolate', description: '', is_drink: true, price: { 'small': 4.95, 'medium': 5.95, 'large': 6.95 } },
-                        { choice: 3, name: 'Hot Tea', description: 'Varieties of Organic Rishi Tea', is_drink: true, price: { 'small': 4.95, 'medium': 5.95, 'large': 6.95 } },
-                        { choice: 4, name: 'London Fog', description: '', is_drink: true, price: { 'small': 4.95, 'medium': 5.95, 'large': 6.95 } },
-                        { choice: 5, name: 'Matcha', description: '', is_drink: true, price: { 'small': 4.95, 'medium': 5.95, 'large': 6.95 } },
+                        { choice: 0, name: 'Cold Brew', description: '', is_drink: true, price: { 'small': 4.80, 'medium': 5.20, 'large': 5.90 } },
+                        { choice: 1, name: 'Drip Coffee', description: '', is_drink: true, price: { 'small': 2.65, 'medium': 2.85, 'large': 3.05 } },
+                        { choice: 2, name: 'Hot Chocolate', description: '', is_drink: true, price: { 'small': 4.20, 'medium': 5.10, 'large': 5.90 } },
+                        { choice: 3, name: 'Hot Tea', description: 'Varieties of Organic Rishi Tea', is_drink: true, price: { 'small': 3.20, 'medium': 3.70, 'large': 4.20 } },
+                        { choice: 4, name: 'London Fog', description: 'Earl Grey tea with cream and your choice of vanilla &/or lavender', is_drink: true, price: { 'small': 4.20, 'medium': 5.10, 'large': 5.90 } },
+                        { choice: 5, name: 'Matcha', description: 'Traditional Matcha Green Tea', is_drink: true, price: { 'small': 4.30, 'medium': 5.10, 'large': 5.25 } },
                     ],
             },
 
