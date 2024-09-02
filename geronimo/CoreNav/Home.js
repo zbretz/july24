@@ -1,6 +1,7 @@
-import { StyleSheet, Text, TouchableOpacity, View, TextInput, Image, Dimensions, Modal, Animated } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, TextInput, Image, Dimensions, Modal, Animated, Linking, SafeAreaView } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -8,7 +9,7 @@ const windowHeight = Dimensions.get('window').height;
 
 const Stack = createStackNavigator();
 
-export default Home = ({ isConnected, masterState, setMasterState, chatLog, setChatLog, }) => {
+export default Home = ({ isConnected, masterState, setMasterState, chatLog, setChatLog, navigation }) => {
 
     return (
         <Stack.Navigator
@@ -18,6 +19,18 @@ export default Home = ({ isConnected, masterState, setMasterState, chatLog, setC
         >
             <Stack.Screen name="Menu">
                 {props => <Menu {...props} masterState={masterState} isConnected={isConnected} />}
+            </Stack.Screen>
+            <Stack.Screen name="Service">
+                {props => <SafeAreaView style={{ backgroundColor: '#fff', height: '100%', width: '100%', }}>
+                    <TouchableOpacity style={{ top: 40, left: 20, padding:10, alignSelf: 'flex-start', backgroundColor:'#fff', zIndex:11 }} onPress={() => navigation.goBack()}>
+                        <MaterialIcons style={{ marginLeft: 10 }} name="arrow-back-ios" size={24} color="black" />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => Linking.openURL('https://www.justserve.org/ServeParkCity?utm_source=townlift.com&utm_medium=referral&utm_campaign=Townlift')}>
+                        <Text adjustsFontSizeToFit={true} numberOfLines={1} style={{ fontFamily: 'Aristotelica-Regular', fontSize: 30, textAlign: 'center' }}>Click HERE</Text>
+                        <Text adjustsFontSizeToFit={true} numberOfLines={1} style={{ fontFamily: 'Aristotelica-Regular', fontSize: 24, textAlign: 'center' }}>For Expanded View</Text>
+                    </TouchableOpacity>
+                    <Image style={{ width: '100%', }} resizeMode='contain' source={require('../assets/nds.jpg')} />
+                </SafeAreaView>}
             </Stack.Screen>
 
         </Stack.Navigator>
@@ -80,6 +93,12 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                 </View>
 
                 <View style={{ backgroundColor: '#FFCF56', margin: 20, borderRadius: 40, padding: 30, alignItems: 'center', }}>
+
+                    <TouchableOpacity onPress={() => navigation.navigate('Service')} style={{ zIndex: 100, backgroundColor: '#55c1ff', height: windowHeight * .11, width: windowWidth * .36, position: 'absolute', top: 10, right: 10, borderRadius: 30, justifyContent: 'center', padding: 10 }}>
+                        <Image style={{ width: '64%', height: '64%', position: 'absolute', bottom: -16, right: -6, zIndex: 10 }} resizeMode='contain' source={require('../assets/click-here.png')} />
+                        <Text style={{ fontFamily: 'PointSoftSemiBold', color: 'white', textAlign: 'left', fontSize: 18 }} adjustsFontSizeToFit={true} numberOfLines={1}>September 14</Text>
+                        <Text style={{ fontFamily: 'PointSoftSemiBold', color: 'white' }}>9/11 National Day of Service</Text>
+                    </TouchableOpacity>
 
                     <View style={{}}>
                         <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 90, marginVertical: windowHeight < 800 ? -16 : 0 }} adjustsFontSizeToFit={true}
