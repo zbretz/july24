@@ -402,9 +402,9 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
 
                         <View style={{ flex: 1, backgroundColor: '#fff' }}>
 
-                            <View style={{ justifyContent: 'center', flex: 1, }}>
+                            <View style={{ justifyContent: 'center', flex: 1,}}>
 
-                                <View style={{ paddingHorizontal: 20, paddingVertical: 20, borderRadius: 40, backgroundColor: '#f2f2f2', marginHorizontal: 40, alignItems: 'center' }}>
+                                <View style={{ paddingHorizontal: 20, paddingVertical: 20, borderRadius: 40, backgroundColor: '#f2f2f2', marginHorizontal: 40, alignItems: 'center',  }}>
 
                                     <TextInput
                                         keyboardType='numeric'
@@ -416,8 +416,8 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                                     />
 
 
-                                    <TouchableOpacity onPress={() => { Keyboard.dismiss(); signIn() }} style={{ marginTop: 10, backgroundColor: '#ffcf56', borderRadius: 24, textAlign: 'center', justifyContent: 'center', width: '100%' , padding: 10, }}>
-                                        <Text style={{ textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20em' : 20, color: '#000', fontFamily: 'PointSoftSemiBold',}}>Sign In</Text>
+                                    <TouchableOpacity onPress={() => { Keyboard.dismiss(); signIn() }} style={{ marginTop: 10, backgroundColor: '#ffcf56', borderRadius: 24, textAlign: 'center', justifyContent: 'center', width: '100%' , padding: 10,  }}>
+                                        <Text  style={{lineHeight:20, textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20em' : 20,  color: '#000', fontFamily: 'PointSoftSemiBold',}}>Sign In</Text>
                                     </TouchableOpacity>
 
                                 </View>
@@ -432,7 +432,7 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                                         <Text style={{ textAlign: 'center', fontSize: Platform.OS === 'ios' ? '18em' : 18, color: '#000', fontFamily: 'PointSoftSemiBold', margin: 10 }}>Or</Text>
 
                                         <TouchableOpacity onPress={() => navigation.navigate('SignUp')} style={{ backgroundColor: '#ffcf56', borderRadius: 24, textAlign: 'center', padding: 10, paddingHorizontal: 16, marginHorizontal: 60 }}>
-                                            <Text style={{ textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20em' : 20, color: '#000', fontFamily: 'PointSoftSemiBold' }}>New Account</Text>
+                                            <Text style={{lineHeight:20, textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20em' : 20, color: '#000', fontFamily: 'PointSoftSemiBold' }}>New Account</Text>
                                         </TouchableOpacity>
                                     </View>
                                 }

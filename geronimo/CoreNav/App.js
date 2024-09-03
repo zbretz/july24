@@ -9,7 +9,7 @@ import MainStack from './BottomTabs'
 import SplashScreen from './SplashScreen'
 import UpdateAvailable from './UpdateAvailable';
 
-// AsyncStorage.clear()
+AsyncStorage.clear()
 export default function App() {
 
   const [fontsLoaded, fontError] = useFonts({
