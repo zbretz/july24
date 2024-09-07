@@ -21,9 +21,13 @@ const { db_locals, db__ } = require('../mongoConnection.js')
 
 console.log('stripe private key: ', stripe_private_key)
 
+router.get('/6100test', async (req, res) => {
+    console.log('6100test')
+    res.status(200).send('6100test');
+});
+
 router.post('/placeOrder', async (req, res) => {
 
-    console.log('sfdsdf sdfsdfsdf')
     console.log(req.body)
 
     let { user, basket, timeOfOrder } = req.body
