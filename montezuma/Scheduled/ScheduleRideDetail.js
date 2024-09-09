@@ -133,21 +133,39 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
                 <Feather style={{ marginBottom: 0 }} name="arrow-left-circle" size={36} color="black" />
             </TouchableOpacity>
 
-            <Text style={{ fontSize: 20, fontWeight: '600', color: "#000", margin: 20, textAlign: 'center' }}>Detail</Text>
+            <Text style={{ fontSize: 20, fontWeight: '600', color: "#000", margin: 10, textAlign: 'center' }}>Detail</Text>
 
+            {/* <Text>{request.userName}</Text> */}
+            {/* <Text>Passenger: {request.user.firstName}</Text> */}
+            {/* <Text>From: {request.pickupAddress}</Text> */}
 
+            <View style={{ backgroundColor: '#f2f2f2', borderRadius: 20, margin: 10, padding: 20 }}>
+                <Text style={{ fontSize: 18, fontWeight: '600', marginBottom:6 }}>{request.user.firstName}</Text>
+                <Text style={{ fontSize: 16, fontWeight: '600' }}>{formatInTimeZone(request.pickupDateTime, 'America/Denver', "eee',' MMMM do h':'mm bbb")}</Text>
 
-            <View style={{ borderColor: '#000', borderWidth: 0, borderRadius: 20, margin: 10, padding: 10 }}>
-                <Text>{request.userName}</Text>
-                <Text>Passenger: {request.user.firstName}</Text>
-                <Text>From: {request.pickupAddress}</Text>
+                <View style={{ flexDirection: 'row', marginTop: 10, }}>
+                    <View style={{ marginRight: -4, marginTop: -3 }}>
+                        <Entypo style={{ marginLeft: -8, marginRight: 8 }} name="dot-single" size={24} color="black" />
+                        <Feather style={{}} name="corner-down-right" size={17} color="black" />
+                    </View>
+                    <View>
+                        <Text style={{ fontFamily: 'PointSoftLight' }}>{request.pickupAddress}</Text>
+                        <Text style={{ marginTop: 6, fontFamily: 'PointSoftLight' }}>{request.dropoffAddress}</Text>
+                    </View>
+                </View>
+
                 {request.flightNumber &&
-                    <Text>Flight number: {request.flightNumber}</Text>
+                    <Text style={{ marginTop: 10 }}>Flight number: <Text style={{ fontWeight: '600' }}>{request.flightNumber}</Text> </Text>
                 }
-                <Text>To: {request.dropoffAddress}</Text>
-                <Text>Requested: {formatInTimeZone(request.pickupDateTime, 'America/Denver', "eee',' MMMM do h':'mm bbb")}</Text>
-                <Text>Fare: ${request.fare}</Text>
-                <Text>Ride Type: {rideTypeText}</Text>
+                <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                    <Text style={{}}>Fare: ${request.fare} ({rideTypeText})</Text>
+                    {!request.paid &&
+                        <View style={{ backgroundColor: '#000', flexDirection: 'row', borderRadius:10, padding:2, top:-2, paddingLeft:6, marginLeft:6, alignItems:'center', justifyContent:'center'}}>
+                            <Text style={{color:'#fff'}}>paid</Text>
+                            <FontAwesome5 name="check" size={16} style={{ marginRight: 6, marginLeft: 6 }} color="#fff" />
+                        </View>
+                    }
+                </View>
             </View>
 
             {(request.rideCanceledByDriver || request.rideCanceledByRider) ?
@@ -177,15 +195,18 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
                         <>
 
                             {chatLog.length ?
-                                <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId }) }} style={{ backgroundColor: '#fff', borderRadius: 10, borderWidth: 0, borderColor: '#c4a73b', margin: 10, }} >
+                                <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId }) }} style={{ backgroundColor: '#ddd', borderRadius: 10, borderWidth: 0, borderColor: '#c4a73b', margin: 10, padding: 10 }} >
                                     <View style={{ alignItems: 'center', flexDirection: 'row', padding: 10 }}>
                                         <Entypo name="chat" size={24} color="black" style={{ marginRight: 20 }} />
                                         <Text style={{ fontSize: 16, fontWeight: '600', color: "#000", marginBottom: 4 }}>User Chat</Text>
                                     </View>
-                                    <Text style={{ margin: 10 }} numberOfLines={2}>{chatLog[chatLog.length - 1].text}</Text>
+                                    <View style={{ borderRadius: 20, borderWidth: 1, backgroundColor: '#fff' }}>
+                                        {/* <Text style={{ margin: 10 }} numberOfLines={2}>test test test test</Text> */}
+                                        <Text style={{ margin: 10 }} numberOfLines={2}>{chatLog[chatLog.length - 1].text}</Text>
+                                    </View>
                                 </TouchableOpacity>
                                 :
-                                <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId }) }} style={{ backgroundColor: '#fff', height: 56, borderRadius: 10, borderWidth: 0, margin: 10, alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }} >
+                                <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId }) }} style={{ backgroundColor: '#ddd', height: 56, borderRadius: 10, borderWidth: 0, margin: 10, alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }} >
                                     <Entypo name="chat" size={24} color="black" style={{ marginRight: 20 }} />
                                     <Text style={{ color: '#000', fontSize: 18, }}>Message User...</Text>
                                 </TouchableOpacity>
@@ -195,10 +216,9 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
 
                     {request.driver &&
 
+                        <>
 
 
-
-                        <View style={{ flexDirection: 'row', width: windowWidth, flexWrap: 'wrap' }}>
 
                             <View style={{ borderColor: '#000', borderWidth: 0, borderRadius: 20, margin: 0, padding: 10, alignItems: 'center' }}>
                                 <Text>En Route</Text>
@@ -216,68 +236,32 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
                                 </View>
                             </View>
 
-                            <View style={{ borderColor: '#000', borderWidth: 0, borderRadius: 20, margin: 0, padding: 10, alignItems: 'center' }}>
-                                <Text>Ride Complete</Text>
-                                <View style={{ flexDirection: 'row' }}>
-                                    {request.rideCompleted ?
-                                        <View style={{ backgroundColor: '#fff', padding: 10, margin: 10, borderRadius: 10, flexDirection: 'row' }}>
-                                            <FontAwesome5 name="check-circle" size={16} style={{ marginRight: 6 }} color="black" />
-                                            <Text>Completed</Text>
-                                        </View>
-                                        :
-                                        <TouchableOpacity onPress={completeScheduledRide} style={{ backgroundColor: '#ddd', padding: 10, margin: 10, borderRadius: 10 }}>
-                                            <Text>Complete</Text>
-                                        </TouchableOpacity>
-                                    }
-                                </View>
-                            </View>
-
-                            <View style={{ borderColor: '#000', borderWidth: 0, borderRadius: 20, margin: 0, padding: 10, alignItems: 'center' }}>
-                                <Text>Ride Canceled</Text>
-                                <View style={{ flexDirection: 'row' }}>
-
-                                    {request.rideCanceledByDriver || request.rideCanceledByRider ?
-                                        <View style={{ backgroundColor: '#fff', padding: 10, margin: 10, borderRadius: 10, flexDirection: 'row' }}>
-                                            <AntDesign name="close" size={16} style={{ marginRight: 6 }} color="black" />
-                                            <Text>Canceled</Text>
-                                        </View>
-                                        :
-                                        <TouchableOpacity onPress={cancelScheduledRide} style={{ backgroundColor: '#ddd', padding: 10, margin: 10, borderRadius: 10 }}>
-                                            <Text>Terminate</Text>
-                                        </TouchableOpacity>
-                                    }
-
-                                </View>
-                            </View>
-
-                            <View style={{ borderColor: '#000', borderWidth: 0, borderRadius: 20, margin: 0, padding: 10, alignItems: 'center' }}>
-                                <Text>Accept Payment</Text>
-
-                                {request.paid ?
-                                    <View style={{ backgroundColor: '#fff', padding: 10, margin: 10, borderRadius: 10, flexDirection: 'row' }}>
-                                        <FontAwesome5 name="check-circle" size={16} style={{ marginRight: 6 }} color="black" />
-                                        <Text>Ride Paid</Text>
-                                    </View>
-                                    :
+                            {request.paid &&
+                                <View style={{ borderColor: '#000', borderWidth: 0, borderRadius: 20, margin: 0, padding: 10, alignItems: 'center' }}>
+                                    <Text>Ride Complete</Text>
                                     <View style={{ flexDirection: 'row' }}>
-                                        <TouchableOpacity onPress={acceptPayScheduledRide} style={{ backgroundColor: '#ddd', padding: 10, margin: 10, borderRadius: 10 }}>
-                                            <Text>Received</Text>
-                                        </TouchableOpacity>
+                                        {request.rideCompleted ?
+                                            <View style={{ backgroundColor: '#fff', padding: 10, margin: 10, borderRadius: 10, flexDirection: 'row' }}>
+                                                <FontAwesome5 name="check-circle" size={16} style={{ marginRight: 6 }} color="black" />
+                                                <Text>Completed</Text>
+                                            </View>
+                                            :
+                                            <TouchableOpacity onPress={completeScheduledRide} style={{ backgroundColor: '#ddd', padding: 10, margin: 10, borderRadius: 10 }}>
+                                                <Text>Complete</Text>
+                                            </TouchableOpacity>
+                                        }
                                     </View>
-                                }
+                                </View>
+                            }
 
-                            </View>
+                            {request.paid &&
+                                <View style={{ backgroundColor: '#fff', padding: 10, margin: 10, borderRadius: 10, flexDirection: 'row' }}>
+                                    <FontAwesome5 name="check-circle" size={16} style={{ marginRight: 6 }} color="black" />
+                                    <Text>Ride Paid</Text>
+                                </View>
+                            }
 
-                            {/* <View style={{ borderColor: '#000', borderWidth: 0, borderRadius: 20, margin: 0, padding: 10, alignItems: 'center' }}>
-                        <Text>Reassign Ride</Text>
-                        <View style={{ flexDirection: 'row' }}>
-                            <TouchableOpacity onPress={reassignScheduledRide} style={{ backgroundColor: '#ddd', padding: 10, margin: 10, borderRadius: 10 }}>
-                                <Text>Reassign</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View> */}
-
-                        </View>
+                        </>
                     }
 
                 </>
