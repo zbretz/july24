@@ -23,7 +23,7 @@ export default MyAccount = ({ navigation, masterState, setMasterState }) => {
     return (
         <SafeAreaView style={{ height: '100%', backgroundColor: '#fff', }}>
 
-            <Text style={{ fontSize: 20, padding: 20, backgroundColor: '#55c1ff' }}>{user.firstName}</Text>
+            <Text style={{ fontSize: 20, fontWeight:500,  padding: 20, backgroundColor: '#55c1ff' }}>{user.firstName}</Text>
 
             <View style={{ padding: 40, flex: 1 }}>
                 <View style={{ flex: 1, flexDirection: 'row', }}>
@@ -31,7 +31,8 @@ export default MyAccount = ({ navigation, masterState, setMasterState }) => {
 
                     <TouchableOpacity disabled={true} onPress={null} style={{ flex: 1, backgroundColor: '#eee', borderRadius: 20, margin: 10 }}>
                         <Image style={{ height: '80%', width: '100%', backgroundColor: null, }} source={require('./assets/wallet.png')} resizeMode='contain' />
-                        <Text style={{ textAlign: 'center' }}>Wallet Balance ${walletBalance}</Text>
+                        <Text style={{ textAlign: 'center' }}>Wallet Balance</Text>
+                        <Text style={{ textAlign: 'center' }}>${walletBalance}</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity disabled={true} onPress={null} style={{ flex: 1, backgroundColor: '#eee', borderRadius: 20, margin: 10 }}>

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, TouchableHighlight, View, TextInput, Image, Dimensions, FlatList, SafeAreaView, ScrollView, Animated, Modal } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, TouchableHighlight, View, TextInput, Image, Dimensions, FlatList, SafeAreaView, ScrollView, Animated, Modal, Alert } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { Entypo, Feather, FontAwesome5, AntDesign } from '@expo/vector-icons';
 import { socket } from '../socket';
@@ -49,34 +49,45 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
     }
 
     const completeScheduledRide = async () => {
-        socket.emit('complete_scheduled_ride', { ...rideDetail, rideCompleted: true })
-        setMasterState(masterState => {
-            let myScheduledRides = [...masterState.myScheduledRides]
-            myScheduledRides = myScheduledRides.filter(ride => ride._id !== rideDetail._id)
-            return ({
-                ...masterState, myScheduledRides,
-            })
-        })
+        Alert.alert('Ride Complete', 'This ride ended with a successful dropoff.', [
+            {
+                text: 'Go Back',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            {
+                text: 'Yes, Completed', onPress: () => {
+                    socket.emit('complete_scheduled_ride', { ...rideDetail, rideCompleted: true })
+                    setMasterState(masterState => {
+                        let myScheduledRides = [...masterState.myScheduledRides]
+                        myScheduledRides = myScheduledRides.filter(ride => ride._id !== rideDetail._id)
+                        return ({
+                            ...masterState, myScheduledRides,
+                        })
+                    })
+                }
+            },
+        ]);
     }
 
     const cancelScheduledRide = async () => {
         socket.emit('cancel_scheduled_ride', { ...rideDetail, rideCanceledByDriver: true }, null)
     }
 
-    const acceptPayScheduledRide = async () => {
-        socket.emit('accept_pay_scheduled_ride', { ...rideDetail, paid: 'direct_to_driver' })
-        setMasterState(masterState => {
-            let myScheduledRides = [...masterState.myScheduledRides]
-            for (const ride of myScheduledRides) {
-                if (ride._id === rideDetail._id) {
-                    ride.paid = "direct_to_driver"
-                }
-            }
-            return ({
-                ...masterState, myScheduledRides,
-            })
-        })
-    }
+    // const acceptPayScheduledRide = async () => {
+    //     socket.emit('accept_pay_scheduled_ride', { ...rideDetail, paid: 'direct_to_driver' })
+    //     setMasterState(masterState => {
+    //         let myScheduledRides = [...masterState.myScheduledRides]
+    //         for (const ride of myScheduledRides) {
+    //             if (ride._id === rideDetail._id) {
+    //                 ride.paid = "direct_to_driver"
+    //             }
+    //         }
+    //         return ({
+    //             ...masterState, myScheduledRides,
+    //         })
+    //     })
+    // }
 
     const reassignScheduledRide = async () => {
         socket.emit('reassign_scheduled_ride', { ...rideDetail, driver: new_driver })
@@ -139,8 +150,8 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
             {/* <Text>Passenger: {request.user.firstName}</Text> */}
             {/* <Text>From: {request.pickupAddress}</Text> */}
 
-            <View style={{ backgroundColor: '#f2f2f2', borderRadius: 20, margin: 10, padding: 20 }}>
-                <Text style={{ fontSize: 18, fontWeight: '600', marginBottom:6 }}>{request.user.firstName}</Text>
+            <View style={{ backgroundColor: '#e6e6e6', borderRadius: 20, margin: 10, padding: 20 }}>
+                <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: 6 }}>{request.user.firstName}</Text>
                 <Text style={{ fontSize: 16, fontWeight: '600' }}>{formatInTimeZone(request.pickupDateTime, 'America/Denver', "eee',' MMMM do h':'mm bbb")}</Text>
 
                 <View style={{ flexDirection: 'row', marginTop: 10, }}>
@@ -159,9 +170,9 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
                 }
                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
                     <Text style={{}}>Fare: ${request.fare} ({rideTypeText})</Text>
-                    {!request.paid &&
-                        <View style={{ backgroundColor: '#000', flexDirection: 'row', borderRadius:10, padding:2, top:-2, paddingLeft:6, marginLeft:6, alignItems:'center', justifyContent:'center'}}>
-                            <Text style={{color:'#fff'}}>paid</Text>
+                    {request.paid &&
+                        <View style={{ backgroundColor: '#000', flexDirection: 'row', borderRadius: 10, padding: 2, top: -2, paddingLeft: 6, marginLeft: 6, alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ color: '#fff' }}>paid</Text>
                             <FontAwesome5 name="check" size={16} style={{ marginRight: 6, marginLeft: 6 }} color="#fff" />
                         </View>
                     }
@@ -195,7 +206,7 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
                         <>
 
                             {chatLog.length ?
-                                <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId }) }} style={{ backgroundColor: '#ddd', borderRadius: 10, borderWidth: 0, borderColor: '#c4a73b', margin: 10, padding: 10 }} >
+                                <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId }) }} style={{ backgroundColor: 'f2f2f2', borderRadius: 10, borderWidth: 0, borderColor: '#c4a73b', margin: 10, padding: 10 }} >
                                     <View style={{ alignItems: 'center', flexDirection: 'row', padding: 10 }}>
                                         <Entypo name="chat" size={24} color="black" style={{ marginRight: 20 }} />
                                         <Text style={{ fontSize: 16, fontWeight: '600', color: "#000", marginBottom: 4 }}>User Chat</Text>
@@ -206,7 +217,7 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
                                     </View>
                                 </TouchableOpacity>
                                 :
-                                <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId }) }} style={{ backgroundColor: '#ddd', height: 56, borderRadius: 10, borderWidth: 0, margin: 10, alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }} >
+                                <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId }) }} style={{ backgroundColor: '#f2f2f2', height: 56, borderRadius: 10, borderWidth: 0, margin: 10, alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }} >
                                     <Entypo name="chat" size={24} color="black" style={{ marginRight: 20 }} />
                                     <Text style={{ color: '#000', fontSize: 18, }}>Message User...</Text>
                                 </TouchableOpacity>
@@ -229,7 +240,7 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
                                             <Text>Notified</Text>
                                         </View>
                                         :
-                                        <TouchableOpacity onPress={enRouteScheduledRide} style={{ backgroundColor: '#ddd', padding: 10, margin: 10, borderRadius: 10 }}>
+                                        <TouchableOpacity onPress={enRouteScheduledRide} style={{ backgroundColor: '#e6e6e6', padding: 10, margin: 10, borderRadius: 10 }}>
                                             <Text>En Route</Text>
                                         </TouchableOpacity>
                                     }
