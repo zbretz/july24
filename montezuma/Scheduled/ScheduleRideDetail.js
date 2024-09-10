@@ -21,6 +21,11 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
 
     let rideDetail = requestType == 'open' ? masterState.newScheduledRides.find(ride => ride._id == rideId) : masterState.myScheduledRides.find(ride => ride._id == rideId)
 
+    // display 'en route' button to driver
+    let timeDiff = new Date(rideDetail.pickupDateTime).getTime() - new Date()
+    let hoursUntilPickup = Math.floor(timeDiff / 1000 / 60 / 60)
+    let displayEnRoute = hoursUntilPickup < 2
+
     const enRouteScheduledRide = async () => {
         socket.emit('en_route_scheduled_ride', { ...rideDetail, enRoute: true })
         setMasterState(masterState => {
@@ -70,9 +75,9 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
         ]);
     }
 
-    const cancelScheduledRide = async () => {
-        socket.emit('cancel_scheduled_ride', { ...rideDetail, rideCanceledByDriver: true }, null)
-    }
+    // const cancelScheduledRide = async () => {
+    //     socket.emit('cancel_scheduled_ride', { ...rideDetail, rideCanceledByDriver: true }, null)
+    // }
 
     // const acceptPayScheduledRide = async () => {
     //     socket.emit('accept_pay_scheduled_ride', { ...rideDetail, paid: 'direct_to_driver' })
@@ -89,9 +94,9 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
     //     })
     // }
 
-    const reassignScheduledRide = async () => {
-        socket.emit('reassign_scheduled_ride', { ...rideDetail, driver: new_driver })
-    }
+    // const reassignScheduledRide = async () => {
+    //     socket.emit('reassign_scheduled_ride', { ...rideDetail, driver: new_driver })
+    // }
 
 
     //if ride canceled, close out of detail view
@@ -206,7 +211,7 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
                         <>
 
                             {chatLog.length ?
-                                <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId }) }} style={{ backgroundColor: 'f2f2f2', borderRadius: 10, borderWidth: 0, borderColor: '#c4a73b', margin: 10, padding: 10 }} >
+                                <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId }) }} style={{ backgroundColor: '#f2f2f2', borderRadius: 10, borderWidth: 0, borderColor: '#c4a73b', margin: 10, padding: 10 }} >
                                     <View style={{ alignItems: 'center', flexDirection: 'row', padding: 10 }}>
                                         <Entypo name="chat" size={24} color="black" style={{ marginRight: 20 }} />
                                         <Text style={{ fontSize: 16, fontWeight: '600', color: "#000", marginBottom: 4 }}>User Chat</Text>
@@ -225,27 +230,31 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
                         </>
                     }
 
+                    {/* <Text>{hoursUntilPickup}</Text> */}
+
                     {request.driver &&
 
                         <>
-
-
-
-                            <View style={{ borderColor: '#000', borderWidth: 0, borderRadius: 20, margin: 0, padding: 10, alignItems: 'center' }}>
-                                <Text>En Route</Text>
-                                <View style={{ flexDirection: 'row' }}>
-                                    {request.enRoute ?
-                                        <View style={{ backgroundColor: '#fff', padding: 10, margin: 10, borderRadius: 10, flexDirection: 'row' }}>
-                                            <FontAwesome5 name="check-circle" size={16} style={{ marginRight: 6 }} color="black" />
-                                            <Text>Notified</Text>
-                                        </View>
-                                        :
-                                        <TouchableOpacity onPress={enRouteScheduledRide} style={{ backgroundColor: '#e6e6e6', padding: 10, margin: 10, borderRadius: 10, }}>
-                                            <Text>En Route</Text>
-                                        </TouchableOpacity>
-                                    }
+                            {displayEnRoute &&
+                                <View style={{ borderColor: '#000', borderWidth: 0, borderRadius: 20, margin: 0, padding: 10, alignItems: 'center' }}>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        {request.enRoute ?
+                                            <View style={{alignItems:'center'}}>
+                                                <Text>En Route</Text>
+                                                <View style={{ backgroundColor: '#fff', padding: 10, margin: 0, borderRadius: 10, flexDirection: 'row' }}>
+                                                    <FontAwesome5 name="check-circle" size={16} style={{ marginRight: 6 }} color="black" />
+                                                    <Text>Notified</Text>
+                                                </View>
+                                            </View>
+                                            :
+                                            <TouchableOpacity onPress={enRouteScheduledRide} style={{ backgroundColor: '#ffcf56', padding: 10, margin: 10, borderRadius: 10, }}>
+                                                <Text style={{ fontSize: 20, }}>En Route</Text>
+                                            </TouchableOpacity>
+                                        }
+                                    </View>
                                 </View>
-                            </View>
+                            }
+
 
                             {request.paid &&
                                 <View style={{ borderColor: '#000', borderWidth: 0, borderRadius: 20, margin: 0, padding: 10, alignItems: 'center' }}>
@@ -280,7 +289,6 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
 
 
             }
-
 
 
 
