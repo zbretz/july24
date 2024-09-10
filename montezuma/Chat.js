@@ -42,7 +42,7 @@ export default Chat = ({ route, navigation, masterState, setMasterState, isConne
 
     return (
 
-        <View style={{ padding: 20, position: 'absolute', bottom: 0, zIndex: 20, maxHeight: windowHeight - 120, paddingBottom: Platform.OS == 'ios' ? keyboardHeight - 90 : 0, width: '100%', backgroundColor: 'rgba(0,0,0,0)', }}>
+        <View style={{ padding: 20,paddingTop:30,bottom:10, zIndex: 20, maxHeight: windowHeight - 120, paddingBottom: Platform.OS == 'ios' ? keyboardHeight - 80 : 0, width: '100%', backgroundColor: 'rgba(0,0,0,0)', }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', position: 'absolute', top: 20, right: 20 }}>
                 <View style={{ height: 9, width: 9, borderRadius: 30, backgroundColor: isConnected ? '#85ba78' : 'red' }}></View>
             </View>
@@ -80,6 +80,9 @@ export default Chat = ({ route, navigation, masterState, setMasterState, isConne
                 })}
 
                 <View style={{ height: 16 }} />
+
+
+                
             </ScrollView>
 
             {!chatLog?.length && <View style={{ position: 'absolute', bottom: windowHeight * .5, alignSelf: 'center' }}><Text style={{ color: '#77756e', fontSize: 20, }}>Chat with us</Text></View>}
@@ -99,7 +102,7 @@ export default Chat = ({ route, navigation, masterState, setMasterState, isConne
                 />
                 <TouchableOpacity
                     onPress={() => sendMessage()}
-                    style={{ padding: 8, borderRadius: 20, backgroundColor: '#b7caaa', marginLeft: 10 }} >
+                    style={{ padding: 8, borderRadius: 20, backgroundColor: '#b7caaa', marginLeft: 10, }} >
                     <Image style={{ height: 24, width: 24, }} source={require('./assets/icons8-up-arrow-48.png')} />
                 </TouchableOpacity>
             </View>

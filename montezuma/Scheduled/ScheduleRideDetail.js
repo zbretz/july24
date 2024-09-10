@@ -240,7 +240,7 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
                                             <Text>Notified</Text>
                                         </View>
                                         :
-                                        <TouchableOpacity onPress={enRouteScheduledRide} style={{ backgroundColor: '#e6e6e6', padding: 10, margin: 10, borderRadius: 10 }}>
+                                        <TouchableOpacity onPress={enRouteScheduledRide} style={{ backgroundColor: '#e6e6e6', padding: 10, margin: 10, borderRadius: 10, }}>
                                             <Text>En Route</Text>
                                         </TouchableOpacity>
                                     }
