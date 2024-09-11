@@ -21,11 +21,6 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
 
     let rideDetail = requestType == 'open' ? masterState.newScheduledRides.find(ride => ride._id == rideId) : masterState.myScheduledRides.find(ride => ride._id == rideId)
 
-    // display 'en route' button to driver
-    let timeDiff = new Date(rideDetail.pickupDateTime).getTime() - new Date()
-    let hoursUntilPickup = Math.floor(timeDiff / 1000 / 60 / 60)
-    let displayEnRoute = hoursUntilPickup < 3
-
     const enRouteScheduledRide = async () => {
         socket.emit('en_route_scheduled_ride', { ...rideDetail, enRoute: true })
         setMasterState(masterState => {
@@ -104,6 +99,12 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
         if (!rideDetail) navigation.goBack()
     }, [rideDetail])
     if (!rideDetail) { return null }
+
+
+    // display 'en route' button to driver
+    let timeDiff = new Date(rideDetail.pickupDateTime).getTime() - new Date()
+    let hoursUntilPickup = Math.floor(timeDiff / 1000 / 60 / 60)
+    let displayEnRoute = hoursUntilPickup < 3
 
 
     let request = rideDetail
@@ -239,7 +240,7 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
                                 <View style={{ borderColor: '#000', borderWidth: 0, borderRadius: 20, margin: 0, padding: 10, alignItems: 'center' }}>
                                     <View style={{ flexDirection: 'row' }}>
                                         {request.enRoute ?
-                                            <View style={{alignItems:'center'}}>
+                                            <View style={{ alignItems: 'center' }}>
                                                 <Text>En Route</Text>
                                                 <View style={{ backgroundColor: '#fff', padding: 10, margin: 0, borderRadius: 10, flexDirection: 'row' }}>
                                                     <FontAwesome5 name="check-circle" size={16} style={{ marginRight: 6 }} color="black" />
