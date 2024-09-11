@@ -28,7 +28,7 @@ router.get('/6100test', async (req, res) => {
 
 router.post('/placeOrder', async (req, res) => {
 
-    console.log(req.body)
+    // console.log(req.body)
 
     let { user, basket, timeOfOrder } = req.body
     let orderNumber = Math.floor(Math.random() * (999 - 100 + 1) + 100);
@@ -37,7 +37,7 @@ router.post('/placeOrder', async (req, res) => {
 
     try {
         const order = await db_locals.collection('orders').insertOne({ phone: user.phone, userName: user.firstName + ' ' + user.lastName, partner: basket.partner, orderItems: basket.items, timeOfOrder: timeOfOrder, completed: false, orderNumber: orderNumber })
-        console.log('order: ', order)
+        // console.log('order: ', order)
         res.status(200).send(order);
 
         let io = req.app.get('socketio');

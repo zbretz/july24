@@ -24,7 +24,7 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
     // display 'en route' button to driver
     let timeDiff = new Date(rideDetail.pickupDateTime).getTime() - new Date()
     let hoursUntilPickup = Math.floor(timeDiff / 1000 / 60 / 60)
-    let displayEnRoute = hoursUntilPickup < 2
+    let displayEnRoute = hoursUntilPickup < 3
 
     const enRouteScheduledRide = async () => {
         socket.emit('en_route_scheduled_ride', { ...rideDetail, enRoute: true })
