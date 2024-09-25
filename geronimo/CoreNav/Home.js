@@ -20,18 +20,6 @@ export default Home = ({ isConnected, masterState, setMasterState, chatLog, setC
             <Stack.Screen name="Menu">
                 {props => <Menu {...props} masterState={masterState} isConnected={isConnected} />}
             </Stack.Screen>
-            <Stack.Screen name="Service">
-                {props => <SafeAreaView style={{ backgroundColor: '#fff', height: '100%', width: '100%', }}>
-                    <TouchableOpacity style={{ top: 40, left: 20, padding:10, alignSelf: 'flex-start', backgroundColor:'#fff', zIndex:11 }} onPress={() => navigation.goBack()}>
-                        <MaterialIcons style={{ marginLeft: 10 }} name="arrow-back-ios" size={24} color="black" />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => Linking.openURL('https://www.justserve.org/ServeParkCity?utm_source=townlift.com&utm_medium=referral&utm_campaign=Townlift')}>
-                        <Text adjustsFontSizeToFit={true} numberOfLines={1} style={{ fontFamily: 'Aristotelica-Regular', fontSize: 30, textAlign: 'center' }}>Click HERE</Text>
-                        <Text adjustsFontSizeToFit={true} numberOfLines={1} style={{ fontFamily: 'Aristotelica-Regular', fontSize: 24, textAlign: 'center' }}>For Expanded View</Text>
-                    </TouchableOpacity>
-                    <Image style={{ width: '100%', }} resizeMode='contain' source={require('../assets/nds.jpg')} />
-                </SafeAreaView>}
-            </Stack.Screen>
 
         </Stack.Navigator>
     );
@@ -67,8 +55,8 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                             <View style={{ borderRadius: 30, }}>
                                 <View style={{ flex: 1 }}>
                                     <Image style={{ height: 90, width: 90, alignSelf: 'center' }} source={require('../assets/app-development.png')} />
-                                    <Text style={{ fontSize: 20, color: '#353431', textAlign: 'center', fontFamily: 'Aristotelica-Regular', margin: 10 }}>This feature will be restored in the next couple of days.</Text>
-                                    <Text style={{ fontSize: 20, color: '#353431', textAlign: 'center', fontFamily: 'Aristotelica-Regular', margin: 0 }}>Try again this week.</Text>
+                                    <Text style={{ fontSize: 20, color: '#353431', textAlign: 'center', fontFamily: 'Aristotelica-Regular', margin: 10 }}>Housekeeping and other vetted local providers.</Text>
+                                    <Text style={{ fontSize: 20, color: '#353431', textAlign: 'center', fontFamily: 'Aristotelica-Regular', margin: 0 }}>Coming Soon!</Text>
                                     <TouchableOpacity onPress={() => setModalVisible(false)} style={{ marginTop: 10, padding: 14, paddingHorizontal: 40, alignSelf: 'center', backgroundColor: '#00a1ff', borderRadius: 30 }}>
                                         <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -6 }}>Ok</Text>
                                     </TouchableOpacity>
@@ -93,12 +81,6 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                 </View>
 
                 <View style={{ backgroundColor: '#FFCF56', margin: 20, borderRadius: 40, padding: 30, alignItems: 'center', }}>
-
-                    <TouchableOpacity onPress={() => navigation.navigate('Service')} style={{ zIndex: 100, backgroundColor: '#55c1ff', height: windowHeight * .11, width: windowWidth * .36, position: 'absolute', top: 10, right: 10, borderRadius: 30, justifyContent: 'center', padding: 10 }}>
-                        <Image style={{ width: '64%', height: '64%', position: 'absolute', bottom: -16, right: -6, zIndex: 10 }} resizeMode='contain' source={require('../assets/click-here.png')} />
-                        <Text style={{ fontFamily: 'PointSoftSemiBold', color: 'white', textAlign: 'left', fontSize: 18 }} adjustsFontSizeToFit={true} numberOfLines={1}>September 14</Text>
-                        <Text style={{ fontFamily: 'PointSoftSemiBold', color: 'white' }}>9/11 National Day of Service</Text>
-                    </TouchableOpacity>
 
                     <View style={{}}>
                         <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 90, marginVertical: windowHeight < 800 ? -16 : 0 }} adjustsFontSizeToFit={true}
