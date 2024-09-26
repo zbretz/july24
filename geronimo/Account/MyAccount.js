@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Text, View, TextInput, Dimensions, Alert, Modal, SafeAreaView, TouchableOpacity, Keyboard, Image, Linking, Platform } from 'react-native';
+import { Text, View, TextInput, Dimensions, Alert, Modal, SafeAreaView, TouchableOpacity, Keyboard, Image, Linking, Platform, ActivityIndicator } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AntDesign, MaterialIcons, Ionicons, FontAwesome } from '@expo/vector-icons';
@@ -40,6 +40,10 @@ export default function MyAccount({ navigation, masterState, setMasterState }) {
 
                     <Stack.Screen name="DeleteAccount">
                         {props => <DeleteAccount {...props} masterState={masterState} setMasterState={setMasterState} />}
+                    </Stack.Screen>
+
+                    <Stack.Screen name="ReceiptScreen">
+                        {props => <ReceiptScreen {...props} masterState={masterState} setMasterState={setMasterState} />}
                     </Stack.Screen>
                 </>
 
@@ -138,7 +142,7 @@ const AccountDetail = ({ navigation, masterState, setMasterState }) => {
             </TouchableOpacity> */}
 
             <View style={{ backgroundColor: '#f2f2f2', borderRadius: 30, marginHorizontal: 20, padding: 0 }}>
-                <TouchableOpacity onPress={() => comingSoonAlert('receipt')} style={{ padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <TouchableOpacity onPress={() => navigation.navigate('ReceiptScreen')} style={{ padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Text style={{ fontSize: 16, fontFamily: 'Aristotelica-Regular' }}>Receipt Preferences</Text>
                     <AntDesign name="right" size={16} color="black" />
                 </TouchableOpacity>
@@ -402,9 +406,9 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
 
                         <View style={{ flex: 1, backgroundColor: '#fff' }}>
 
-                            <View style={{ justifyContent: 'center', flex: 1,}}>
+                            <View style={{ justifyContent: 'center', flex: 1, }}>
 
-                                <View style={{ paddingHorizontal: 20, paddingVertical: 20, borderRadius: 40, backgroundColor: '#f2f2f2', marginHorizontal: 40, alignItems: 'center',  }}>
+                                <View style={{ paddingHorizontal: 20, paddingVertical: 20, borderRadius: 40, backgroundColor: '#f2f2f2', marginHorizontal: 40, alignItems: 'center', }}>
 
                                     <TextInput
                                         keyboardType='numeric'
@@ -416,8 +420,8 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                                     />
 
 
-                                    <TouchableOpacity onPress={() => { Keyboard.dismiss(); signIn() }} style={{ marginTop: 10, backgroundColor: '#ffcf56', borderRadius: 24, textAlign: 'center', justifyContent: 'center', width: '100%' , padding: 10,  }}>
-                                        <Text  style={{lineHeight:20, textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20em' : 20,  color: '#000', fontFamily: 'PointSoftSemiBold',}}>Sign In</Text>
+                                    <TouchableOpacity onPress={() => { Keyboard.dismiss(); signIn() }} style={{ marginTop: 10, backgroundColor: '#ffcf56', borderRadius: 24, textAlign: 'center', justifyContent: 'center', width: '100%', padding: 10, }}>
+                                        <Text style={{ lineHeight: 20, textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20em' : 20, color: '#000', fontFamily: 'PointSoftSemiBold', }}>Sign In</Text>
                                     </TouchableOpacity>
 
                                 </View>
@@ -432,7 +436,7 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                                         <Text style={{ textAlign: 'center', fontSize: Platform.OS === 'ios' ? '18em' : 18, color: '#000', fontFamily: 'PointSoftSemiBold', margin: 10 }}>Or</Text>
 
                                         <TouchableOpacity onPress={() => navigation.navigate('SignUp')} style={{ backgroundColor: '#ffcf56', borderRadius: 24, textAlign: 'center', padding: 10, paddingHorizontal: 16, marginHorizontal: 60 }}>
-                                            <Text style={{lineHeight:20, textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20em' : 20, color: '#000', fontFamily: 'PointSoftSemiBold' }}>New Account</Text>
+                                            <Text style={{ lineHeight: 20, textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20em' : 20, color: '#000', fontFamily: 'PointSoftSemiBold' }}>New Account</Text>
                                         </TouchableOpacity>
                                     </View>
                                 }
@@ -667,6 +671,102 @@ const InformationScreen = ({ navigation, }) => {
                 <FontAwesome name="phone" size={24} color="black" />
                 <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginTop: 0, textAlign: 'center', padding: 20, marginBottom: -8 }}>Call Now</Text>
             </TouchableOpacity>
+
+
+        </View>
+
+    )
+}
+
+
+
+
+const ReceiptScreen = ({ navigation, masterState, setMasterState }) => {
+
+    const [emailAddress, setEmailAddress] = useState(null)
+    const [autoReceipts, setAutoReceipts] = useState(null)
+    const [loadingPayForm, setLoadingPayForm] = useState(false)
+
+    const saveEmailPreferences = () => {
+
+        setLoadingPayForm(true)
+
+        axios.post(`${url}/user/receiptPreferences`, { user: masterState.user, email: emailAddress, autoReceipts })
+            .then(res => {
+                if (res.data === 'ok') {
+                    console.log('receipt preferences saved: ', res.data)
+                    setMasterState({ ...masterState, user: { ...masterState.user, email: emailAddress, autoReceipts } })
+                    Keyboard.dismiss()
+                }
+                else {
+                    console.log('receipt error!')
+                    // errorTimeout("Phone number taken.\nTry signing in!")
+                }
+            })
+            .catch(() => null)
+            .finally(() => {
+                setTimeout(() => {
+                    setLoadingPayForm(false); Alert.alert('Success', 'Preferences Saved', [])
+                }, 1500);
+            })
+    }
+
+    useEffect(() => {
+        //     setMasterState({...masterState, user:{...masterState.user, email:'hello@kitty.com', autoReceipts: true}})
+        setEmailAddress(masterState.user.email)
+        setAutoReceipts(masterState.user.autoReceipts)
+    }, [])
+
+    return (
+
+        <View style={{ padding: 20, height: '100%', backgroundColor: '#fff' }}>
+
+            <View style={{ position: 'absolute', top: 40, right: 20, backgroundColor: '#FFCF56', height: 48, width: 48, zIndex: 98, borderRadius: 30, alignItems: 'center', justifyContent: 'center' }} name="arrow-back-ios" size={24} color="black" >
+                <Image style={{ height: 40, width: 40, borderRadius: 30 }} source={require('../assets/yellow-icon-bold.png')} />
+            </View>
+
+            <TouchableOpacity onPress={() => navigation.goBack()} style={{ backgroundColor: '#f2f2f2', height: 34, width: 34, zIndex: 98, borderRadius: 20, position: 'absolute', top: 40, left: 20, alignItems: 'center', justifyContent: 'center' }} name="arrow-back-ios" size={24} color="black" >
+                <MaterialIcons style={{ marginLeft: 10 }} name="arrow-back-ios" size={20} color="black" />
+            </TouchableOpacity>
+
+
+
+            <View style={{ backgroundColor: '#fff', textAlign: 'center', paddingTop: 30, borderRadius: 30, marginTop: 68 }}>
+                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 21, textAlign: 'center' }} >
+                    Receipt Preferences
+                </Text>
+            </View>
+
+            <View style={{ backgroundColor: '#f2f2f2', padding: 20, borderRadius: 30, marginVertical: 20, }}>
+                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 18, textAlign: 'center' }} >
+                    Enable receipts to generate an automatic email after each payment.
+                </Text>
+            </View>
+
+            <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 18, textAlign: 'left' }} >
+                Email Address
+            </Text>
+            <TextInput style={{ paddingLeft: 10, backgroundColor: null, backgroundColor: '#f2f2f2', padding: 10, marginVertical: 10, borderRadius: 10, fontFamily: 'PointSoftSemiBold', fontSize: 16 }} onChangeText={(text) => { setEmailAddress(text) }} value={emailAddress} />
+
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 18, textAlign: 'left', marginTop: 10 }} >
+                    Receipts Enabled
+                </Text>
+
+                <TouchableOpacity onPress={() => setAutoReceipts(!autoReceipts)}>
+                    {autoReceipts ? <MaterialIcons name="check-box" size={28} color="black" /> : <MaterialIcons name="check-box-outline-blank" size={28} color="black" />}
+                </TouchableOpacity>
+            </View>
+
+            {loadingPayForm ?
+                <View style={{ alignItems: 'center', backgroundColor: '#ffcf56', borderRadius: 30, height: 54, marginTop: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} >
+                    <ActivityIndicator />
+                </View>
+                :
+                <TouchableOpacity onPress={saveEmailPreferences} style={{ alignItems: 'center', backgroundColor: '#ffcf56', borderRadius: 30, marginTop: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginTop: 0, textAlign: 'center', padding: 20, paddingHorizontal: 16, marginBottom: -8 }} adjustsFontSizeToFit={true} numberOfLines={1}>Save</Text>
+                </TouchableOpacity>
+            }
 
 
         </View>
