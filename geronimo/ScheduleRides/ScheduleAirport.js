@@ -97,7 +97,7 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
         driverHasArrived: false,
         paid: false,
         datetimeOfRequest: Date.now(),
-        user: user ? { _id: user._id, firstName: user.firstName, lastName: user.lastName, phone: user.phone, stripe_customer_id: user.stripe_customer_id } : null,
+        user: user ? { _id: user._id, firstName: user.firstName, lastName: user.lastName, phone: user.phone, stripe_customer_id: user.stripe_customer_id, email:user.email, autoReceipts:user.autoReceipts } : null,
         chatLog: []
     }
 

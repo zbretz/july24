@@ -26,7 +26,7 @@ router.get('/test', async (req, res) => {
 
 
     try {
-       console.log('test')
+        console.log('test')
     } catch (e) {
         console.log('fetchchatlog error: ', e)
     }
@@ -270,15 +270,17 @@ router.post('/payment-sheet', async (req, res) => {
         { apiVersion: '2023-08-16' }
     );
 
-    const paymentIntent = await stripe.paymentIntents.create({
+    let initIntent = {
         amount: req.query.charge * 100,
         currency: 'usd',
         customer: stripe_customer_id,
-        // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
         payment_method_types: ['card'],
-    });
+        ...(rideDetail.user.autoReceipts && rideDetail.user.email) && {receipt_email: rideDetail.user.email}     // Object.assign
+    }
 
-    // console.log("PI: ", paymentIntent)
+    const paymentIntent = await stripe.paymentIntents.create(initIntent);
+    
+    console.log("PI: ", paymentIntent)
     res.json({
         ephemeralKey: ephemeralKey.secret,
         customer: stripe_customer_id,
