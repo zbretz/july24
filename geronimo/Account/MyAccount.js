@@ -141,18 +141,18 @@ const AccountDetail = ({ navigation, masterState, setMasterState }) => {
                 </Text>
             </TouchableOpacity> */}
 
-            <View style={{ backgroundColor: '#f2f2f2', borderRadius: 30, marginHorizontal: 20, padding: 0 }}>
+            <View style={{ backgroundColor: '#e6e6e6', borderRadius: 30, marginHorizontal: 20, padding: 0 }}>
                 <TouchableOpacity onPress={() => navigation.navigate('ReceiptScreen')} style={{ padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Text style={{ fontSize: 16, fontFamily: 'Aristotelica-Regular' }}>Receipt Preferences</Text>
                     <AntDesign name="right" size={16} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => comingSoonAlert('driver')} style={{ padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
-                    <Text style={{ fontSize: 16, fontFamily: 'Aristotelica-Regular' }}>Driver Preferences</Text>
-                    <AntDesign name="right" size={16} color="black" />
+                <TouchableOpacity onPress={() => comingSoonAlert('driver')} style={{backgroundColor:'#f2f2f2', padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
+                    <Text style={{ fontSize: 16, fontFamily: 'Aristotelica-Regular', color:'#b2b2b2',  }}>Driver Preferences</Text>
+                    <AntDesign name="right" size={16} color="#b2b2b2" />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('DeleteAccount')} style={{ padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
-                    <Text style={{ fontSize: 16, fontFamily: 'Aristotelica-Regular' }}>Other Settings</Text>
-                    <AntDesign name="right" size={16} color="black" />
+                <TouchableOpacity onPress={() => navigation.navigate('DeleteAccount')} style={{ backgroundColor:'#f2f2f2', borderBottomLeftRadius: 30, borderBottomRightRadius:30, padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
+                    <Text style={{ fontSize: 16, fontFamily: 'Aristotelica-Regular', color:'#b2b2b2', }}>Other Settings</Text>
+                    <AntDesign name="right" size={16} color="#b2b2b2" />
                 </TouchableOpacity>
             </View>
 
