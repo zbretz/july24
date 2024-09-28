@@ -4,6 +4,13 @@ dotenv.config({ path: './.env' })
 let stripe_public_key = process.env.STRIPE_PUBLIC_KEY
 let stripe_private_key = process.env.STRIPE_PRIVATE_KEY
 
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const phoneNumber = process.env.TWILIO_PHONE_NUMBER;
+const demoNumber = process.env.DEMO_NUMBER;
+
+const client = require('twilio')(accountSid, authToken);
+
 // const {app} = require('indexRefactored')
 const router = require("express").Router();
 var ObjectId = require('mongodb').ObjectId;
@@ -33,7 +40,7 @@ router.post('/placeOrder', async (req, res) => {
     let { user, basket, timeOfOrder } = req.body
     let orderNumber = Math.floor(Math.random() * (999 - 100 + 1) + 100);
 
-    console.log(user, basket, timeOfOrder, orderNumber)
+    console.log('notify zach', user, basket, timeOfOrder, orderNumber)
 
     try {
         const order = await db_locals.collection('orders').insertOne({ phone: user.phone, userName: user.firstName + ' ' + user.lastName, partner: basket.partner, orderItems: basket.items, timeOfOrder: timeOfOrder, completed: false, orderNumber: orderNumber })
@@ -43,7 +50,8 @@ router.post('/placeOrder', async (req, res) => {
         let io = req.app.get('socketio');
 
         let socketOrder =
-        {   "_id": order.insertedId,
+        {
+            "_id": order.insertedId,
             "phone": user.phone,
             "userName": user.firstName + ' ' + user.lastName,
             "partner": basket.partner,
@@ -55,6 +63,7 @@ router.post('/placeOrder', async (req, res) => {
 
         notifyAdminLocals(basket.partner, socketOrder)
         io.in(basket.partner).emit('order_received', socketOrder)
+        smsNotifyZach(JSON.stringify(socketOrder))
 
     } catch (e) {
         console.log('order error: ', e)
@@ -207,7 +216,6 @@ let expo = new Expo();
 
 const notifyAdminLocals = async (partner, order) => {
 
-
     partner = await db_locals.collection('partners').findOne({ name: partner })
     console.log('partner: ', partner)
     console.log('orderrrrrrr: ', order)
@@ -215,7 +223,6 @@ const notifyAdminLocals = async (partner, order) => {
     let itemNames = order.orderItems.map(item => item.name).join(", ")
 
     console.log('item names: ', itemNames)
-
 
     try {
         let messageAdmin = {
@@ -237,37 +244,20 @@ const notifyAdminLocals = async (partner, order) => {
     }
 }
 
+const smsNotifyZach = (order) => {
+    return client.messages
+        .create({
+            body:
+                `New locals order:\n${order}`,
+            from: phoneNumber,
+            to: demoNumber
+        })
+        .then(message => console.log('sms sent: ', message.sid))
+        .catch(e => {
+            console.log('caught error!: ', e)
+        });
+}
 
-
-// router.get('/sockettest', async (req, res) => {
-//     console.log('test')
-//     let io = req.app.get('socketio');
-
-//     let order =
-//       {
-//         "_id": {
-//           "$oid": "662ed683e1137fa23b6a3a6b"
-//         },
-//         "phone": "9175751955",
-//         "userName": "Zee Bee",
-//         "partner": "Clockwork",
-//         "orderItem": {
-//           "item": "Latest order",
-//           "notes": "Make it yummy Make i t yummy Make it yumm t yummy Make it yummy Make it yummy",
-//           "price": 13.99,
-//           // "is_drink": false
-//           "is_drink": {
-//             type: "cold",
-//             size: "20oz"
-//           },
-//         },
-//         "timeOfOrder": "Sun Apr 28th 5:08 pm",
-//         "completed": false,
-//         "orderNumber": 283
-//       }
-
-//     io.emit('order_received', order)
-// });
 
 
 module.exports = router;
