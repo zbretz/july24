@@ -14,18 +14,8 @@ const Stack = createStackNavigator();
 
 export default LocalsNav = ({ isConnected, masterState, setMasterState, chatLog, setChatLog }) => {
 
-    // const [basket, setBasket] = useState(null)
     const [basket, setBasket] = useState({
-
         partner: null, items: []
-
-        // partner: 'Daily Rise',
-        // items:
-        //     [
-        //         { name: 'Latte', size: 'small', qty: 1, price: 5.95, temp: 'hot', description: 'item description item description' },
-        //         { name: 'Mocha', size: 'large', qty: 1, price: 5.95, temp: 'hot', description: 'item description item description' },
-        //         { name: 'Latte', size: 'medium', qty: 1, price: 5.95, temp: 'cold', description: 'item description item description' },
-        //     ]
     })
 
     const [item, setItem] = useState(null)
@@ -33,8 +23,8 @@ export default LocalsNav = ({ isConnected, masterState, setMasterState, chatLog,
 
     return (
         <StripeProvider
-            // publishableKey="pk_test_51Nj9WRAUREUmtjLCVtihPOMA6K9A28JW0goEfBW14Poj6Y6AJJUBBXcHhwUfrTsEQEJ15S26FBGDGbkVjm84x8f900VG5onWlT"
-            publishableKey="pk_live_51Nj9WRAUREUmtjLCliIgWk6tgmUXBHSOGsmmaNIC6Tb9UT4BVNEAK40DNXsrljEJHLHxJsj0CyU0qdU5ozO4I1Eb00SdEyvrQ9"
+            publishableKey="pk_test_51Nj9WRAUREUmtjLCVtihPOMA6K9A28JW0goEfBW14Poj6Y6AJJUBBXcHhwUfrTsEQEJ15S26FBGDGbkVjm84x8f900VG5onWlT"
+            // publishableKey="pk_live_51Nj9WRAUREUmtjLCliIgWk6tgmUXBHSOGsmmaNIC6Tb9UT4BVNEAK40DNXsrljEJHLHxJsj0CyU0qdU5ozO4I1Eb00SdEyvrQ9"
         >
             <Stack.Navigator
                 screenOptions={{

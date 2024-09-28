@@ -11,8 +11,8 @@ var ObjectId = require('mongodb').ObjectId;
 const { Expo } = require('expo-server-sdk')
 // const { smsRequestConfirmation, sendCode } = require("../sms.js");
 
-// const stripe = require('stripe')('sk_test_51Nj9WRAUREUmtjLCN8G4QqEEVvYoPpWKX82iY5lDX3dZxnaOGDDhqkyVpIFgg63FvXaAE3FmZ1p0btPM9s1De3m200uOIKI70O'); // test key
-const stripe = require('stripe')(stripe_private_key);
+const stripe = require('stripe')('sk_test_51Nj9WRAUREUmtjLCN8G4QqEEVvYoPpWKX82iY5lDX3dZxnaOGDDhqkyVpIFgg63FvXaAE3FmZ1p0btPM9s1De3m200uOIKI70O'); // test key
+// const stripe = require('stripe')(stripe_private_key);
 // This example sets up an endpoint using the Express framework.
 // Watch this video to get started: https://youtu.be/rPR2aJ6XnAc.
 
@@ -37,13 +37,13 @@ router.post('/placeOrder', async (req, res) => {
 
     try {
         const order = await db_locals.collection('orders').insertOne({ phone: user.phone, userName: user.firstName + ' ' + user.lastName, partner: basket.partner, orderItems: basket.items, timeOfOrder: timeOfOrder, completed: false, orderNumber: orderNumber })
-        // console.log('order: ', order)
+        console.log('ooooorder: ', order)
         res.status(200).send(order);
 
         let io = req.app.get('socketio');
 
         let socketOrder =
-        {
+        {   "_id": order.insertedId,
             "phone": user.phone,
             "userName": user.firstName + ' ' + user.lastName,
             "partner": basket.partner,
@@ -133,6 +133,14 @@ router.post('/payment-sheet2', async (req, res) => {
     }
 
 })
+
+router.post('/acknowledgeOrder', async (req, res) => {
+    let orderId = req.body.orderId
+    console.log('orderId: ', orderId)
+    acknowledgeOrder = await db_locals.collection('orders').findOneAndUpdate({ _id: new ObjectId(orderId) }, { $set: { acknowledged: true } }, { returnDocument: "after" });
+    // console.log('order acknowledged: ', acknowledgeOrder)
+    // res.status(200).send('acknowledged');
+});
 
 router.post('/orderComplete', async (req, res) => {
     let orderId = req.body.orderId

@@ -25,13 +25,13 @@ const socketRouter = require('./socketRouterLocals')(io)
 
 // app.use('/test', socketRouter)
 
-// server.listen(7100, () => {
-//     console.log('listening on *:7100');
-// });
-
-server.listen(6100, () => {
-    console.log('listening on *:6100');
+server.listen(7100, () => {
+    console.log('listening on *:7100');
 });
+
+// server.listen(6100, () => {
+//     console.log('listening on *:6100');
+// });
 
 module.exports = {
     server: server,
