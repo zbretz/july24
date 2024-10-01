@@ -154,12 +154,18 @@ router.post('/acknowledgeOrder', async (req, res) => {
 router.post('/orderComplete', async (req, res) => {
     let orderId = req.body.orderId
     console.log('orderId: ', orderId)
-
     completeOrder = await db_locals.collection('orders').findOneAndUpdate({ _id: new ObjectId(orderId) }, { $set: { completed: true } }, { returnDocument: "after" });
-
     console.log('complete order: ', completeOrder)
-
     res.status(200).send('complete');
+    // res.status(200).send(JSON.stringify(rideRequest));
+});
+
+router.post('/cancelOrder', async (req, res) => {
+    let orderId = req.body.orderId
+    console.log('orderId: ', orderId)
+    cancelOrder = await db_locals.collection('orders').findOneAndUpdate({ _id: new ObjectId(orderId) }, { $set: { canceled: true } }, { returnDocument: "after" });
+    console.log('cancel order: ', cancelOrder)
+    res.status(200).send('canceled');
     // res.status(200).send(JSON.stringify(rideRequest));
 });
 
@@ -192,8 +198,7 @@ router.get('/orderHistory', async (req, res) => {
 router.get('/openOrders', async (req, res) => {
 
     let partner = req.query.partner
-
-    let orders = await db_locals.collection('orders').find({ partner: partner, completed: false }).sort({ _id: -1 }).toArray();
+    let orders = await db_locals.collection('orders').find({ partner: partner, completed: false, canceled: {$exists:false} }).sort({ _id: -1 }).toArray();
     // console.log('open orders fetch: ', orders)
 
     res.status(200).send(orders);
