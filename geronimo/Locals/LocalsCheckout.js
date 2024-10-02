@@ -70,25 +70,24 @@ export default function LocalsCheckout(basket, setBasket, masterState, navigatio
         } else {
             console.log('bong bong')
 
-        let timeOfOrder = formatInTimeZone(new Date(), 'America/Denver', "eee',' MMMM do h':'mm aa")
-        console.log('timeOfOrder: ', timeOfOrder)
+            let timeOfOrder = formatInTimeZone(new Date(), 'America/Denver', "eee',' MMMM do h':'mm aa")
+            console.log('timeOfOrder: ', timeOfOrder)
 
-        // axios.post(`https://summer.theparkcityapp.com:7100/locals/placeOrder`, { user: masterState.user, basket, timeOfOrder: timeOfOrder })
-        axios.post(`http://10.0.0.135:7100/locals/placeOrder`, { user: masterState.user, basket, timeOfOrder: timeOfOrder })
-            .then(res => {
-                console.log('DATA: ', res.data)
-                if (res.data) {
-                    console.log('count: ', res.data.count)
+            // axios.post(`https://summer.theparkcityapp.com:7100/locals/placeOrder`, { user: masterState.user, basket, timeOfOrder: timeOfOrder })
+            axios.post(`http://10.0.0.135:7100/locals/placeOrder`, { user: masterState.user, basket, timeOfOrder: timeOfOrder })
+                .then(res => {
+                    console.log('DATA: ', res.data)
+                    if (res.data) {
+                        console.log('count: ', res.data.count)
 
-                    Alert.alert('Order Placed', 'Your order will be ready for pickup shortly. Just give your name at the counter!');
-                    navigation.navigate('LocalsHome')
-                    setBasket({ partner: null, items: [] })
-
-                } else {
-                    console.log('nada')
-                }
-            })
-            .catch(e => console.log('order  error: ', e))
+                        Alert.alert('Order Placed', 'Your order will be ready for pickup shortly. Just give your name at the counter!');
+                        navigation.navigate('LocalsHome')
+                        setBasket({ partner: null, items: [], pickupTime: '20 mins' })
+                    } else {
+                        console.log('nada')
+                    }
+                })
+                .catch(e => console.log('order  error: ', e))
 
         }
     };

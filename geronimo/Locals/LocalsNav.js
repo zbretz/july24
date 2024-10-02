@@ -15,7 +15,7 @@ const Stack = createStackNavigator();
 export default LocalsNav = ({ isConnected, masterState, setMasterState, chatLog, setChatLog }) => {
 
     const [basket, setBasket] = useState({
-        partner: null, items: []
+        partner: null, items: [], pickupTime: '20 mins'
     })
 
     const [item, setItem] = useState(null)

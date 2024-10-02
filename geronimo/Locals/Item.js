@@ -1,7 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Modal, TextInput, Alert } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { Entypo, Feather, Octicons, FontAwesome5, Ionicons, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
+import { Ionicons, AntDesign } from '@expo/vector-icons';
 import LocalsCheckout from './LocalsCheckout';
+
+import SelectDropdown from 'react-native-select-dropdown'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -48,7 +52,8 @@ export default Item = ({ route, isConnected, masterState, navigation, basket, se
                                 text: 'Yes, replace items.', onPress: () => {
                                     setBasket({
                                         partner: selectedPartner,
-                                        items: []
+                                        items: [],
+                                        pickupTime: '20 mins'
                                     })
                                     resolve()
                                 }
@@ -111,7 +116,16 @@ export default Item = ({ route, isConnected, masterState, navigation, basket, se
     console.log('checkout total: ', checkoutTotal)
     const basketLength = basket.items.length ? Object.values(basket.items).reduce((accumulator, currentItem) => accumulator + currentItem.qty, 0) : 0
 
-    let openPaymentSheet = LocalsCheckout(basket, setBasket, masterState, navigation)
+    let openPaymentSheet = LocalsCheckout(basket, setBasket, masterState, navigation) //console.log('bbbbbasket: ', basket)// 
+
+
+
+    const emojisWithIcons = [
+        { title: 'Asap', icon: 'emoticon-happy-outline' },
+        { title: '20 mins', icon: 'clock' },
+        { title: '40 mins', icon: 'clock' },
+    ];
+
 
     return (
 
@@ -169,6 +183,44 @@ export default Item = ({ route, isConnected, masterState, navigation, basket, se
                                 )
                             })}
                         </View>
+
+
+                        <SelectDropdown
+                            data={emojisWithIcons}
+                            onSelect={(selectedItem, index) => {
+                                console.log(selectedItem, index);
+                                setBasket(basket => {
+
+                                    return { ...basket, pickupTime: selectedItem.title }
+                                })
+                            }}
+                            renderButton={(selectedItem, isOpened) => {
+                                return (
+                                    <View style={styles.dropdownButtonStyle}>
+                                        {selectedItem && (
+                                            <Icon name={selectedItem.icon} style={styles.dropdownButtonIconStyle} />
+                                        )}
+                                        <Text style={styles.dropdownButtonTxtStyle}>
+                                            {(selectedItem && selectedItem.title) || 'Select Pickup Time'}
+                                        </Text>
+                                        {!(selectedItem && selectedItem.title) && <Text>20 mins</Text>}
+                                        {(selectedItem && selectedItem.title == 'Asap') && <Text>We'll try our best!</Text>}
+                                        <Icon name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} />
+                                    </View>
+                                );
+                            }}
+                            renderItem={(item, index, isSelected) => {
+                                return (
+                                    <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
+                                        <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
+                                        <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
+                                    </View>
+                                );
+                            }}
+                            showsVerticalScrollIndicator={false}
+                            dropdownStyle={styles.dropdownMenuStyle}
+                        />
+
                         <TouchableOpacity onPress={openPaymentSheet} style={{ marginTop: 10, padding: 14, paddingHorizontal: 40, alignSelf: 'center', backgroundColor: '#ffcf56', borderRadius: 30, width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 20, marginBottom: 0 }}>Checkout</Text>
                             <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 20, marginBottom: 0 }}>${checkoutTotal}</Text>
@@ -342,3 +394,51 @@ export default Item = ({ route, isConnected, masterState, navigation, basket, se
 
 
 
+const styles = StyleSheet.create({
+    dropdownButtonStyle: {
+        // width: 200,
+        height: 50,
+        backgroundColor: '#E9ECEF',
+        borderRadius: 12,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 12,
+        marginTop: 10
+    },
+    dropdownButtonTxtStyle: {
+        flex: 1,
+        fontSize: 18,
+        fontWeight: '500',
+        color: '#151E26',
+    },
+    dropdownButtonArrowStyle: {
+        fontSize: 28,
+    },
+    dropdownButtonIconStyle: {
+        fontSize: 28,
+        marginRight: 8,
+    },
+    dropdownMenuStyle: {
+        backgroundColor: '#E9ECEF',
+        borderRadius: 8,
+    },
+    dropdownItemStyle: {
+        width: '100%',
+        flexDirection: 'row',
+        paddingHorizontal: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 8,
+    },
+    dropdownItemTxtStyle: {
+        flex: 1,
+        fontSize: 18,
+        fontWeight: '500',
+        color: '#151E26',
+    },
+    dropdownItemIconStyle: {
+        fontSize: 28,
+        marginRight: 8,
+    },
+});

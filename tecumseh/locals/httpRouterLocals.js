@@ -1,5 +1,5 @@
 const dotenv = require('dotenv')
-dotenv.config({ path: './.env' })
+dotenv.config({ path: '../.env' })
 
 let stripe_public_key = process.env.STRIPE_PUBLIC_KEY
 let stripe_private_key = process.env.STRIPE_PRIVATE_KEY
@@ -43,7 +43,7 @@ router.post('/placeOrder', async (req, res) => {
     console.log('notify zach', user, basket, timeOfOrder, orderNumber)
 
     try {
-        const order = await db_locals.collection('orders').insertOne({ phone: user.phone, userName: user.firstName + ' ' + user.lastName, partner: basket.partner, orderItems: basket.items, timeOfOrder: timeOfOrder, completed: false, orderNumber: orderNumber })
+        const order = await db_locals.collection('orders').insertOne({ phone: user.phone, userName: user.firstName + ' ' + user.lastName, partner: basket.partner, orderItems: basket.items, timeOfOrder: timeOfOrder, completed: false, orderNumber: orderNumber, pickupTime: basket.pickupTime })
         console.log('ooooorder: ', order)
         res.status(200).send(order);
 
@@ -58,7 +58,8 @@ router.post('/placeOrder', async (req, res) => {
             "orderItems": basket.items,
             "timeOfOrder": timeOfOrder,
             "completed": false,
-            "orderNumber": orderNumber
+            "orderNumber": orderNumber,
+            "pickupTime": basket.pickupTime
         }
 
         notifyAdminLocals(basket.partner, socketOrder)
