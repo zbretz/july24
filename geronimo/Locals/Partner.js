@@ -1,9 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, ScrollView, Alert, SectionList, Animated, Modal } from 'react-native';
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, ActivityIndicator, SectionList, Animated, Modal } from 'react-native';
+import { useEffect, useState, useRef } from 'react';
 import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import partnerData from './LocalsData';
 import LocalsCheckout from './LocalsCheckout';
 import axios from 'axios';
+import LottieView from 'lottie-react-native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -174,11 +175,19 @@ export default Partner = ({ route, isConnected, masterState, navigation, item, s
                 <Animated.Image style={{ height: magicHeight, width: '100%', borderRadius: 30, }} resizeMode='cover' source={partnerData[selectedPartner].cover_photo} />
             </Animated.View>
 
+
             <View style={{ width: '100%', alignItems: 'center', }}>
-                <View style={{ width: '90%', flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 16, color: '#353431', fontFamily: 'Aristotelica-Regular', marginTop: 6 }}>{isOpen ? 'open' : 'closed'}</Text>
-                    <MaterialIcons style={{ marginLeft: 4 }} name={isOpen ? "check-circle-outline" : "do-not-disturb"} size={16} color={isOpen ? "green" : "red"} />
-                </View>
+                {isOpen === null ?
+                    <View style={{ width: '90%', flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{ fontSize: 16, color: '#353431', fontFamily: 'Aristotelica-Regular', marginTop: 6 }}>Hours </Text>
+                        <LottieView speed={1.5} style={{ height: 14, width: 14, alignSelf: 'center', margin: 0 }} source={require('../assets/loading.json')} autoPlay loop />
+                    </View>
+                    :
+                    <View style={{ width: '90%', flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{ fontSize: 16, color: '#353431', fontFamily: 'Aristotelica-Regular', marginTop: 6 }}>{isOpen ? 'open' : 'closed'}</Text>
+                        <MaterialIcons style={{ marginLeft: 4 }} name={isOpen ? "check-circle-outline" : "do-not-disturb"} size={16} color={isOpen ? "green" : "red"} />
+                    </View>
+                }
             </View>
 
             <Animated.View style={{ borderRadius: 20, marginVertical: 0, marginTop: -8, height: slideValue, alignItems: 'center', justifyContent: 'center' }}>
