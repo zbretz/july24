@@ -11,8 +11,14 @@ export default Partner = ({ route, isConnected, masterState, navigation, item, s
 
     let { selectedPartner } = route.params
 
+    let hours = [[6, 15], [6, 15], [6, 15], [6, 15], [6, 15], [6, 15], [6, 15]] // ordered sun (day 0) -> sat (day 6)
+    let now = new Date()
+
+    const [isOpen, setIsOpen] = useState(false)
+
     useEffect(() => {
         setPartner(partnerData[selectedPartner])
+        setIsOpen(now.getHours() >= hours[now.getDay()][0] && now.getHours() <= hours[now.getDay()][1])
     }, [partner])
 
     let scrollOffsetY = useRef(new Animated.Value(0)).current;
@@ -155,7 +161,14 @@ export default Partner = ({ route, isConnected, masterState, navigation, item, s
                 <Animated.Image style={{ height: magicHeight, width: '100%', borderRadius: 30, }} resizeMode='cover' source={partnerData[selectedPartner].cover_photo} />
             </Animated.View>
 
-            <Animated.View style={{ backgroundColor: '#fff', borderRadius: 20, marginVertical: 10, height: slideValue, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ width: '100%', alignItems: 'center', }}>
+                <View style={{ width: '90%', flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 16, color: '#353431', fontFamily: 'Aristotelica-Regular', marginTop: 6 }}>{isOpen ? 'open' : 'closed'}</Text>
+                    <MaterialIcons style={{ marginLeft: 4 }} name={isOpen ? "check-circle-outline" : "do-not-disturb"} size={16} color={isOpen ? "green" : "red"} />
+                </View>
+            </View>
+
+            <Animated.View style={{ borderRadius: 20, marginVertical: 0, marginTop: -8, height: slideValue, alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 18, margin: 0, marginBottom: 0, width: '90%' }} >
                     {partner.blurb}
                 </Text>
