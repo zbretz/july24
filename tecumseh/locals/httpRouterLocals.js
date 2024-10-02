@@ -33,6 +33,14 @@ router.get('/6100test', async (req, res) => {
     res.status(200).send('6100test');
 });
 
+router.get('/partnerData', async (req, res) => {
+    let partner = req.query.partner
+    partner = await db_locals.collection('partners').findOne({ name: partner })
+    console.log('partner!!!!!: ', partner)
+    // let hours = [[6, 15], [6, 15], [6, 15], [6, 15], [6, 15], [6, 15], [6, 15]] // ordered sun (day 0) -> sat (day 6)
+    res.status(200).send(JSON.stringify(partner.hours));
+});
+
 router.post('/placeOrder', async (req, res) => {
 
     // console.log(req.body)

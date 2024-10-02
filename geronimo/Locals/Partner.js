@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import partnerData from './LocalsData';
 import LocalsCheckout from './LocalsCheckout';
+import axios from 'axios';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -11,15 +12,27 @@ export default Partner = ({ route, isConnected, masterState, navigation, item, s
 
     let { selectedPartner } = route.params
 
-    let hours = [[6, 15], [6, 15], [6, 15], [6, 15], [6, 15], [6, 15], [6, 15]] // ordered sun (day 0) -> sat (day 6)
+    // let hours = [[6, 15], [6, 15], [6, 15], [6, 15], [6, 15], [6, 15], [6, 15]] // ordered sun (day 0) -> sat (day 6)
+    const [hours, setHours] = useState(null)
     let now = new Date()
 
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(null)
+
+    const fetchPartnerData = () => {
+        axios.get(`http://10.0.0.135:7100/locals/partnerData?partner=${selectedPartner}`)
+            .then(res => {
+                console.log('DATA: ', res.data)
+                let hours = res.data
+                setHours(hours)
+                setIsOpen(now.getHours() >= hours[now.getDay()][0] && now.getHours() <= hours[now.getDay()][1])
+            })
+            .catch(e => console.log('order  error: ', e))
+    }
 
     useEffect(() => {
+        fetchPartnerData()
         setPartner(partnerData[selectedPartner])
-        setIsOpen(now.getHours() >= hours[now.getDay()][0] && now.getHours() <= hours[now.getDay()][1])
-    }, [partner])
+    }, [selectedPartner])
 
     let scrollOffsetY = useRef(new Animated.Value(0)).current;
     console.log('scrollOFfset: ', scrollOffsetY)
