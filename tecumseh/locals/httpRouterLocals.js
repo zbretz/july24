@@ -160,6 +160,15 @@ router.post('/acknowledgeOrder', async (req, res) => {
     // res.status(200).send('acknowledged');
 });
 
+router.post('/saveDateChanges', async (req, res) => {
+    let partner = req.body.partner
+    let dateArray = req.body.dateArray
+    console.log('date array: ', dateArray)
+    dates_saved = await db_locals.collection('partners').findOneAndUpdate({ partner: partner }, { $set: { deactivatedDates: dateArray } }, { returnDocument: "after" });
+    console.log('dates saved: ', dates_saved)
+    res.status(200).send(dates_saved);
+});
+
 router.post('/orderComplete', async (req, res) => {
     let orderId = req.body.orderId
     console.log('orderId: ', orderId)
