@@ -163,10 +163,18 @@ router.post('/acknowledgeOrder', async (req, res) => {
 router.post('/saveDateChanges', async (req, res) => {
     let partner = req.body.partner
     let dateArray = req.body.dateArray
-    console.log('date array: ', dateArray)
-    dates_saved = await db_locals.collection('partners').findOneAndUpdate({ partner: partner }, { $set: { deactivatedDates: dateArray } }, { returnDocument: "after" });
+    console.log('date array: ', dateArray, partner)
+    dates_saved = await db_locals.collection('partners').findOneAndUpdate({ name: partner }, { $set: { deactivatedDates: dateArray } }, { returnDocument: "after" });
     console.log('dates saved: ', dates_saved)
     res.status(200).send(dates_saved);
+});
+
+router.get('/fetchDates', async (req, res) => {
+    let partner = req.query.partner
+    console.log('sdfsdfsdf: ', partner)
+    partner = await db_locals.collection('partners').findOne({ name: partner});
+    console.log('fetch date: ', partner)
+    res.status(200).send(partner);
 });
 
 router.post('/orderComplete', async (req, res) => {
@@ -214,13 +222,10 @@ router.get('/orderHistory', async (req, res) => {
 });
 
 router.get('/openOrders', async (req, res) => {
-
     let partner = req.query.partner
-    let orders = await db_locals.collection('orders').find({ partner: partner, completed: false, canceled: {$exists:false} }).sort({ _id: -1 }).toArray();
+    let orders = await db_locals.collection('orders').find({ partner: partner, completed: false, canceled: { $exists: false } }).sort({ _id: -1 }).toArray();
     // console.log('open orders fetch: ', orders)
-
     res.status(200).send(orders);
-
 });
 
 router.get('/saveExpoPushTokenLocals', async (req, res) => {
