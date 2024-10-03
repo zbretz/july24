@@ -37,8 +37,7 @@ router.get('/partnerData', async (req, res) => {
     let partner = req.query.partner
     partner = await db_locals.collection('partners').findOne({ name: partner })
     console.log('partner!!!!!: ', partner)
-    // let hours = [[6, 15], [6, 15], [6, 15], [6, 15], [6, 15], [6, 15], [6, 15]] // ordered sun (day 0) -> sat (day 6)
-    res.status(200).send(JSON.stringify(partner.hours));
+    res.status(200).send(JSON.stringify(partner));
 });
 
 router.post('/placeOrder', async (req, res) => {

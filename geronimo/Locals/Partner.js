@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, ActivityIndicator, SectionList, Animated, Modal } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, ActivityIndicator, SectionList, Animated, Modal, Alert } from 'react-native';
 import { useEffect, useState, useRef } from 'react';
 import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import partnerData from './LocalsData';
@@ -14,17 +14,33 @@ export default Partner = ({ route, isConnected, masterState, navigation, item, s
     let { selectedPartner } = route.params
 
     const [hours, setHours] = useState(null)     // let hours = [[6, 15], [6, 15], [6, 15], [6, 15], [6, 15], [6, 15], [6, 15]] // ordered sun (day 0) -> sat (day 6)
+    const [dates, setDates] = useState(null)
     let now = new Date()
 
-    const [isOpen, setIsOpen] = useState(null)
+    const [isOpenHours, setIsOpenHours] = useState(null)
+    const [isOpenDates, setIsOpenDates] = useState(true)
 
     const fetchPartnerData = () => {
+        console.log('fetch partner data')
         axios.get(`http://10.0.0.135:7100/locals/partnerData?partner=${selectedPartner}`)
             .then(res => {
                 console.log('DATA: ', res.data)
-                let hours = res.data
+                let hours = res.data.hours
+                let dates = res.data.deactivatedDates
+                if (dates.length) {
+                    // let isOpen = true
+                    dates.forEach((date) => {
+                        date = new Date(date)
+                        console.log('89yg498hru93uhr983hirvi3nrvc0i3rvi30rinv03inrv0in3rv: ', date.getDate)
+                        if ((date.getDate() == now.getDate()) && (date.getMonth() == now.getMonth())) {
+                            // isOpen = false
+                            setIsOpenDates(false)
+                        }
+                    })
+                    // if (notPresent) newArr = [...dateArray, date]
+                }
                 setHours(hours)
-                setIsOpen(now.getHours() >= hours[now.getDay()][0] && now.getHours() <= hours[now.getDay()][1])
+                setIsOpenHours(now.getHours() >= hours[now.getDay()][0] && now.getHours() <= hours[now.getDay()][1])
             })
             .catch(e => console.log('order  error: ', e))
     }
@@ -175,21 +191,34 @@ export default Partner = ({ route, isConnected, masterState, navigation, item, s
             </Animated.View>
 
 
-            <View style={{ width: '100%', alignItems: 'center', }}>
-                {isOpen == null ?
+            <View style={{ alignItems: 'center', backgroundColor: '#f2f2f2', alignSelf: 'flex-start', borderRadius: 10, paddingHorizontal: 6, marginVertical: 6 }}>
+                {!isOpenDates ?
                     <View style={{ width: '90%', flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 16, color: '#353431', fontFamily: 'Aristotelica-Regular', marginTop: 6 }}>Hours </Text>
-                        <LottieView speed={1.5} style={{ height: 14, width: 14, alignSelf: 'center', margin: 0 }} source={require('../assets/loading.json')} autoPlay loop />
+                        <Text style={{ fontSize: 16, color: '#353431', fontFamily: 'Aristotelica-Regular', marginTop: 6 }}>closed today</Text>
+                        <MaterialIcons style={{ marginLeft: 4 }} name="do-not-disturb" size={16} color="red" />
                     </View>
                     :
-                    <View style={{ width: '90%', flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 16, color: '#353431', fontFamily: 'Aristotelica-Regular', marginTop: 6 }}>{isOpen ? 'open' : 'closed'}</Text>
-                        <MaterialIcons style={{ marginLeft: 4 }} name={isOpen ? "check-circle-outline" : "do-not-disturb"} size={16} color={isOpen ? "green" : "red"} />
-                        {hours &&  <Text style={{ fontFamily: 'PointSoftSemiBold',marginLeft: 4}}>{hours[now.getDay()][0]}a - {hours[now.getDay()][1]%12}p</Text>}
-
-                    </View>
+                    <>
+                        {isOpenHours == null ?
+                            <View style={{ width: '90%', flexDirection: 'row', alignItems: 'center' }}>
+                                <Text style={{ fontSize: 16, color: '#353431', fontFamily: 'Aristotelica-Regular', marginTop: 6 }}>Hours </Text>
+                                <LottieView speed={1.5} style={{ height: 14, width: 14, alignSelf: 'center', margin: 0 }} source={require('../assets/loading.json')} autoPlay loop />
+                            </View>
+                            :
+                            <View style={{ width: '90%', flexDirection: 'row', alignItems: 'center' }}>
+                                <Text style={{ fontSize: 16, color: '#353431', fontFamily: 'Aristotelica-Regular', marginTop: 6 }}>{isOpenHours ? 'open' : 'closed'}</Text>
+                                <MaterialIcons style={{ marginLeft: 4 }} name={isOpenHours ? "check-circle-outline" : "do-not-disturb"} size={16} color={isOpenHours ? "green" : "red"} />
+                                {hours && <Text style={{ fontFamily: 'PointSoftSemiBold', marginLeft: 4 }}>{hours[now.getDay()][0]}a - {hours[now.getDay()][1] % 12}p</Text>}
+                            </View>
+                        }
+                    </>
                 }
             </View>
+
+
+
+            {/* {isOpenDates ? <Text style={{ fontFamily: 'PointSoftSemiBold', marginLeft: 4 }}>Open</Text> : <Text style={{ fontFamily: 'PointSoftSemiBold', marginLeft: 4 }}>Closed</Text>} */}
+
 
             <Animated.View style={{ borderRadius: 20, marginVertical: 0, marginTop: -8, height: slideValue, alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 18, margin: 0, marginBottom: 0, width: '90%' }} >
@@ -218,7 +247,19 @@ export default Partner = ({ route, isConnected, masterState, navigation, item, s
                 renderItem={({ item }) => (
                     <View style={styles.item}>
                         <TouchableOpacity
-                            onPress={() => { setItem(item); navigation.navigate('Item', { selectedPartner }) }}
+                            onPress={() => {
+                                if (!isOpenDates || !isOpenHours) {
+                                    Alert.alert("Closed Today", `Sorry, ${selectedPartner} is closed right now.`, [
+                                        {
+                                            text: 'OK',
+                                            onPress: () => { console.log('ok selected'); },//alertAccepted = false,
+                                        },
+                                    ])
+                                    return
+                                }
+                                setItem(item); navigation.navigate('Item', { selectedPartner })
+                            }
+                            }
                         >
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <Text style={styles.title}>{item.name}</Text>
