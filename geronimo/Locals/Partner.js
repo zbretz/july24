@@ -13,8 +13,7 @@ export default Partner = ({ route, isConnected, masterState, navigation, item, s
 
     let { selectedPartner } = route.params
 
-    // let hours = [[6, 15], [6, 15], [6, 15], [6, 15], [6, 15], [6, 15], [6, 15]] // ordered sun (day 0) -> sat (day 6)
-    const [hours, setHours] = useState(null)
+    const [hours, setHours] = useState(null)     // let hours = [[6, 15], [6, 15], [6, 15], [6, 15], [6, 15], [6, 15], [6, 15]] // ordered sun (day 0) -> sat (day 6)
     let now = new Date()
 
     const [isOpen, setIsOpen] = useState(null)
@@ -177,7 +176,7 @@ export default Partner = ({ route, isConnected, masterState, navigation, item, s
 
 
             <View style={{ width: '100%', alignItems: 'center', }}>
-                {isOpen === null ?
+                {isOpen == null ?
                     <View style={{ width: '90%', flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={{ fontSize: 16, color: '#353431', fontFamily: 'Aristotelica-Regular', marginTop: 6 }}>Hours </Text>
                         <LottieView speed={1.5} style={{ height: 14, width: 14, alignSelf: 'center', margin: 0 }} source={require('../assets/loading.json')} autoPlay loop />
@@ -186,6 +185,8 @@ export default Partner = ({ route, isConnected, masterState, navigation, item, s
                     <View style={{ width: '90%', flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={{ fontSize: 16, color: '#353431', fontFamily: 'Aristotelica-Regular', marginTop: 6 }}>{isOpen ? 'open' : 'closed'}</Text>
                         <MaterialIcons style={{ marginLeft: 4 }} name={isOpen ? "check-circle-outline" : "do-not-disturb"} size={16} color={isOpen ? "green" : "red"} />
+                        {hours &&  <Text style={{ fontFamily: 'PointSoftSemiBold',marginLeft: 4}}>{hours[now.getDay()][0]}a - {hours[now.getDay()][1]%12}p</Text>}
+
                     </View>
                 }
             </View>
