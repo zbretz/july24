@@ -5,7 +5,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LocalsHome from './LocalsHome';
 import OrderHistory from './OrderHistory'
-import DailyRise from './DailyRise';
+// import DailyRise from './DailyRise';
 import Partner from './Partner';
 import Item from './Item';
 import { StripeProvider } from '@stripe/stripe-react-native';
@@ -37,9 +37,9 @@ export default LocalsNav = ({ isConnected, masterState, setMasterState, chatLog,
                 <Stack.Screen name="OrderHistory" options={{ presentation: "modal" }}>
                     {props => <OrderHistory {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} basket={basket} setBasket={setBasket} />}
                 </Stack.Screen>
-                <Stack.Screen name="DailyRise" options={{ presentation: "modal" }}>
+                {/* <Stack.Screen name="DailyRise" options={{ presentation: "modal" }}>
                     {props => <DailyRise {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} basket={basket} setBasket={setBasket} item={item} setItem={setItem} partner={partner} setPartner={setPartner} />}
-                </Stack.Screen>
+                </Stack.Screen> */}
                 <Stack.Screen name="Partner" options={{ presentation: "modal" }}>
                     {props => <Partner {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} basket={basket} setBasket={setBasket} item={item} setItem={setItem} partner={partner} setPartner={setPartner} />}
                 </Stack.Screen>

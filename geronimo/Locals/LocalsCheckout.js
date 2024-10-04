@@ -46,14 +46,11 @@ export default function LocalsCheckout(basket, setBasket, masterState, navigatio
         } = await fetchPaymentSheetParams();
 
         const { error } = await initPaymentSheet({
-
             returnURL: 'your-app://stripe-redirect',
-
             merchantDisplayName: "Park City Payments, Inc.",
             customerId: customer,
             customerEphemeralKeySecret: ephemeralKey,
             paymentIntentClientSecret: paymentIntent,
-
         });
         if (error) {
             console.log('error: ', error)
