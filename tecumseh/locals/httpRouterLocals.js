@@ -1,5 +1,6 @@
 const dotenv = require('dotenv')
 dotenv.config({ path: '../.env' })
+// dotenv.config()
 
 let stripe_public_key = process.env.STRIPE_PUBLIC_KEY
 let stripe_private_key = process.env.STRIPE_PRIVATE_KEY

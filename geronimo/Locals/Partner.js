@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, ActivityIndicator, SectionList, Animated, Modal, Alert } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, AppState, SectionList, Animated, Modal, Alert } from 'react-native';
 import { useEffect, useState, useRef } from 'react';
 import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import partnerData from './LocalsData';
@@ -11,6 +11,7 @@ const windowHeight = Dimensions.get('window').height;
 
 export default Partner = ({ route, isConnected, masterState, navigation, item, setItem, basket, setBasket, partner, setPartner }) => {
 
+
     let { selectedPartner } = route.params
 
     const [hours, setHours] = useState(null)     // let hours = [[6, 15], [6, 15], [6, 15], [6, 15], [6, 15], [6, 15], [6, 15]] // ordered sun (day 0) -> sat (day 6)
@@ -21,23 +22,22 @@ export default Partner = ({ route, isConnected, masterState, navigation, item, s
     const [isOpenDates, setIsOpenDates] = useState(true)
 
     const fetchPartnerData = () => {
-        console.log('fetch partner data')
+        console.log('fetch partner data: ')
         axios.get(`http://10.0.0.135:7100/locals/partnerData?partner=${selectedPartner}`)
             .then(res => {
-                console.log('DATA: ', res.data)
+                // console.log('DATA: ', res.data)
                 let hours = res.data.hours
                 let dates = res.data.deactivatedDates
                 if (dates.length) {
-                    // let isOpen = true
+                    let isOpen = true
                     dates.forEach((date) => {
                         date = new Date(date)
                         console.log('89yg498hru93uhr983hirvi3nrvc0i3rvi30rinv03inrv0in3rv: ', date.getDate)
                         if ((date.getDate() == now.getDate()) && (date.getMonth() == now.getMonth())) {
-                            // isOpen = false
-                            setIsOpenDates(false)
+                            isOpen = false  
                         }
+                        setIsOpenDates(isOpen)
                     })
-                    // if (notPresent) newArr = [...dateArray, date]
                 }
                 setHours(hours)
                 setIsOpenHours(now.getHours() >= hours[now.getDay()][0] && now.getHours() <= hours[now.getDay()][1])
@@ -45,13 +45,27 @@ export default Partner = ({ route, isConnected, masterState, navigation, item, s
             .catch(e => console.log('order  error: ', e))
     }
 
+
+    const appState = useRef(AppState.currentState);
+
+    useEffect(() => {
+        const subscription = AppState.addEventListener('change', nextAppState => {
+          if ( appState.current.match(/inactive|background/) && nextAppState === 'active') { fetchPartnerData()}
+          appState.current = nextAppState;
+        });
+        return () => { subscription.remove()};
+      }, []);
+
     useEffect(() => {
         fetchPartnerData()
         setPartner(partnerData[selectedPartner])
     }, [selectedPartner])
 
+
+
+
     let scrollOffsetY = useRef(new Animated.Value(0)).current;
-    console.log('scrollOFfset: ', scrollOffsetY)
+    console.log('scrollOffset: ', scrollOffsetY)
 
     const Header_Max_Height = windowHeight * .3;
     const magicHeight = scrollOffsetY.interpolate({
@@ -180,7 +194,7 @@ export default Partner = ({ route, isConnected, masterState, navigation, item, s
                 }
 
 
-                <TouchableOpacity onPress={() => navigation.goBack()} style={{ position: 'absolute', top: 20, left: 16, backgroundColor: '#fff', height: 48, width: 48, zIndex: 98, borderRadius: 30, alignItems: 'center', justifyContent: 'center' }} name="arrow-back-ios" size={24} color="black" >
+                <TouchableOpacity onPress={() => navigation.goBack()} style={{ position: 'absolute', top: 20, left: 16, backgroundColor: '#fff', height: 48, width: 48, zIndex: 98, borderRadius: 30, alignItems: 'center', justifyContent: 'center' }}  >
                     <MaterialIcons style={{ marginLeft: 10 }} name="arrow-back-ios" size={24} color="black" />
                 </TouchableOpacity>
 
@@ -249,7 +263,7 @@ export default Partner = ({ route, isConnected, masterState, navigation, item, s
                         <TouchableOpacity
                             onPress={() => {
                                 if (!isOpenDates || !isOpenHours) {
-                                    Alert.alert("Closed Today", `Sorry, ${selectedPartner} is closed right now.`, [
+                                    Alert.alert("Not Open", `Sorry, ${selectedPartner} is closed right now.`, [
                                         {
                                             text: 'OK',
                                             onPress: () => { console.log('ok selected'); },//alertAccepted = false,
