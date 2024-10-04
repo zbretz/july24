@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View, TextInput, Image, Dimensions, Modal, Animated, Linking, SafeAreaView } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -81,6 +81,16 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                 </View>
 
                 <View style={{ backgroundColor: '#FFCF56', margin: 20, borderRadius: 40, padding: 30, alignItems: 'center', }}>
+
+                    {
+                        masterState.user?.user_type === 'driver' &&
+                        <>
+                            <View style={{ zIndex: 6, backgroundColor: 'transparent', height: windowWidth * .2, width: windowWidth * .2, position: 'absolute', top: 0, right: 0, borderBottomLeftRadius: 30, borderLeftWidth: windowWidth * .1, borderLeftColor: '#f4bb29', borderBottomWidth: windowWidth * .1, borderBottomColor: '#f4bb29', borderRightWidth: windowWidth * .1, borderTopWidth: windowWidth * .1, borderColor: 'transparent' }} />
+                            <Entypo style={{ zIndex: 5, position: 'absolute', right: windowWidth * .02, top: windowWidth * .02 }} name="wallet" size={44} color="black" />
+                            <View style={{ zIndex: 4, backgroundColor: '#f4bb29', height: windowWidth * .2, width: windowWidth * .2, position: 'absolute', top: 0, right: 0, borderBottomLeftRadius: 30, borderRightWidth: windowWidth * .1, borderRightColor: 'white', borderTopWidth: windowWidth * .1, borderTopColor: 'white', borderLeftWidth: windowWidth * .1, borderBottomWidth: windowWidth * .1, borderColor: 'transparent' }} />
+
+                        </>
+                    }
 
                     <View style={{}}>
                         <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 90, marginVertical: windowHeight < 800 ? -16 : 0 }} adjustsFontSizeToFit={true}
