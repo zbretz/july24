@@ -5,6 +5,7 @@ import partnerData from './LocalsData';
 import LocalsCheckout from './LocalsCheckout';
 import axios from 'axios';
 import LottieView from 'lottie-react-native';
+import CheckoutModal from './CheckoutModal.js'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -35,7 +36,7 @@ export default Partner = ({ route, isConnected, masterState, setMasterState, nav
                         console.log('89yg498hru93uhr983hirvi3nrvc0i3rvi30rinv03inrv0in3rv: ', date.getDate())
                         console.log('hours: ', hours, 'day: ', now.getDay(), 'hours: ', now.getHours())
                         if ((date.getDate() == now.getDate()) && (date.getMonth() == now.getMonth())) {
-                            isOpen = false  
+                            isOpen = false
                         }
                         setIsOpenDates(isOpen)
                     })
@@ -51,11 +52,11 @@ export default Partner = ({ route, isConnected, masterState, setMasterState, nav
 
     useEffect(() => {
         const subscription = AppState.addEventListener('change', nextAppState => {
-          if ( appState.current.match(/inactive|background/) && nextAppState === 'active') { fetchPartnerData()}
-          appState.current = nextAppState;
+            if (appState.current.match(/inactive|background/) && nextAppState === 'active') { fetchPartnerData() }
+            appState.current = nextAppState;
         });
-        return () => { subscription.remove()};
-      }, []);
+        return () => { subscription.remove() };
+    }, []);
 
     useEffect(() => {
         fetchPartnerData()
@@ -91,23 +92,6 @@ export default Partner = ({ route, isConnected, masterState, setMasterState, nav
         }).start();
     }
 
-
-    const changeQty = (item, amount) => {
-        console.log('change qty item: ', item)
-        console.log('change qty item name: ', item.name)
-        setBasket(basket => {
-            let idx = basket.items.findIndex(basketItem => basketItem.name == item.name && basketItem.temp == item.temp && basketItem.size == item.size)
-            if (basket.items[idx].qty == 1 && amount == -1) {
-                basket.items.splice(idx, 1)
-            } else {
-                basket.items[idx].qty = basket.items[idx].qty + amount
-            }
-            return { ...basket }
-        })
-    }
-
-    let checkoutTotal = Object.values(basket.items).reduce((accumulator, currentItem) => accumulator + currentItem.qty * currentItem.price, 0)
-    checkoutTotal = (Math.round(checkoutTotal * 100) / 100).toFixed(2);
     const [showBasket, setShowBasket] = useState(false)
     const basketLength = basket.items.length ? Object.values(basket.items).reduce((accumulator, currentItem) => accumulator + currentItem.qty, 0) : 0
 
@@ -118,67 +102,7 @@ export default Partner = ({ route, isConnected, masterState, setMasterState, nav
     return (
         <View style={{ height: '100%', backgroundColor: '#fff', padding: 20 }}>
 
-
-            <Modal
-                animationType='slide'
-                transparent={true}
-                visible={showBasket}
-                style={{ height: windowHeight, width: windowWidth, }}>
-                <View style={{ height: windowHeight, width: windowWidth, backgroundColor: 'rgba(0,0,0,0.88)', alignItems: 'center', justifyContent: 'center' }}>
-
-                    <TouchableOpacity style={{ position: 'absolute', top: 80, left: 40, zIndex: 11 }} onPress={() => setShowBasket(false)}>
-                        <Ionicons name="chevron-back-outline" size={36} color="black" />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => { console.log('close modal'); setShowBasket(false) }} style={{ position: 'absolute', height: '100%', width: '100%', backgroundColor: 'transparent', }} />
-
-                    <View style={{ backgroundColor: '#fff', height: windowHeight * .9, borderRadius: 20, padding: 20, justifyContent: 'space-between', width: windowWidth * .9 }}>
-
-                        <View>
-                            <Image style={{ height: 60, width: 60, alignSelf: 'center' }} source={require('../assets/basket.png')} />
-                            <Text style={{ fontSize: 20, color: '#353431', textAlign: 'center', fontFamily: 'Aristotelica-Regular', margin: 10 }}>{basket.partner}</Text>
-                        </View>
-
-                        <View style={{ backgroundColor: '#f2f2f2', flex: 1, borderRadius: 20, padding: 20 }}>
-                            {/* <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 20, }}>My Items</Text> */}
-                            {basket.items.map((item, idx) => {
-                                return (
-                                    <View key={idx} style={{ borderRadius: 20, width: '100%', marginBottom: 10, paddingVertical: 0, }}>
-                                        <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
-
-                                            <View style={{ flexDirection: 'row', flex: 3, alignItems: 'flex-end', display: 'flex', flexWrap: 'wrap' }}>
-                                                <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 19, marginRight: 4 }}>{item.name}</Text>
-                                                {item.is_drink &&
-                                                    <View style={{ backgroundColor: '#e6e6e6', borderRadius: 10, paddingHorizontal: 6 }}>
-                                                        <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 16, color: '#000', marginBottom: 1, }}>{item.size}, {item.temp}</Text>
-                                                    </View>
-                                                }
-                                            </View>
-
-                                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', flex: 1 }}>
-                                                <TouchableOpacity onPress={() => changeQty(item, -1)}>
-                                                    <AntDesign style={{ marginRight: 13 }} name="minuscircleo" size={20} color="black" />
-                                                </TouchableOpacity>
-                                                <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 19, }}>{item.qty}</Text>
-                                                <TouchableOpacity onPress={() => changeQty(item, 1)}>
-                                                    <AntDesign style={{ marginLeft: 13 }} name="pluscircleo" size={20} color="black" />
-                                                </TouchableOpacity>
-                                            </View>
-                                        </View>
-                                        <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 14, color: 'gray' }} numberOfLines={1}>{item.notes}</Text>
-
-                                    </View>
-                                )
-                            })}
-                        </View>
-
-                        <TouchableOpacity onPress={openPaymentSheet} style={{ marginTop: 10, padding: 14, paddingHorizontal: 40, alignSelf: 'center', backgroundColor: '#ffcf56', borderRadius: 30, width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 20, marginBottom: 0 }}>Checkout</Text>
-                            <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 20, marginBottom: 0 }}>${checkoutTotal}</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
+            <CheckoutModal basket={basket} showBasket={showBasket} setShowBasket={setShowBasket} setBasket={setBasket} openPaymentSheet={openPaymentSheet} masterState={masterState} />
 
             <Animated.View style={{ height: magicHeight, zIndex: 100, }}>
 
