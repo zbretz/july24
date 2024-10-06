@@ -56,11 +56,11 @@ router.post('/placeOrder', async (req, res) => {
     if (useWallet) {
         //verify wallet balance in db (instead of just trusting frontend data)
         await db__.collection('users').findOneAndUpdate({ phone: user.phone }, {
-            $inc: { "wallet.balance": -useWallet.price },
+            $set: { "wallet.balance": useWallet.newBalance },
             $push: {
                 "wallet.transactions": {
                     "type": 'debit',
-                    "amount": -useWallet.price,
+                    "amount": useWallet.chargedToWallet,
                     "basket": basket,
                     orderNumber
                 }
@@ -68,11 +68,11 @@ router.post('/placeOrder', async (req, res) => {
         }, { returnDocument: "after" });
 
         //  await db__.collection('drivers').findOneAndUpdate({ phone: user.phone }, {
-        //     $inc: { "wallet.balance": - useWallet.price},  
+        //     $inc: { "wallet.balance": - useWallet.chargedToWallet},  
         //     $push: {
         //         "wallet.transactions": {
         //            "type":debit,
-        //             "amount":useWallet.price,
+        //             "amount":useWallet.chargedToWallet,
         //             "basket": basket,
         //             orderNumber
         //         }
@@ -138,15 +138,23 @@ router.post('/payment-sheet2', async (req, res) => {
             //verify wallet balance in db (instead of just trusting frontend data)
             if (balance - price > 0) {
                 // do not charge driver card
-                useWallet = { amount: 'in_full', walletBalance: balance, price }
-
+                useWallet = { amount: 'in_full', newBalance: balance - price, chargedToWallet:price }
                 console.log('useWallet - payment-sheet2', useWallet)
-
                 res.json({ useWallet });
                 return
             } else {
-                price = (Math.round(price * 100) - Math.round(balance * 100)) / 100
-                useWallet = { amount: 'in_part', walletBalance: balance, price }
+                let diff = (Math.round(price * 100) - Math.round(balance * 100)) / 100
+                if (diff <= .5){
+                    price = .5
+                    diff = (.5*100 - diff*100)/100
+                    console.log('diff: ', diff)
+                    chargedToWallet = Math.round(((balance *100) - (diff*100)))/100
+                    console.log('price2', price)
+                } else {
+                    chargedToWallet = balance
+                    price = (Math.round(price * 100) - Math.round(balance * 100)) / 100
+                }
+                useWallet = { amount: 'in_part', newBalance: Math.round((balance*100 - chargedToWallet*100))/100, chargedToWallet}
             }
         }
 
