@@ -11,13 +11,14 @@ export default function LocalsCheckout(basket, setBasket, masterState, navigatio
     let checkoutTotal = Object.values(basket.items).reduce((accumulator, currentItem) => accumulator + currentItem.qty * currentItem.price, 0)
     checkoutTotal = (Math.round(checkoutTotal * 100) / 100).toFixed(2);
 
-    console.log('locals checkout prrrice: ', checkoutTotal)
-    console.log('locals checkout masterState: ', masterState)
+    masterState.user.wallet && console.log(` comp: ${masterState.user.wallet.balance > checkoutTotal}`)
+
+    // console.log('locals checkout prrrice: ', checkoutTotal)
+    // console.log('locals checkout masterState: ', masterState)
 
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
 
     const fetchPaymentSheetParams = async () => {
-        console.log('INITTT', basket)
 
         // const response = await fetch(`https://summer.theparkcityapp.com:7100/locals/payment-sheet2?price=${checkoutTotal}&user=${JSON.stringify(masterState.user)}`, {
         const response = await fetch(`http://10.0.0.135:7100/locals/payment-sheet2?price=${checkoutTotal}&user=${JSON.stringify(masterState.user)}`, {
@@ -27,12 +28,13 @@ export default function LocalsCheckout(basket, setBasket, masterState, navigatio
             },
         });
 
-        const { paymentIntent, ephemeralKey, customer } = await response.json();
+        const { paymentIntent, ephemeralKey, customer, useWallet } = await response.json();
 
         return {
             paymentIntent,
             ephemeralKey,
             customer,
+            useWallet
         };
     };
 
@@ -43,51 +45,64 @@ export default function LocalsCheckout(basket, setBasket, masterState, navigatio
             ephemeralKey,
             customer,
             publishableKey,
+            useWallet,
         } = await fetchPaymentSheetParams();
 
-        const { error } = await initPaymentSheet({
-            returnURL: 'your-app://stripe-redirect',
-            merchantDisplayName: "Park City Payments, Inc.",
-            customerId: customer,
-            customerEphemeralKeySecret: ephemeralKey,
-            paymentIntentClientSecret: paymentIntent,
-        });
-        if (error) {
-            console.log('error: ', error)
-        } else {
-            openPaymentSheet()
+        console.log('useWallet: ', useWallet)
+
+        if (useWallet?.amount !== "in_full") {
+            //don't deduct from wallet -- just charge user's card
+            const { error } = await initPaymentSheet({
+                returnURL: 'your-app://stripe-redirect',
+                merchantDisplayName: "Park City Payments, Inc.",
+                customerId: customer,
+                customerEphemeralKeySecret: ephemeralKey,
+                paymentIntentClientSecret: paymentIntent,
+            });
+            if (error) {
+                console.log('error: ', error)
+                return
+            }
         }
+
+
+
+        openPaymentSheet(useWallet)
+
     };
 
-    const openPaymentSheet = async () => {
-        const { error } = await presentPaymentSheet();
+    const openPaymentSheet = async (useWallet = false) => {
 
-        if (error) {
-            if (error.code !== 'Canceled') Alert.alert(`Error code: ${error.code}`, error.message);
-        } else {
-            console.log('bong bong')
-
-            let timeOfOrder = formatInTimeZone(new Date(), 'America/Denver', "eee',' MMMM do h':'mm aa")
-            console.log('timeOfOrder: ', timeOfOrder)
-
-            // axios.post(`https://summer.theparkcityapp.com:7100/locals/placeOrder`, { user: masterState.user, basket, timeOfOrder: timeOfOrder })
-            axios.post(`http://10.0.0.135:7100/locals/placeOrder`, { user: masterState.user, basket, timeOfOrder: timeOfOrder })
-                .then(res => {
-                    console.log('DATA: ', res.data)
-                    if (res.data) {
-                        console.log('count: ', res.data.count)
-
-                        Alert.alert('Order Placed', 'Your order will be ready for pickup shortly. Just give your name at the counter!');
-                        navigation.navigate('LocalsHome')
-                        setBasket({ partner: null, items: [], pickupTime: '20 mins' })
-                    } else {
-                        console.log('nada')
-                    }
-                })
-                .catch(e => console.log('order  error: ', e))
-
+        if (useWallet?.amount !== "in_full") {
+            //charge card whether there is no wallet (or wallet balance) or for partial wallet payment
+            const { error } = await presentPaymentSheet();
+            if (error && error.code !== 'Canceled') {
+                Alert.alert(`Error code: ${error.code}`, error.message);
+                return
+            }
         }
-    };
+
+        let timeOfOrder = formatInTimeZone(new Date(), 'America/Denver', "eee',' MMMM do h':'mm aa")
+        console.log('timeOfOrder: ', timeOfOrder)
+
+        // axios.post(`https://summer.theparkcityapp.com:7100/locals/placeOrder`, { user: masterState.user, basket, timeOfOrder: timeOfOrder })
+        axios.post(`http://10.0.0.135:7100/locals/placeOrder`, { user: masterState.user, basket, timeOfOrder: timeOfOrder, useWallet })
+            .then(res => {
+                console.log('DATA: ', res.data)
+                if (res.data) {
+                    console.log('count: ', res.data.count)
+
+                    Alert.alert('Order Placed', 'Your order will be ready for pickup shortly. Just give your name at the counter!');
+                    navigation.navigate('LocalsHome')
+                    setBasket({ partner: null, items: [], pickupTime: '20 mins' })
+                } else {
+                    console.log('nada')
+                }
+            })
+            .catch(e => console.log('order  error: ', e))
+
+
+    }
 
     // useEffect(() => {
     //     initializePaymentSheet();

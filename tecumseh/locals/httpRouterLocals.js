@@ -45,13 +45,48 @@ router.post('/placeOrder', async (req, res) => {
 
     // console.log(req.body)
 
-    let { user, basket, timeOfOrder } = req.body
+    let { user, basket, timeOfOrder, useWallet } = req.body
     let orderNumber = Math.floor(Math.random() * (999 - 100 + 1) + 100);
 
-    console.log('notify zach', user, basket, timeOfOrder, orderNumber)
+    // console.log('notify zach', user, basket, timeOfOrder, orderNumber)
+    console.log('useWallet - place order', useWallet)
+
+
+
+    if (useWallet) {
+        //verify wallet balance in db (instead of just trusting frontend data)
+        await db__.collection('users').findOneAndUpdate({ phone: user.phone }, {
+            $inc: { "wallet.balance": -useWallet.price },
+            $push: {
+                "wallet.transactions": {
+                    "type": 'debit',
+                    "amount": -useWallet.price,
+                    "basket": basket,
+                    orderNumber
+                }
+            },
+        }, { returnDocument: "after" });
+
+        //  await db__.collection('drivers').findOneAndUpdate({ phone: user.phone }, {
+        //     $inc: { "wallet.balance": - useWallet.price},  
+        //     $push: {
+        //         "wallet.transactions": {
+        //            "type":debit,
+        //             "amount":useWallet.price,
+        //             "basket": basket,
+        //             orderNumber
+        //         }
+        //     },
+        //  }, { returnDocument: "after" });
+
+    }
+
 
     try {
-        const order = await db_locals.collection('orders').insertOne({ phone: user.phone, userName: user.firstName + ' ' + user.lastName, partner: basket.partner, orderItems: basket.items, timeOfOrder: timeOfOrder, completed: false, orderNumber: orderNumber, pickupTime: basket.pickupTime })
+        const order = await db_locals.collection('orders').insertOne({ phone: user.phone, userName: user.firstName + ' ' + user.lastName, partner: basket.partner, orderItems: basket.items, timeOfOrder: timeOfOrder, completed: false, orderNumber: orderNumber, pickupTime: basket.pickupTime, useWallet })
+
+
+
         console.log('ooooorder: ', order)
         res.status(200).send(order);
 
@@ -89,39 +124,55 @@ router.post('/payment-sheet2', async (req, res) => {
     try {
 
         let user = JSON.parse(req.query.user)
-        console.log('user: ', user)
+        let price = Number(req.query.price)
+        // let price = Number(req.query.price).toFixed(2)
+        // console.log('price: ', Number(req.query.price).toFixed(2))
+        // price = Math.round(price * 100)
+        let balance = user.wallet.balance
 
-        let price = Number(req.query.price).toFixed(2)
-        price = Math.round(price * 100)
-        console.log('price - paymentsheet2: ', price)
+        console.log('price: ', typeof price, price, 'wallet: ', balance)
+
+        let useWallet = false
+
+        if (user.user_type == 'driver' && balance) {
+            //verify wallet balance in db (instead of just trusting frontend data)
+            if (balance - price > 0) {
+                // do not charge driver card
+                useWallet = { amount: 'in_full', walletBalance: balance, price }
+
+                console.log('useWallet - payment-sheet2', useWallet)
+
+                res.json({ useWallet });
+                return
+            } else {
+                price = (Math.round(price * 100) - Math.round(balance * 100)) / 100
+                useWallet = { amount: 'in_part', walletBalance: balance, price }
+            }
+        }
+
+
+        console.log('useWallet - payment-sheet2', useWallet)
+
+
+
+
+        price = Math.round(price * 100) //for generating payment intent
+
+
+
 
         let stripe_customer_id = user.stripe_customer_id//  'cus_Pqv42p6HqP2PlU'
 
         if (!stripe_customer_id) {
-
             customer = await stripe.customers.create({
                 name: `${user.firstName} ${user.lastName}`,
                 phone: user.phone,
                 metadata: { userUUID: user.userUUID }
             })
 
-
-            // customer = await stripe.customers.create({
-            //     name: "test user"
-            //     // name: `${active_ride.firstName} ${active_ride.lastName}`,
-            //     // phone: active_ride.phone,
-            //     // metadata: { userUUID: active_ride.userUUID }
-            // })
-
             stripe_customer_id = customer.id
-
             await db__.collection('riders').findOneAndUpdate({ phone: user.phone }, { $set: { stripe_customer_id: stripe_customer_id } }, { returnDocument: "after" });
         }
-        // else {
-        //     console.log('stripe1')
-        //     stripe_customer_id = user.stripe_customer_id
-        // }
-
 
         const ephemeralKey = await stripe.ephemeralKeys.create(
             { customer: stripe_customer_id },
@@ -132,7 +183,6 @@ router.post('/payment-sheet2', async (req, res) => {
             amount: price,
             currency: 'usd',
             customer: stripe_customer_id,//'cus_PaPI1VLGHW6olo',//stripe_customer_id,
-            // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
             payment_method_types: ['card'],
         });
 
@@ -141,7 +191,9 @@ router.post('/payment-sheet2', async (req, res) => {
             ephemeralKey: ephemeralKey.secret,
             customer: stripe_customer_id,//'cus_PaPI1VLGHW6olo',//stripe_customer_id,
             paymentIntent: paymentIntent.client_secret,
-            publishableKey: stripe_public_key
+            publishableKey: stripe_public_key,
+            useWallet
+
             // publishableKey: 'pk_test_51Nj9WRAUREUmtjLCVtihPOMA6K9A28JW0goEfBW14Poj6Y6AJJUBBXcHhwUfrTsEQEJ15S26FBGDGbkVjm84x8f900VG5onWlT' // test key
 
         });
@@ -172,7 +224,7 @@ router.post('/saveDateChanges', async (req, res) => {
 router.get('/fetchDates', async (req, res) => {
     let partner = req.query.partner
     console.log('sdfsdfsdf: ', partner)
-    partner = await db_locals.collection('partners').findOne({ name: partner});
+    partner = await db_locals.collection('partners').findOne({ name: partner });
     console.log('fetch date: ', partner)
     res.status(200).send(partner);
 });

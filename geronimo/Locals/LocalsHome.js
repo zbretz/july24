@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, ScrollView, Modal } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { AntDesign, MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons, Ionicons, Entypo } from '@expo/vector-icons';
 import LocalsCheckout from './LocalsCheckout';
 
 const windowWidth = Dimensions.get('window').width;
@@ -121,7 +121,16 @@ export default LocalsHome = ({ isConnected, masterState, navigation, basket, set
                         <TouchableOpacity onPress={comingSoonAlert} style={{ alignSelf: 'center', alignItems: 'center', justifyContent: 'center', borderRadius: 40, padding: 10, height: 50, backgroundColor: '#fff' }} >
                             <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Aristotelica-Regular', marginBottom: -8 }}>Order History</Text>
                         </TouchableOpacity>
+                    </View>
+                }
 
+                {
+                    masterState.user?.user_type === 'driver' &&
+                    <View style={{ height: windowWidth * .2, width: windowWidth * .2, position: 'absolute', top: 0, right: 0,}}>
+                        <View style={{ zIndex: 6, backgroundColor: 'transparent', borderBottomLeftRadius: 30, borderLeftWidth: windowWidth * .1, borderLeftColor: '#f4bb29', borderBottomWidth: windowWidth * .1, borderBottomColor: '#f4bb29', borderRightWidth: windowWidth * .1, borderTopWidth: windowWidth * .1, borderColor: 'transparent' }} />
+                        <Entypo style={{ zIndex: 5, position: 'absolute', right: windowWidth * .02, top: windowWidth * .02 }} name="wallet" size={44} color="black" />
+                        <View style={{ zIndex: 4, backgroundColor: '#f4bb29',position:'absolute', borderBottomLeftRadius: 30, borderRightWidth: windowWidth * .1, borderRightColor: 'white', borderTopWidth: windowWidth * .1, borderTopColor: 'white', borderLeftWidth: windowWidth * .1, borderBottomWidth: windowWidth * .1, borderColor: 'transparent' }} />
+                        <Text style={{fontFamily: 'PointSoftSemiBold', fontSize: 12, zIndex: 8, position:'absolute',  right: windowWidth * .02 + 8, top: windowWidth * .02 + 44}}>${masterState.user.wallet.balance}</Text>
                     </View>
                 }
 
