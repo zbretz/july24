@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export default Item = ({ route, isConnected, masterState, navigation, basket, setBasket, item, setItem }) => {
+export default Item = ({ route, isConnected, masterState, setMasterState, navigation, basket, setBasket, item, setItem }) => {
 
     let { selectedPartner } = route.params
 
@@ -116,7 +116,7 @@ export default Item = ({ route, isConnected, masterState, navigation, basket, se
     console.log('checkout total: ', checkoutTotal)
     const basketLength = basket.items.length ? Object.values(basket.items).reduce((accumulator, currentItem) => accumulator + currentItem.qty, 0) : 0
 
-    let openPaymentSheet = LocalsCheckout(basket, setBasket, masterState, navigation) //console.log('bbbbbasket: ', basket)// 
+    let openPaymentSheet = LocalsCheckout(basket, setBasket, masterState, setMasterState, navigation) //console.log('bbbbbasket: ', basket)// 
 
 
 

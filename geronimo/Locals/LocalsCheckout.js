@@ -6,12 +6,12 @@ import { formatInTimeZone } from "date-fns-tz";
 import { useStripe } from '@stripe/stripe-react-native';
 
 
-export default function LocalsCheckout(basket, setBasket, masterState, navigation) {
+export default function LocalsCheckout(basket, setBasket, masterState, setMasterState, navigation) {
 
     let checkoutTotal = Object.values(basket.items).reduce((accumulator, currentItem) => accumulator + currentItem.qty * currentItem.price, 0)
     checkoutTotal = (Math.round(checkoutTotal * 100) / 100).toFixed(2);
 
-    masterState.user.wallet && console.log(` comp: ${masterState.user.wallet.balance > checkoutTotal}`)
+    masterState.user?.wallet && console.log(` comp: ${masterState.user.wallet.balance > checkoutTotal}`)
 
     // console.log('locals checkout prrrice: ', checkoutTotal)
     // console.log('locals checkout masterState: ', masterState)
@@ -89,12 +89,16 @@ export default function LocalsCheckout(basket, setBasket, masterState, navigatio
         axios.post(`http://10.0.0.135:7100/locals/placeOrder`, { user: masterState.user, basket, timeOfOrder: timeOfOrder, useWallet })
             .then(res => {
                 console.log('DATA: ', res.data)
-                if (res.data) {
-                    console.log('count: ', res.data.count)
+                if (res.data[0]) {
+                    console.log('count: ', res.data[0].count)
 
                     Alert.alert('Order Placed', 'Your order will be ready for pickup shortly. Just give your name at the counter!');
                     navigation.navigate('LocalsHome')
                     setBasket({ partner: null, items: [], pickupTime: '20 mins' })
+                   
+                   useWallet && setMasterState(masterState => {
+                        return {...masterState, user: {...masterState.user, wallet: {...masterState.user.wallet, balance: res.data[1] }}}
+                    })
                 } else {
                     console.log('nada')
                 }

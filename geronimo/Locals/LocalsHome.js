@@ -6,7 +6,7 @@ import LocalsCheckout from './LocalsCheckout';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export default LocalsHome = ({ isConnected, masterState, navigation, basket, setBasket, partner, setPartner }) => {
+export default LocalsHome = ({ isConnected, masterState, setMasterState, navigation, basket, setBasket, partner, setPartner }) => {
 
     const comingSoonAlert = (type) => {
         Alert.alert('Coming soon', "This feature is not yet active. We're working on it! For help with orders, text Zach at 917-575-1955. Thanks!"
@@ -30,7 +30,7 @@ export default LocalsHome = ({ isConnected, masterState, navigation, basket, set
         })
     }
 
-    let openPaymentSheet = LocalsCheckout(basket, setBasket, masterState, navigation)
+    let openPaymentSheet = LocalsCheckout(basket, setBasket,setMasterState, masterState, navigation)
 
     return (
 

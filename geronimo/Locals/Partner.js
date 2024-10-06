@@ -9,7 +9,7 @@ import LottieView from 'lottie-react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export default Partner = ({ route, isConnected, masterState, navigation, item, setItem, basket, setBasket, partner, setPartner }) => {
+export default Partner = ({ route, isConnected, masterState, setMasterState, navigation, item, setItem, basket, setBasket, partner, setPartner }) => {
 
 
     let { selectedPartner } = route.params
@@ -32,7 +32,8 @@ export default Partner = ({ route, isConnected, masterState, navigation, item, s
                     let isOpen = true
                     dates.forEach((date) => {
                         date = new Date(date)
-                        console.log('89yg498hru93uhr983hirvi3nrvc0i3rvi30rinv03inrv0in3rv: ', date.getDate)
+                        console.log('89yg498hru93uhr983hirvi3nrvc0i3rvi30rinv03inrv0in3rv: ', date.getDate())
+                        console.log('hours: ', hours, 'day: ', now.getDay(), 'hours: ', now.getHours())
                         if ((date.getDate() == now.getDate()) && (date.getMonth() == now.getMonth())) {
                             isOpen = false  
                         }
@@ -110,7 +111,7 @@ export default Partner = ({ route, isConnected, masterState, navigation, item, s
     const [showBasket, setShowBasket] = useState(false)
     const basketLength = basket.items.length ? Object.values(basket.items).reduce((accumulator, currentItem) => accumulator + currentItem.qty, 0) : 0
 
-    let openPaymentSheet = LocalsCheckout(basket, setBasket, masterState, navigation)
+    let openPaymentSheet = LocalsCheckout(basket, setBasket, masterState, setMasterState, navigation)
 
     if (!partner) return
 

@@ -88,7 +88,7 @@ router.post('/placeOrder', async (req, res) => {
 
 
         console.log('ooooorder: ', order)
-        res.status(200).send(order);
+        res.status(200).send([order, useWallet?.newBalance]);
 
         let io = req.app.get('socketio');
 
