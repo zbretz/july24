@@ -36,14 +36,14 @@ export default async function populateData({ masterState, setMasterState }) {
             console.log('user data: ', res.data)
 
             // onDemandActive = !res.data[1]
-            const {user, live_versions, onDemandActive} = res.data
+            const {user, live_versions, onDemandActive, localsDisabled} = res.data
             console.log('user2: ', user)
 
             const updateAvailable = !live_versions.includes(app_version)
             await AsyncStorage.setItem('User', JSON.stringify(user))
 
             setMasterState(masterState => {
-                return { ...masterState, user, onDemandActive, appIsReady: true, updateAvailable }
+                return { ...masterState, user, onDemandActive, localsDisabled, appIsReady: true, updateAvailable }
             })
 
         })

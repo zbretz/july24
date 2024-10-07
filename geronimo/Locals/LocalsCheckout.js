@@ -8,6 +8,8 @@ import { useStripe } from '@stripe/stripe-react-native';
 
 export default function LocalsCheckout(basket, setBasket, masterState, setMasterState, navigation) {
 
+    console.log('locals checkout user: ', masterState.user)
+
     let checkoutTotal = Object.values(basket.items).reduce((accumulator, currentItem) => accumulator + currentItem.qty * currentItem.price, 0)
     checkoutTotal = (Math.round(checkoutTotal * 100) / 100).toFixed(2);
 
@@ -76,9 +78,11 @@ export default function LocalsCheckout(basket, setBasket, masterState, setMaster
         if (useWallet?.amount !== "in_full") {
             //charge card whether there is no wallet (or wallet balance) or for partial wallet payment
             const { error } = await presentPaymentSheet();
-            if (error && error.code !== 'Canceled') {
+            if (error) {
                 Alert.alert(`Error code: ${error.code}`, error.message);
                 return
+            } else {
+null
             }
         }
 

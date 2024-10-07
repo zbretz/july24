@@ -15,6 +15,19 @@ export default CheckoutModal = ({ basket, showBasket, setShowBasket, setBasket, 
     checkoutTotal = (Math.round(checkoutTotal * 100) / 100).toFixed(2);
     console.log('checkout total: ', checkoutTotal)
 
+    let adjustWallet = false
+    let walletAdjustedPrice = null
+    if (masterState.user?.wallet?.balance) {
+        adjustWallet = true
+        walletAdjustedPrice = masterState.user?.wallet?.balance && (Math.round((Number(checkoutTotal) * 100) - Number(masterState.user.wallet.balance) * 100) / 100)
+        walletAdjustedPrice = walletAdjustedPrice < 0 ? 0 : walletAdjustedPrice
+        walletAdjustedPrice = (0 < walletAdjustedPrice) && (walletAdjustedPrice < .5) ? 0.5 : walletAdjustedPrice
+        console.log('wallet adujsted price: ', checkoutTotal, walletAdjustedPrice, masterState.user?.wallet?.balance)
+    }
+
+
+
+
     const changeQty = (item, amount) => {
         console.log('change qty item: ', item)
         console.log('change qty item name: ', item.name)
@@ -126,16 +139,25 @@ export default CheckoutModal = ({ basket, showBasket, setShowBasket, setBasket, 
                         dropdownStyle={styles.dropdownMenuStyle}
                     />
 
-                    <TouchableOpacity onPress={openPaymentSheet} style={{ marginTop: 10, padding: 14, paddingHorizontal: 40, alignSelf: 'center', backgroundColor: '#ffcf56', borderRadius: 30, width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 20, marginBottom: 0 }}>Checkout</Text>
-                        <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 20, marginBottom: 0 }}>${checkoutTotal}</Text>
-                        {masterState.user.wallet.balance && <Text>wallet {masterState.user.wallet.balance}</Text>}
+                    {adjustWallet ?
+                        <TouchableOpacity onPress={openPaymentSheet} style={{ marginTop: 10, padding: 14, paddingHorizontal: 40, alignSelf: 'center', backgroundColor: '#ffcf56', borderRadius: 30, width: '100%', }}>
+                            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', }}>
+                                <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 11, marginBottom: 0 }}>Wallet Applied</Text>
+                                <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 14, marginBottom: 0, textDecorationLine: 'line-through' }}>${checkoutTotal}</Text>
+                            </View>
 
-                        {masterState.user.wallet.balance && <Text>wallet {((Math.round((Number(checkoutTotal) * 100)) / 100) - ((Math.round(masterState.user.wallet.balance * 100)) / 100))}</Text>}
+                            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+                                <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 20, marginBottom: 0 }}>Checkout</Text>
+                                <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 20, marginBottom: 0 }}>${walletAdjustedPrice.toFixed(2)}</Text>
+                            </View>
+                        </TouchableOpacity>
+                        :
+                        <TouchableOpacity onPress={openPaymentSheet} style={{ marginTop: 10, padding: 14, paddingHorizontal: 40, alignSelf: 'center', backgroundColor: '#ffcf56', borderRadius: 30, width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 20, marginBottom: 0 }}>Checkout</Text>
+                            <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 20, marginBottom: 0 }}>${checkoutTotal}</Text>
+                        </TouchableOpacity>
+                    }
 
-
-
-                    </TouchableOpacity>
                 </View>
             </View>
         </Modal>

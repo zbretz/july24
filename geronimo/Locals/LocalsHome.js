@@ -4,6 +4,7 @@ import { AntDesign, MaterialIcons, Ionicons, Entypo } from '@expo/vector-icons';
 import LocalsCheckout from './LocalsCheckout';
 import CheckoutModal from './CheckoutModal.js'
 
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -19,6 +20,8 @@ export default LocalsHome = ({ isConnected, masterState, setMasterState, navigat
     let openPaymentSheet = LocalsCheckout(basket, setBasket, setMasterState, masterState, navigation)
 
     return (
+
+
 
 
 
@@ -38,23 +41,40 @@ export default LocalsHome = ({ isConnected, masterState, setMasterState, navigat
                     <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 40, marginBottom: -14, textAlign: 'center' }} adjustsFontSizeToFit={true} numberOfLines={1}>   Locals Takeout</Text>
                 </View>
 
-                {masterState.user &&
-                    <View style={{ marginTop: 20, }}>
-                        <TouchableOpacity onPress={comingSoonAlert} style={{ alignSelf: 'center', alignItems: 'center', justifyContent: 'center', borderRadius: 40, padding: 10, height: 50, backgroundColor: '#fff' }} >
-                            <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Aristotelica-Regular', marginBottom: -8 }}>Order History</Text>
-                        </TouchableOpacity>
-                    </View>
-                }
 
-                {
+                <View style={{ flexDirection: 'row', justifyContent: 'space-evenly',  marginTop: 20,  }}>
+                    {masterState.user &&
+                        <View style={{}}>
+                            <TouchableOpacity onPress={comingSoonAlert} style={{ alignSelf: 'center', alignItems: 'center', justifyContent: 'center', borderRadius: 40, padding: 10, height: 50, backgroundColor: '#fff' }} >
+                                <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Aristotelica-Regular', marginBottom: -8 }}>Order History</Text>
+                            </TouchableOpacity>
+                        </View>
+                    }
+
+                    {
+                        masterState.user?.user_type === 'driver' &&
+                        <View style={{ }}>
+                            <View  style={{ alignSelf: 'center', alignItems:'center', flexDirection:'row', borderRadius: 40, padding: 0, }} >
+                                <Entypo style={{}} name="wallet" size={44} color="black" />
+                                <View style={{alignItems:'flex-end'}}>
+                                    <Text style={{ marginVertical: 0, fontSize: 17, fontFamily: 'Aristotelica-Regular' }}>Wallet</Text>
+                                    <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 12, marginTop: 2, }}>${(masterState.user.wallet.balance).toFixed(2)}</Text>
+                                </View>
+                            </View>
+                        </View>
+                    }
+
+                </View>
+
+                {/* {
                     masterState.user?.user_type === 'driver' &&
                     <View style={{ height: windowWidth * .2, width: windowWidth * .2, position: 'absolute', top: 0, right: 0, }}>
                         <View style={{ zIndex: 6, backgroundColor: 'transparent', borderBottomLeftRadius: 30, borderLeftWidth: windowWidth * .1, borderLeftColor: '#f4bb29', borderBottomWidth: windowWidth * .1, borderBottomColor: '#f4bb29', borderRightWidth: windowWidth * .1, borderTopWidth: windowWidth * .1, borderColor: 'transparent' }} />
                         <Entypo style={{ zIndex: 5, position: 'absolute', right: windowWidth * .02, top: windowWidth * .02 }} name="wallet" size={44} color="black" />
                         <View style={{ zIndex: 4, backgroundColor: '#f4bb29', position: 'absolute', borderBottomLeftRadius: 30, borderRightWidth: windowWidth * .1, borderRightColor: 'white', borderTopWidth: windowWidth * .1, borderTopColor: 'white', borderLeftWidth: windowWidth * .1, borderBottomWidth: windowWidth * .1, borderColor: 'transparent' }} />
-                        <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 12, zIndex: 8, position: 'absolute', right: windowWidth * .02 + 8, top: windowWidth * .02 + 44 }}>${masterState.user.wallet.balance}</Text>
+                        <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 12, zIndex: 8, position: 'absolute', right: windowWidth * .02 + 8, top: windowWidth * .02 + 44 }}>${(masterState.user.wallet.balance).toFixed(2)}</Text>
                     </View>
-                }
+                } */}
 
             </View>
 
@@ -177,7 +197,6 @@ export default LocalsHome = ({ isConnected, masterState, setMasterState, navigat
             </View >
 
         </ScrollView>
-
 
 
 
