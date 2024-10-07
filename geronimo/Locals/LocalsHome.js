@@ -4,8 +4,6 @@ import { AntDesign, MaterialIcons, Ionicons, Entypo } from '@expo/vector-icons';
 import LocalsCheckout from './LocalsCheckout';
 import CheckoutModal from './CheckoutModal.js'
 
-
-const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 export default LocalsHome = ({ isConnected, masterState, setMasterState, navigation, basket, setBasket, partner, setPartner }) => {

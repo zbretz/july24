@@ -128,9 +128,9 @@ router.post('/payment-sheet2', async (req, res) => {
         // let price = Number(req.query.price).toFixed(2)
         // console.log('price: ', Number(req.query.price).toFixed(2))
         // price = Math.round(price * 100)
-        let balance = user.wallet.balance
+        let balance = user.wallet?.balance
 
-        console.log('price: ', typeof price, price, 'wallet: ', balance)
+        console.log('price: ', typeof price, price, 'wallet: ', )//balance)
 
         let useWallet = false
 

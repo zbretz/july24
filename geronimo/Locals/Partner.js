@@ -26,7 +26,7 @@ export default Partner = ({ route, isConnected, masterState, setMasterState, nav
         console.log('fetch partner data: ')
         axios.get(`http://10.0.0.135:7100/locals/partnerData?partner=${selectedPartner}`)
             .then(res => {
-                // console.log('DATA: ', res.data)
+                console.log('DATA: ', res.data)
                 let hours = res.data.hours
                 let dates = res.data.deactivatedDates
                 if (dates.length) {
@@ -42,7 +42,13 @@ export default Partner = ({ route, isConnected, masterState, setMasterState, nav
                     })
                 }
                 setHours(hours)
-                setIsOpenHours(now.getHours() >= hours[now.getDay()][0] && now.getHours() <= hours[now.getDay()][1])
+
+                if (hours[now.getDay()] === 'closed') {
+                    setIsOpenDates(false)
+                } else {
+                    setIsOpenHours(now.getHours() >= hours[now.getDay()][0] && now.getHours() <= hours[now.getDay()][1])
+                }
+
             })
             .catch(e => console.log('order  error: ', e))
     }

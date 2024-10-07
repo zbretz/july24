@@ -130,18 +130,18 @@ const AccountDetail = ({ navigation, masterState, setMasterState }) => {
                 Hello, {user.firstName}.
             </Text>
 
-            <View style={{ flexDirection: 'row', margin: 20, padding: 30, borderRadius: 30, borderColor: '#666', borderWidth: 0, justifyContent: 'center', alignItems: 'center', }}>
+            {/* <View style={{ flexDirection: 'row', margin: 20, padding: 30, borderRadius: 30, borderColor: '#666', borderWidth: 0, justifyContent: 'center', alignItems: 'center', }}>
                 <Image style={{ height: '300%', flex: 2, marginRight: 10, }} resizeMode='contain' source={require('../assets/coming-soon.png')} />
                 <Text style={{ flexWrap: 'wrap', flex: 3, fontSize: 18, padding: 0, fontFamily: 'Aristotelica-Regular', }}>Preferences and other settings are on the way!</Text>
-            </View>
+            </View> */}
 
-            {/* <TouchableOpacity onPress={logout} style={{ padding: 20, margin: 20, backgroundColor: '#e6e6e6', borderRadius: 20, alignSelf: 'baseline' }}>
+            <TouchableOpacity onPress={logout} style={{ padding: 20, margin: 20, backgroundColor: '#e6e6e6', borderRadius: 20, alignSelf: 'baseline' }}>
                 <Text style={{ fontFamily: 'Aristotelica-Regular', }}>
                     Logout
                 </Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
 
-            <View style={{ backgroundColor: '#e6e6e6', borderRadius: 30, marginHorizontal: 20, padding: 0 }}>
+            <View style={{ backgroundColor: '#e6e6e6', borderRadius: 30, margin: 20, padding: 0 }}>
                 <TouchableOpacity onPress={() => navigation.navigate('ReceiptScreen')} style={{ padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Text style={{ fontSize: 16, fontFamily: 'Aristotelica-Regular' }}>Receipt Preferences</Text>
                     <AntDesign name="right" size={16} color="black" />
