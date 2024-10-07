@@ -111,19 +111,28 @@ export default PaymentPage = ({ masterState, setMasterState, navigation, route }
                             }
 
 
-                            <View style={{flexDirection:'row',  marginTop: 20, alignItems:'center' , justifyContent:'center', }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular',}}>
+                            <View style={{ flexDirection: 'row', marginTop: 20, alignItems: 'center', justifyContent: 'center', }}>
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', }}>
                                     Or you can use this link:
                                 </Text>
                                 <TouchableOpacity onPress={() => Linking.openURL("https://buy.stripe.com/8wMdSlfvN9OZgRW6oq")}
-                                    style={{ borderRadius: 30, padding: 8,backgroundColor: '#e2e2e2', marginLeft:10 }} >
+                                    style={{ borderRadius: 30, padding: 8, backgroundColor: '#e2e2e2', marginLeft: 10 }} >
                                     <Text style={{ color: '#000', fontSize: 14, fontFamily: 'Aristotelica-Regular', marginBottom: -4, textAlign: 'center' }}>Pay here</Text>
                                 </TouchableOpacity>
                             </View>
 
+
                         </View>
                     </View>
                 </View>
+
+                    <TouchableOpacity onPress={() => navigation.navigate('Account', { screen: 'ReceiptScreen' })}
+                        style={{ borderRadius: 30, padding: 8, backgroundColor: '#fff', padding:20,paddingHorizontal:28, borderRadius:80,alignItems: 'center', justifyContent: 'center', position:'absolute', bottom:40, right:40  }} >
+                             <Ionicons name="receipt-outline" size={38} color="black" />
+                             <Text style={{ color: '#000', fontSize: 14, fontFamily: 'Aristotelica-Regular', marginBottom: -4, textAlign: 'center' }}>Receipt</Text>
+                             <Text style={{ color: '#000', fontSize: 14, fontFamily: 'Aristotelica-Regular', marginBottom: -4, textAlign: 'center' }}>Options</Text>
+                    </TouchableOpacity>
+
 
             </SafeAreaView>
         </StripeProvider >
@@ -134,5 +143,5 @@ export default PaymentPage = ({ masterState, setMasterState, navigation, route }
 
 
 
-
+// import Ionicons from '@expo/vector-icons/Ionicons';
 
