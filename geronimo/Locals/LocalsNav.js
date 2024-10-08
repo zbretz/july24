@@ -22,20 +22,18 @@ export default LocalsNav = ({ isConnected, masterState, setMasterState, chatLog,
     const [item, setItem] = useState(null)
     const [partner, setPartner] = useState(null)
 
-
-    const navigationRef = useNavigationContainerRef();
     const [modalVisible, setModalVisible] = useState(false)
     useFocusEffect(
         useCallback(() => {
-            let modalTimeout = setTimeout(() => setModalVisible(!!masterState.localsDisabled), 1000)
+            let modalTimeout = setTimeout(() => setModalVisible(!!masterState.localsDisabled), 500)
             return () => clearTimeout(modalTimeout)
         }, [])
     )
 
     return (
         <StripeProvider
-            publishableKey="pk_test_51Nj9WRAUREUmtjLCVtihPOMA6K9A28JW0goEfBW14Poj6Y6AJJUBBXcHhwUfrTsEQEJ15S26FBGDGbkVjm84x8f900VG5onWlT"
-        // publishableKey="pk_live_51Nj9WRAUREUmtjLCliIgWk6tgmUXBHSOGsmmaNIC6Tb9UT4BVNEAK40DNXsrljEJHLHxJsj0CyU0qdU5ozO4I1Eb00SdEyvrQ9"
+            // publishableKey="pk_test_51Nj9WRAUREUmtjLCVtihPOMA6K9A28JW0goEfBW14Poj6Y6AJJUBBXcHhwUfrTsEQEJ15S26FBGDGbkVjm84x8f900VG5onWlT"
+            publishableKey="pk_live_51Nj9WRAUREUmtjLCliIgWk6tgmUXBHSOGsmmaNIC6Tb9UT4BVNEAK40DNXsrljEJHLHxJsj0CyU0qdU5ozO4I1Eb00SdEyvrQ9"
         >
 
             <Modal
@@ -47,9 +45,9 @@ export default LocalsNav = ({ isConnected, masterState, setMasterState, chatLog,
                     <TouchableOpacity onPress={() => { setModalVisible(false); navigation.goBack() }} style={{ position: 'absolute', height: '100%', width: '100%', backgroundColor: 'transparent', }} />
                     <View style={{ width: windowWidth * .9, backgroundColor: '#f2f2f2', alignItems: 'center', justifyContent: 'center', top: windowHeight * .1, alignSelf: 'center', borderRadius: 40, padding: 20, }}>
                         <View style={{ marginTop: 0, padding: 30, backgroundColor: '#e6e6e6', borderRadius: 30, alignItems: 'center', }}>
-                            <Text style={{ fontSize: 20, color: '#353431', textAlign: 'center', fontFamily: 'Aristotelica-Regular', marginBottom: 20 }}>{masterState.localsDisabled[0]}</Text>
+                            <Text style={{ fontSize: 20, color: '#353431', textAlign: 'center', fontFamily: 'Aristotelica-Regular', marginBottom: 20 }}>{masterState.localsDisabled && masterState.localsDisabled[0]}</Text>
                             <Image source={require('../assets/cooking.png')} style={{ height: windowWidth * .5, width: windowWidth * .5, marginTop: -30, backgroundColor: null }} />
-                            <Text style={{ fontSize: 20, color: '#353431', textAlign: 'center', fontFamily: 'Aristotelica-Regular', }}>{masterState.localsDisabled[1]}</Text>
+                            <Text style={{ fontSize: 20, color: '#353431', textAlign: 'center', fontFamily: 'Aristotelica-Regular', }}>{masterState.localsDisabled && masterState.localsDisabled[1]}</Text>
                             <TouchableOpacity style={{ padding: 14, backgroundColor: '#ffcf56', borderRadius: 20, marginTop: 30 }} onPress={() => { setModalVisible(false); navigation.goBack() }}>
                                 <Text style={{ fontSize: 18, fontFamily: 'Aristotelica-Regular', marginBottom: -8 }}>Go Back</Text>
                             </TouchableOpacity>
@@ -61,7 +59,6 @@ export default LocalsNav = ({ isConnected, masterState, setMasterState, chatLog,
 
 
             <Stack.Navigator
-                ref={navigationRef}
                 screenOptions={{
                     headerShown: false
                 }}

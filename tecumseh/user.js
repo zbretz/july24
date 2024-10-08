@@ -9,7 +9,7 @@ const { db__, db_locals } = require('./mongoConnection.js')
 
 let onDemandActive = true
 let localsDisabled = false//['"Locals" is temporarily offline.', "We're resolving some bugs and are working to restore ordering ASAP!"]
-let live_versions = ['6.2.1', '6.2.0']
+let live_versions = ['6.2.1', '6.2.0', '6.3.0']
 
 router.get('/populateData', async (req, res) => {
 

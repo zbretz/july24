@@ -214,7 +214,7 @@ export default function MapWrapper({ navigation, masterState, setMasterState, })
     useFocusEffect(
         useCallback(() => {
             //    console.log('KJNASDF;KJNASK;JDFN S;KJDNFK;AJSNDF;KJNASD;KJNASDV;KJNASD LKNSDFK;JNASD;KJFN A;KSJDNF;KSAJDFN;SDKAJFN')
-            let modalTimeout = setTimeout(() => setModalVisible(!masterState.onDemandActive), 1000)
+            let modalTimeout = setTimeout(() => setModalVisible(!masterState.onDemandActive), 700)
             return () => clearTimeout(modalTimeout)
 
         }, [])

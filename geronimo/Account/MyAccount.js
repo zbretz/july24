@@ -135,11 +135,11 @@ const AccountDetail = ({ navigation, masterState, setMasterState }) => {
                 <Text style={{ flexWrap: 'wrap', flex: 3, fontSize: 18, padding: 0, fontFamily: 'Aristotelica-Regular', }}>Preferences and other settings are on the way!</Text>
             </View> */}
 
-            <TouchableOpacity onPress={logout} style={{ padding: 20, margin: 20, backgroundColor: '#e6e6e6', borderRadius: 20, alignSelf: 'baseline' }}>
+            {/* <TouchableOpacity onPress={logout} style={{ padding: 20, margin: 20, backgroundColor: '#e6e6e6', borderRadius: 20, alignSelf: 'baseline' }}>
                 <Text style={{ fontFamily: 'Aristotelica-Regular', }}>
                     Logout
                 </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <View style={{ backgroundColor: '#e6e6e6', borderRadius: 30, margin: 20, padding: 0 }}>
                 <TouchableOpacity onPress={() => navigation.navigate('ReceiptScreen')} style={{ padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>

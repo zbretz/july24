@@ -19,8 +19,8 @@ var ObjectId = require('mongodb').ObjectId;
 const { Expo } = require('expo-server-sdk')
 // const { smsRequestConfirmation, sendCode } = require("../sms.js");
 
-const stripe = require('stripe')('sk_test_51Nj9WRAUREUmtjLCN8G4QqEEVvYoPpWKX82iY5lDX3dZxnaOGDDhqkyVpIFgg63FvXaAE3FmZ1p0btPM9s1De3m200uOIKI70O'); // test key
-// const stripe = require('stripe')(stripe_private_key);
+// const stripe = require('stripe')('sk_test_51Nj9WRAUREUmtjLCN8G4QqEEVvYoPpWKX82iY5lDX3dZxnaOGDDhqkyVpIFgg63FvXaAE3FmZ1p0btPM9s1De3m200uOIKI70O'); // test key
+const stripe = require('stripe')(stripe_private_key);
 // This example sets up an endpoint using the Express framework.
 // Watch this video to get started: https://youtu.be/rPR2aJ6XnAc.
 
