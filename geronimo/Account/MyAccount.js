@@ -192,15 +192,8 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                         userRef.current = res.data.user
 
                         let push_token = await AsyncStorage.getItem('ExpoPushToken')
-                        // console.log('push tokenn: ', push_token)
-
-                        // const { status } = await Notifications.requestPermissionsAsync();
-
-                        // console.log('push status: ', status)
-                        // if (push_token || status == 'granted') {
+                       
                         if (push_token) {
-
-                            // if (status !== 'granted') {
                             AsyncStorage.setItem('User', JSON.stringify(res.data.user))
                             setMasterState(masterState => ({ ...masterState, user: res.data.user }))
                             setModalVisible(false)
@@ -255,7 +248,7 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
             });
         }
 
-        setModalVisible(false)
+        // setModalVisible(false)
         AsyncStorage.setItem('User', JSON.stringify(user))
         setMasterState(masterState => ({ ...masterState, user: user }))
 

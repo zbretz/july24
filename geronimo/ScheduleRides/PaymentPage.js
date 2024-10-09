@@ -123,6 +123,9 @@ export default PaymentPage = ({ masterState, setMasterState, navigation, route }
 
 
                         </View>
+
+
+                        
                     </View>
                 </View>
 
