@@ -106,7 +106,7 @@ export default PaymentPage = ({ masterState, setMasterState, navigation, route }
                                 :
                                 <TouchableOpacity onPress={() => { setLoadingPayForm(true); openPaymentSheet() }} style={{ backgroundColor: '#ffcf56', padding: 20, borderRadius: 20, borderWidth: 0, marginTop: 10, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }} >
                                     <FontAwesome5 name="money-check" size={22} style={{ marginRight: 20 }} color="black" />
-                                    <Text style={{ color: '#000', fontSize: 24, fontFamily: 'AristotelicaSmallCaps-Regular', marginBottom: -6 }}>Pay By Card</Text>
+                                    <Text style={{ color: '#000', fontSize: 24, fontFamily: 'Aristotelica-SmallCaps', marginBottom: -6 }}>Pay By Card</Text>
                                 </TouchableOpacity>
                             }
 

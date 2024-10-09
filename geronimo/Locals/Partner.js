@@ -24,7 +24,8 @@ export default Partner = ({ route, isConnected, masterState, setMasterState, nav
 
     const fetchPartnerData = () => {
         console.log('fetch partner data: ')
-        axios.get(`http://10.0.0.135:7100/locals/partnerData?partner=${selectedPartner}`)
+        // axios.get(`http://10.0.0.135:7100/locals/partnerData?partner=${selectedPartner}`)
+        axios.get(`https://summer.theparkcityapp.com:7100/locals/partnerData?partner=${selectedPartner}`)
             .then(res => {
                 console.log('DATA: ', res.data)
                 let hours = res.data.hours

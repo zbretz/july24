@@ -1,10 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Modal, TextInput, Alert } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { Ionicons, AntDesign } from '@expo/vector-icons';
+import { Ionicons, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import LocalsCheckout from './LocalsCheckout';
 
 import SelectDropdown from 'react-native-select-dropdown'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -116,21 +116,21 @@ export default CheckoutModal = ({ basket, showBasket, setShowBasket, setBasket, 
                             return (
                                 <View style={styles.dropdownButtonStyle}>
                                     {selectedItem && (
-                                        <Icon name={selectedItem.icon} style={styles.dropdownButtonIconStyle} />
+                                        <MaterialCommunityIcons name={selectedItem.icon} style={styles.dropdownButtonIconStyle} />
                                     )}
                                     <Text style={styles.dropdownButtonTxtStyle}>
                                         {(selectedItem && selectedItem.title) || 'Select Pickup Time'}
                                     </Text>
                                     {!(selectedItem && selectedItem.title) && <Text>20 mins</Text>}
                                     {(selectedItem && selectedItem.title == 'Asap') && <Text>We'll try our best!</Text>}
-                                    <Icon name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} />
+                                    <MaterialCommunityIcons name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} />
                                 </View>
                             );
                         }}
                         renderItem={(item, index, isSelected) => {
                             return (
                                 <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: '#D2D9DF' }) }}>
-                                    <Icon name={item.icon} style={styles.dropdownItemIconStyle} />
+                                    <MaterialCommunityIcons name={item.icon} style={styles.dropdownItemIconStyle} />
                                     <Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
                                 </View>
                             );
