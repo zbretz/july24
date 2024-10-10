@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, TouchableHighlight, View, TextInput, Image, Dimensions, FlatList, SafeAreaView, ScrollView, Animated, LayoutAnimation, ActivityIndicator, Linking } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, TouchableHighlight, View, TextInput, Image, Dimensions, FlatList, SafeAreaView, ScrollView, Animated, Platform, LayoutAnimation, ActivityIndicator, Linking } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { Entypo, Feather, Octicons, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import ScheduleRideStripeConfig from './ScheduleRideStripeConfig';
@@ -12,7 +12,7 @@ const windowHeight = Dimensions.get('window').height;
 
 export default PaymentPage = ({ masterState, setMasterState, navigation, route }) => {
 
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    Platform.OS == 'ios' && LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 
     // const rideDetail = masterState.user.rideDetails.length ? masterState.user.rideDetails[0] : null
     // if (!rideDetail) { return null }
