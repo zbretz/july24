@@ -89,6 +89,7 @@ export default function App() {
       {masterState.updateAvailable && <UpdateAvailable />}
       <SplashScreen appIsReady={masterState.appIsReady} stopAnim={stopAnim} />
       <InitSocket masterState={masterState} setMasterState={setMasterState} />
+      {masterState.updateAvailable && <UpdateAvailable />}
     </>
   )
 }
