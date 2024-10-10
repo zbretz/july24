@@ -9,6 +9,8 @@ import fetchPushToken from './fetchPushToken';
 import pushConfig from './pushConfig';
 import * as Animatable from 'react-native-animatable';
 import url from '../url_toggle'
+import populateData from '../CoreNav/populateData';
+
 
 const Stack = createStackNavigator();
 const windowWidth = Dimensions.get('window').width;
@@ -135,23 +137,23 @@ const AccountDetail = ({ navigation, masterState, setMasterState }) => {
                 <Text style={{ flexWrap: 'wrap', flex: 3, fontSize: 18, padding: 0, fontFamily: 'Aristotelica-Regular', }}>Preferences and other settings are on the way!</Text>
             </View> */}
 
-            {/* <TouchableOpacity onPress={logout} style={{ padding: 20, margin: 20, backgroundColor: '#e6e6e6', borderRadius: 20, alignSelf: 'baseline' }}>
+            <TouchableOpacity onPress={logout} style={{ padding: 20, margin: 20, backgroundColor: '#e6e6e6', borderRadius: 20, alignSelf: 'baseline' }}>
                 <Text style={{ fontFamily: 'Aristotelica-Regular', }}>
                     Logout
                 </Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
 
             <View style={{ backgroundColor: '#e6e6e6', borderRadius: 30, margin: 20, padding: 0 }}>
                 <TouchableOpacity onPress={() => navigation.navigate('ReceiptScreen')} style={{ padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Text style={{ fontSize: 16, fontFamily: 'Aristotelica-Regular' }}>Receipt Preferences</Text>
                     <AntDesign name="right" size={16} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => comingSoonAlert('driver')} style={{backgroundColor:'#f2f2f2', padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
-                    <Text style={{ fontSize: 16, fontFamily: 'Aristotelica-Regular', color:'#b2b2b2',  }}>Driver Preferences</Text>
+                <TouchableOpacity onPress={() => comingSoonAlert('driver')} style={{ backgroundColor: '#f2f2f2', padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
+                    <Text style={{ fontSize: 16, fontFamily: 'Aristotelica-Regular', color: '#b2b2b2', }}>Driver Preferences</Text>
                     <AntDesign name="right" size={16} color="#b2b2b2" />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('DeleteAccount')} style={{ backgroundColor:'#f2f2f2', borderBottomLeftRadius: 30, borderBottomRightRadius:30, padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
-                    <Text style={{ fontSize: 16, fontFamily: 'Aristotelica-Regular', color:'#b2b2b2', }}>Other Settings</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('DeleteAccount')} style={{ backgroundColor: '#f2f2f2', borderBottomLeftRadius: 30, borderBottomRightRadius: 30, padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
+                    <Text style={{ fontSize: 16, fontFamily: 'Aristotelica-Regular', color: '#b2b2b2', }}>Other Settings</Text>
                     <AntDesign name="right" size={16} color="#b2b2b2" />
                 </TouchableOpacity>
             </View>
@@ -192,9 +194,11 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                         userRef.current = res.data.user
 
                         let push_token = await AsyncStorage.getItem('ExpoPushToken')
-                       
+                        console.log('IZ PUSH TOKN: ', push_token)
+
+                        AsyncStorage.setItem('User', JSON.stringify(res.data.user))
+
                         if (push_token) {
-                            AsyncStorage.setItem('User', JSON.stringify(res.data.user))
                             setMasterState(masterState => ({ ...masterState, user: res.data.user }))
                             setModalVisible(false)
                         } else {
@@ -214,30 +218,7 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
     const requestToken = async () => {
         let user = userRef.current
         console.log('request token function - user: ', user)
-        const { status } = await Notifications.requestPermissionsAsync();
 
-        // console.log('push token: ', push_token)
-
-        if (status == 'granted') {
-            let push_token = (await Notifications.getExpoPushTokenAsync({ projectId: 'ef351239-8922-4a5d-ac35-a9d64e9afd73' })).data;
-            await AsyncStorage.setItem('ExpoPushToken', push_token)
-            let userId = user._id//res.data.user._id
-            console.log('user id: ', userId)
-
-            console.log('request token push token!!: ', push_token)
-            axios({
-                method: 'post',
-                url: `${url}/auth/saveExpoPushToken`,
-                data: { userId, push_token }
-
-            })
-                .then(res => {
-                    console.log('push token save response: ', res)
-                })
-                .catch((err) => console.log('push token save error: ', err))
-
-
-        }
 
         if (Platform.OS === 'android') {
             Notifications.setNotificationChannelAsync('default', {
@@ -248,9 +229,33 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
             });
         }
 
-        // setModalVisible(false)
-        AsyncStorage.setItem('User', JSON.stringify(user))
-        setMasterState(masterState => ({ ...masterState, user: user }))
+
+        const { status } = await Notifications.requestPermissionsAsync();
+        // console.log('status: ', status)
+
+        if (status == 'granted') {
+            let push_token = (await Notifications.getExpoPushTokenAsync({ projectId: 'ef351239-8922-4a5d-ac35-a9d64e9afd73' })).data;
+            await AsyncStorage.setItem('ExpoPushToken', push_token)
+            let userId = user._id//res.data.user._id
+            console.log('request token push token!!: ', push_token)
+            axios({
+                method: 'post',
+                url: `${url}/auth/saveExpoPushToken`,
+                data: { userId, push_token }
+            })
+                .then(res => {
+                    console.log('push token save response: ', res)
+                })
+                .catch((err) => console.log('push token save error: ', err))
+        }
+
+        if (user){
+            populateData({masterState, setMasterState, loginUser:user})
+        }
+        // setMasterState(masterState => {
+        //     console.log('user123123123: ', user)
+        //     return { ...masterState, user: user }
+        // })
 
     }
 
@@ -776,3 +781,16 @@ const ReceiptScreen = ({ navigation, masterState, setMasterState }) => {
 
 
 
+
+async function waitForAlertResponse() {
+
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log('hell....', user.firstName)
+            resolve()
+        }, 7000)
+
+    })
+}
+
+// await waitForAlertResponse()

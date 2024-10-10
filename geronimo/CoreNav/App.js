@@ -69,6 +69,7 @@ export default function App() {
         appState.current.match(/inactive|background/) &&
         nextAppState === 'active'
       ) {
+        console.log('why dem', appState.current, nextAppState)
         populateData({ masterState, setMasterState })
       }
       appState.current = nextAppState;
@@ -78,7 +79,9 @@ export default function App() {
     return () => {
       subscription.remove();
     };
-  }, [masterState.user]);
+  // }, [masterState.user]);
+}, []);
+
 
   if (!fontsLoaded && !fontError) {
     { return (<View style={{ height: '100%', width: '100%', backgroundColor: '#ffcf56' }} />) }

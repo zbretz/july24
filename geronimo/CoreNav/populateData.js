@@ -4,11 +4,17 @@ import { version as app_version } from '../package.json';
 
 import url from '../url_toggle'
 
-export default async function populateData({ masterState, setMasterState }) {
+export default async function populateData({ masterState, setMasterState, loginUser }) {
 
     // AsyncStorage.clear()
+    let user;
 
-    let user = masterState.user ? masterState.user : JSON.parse(await AsyncStorage.getItem('User'))
+    if (loginUser) {
+        console.log('login user!!!:', loginUser)
+        user = loginUser
+    } else {
+        user = masterState.user ? masterState.user : JSON.parse(await AsyncStorage.getItem('User'))
+    }
     // console.log('populate data user: ', user)
 
     // if (!user) {
@@ -36,7 +42,7 @@ export default async function populateData({ masterState, setMasterState }) {
             console.log('user data: ', res.data)
 
             // onDemandActive = !res.data[1]
-            const {user, live_versions, onDemandActive, localsDisabled} = res.data
+            const { user, live_versions, onDemandActive, localsDisabled } = res.data
             console.log('user2: ', user)
 
             const updateAvailable = !live_versions.includes(app_version)
@@ -47,7 +53,7 @@ export default async function populateData({ masterState, setMasterState }) {
             })
 
         })
-        
+
 
 
 
