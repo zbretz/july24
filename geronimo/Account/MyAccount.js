@@ -87,10 +87,10 @@ const AccountDetail = ({ navigation, masterState, setMasterState }) => {
     const { user } = masterState
     const [showDeleteInput, setShowDeleteInput] = useState(false)
 
-    const logout = () => {
-        AsyncStorage.clear()
-        setMasterState(masterState => { return { ...masterState, user: null } })
-    }
+    // const logout = () => {
+    //     AsyncStorage.clear()
+    //     setMasterState(masterState => { return { ...masterState, user: null } })
+    // }
 
     const comingSoonAlert = (type) => {
 
@@ -131,17 +131,6 @@ const AccountDetail = ({ navigation, masterState, setMasterState }) => {
             <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 40, alignSelf: 'center', marginTop: 30, paddingHorizontal: 30 }} adjustsFontSizeToFit={true} numberOfLines={1}>
                 Hello, {user.firstName}.
             </Text>
-
-            {/* <View style={{ flexDirection: 'row', margin: 20, padding: 30, borderRadius: 30, borderColor: '#666', borderWidth: 0, justifyContent: 'center', alignItems: 'center', }}>
-                <Image style={{ height: '300%', flex: 2, marginRight: 10, }} resizeMode='contain' source={require('../assets/coming-soon.png')} />
-                <Text style={{ flexWrap: 'wrap', flex: 3, fontSize: 18, padding: 0, fontFamily: 'Aristotelica-Regular', }}>Preferences and other settings are on the way!</Text>
-            </View> */}
-
-            <TouchableOpacity onPress={logout} style={{ padding: 20, margin: 20, backgroundColor: '#e6e6e6', borderRadius: 20, alignSelf: 'baseline' }}>
-                <Text style={{ fontFamily: 'Aristotelica-Regular', }}>
-                    Logout
-                </Text>
-            </TouchableOpacity>
 
             <View style={{ backgroundColor: '#e6e6e6', borderRadius: 30, margin: 20, padding: 0 }}>
                 <TouchableOpacity onPress={() => navigation.navigate('ReceiptScreen')} style={{ padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -544,6 +533,11 @@ const DeleteAccount = ({ navigation, masterState, setMasterState }) => {
     const [deleteInput, setDeleteInput] = useState('')
     const [error, setError] = useState(null)
 
+    const logout = () => {
+        AsyncStorage.clear()
+        setMasterState(masterState => { return { ...masterState, user: null } })
+    }
+
     const deleteUser = () => {
         Alert.alert(`Delete My Account`, `This action is irreversible. Are you sure that you want to delete your account?`, [
             {
@@ -589,9 +583,14 @@ const DeleteAccount = ({ navigation, masterState, setMasterState }) => {
                 <MaterialIcons style={{ marginLeft: 10 }} name="arrow-back-ios" size={20} color="black" />
             </TouchableOpacity>
 
+            <TouchableOpacity onPress={logout} style={{ padding: 20, margin: 20, backgroundColor: '#e6e6e6', borderRadius: 20, alignSelf: 'baseline' }}>
+                <Text style={{ fontFamily: 'Aristotelica-Regular', }}>
+                    Logout
+                </Text>
+            </TouchableOpacity>
 
 
-            {showDelete ?
+            {/* {showDelete ?
                 <View style={{ marginTop: 20, backgroundColor: '#ddd', borderRadius: 10, height: 100, width: windowWidth * .75, padding: 10 }}>
                     <Text>
                         Please enter the word <Text style={{ fontStyle: 'italic' }}>delete</Text> to complete this action.
@@ -620,7 +619,7 @@ const DeleteAccount = ({ navigation, masterState, setMasterState }) => {
 
             {error &&
                 <Text>{error}</Text>
-            }
+            } */}
 
         </View>
 
