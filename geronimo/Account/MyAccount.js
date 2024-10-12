@@ -703,7 +703,7 @@ const ReceiptScreen = ({ navigation, masterState, setMasterState }) => {
             .catch(() => null)
             .finally(() => {
                 setTimeout(() => {
-                    setLoadingPayForm(false); Alert.alert('Success', 'Preferences Saved', [])
+                    setLoadingPayForm(false); Alert.alert('Success', 'Preferences Saved', [], {cancelable:true})
                 }, 1500);
             })
     }
