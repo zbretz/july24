@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Platform, Text, View, Dimensions, TouchableOpacity, ScrollView, Image, Alert } from 'react-native';
 import { socket } from '../CoreNav/socket';
 import { StripeProvider, useStripe } from '@stripe/stripe-react-native';
-import url from '../url_toggle'
+import {url} from '../url_toggle'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;

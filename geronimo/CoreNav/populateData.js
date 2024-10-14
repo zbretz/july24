@@ -2,9 +2,11 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { version as app_version } from '../package.json';
 
-import url from '../url_toggle'
+import {url} from '../url_toggle'
 
 export default async function populateData({ masterState, setMasterState, loginUser }) {
+    console.log('url: ', url)
+
 
     // AsyncStorage.clear()
     let user;

@@ -7,7 +7,7 @@ import axios from 'axios';
 import { socket } from '../CoreNav/socket';
 import * as Animatable from 'react-native-animatable';
 import { formatInTimeZone } from "date-fns-tz";
-import url from '../url_toggle'
+import {url} from '../url_toggle'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;

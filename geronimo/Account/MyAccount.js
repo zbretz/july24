@@ -8,7 +8,7 @@ import axios from 'axios';
 import fetchPushToken from './fetchPushToken';
 import pushConfig from './pushConfig';
 import * as Animatable from 'react-native-animatable';
-import url from '../url_toggle'
+import {url} from '../url_toggle'
 import populateData from '../CoreNav/populateData';
 
 

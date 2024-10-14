@@ -6,6 +6,7 @@ import LocalsCheckout from './LocalsCheckout';
 import axios from 'axios';
 import LottieView from 'lottie-react-native';
 import CheckoutModal from './CheckoutModal.js'
+import {locals_url} from '../url_toggle'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -24,8 +25,7 @@ export default Partner = ({ route, isConnected, masterState, setMasterState, nav
 
     const fetchPartnerData = () => {
         console.log('fetch partner data: ')
-        // axios.get(`http://10.0.0.135:7100/locals/partnerData?partner=${selectedPartner}`)
-        axios.get(`https://summer.theparkcityapp.com:7100/locals/partnerData?partner=${selectedPartner}`)
+        axios.get(`${locals_url}/locals/partnerData?partner=${selectedPartner}`)
             .then(res => {
                 console.log('DATA: ', res.data)
                 let hours = res.data.hours

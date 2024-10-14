@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import pushConfig from './pushConfig';
 import axios from 'axios';
 import { Alert } from 'react-native';
-import url from '../url_toggle'
+import {url} from '../url_toggle'
 
 export default fetchPushToken = async (userId) => {
     console.log('with REF userId: ', userId)

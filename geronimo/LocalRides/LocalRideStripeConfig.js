@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Platform, Text, View, Dimensions, TouchableOpacity, ScrollView, Image, Alert } from 'react-native';
 import axios from 'axios';
-import url from '../url_toggle'
+import {url} from '../url_toggle'
 
 import { StripeProvider, useStripe } from '@stripe/stripe-react-native';
 

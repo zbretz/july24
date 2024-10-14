@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Dimensions, Alert } from 'react-native';
 import axios from 'axios';
 import { formatInTimeZone } from "date-fns-tz";
+import { locals_url } from '../url_toggle';
 
 import { useStripe } from '@stripe/stripe-react-native';
 
@@ -22,8 +23,7 @@ export default function LocalsCheckout(basket, setBasket, masterState, setMaster
 
     const fetchPaymentSheetParams = async () => {
 
-        const response = await fetch(`https://summer.theparkcityapp.com:7100/locals/payment-sheet2?price=${checkoutTotal}&user=${JSON.stringify(masterState.user)}`, {
-        // const response = await fetch(`http://10.0.0.135:7100/locals/payment-sheet2?price=${checkoutTotal}&user=${JSON.stringify(masterState.user)}`, {
+        const response = await fetch(`${locals_url}/locals/payment-sheet2?price=${checkoutTotal}&user=${JSON.stringify(masterState.user)}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -89,8 +89,7 @@ null
         let timeOfOrder = formatInTimeZone(new Date(), 'America/Denver', "eee',' MMMM do h':'mm aa")
         console.log('timeOfOrder: ', timeOfOrder)
 
-        axios.post(`https://summer.theparkcityapp.com:7100/locals/placeOrder`, { user: masterState.user, basket, timeOfOrder: timeOfOrder })
-        // axios.post(`http://10.0.0.135:7100/locals/placeOrder`, { user: masterState.user, basket, timeOfOrder: timeOfOrder, useWallet })
+        axios.post(`${locals_url}/locals/placeOrder`, { user: masterState.user, basket, timeOfOrder: timeOfOrder, useWallet })
             .then(res => {
                 console.log('DATA: ', res.data)
                 if (res.data[0]) {

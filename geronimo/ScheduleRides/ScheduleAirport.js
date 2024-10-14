@@ -14,7 +14,7 @@ import { socket } from '../CoreNav/socket';
 import * as Animatable from 'react-native-animatable';
 import LottieView from 'lottie-react-native';
 import { formatInTimeZone } from "date-fns-tz";
-import url from '../url_toggle'
+import {url} from '../url_toggle'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
