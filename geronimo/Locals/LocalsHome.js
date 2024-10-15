@@ -15,7 +15,7 @@ export default LocalsHome = ({ isConnected, masterState, setMasterState, navigat
 
     const [showBasket, setShowBasket] = useState(false)
 
-    let openPaymentSheet = LocalsCheckout(basket, setBasket, setMasterState, masterState, navigation)
+    let openPaymentSheet = LocalsCheckout(basket, setBasket, masterState, setMasterState, navigation)
 
     return (
 
