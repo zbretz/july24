@@ -23,11 +23,15 @@ export default function LocalsCheckout(basket, setBasket, masterState, setMaster
 
     const fetchPaymentSheetParams = async () => {
 
-        const response = await fetch(`${locals_url}/locals/payment-sheet2?price=${checkoutTotal}&user=${JSON.stringify(masterState.user)}`, {
+        const response = await fetch(`${locals_url}/locals/payment-sheet2`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify({
+                price:checkoutTotal,
+                user:masterState.user
+            }),
         });
 
         const { paymentIntent, ephemeralKey, customer, useWallet } = await response.json();

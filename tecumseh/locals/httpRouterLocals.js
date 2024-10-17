@@ -37,7 +37,7 @@ router.get('/6100test', async (req, res) => {
 router.get('/partnerData', async (req, res) => {
     let partner = req.query.partner
     partner = await db_locals.collection('partners').findOne({ name: partner })
-    console.log('partner!!!!!: ', partner)
+    console.log('partner!!: ', partner)
     res.status(200).send(JSON.stringify(partner));
 });
 
@@ -123,8 +123,12 @@ router.post('/placeOrder', async (req, res) => {
 router.post('/payment-sheet2', async (req, res) => {
     try {
 
-        let user = JSON.parse(req.query.user)
-        let price = Number(req.query.price)
+        let { user, price } = req.body
+        price=Number(price)
+
+        // let user = JSON.parse(req.query.user)
+        // let price = Number(req.query.price)
+
         // let price = Number(req.query.price).toFixed(2)
         // console.log('price: ', Number(req.query.price).toFixed(2))
         // price = Math.round(price * 100)
@@ -217,7 +221,7 @@ router.post('/acknowledgeOrder', async (req, res) => {
     console.log('orderId: ', orderId)
     acknowledgeOrder = await db_locals.collection('orders').findOneAndUpdate({ _id: new ObjectId(orderId) }, { $set: { acknowledged: true } }, { returnDocument: "after" });
     // console.log('order acknowledged: ', acknowledgeOrder)
-    // res.status(200).send('acknowledged');
+    res.status(200).send('acknowledged');
 });
 
 router.post('/saveDateChanges', async (req, res) => {
