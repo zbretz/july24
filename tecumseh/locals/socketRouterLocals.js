@@ -18,6 +18,11 @@ module.exports = function (io) {
             console.log('User disconnected');
         });
 
+        socket.on('logout', () => {
+            console.log('User Logged-Out');
+            socket.disconnect()
+        });
+
         socket.on('message', (data) => {
             console.log('Received message:', data);
             io.emit('message', data); // Broadcast message to all connected clients
