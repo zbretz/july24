@@ -18,7 +18,7 @@ export default MyAccount = ({ navigation, masterState, setMasterState }) => {
 
     const { user } = masterState
 
-    let walletBalance = user.walletTest && user.walletTest.balance
+    let walletBalance = user.wallet && user.wallet.balance.toFixed(2)
     console.log('wallet balance: ', walletBalance)
     return (
         <SafeAreaView style={{ height: '100%', backgroundColor: '#fff', }}>

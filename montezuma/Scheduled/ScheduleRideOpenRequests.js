@@ -12,7 +12,7 @@ const windowHeight = Dimensions.get('window').height;
 
 export default ScheduleRideOpenRequests = ({ navigation, isConnected, masterState, }) => {
 
-    const walletTest = async (inc_dec) => {
+    const wallet = async (inc_dec) => {
         socket.emit('wallet_test', { inc_dec, amount:12 })
         // setMasterState(masterState => {
         //     let myScheduledRides = [...masterState.myScheduledRides]
@@ -29,11 +29,11 @@ export default ScheduleRideOpenRequests = ({ navigation, isConnected, masterStat
 
             <View>
 
-                <TouchableOpacity onPress={() => { walletTest('inc')}} style={{ borderColor: '#000', borderWidth: 1, borderRadius: 20, margin: 10, padding: 30 }}>
+                <TouchableOpacity onPress={() => { wallet('inc')}} style={{ borderColor: '#000', borderWidth: 1, borderRadius: 20, margin: 10, padding: 30 }}>
                     <Text>Wallet Test Inc</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => { walletTest('dec')}} style={{ borderColor: '#000', borderWidth: 1, borderRadius: 20, margin: 10, padding: 30 }}>
+                <TouchableOpacity onPress={() => { wallet('dec')}} style={{ borderColor: '#000', borderWidth: 1, borderRadius: 20, margin: 10, padding: 30 }}>
                     <Text>Wallet Test Dec</Text>
                 </TouchableOpacity>
 

@@ -48,15 +48,15 @@ router.post('/placeOrder', async (req, res) => {
     let { user, basket, timeOfOrder, useWallet } = req.body
     let orderNumber = Math.floor(Math.random() * (999 - 100 + 1) + 100);
 
-    // console.log('notify zach', user, basket, timeOfOrder, orderNumber)
     console.log('useWallet - place order', useWallet)
 
-
-
     if (useWallet) {
-        //verify wallet balance in db (instead of just trusting frontend data)
-        await db__.collection('users').findOneAndUpdate({ phone: user.phone }, {
-            $set: { "wallet.balance": useWallet.newBalance },
+
+        let amount = -1 * useWallet.chargedToWallet
+
+        let result1 = await db__.collection('drivers').findOneAndUpdate(
+            { phone: user.phone }, {
+            $inc: { "wallet.balance": amount },
             $push: {
                 "wallet.transactions": {
                     "type": 'debit',
@@ -67,20 +67,20 @@ router.post('/placeOrder', async (req, res) => {
             },
         }, { returnDocument: "after" });
 
-        //  await db__.collection('drivers').findOneAndUpdate({ phone: user.phone }, {
-        //     $inc: { "wallet.balance": - useWallet.chargedToWallet},  
-        //     $push: {
-        //         "wallet.transactions": {
-        //            "type":debit,
-        //             "amount":useWallet.chargedToWallet,
-        //             "basket": basket,
-        //             orderNumber
-        //         }
-        //     },
-        //  }, { returnDocument: "after" });
+        let result2 = await db__.collection('users').findOneAndUpdate(
+            { phone: user.phone }, {
+            $inc: { "wallet.balance": amount },
+            $push: {
+                "wallet.transactions": {
+                    "type": 'debit',
+                    "amount": useWallet.chargedToWallet,
+                    "basket": basket,
+                    orderNumber
+                }
+            },
+        }, { returnDocument: "after" });
 
     }
-
 
     try {
         const order = await db_locals.collection('orders').insertOne({ phone: user.phone, userName: user.firstName + ' ' + user.lastName, partner: basket.partner, orderItems: basket.items, timeOfOrder: timeOfOrder, completed: false, orderNumber: orderNumber, pickupTime: basket.pickupTime, useWallet })

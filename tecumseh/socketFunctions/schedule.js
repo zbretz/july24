@@ -224,16 +224,34 @@ completeScheduledRide = async (io, rideRequest) => {
             await db__.collection('rides').updateOne({ _id: new ObjectId(String(completedRide._id)) }, { $set: { paymentSentToDriver: true } })
 
 
-            //Driver Wallet
-            db__.collection('drivers').updateOne(
-                { _id: new ObjectId(String(rideRequest.driver._id)) },
-                // { $inc: { walletBalance: walletDeposit } },
-                {
-                    $push: {
-                        wallet: { depositAmount, ...rideRequest }
-                    },
+            //Wallet Deposit
+            result1 = await db__.collection('drivers').findOneAndUpdate(
+                { _id: new ObjectId(String(rideRequest.driver._id)) }, {
+                $inc: { "wallet.balance": depositAmount },
+                $push: {
+                    "wallet.transactions": {
+                        "type": 'credit',
+                        "amount": depositAmount,
+                        "ride": { _id: rideRequest._id, user: rideRequest.user, dateTime: rideRequest.pickupDateTime, fare: rideRequest.fare }
+                    }
                 },
-            )
+            }, { returnDocument: "after" });
+
+
+            result2 = await db__.collection('users').findOneAndUpdate(
+                { phone: rideRequest.driver.phone }, {
+                $inc: { "wallet.balance": depositAmount },
+                $push: {
+                    "wallet.transactions": {
+                        "type": 'credit',
+                        "amount": depositAmount,
+                        "ride": { _id: rideRequest._id, user: rideRequest.user, dateTime: rideRequest.pickupDateTime, fare: rideRequest.fare }
+                    }
+                },
+            }, { returnDocument: "after" });
+
+
+
 
         }
 
@@ -266,10 +284,10 @@ walletTest = async (io, data, callback) => {
 
         result1 = await db__.collection('drivers').findOneAndUpdate(
             { _id: new ObjectId(String(driver_id)) }, {
-            // $set: { "walletTest.balance": useWallet.newBalance },
-            $inc: { "walletTest.balance": amount },
+            // $set: { "wallet.balance": useWallet.newBalance },
+            $inc: { "wallet.balance": amount },
             $push: {
-                "walletTest.transactions": {
+                "wallet.transactions": {
                     "type": 'credit',
                     "amount": amount,
                     "ride": ride
@@ -280,10 +298,10 @@ walletTest = async (io, data, callback) => {
 
         result2 = await db__.collection('users').findOneAndUpdate(
             { phone: driver_phone }, {
-            // $set: { "walletTest.balance": useWallet.newBalance },
-            $inc: { "walletTest.balance": amount },
+            // $set: { "wallet.balance": useWallet.newBalance },
+            $inc: { "wallet.balance": amount },
             $push: {
-                "walletTest.transactions": {
+                "wallet.transactions": {
                     "type": 'credit',
                     "amount": amount,
                     "ride": ride
@@ -295,22 +313,23 @@ walletTest = async (io, data, callback) => {
 
         result1 = await db__.collection('drivers').findOneAndUpdate(
             { _id: new ObjectId(String(driver_id)) }, {
-            // $set: { "walletTest.balance": useWallet.newBalance },
-            $inc: { "walletTest.balance": amount },
+            // $set: { "wallet.balance": useWallet.newBalance },
+            $inc: { "wallet.balance": amount },
             $push: {
-                "walletTest.transactions": {
+                "wallet.transactions": {
                     "type": 'debit',
                     "amount": amount,//useWallet.chargedToWallet,
-                    "basket": null,                }
+                    "basket": null,
+                }
             },
         }, { returnDocument: "after" });
 
         result2 = await db__.collection('users').findOneAndUpdate(
             { phone: driver_phone }, {
-            // $set: { "walletTest.balance": useWallet.newBalance },
-            $inc: { "walletTest.balance": amount },
+            // $set: { "wallet.balance": useWallet.newBalance },
+            $inc: { "wallet.balance": amount },
             $push: {
-                "walletTest.transactions": {
+                "wallet.transactions": {
                     "type": 'debit',
                     "amount": amount,//useWallet.chargedToWallet,
                     "basket": null,
