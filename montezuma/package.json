@@ -1,6 +1,6 @@
 {
   "name": "pcadmin",
-  "version": "6.2.1",
+  "version": "6.2.2",
   "main": "expo/AppEntry.js",
   "scripts": {
     "start": "expo start",

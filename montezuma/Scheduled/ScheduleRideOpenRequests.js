@@ -4,14 +4,41 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 
 import { formatInTimeZone } from "date-fns-tz";
 
+import { socket } from '../socket';
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
 export default ScheduleRideOpenRequests = ({ navigation, isConnected, masterState, }) => {
 
+    const walletTest = async (inc_dec) => {
+        socket.emit('wallet_test', { inc_dec, amount:12 })
+        // setMasterState(masterState => {
+        //     let myScheduledRides = [...masterState.myScheduledRides]
+        //     myScheduledRides = myScheduledRides.filter(ride => ride._id !== rideDetail._id)
+        //     return ({
+        //         ...masterState, myScheduledRides,
+        //     })
+        // })
+    }
+
+
     return (
         <SafeAreaView style={{ height: '100%', backgroundColor: '#fff' }}>
+
+            <View>
+
+                <TouchableOpacity onPress={() => { walletTest('inc')}} style={{ borderColor: '#000', borderWidth: 1, borderRadius: 20, margin: 10, padding: 30 }}>
+                    <Text>Wallet Test Inc</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => { walletTest('dec')}} style={{ borderColor: '#000', borderWidth: 1, borderRadius: 20, margin: 10, padding: 30 }}>
+                    <Text>Wallet Test Dec</Text>
+                </TouchableOpacity>
+
+            </View>
+
             <Text style={{ fontSize: 20, fontWeight: '600', color: "#000", textAlign: 'center', position: 'absolute', top: 80, alignSelf: 'center' }}>Open Requests</Text>
             <ScrollView style={{ paddingTop: 60, paddingBottom: 70 }}>
                 {/* {[1].map(request => { */}

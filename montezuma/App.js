@@ -8,6 +8,7 @@ import InitSocket from './InitSocket';
 import LoginScreen from './LoginScreen';
 
 export default function App() {
+  // AsyncStorage.clear()
 
   const [masterState, setMasterState] = useState({
     user: null,

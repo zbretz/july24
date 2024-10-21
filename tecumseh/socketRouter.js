@@ -1,5 +1,5 @@
 
-const { message, requestScheduledRide, acceptScheduledRide, completeScheduledRide, cancelScheduledRide, acceptPayScheduledRide, paymentCompleteScheduledRide, enRouteScheduledRide} = require("./socketFunctions/schedule");
+const { message, requestScheduledRide, acceptScheduledRide, completeScheduledRide, cancelScheduledRide, acceptPayScheduledRide, paymentCompleteScheduledRide, enRouteScheduledRide, walletTest} = require("./socketFunctions/schedule");
 const {  requestLocalRide, acceptLocalRide, completeLocalRide } = require("./socketFunctions/local");
 
 module.exports = function (io) {
@@ -64,12 +64,16 @@ module.exports = function (io) {
             completeScheduledRide(io, rideRequest)
         })
 
+        socket.on('wallet_test', async (rideRequest) => {
+           walletTest(io, rideRequest)
+        })
+
         socket.on('cancel_scheduled_ride', async (rideRequest, callback) => {
             cancelScheduledRide(io, rideRequest, callback)
         })
 
-        socket.on('accept_pay_scheduled_ride', async (rideRequest) => {
-            acceptPayScheduledRide(io, rideRequest)
+        socket.on('accept_pay_scheduled_ride', async (inc_dec, amount) => {
+            acceptPayScheduledRide(io, inc_dec, amount)
         })
 
         socket.on('payment_complete_scheduled_ride', async (rideRequest) => {

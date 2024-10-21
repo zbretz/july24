@@ -198,7 +198,7 @@ completeScheduledRide = async (io, rideRequest) => {
 
         // let app_fee = fare > 55 ? .10 * fare > 10 ? .10 * fare : 10 : fare * .10
         let app_fee = fare > 99 || fare < 50 ? .10 * fare : 8
-        let depositAmount = fare *.05 > 5 ? 5 : Number((fare *.05).toFixed(2)) 
+        let depositAmount = fare * .05 > 5 ? 5 : Number((fare * .05).toFixed(2))
         // depositAmount *= 100
         console.log('depositAmount: ', depositAmount)
 
@@ -222,25 +222,113 @@ completeScheduledRide = async (io, rideRequest) => {
             });
             console.log('stripe transfer: ', transfer)
             await db__.collection('rides').updateOne({ _id: new ObjectId(String(completedRide._id)) }, { $set: { paymentSentToDriver: true } })
-       
 
-        //Driver Wallet
-        db__.collection('drivers').updateOne(
-            { _id: new ObjectId(String(rideRequest.driver._id)) },
-            // { $inc: { walletBalance: walletDeposit } },
-            {
-                $push: {
-                   wallet: {depositAmount, ...rideRequest}
+
+            //Driver Wallet
+            db__.collection('drivers').updateOne(
+                { _id: new ObjectId(String(rideRequest.driver._id)) },
+                // { $inc: { walletBalance: walletDeposit } },
+                {
+                    $push: {
+                        wallet: { depositAmount, ...rideRequest }
+                    },
                 },
-            },
-        )
+            )
 
-    }
+        }
 
     }
 
 
 };
+
+
+
+walletTest = async (io, data, callback) => {
+
+    let { amount, inc_dec } = data
+
+    amount = inc_dec == 'inc' ? amount : amount * -1
+
+    console.log('inc dec: ', inc_dec, amount)
+    let driver_id = '66722439d283bd70fa29ec9d'
+    let driver_phone = '9175751955'
+    let ride = "ride data"
+
+    // let result = await db__.collection('drivers').findOneAndUpdate(
+    //     { _id: new ObjectId(String(driver_id)) },
+    //     { $inc: { walletBalance: amount } },
+    //     { returnDocument: "after" }
+    // )
+    let result1, result2
+
+    if (inc_dec == 'inc') {
+
+        result1 = await db__.collection('drivers').findOneAndUpdate(
+            { _id: new ObjectId(String(driver_id)) }, {
+            // $set: { "walletTest.balance": useWallet.newBalance },
+            $inc: { "walletTest.balance": amount },
+            $push: {
+                "walletTest.transactions": {
+                    "type": 'credit',
+                    "amount": amount,
+                    "ride": ride
+                }
+            },
+        }, { returnDocument: "after" });
+
+
+        result2 = await db__.collection('users').findOneAndUpdate(
+            { phone: driver_phone }, {
+            // $set: { "walletTest.balance": useWallet.newBalance },
+            $inc: { "walletTest.balance": amount },
+            $push: {
+                "walletTest.transactions": {
+                    "type": 'credit',
+                    "amount": amount,
+                    "ride": ride
+                }
+            },
+        }, { returnDocument: "after" });
+
+    } else {
+
+        result1 = await db__.collection('drivers').findOneAndUpdate(
+            { _id: new ObjectId(String(driver_id)) }, {
+            // $set: { "walletTest.balance": useWallet.newBalance },
+            $inc: { "walletTest.balance": amount },
+            $push: {
+                "walletTest.transactions": {
+                    "type": 'debit',
+                    "amount": amount,//useWallet.chargedToWallet,
+                    "basket": null,                }
+            },
+        }, { returnDocument: "after" });
+
+        result2 = await db__.collection('users').findOneAndUpdate(
+            { phone: driver_phone }, {
+            // $set: { "walletTest.balance": useWallet.newBalance },
+            $inc: { "walletTest.balance": amount },
+            $push: {
+                "walletTest.transactions": {
+                    "type": 'debit',
+                    "amount": amount,//useWallet.chargedToWallet,
+                    "basket": null,
+                }
+            },
+        }, { returnDocument: "after" });
+
+
+    }
+
+
+
+    console.log('result: ', result1, result2)
+
+}
+
+
+
 
 cancelScheduledRide = async (io, rideRequest, callback) => {
 
@@ -353,5 +441,6 @@ module.exports = {
     cancelScheduledRide,
     acceptPayScheduledRide,
     paymentCompleteScheduledRide,
-    enRouteScheduledRide
+    enRouteScheduledRide,
+    walletTest
 }
