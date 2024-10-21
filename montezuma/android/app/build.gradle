@@ -89,8 +89,8 @@ android {
         applicationId 'com.zbretz.pcadmin'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 19
-        versionName "6.2.2"
+        versionCode 20
+        versionName "6.4.0"
     }
     signingConfigs {
         debug {
