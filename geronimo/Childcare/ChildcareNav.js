@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import { useFocusEffect, useNavigationContainerRef, } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import ChildcareHome from './ChildcareHome';
-import Partner from './Partner';
+import SitterPage from './SitterPage';
 import { StripeProvider } from '@stripe/stripe-react-native';
 
 const windowHeight = Dimensions.get('window').height;
@@ -43,8 +43,8 @@ export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatL
                     {props => <ChildcareHome {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} basket={basket} setBasket={setBasket} partner={partner} setPartner={setPartner} />}
                 </Stack.Screen>
              
-                <Stack.Screen name="Partner" options={{ presentation: "modal" }}>
-                    {props => <Partner {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} basket={basket} setBasket={setBasket} item={item} setItem={setItem} partner={partner} setPartner={setPartner} />}
+                <Stack.Screen name="SitterPage" options={{ presentation: "modal" }}>
+                    {props => <SitterPage {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} basket={basket} setBasket={setBasket} item={item} setItem={setItem} partner={partner} setPartner={setPartner} />}
                 </Stack.Screen>
                
             </Stack.Navigator>

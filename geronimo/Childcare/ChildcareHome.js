@@ -42,15 +42,15 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                     <Text style={{ color: 'white', fontSize: 11, }}>Teacher</Text>
                 </View> */}
 
-                <View style={{ position: 'absolute', bottom: 20, right: 20, zIndex: 11, width: windowHeight * .2, padding: 10, marginRight: 20, borderRadius: 14, backgroundColor: 'rgba(0,0,0,.4)' }}>
+                <TouchableOpacity onPress={() => navigation.navigate('SitterPage')} style={{ position: 'absolute', bottom: 20, right: 20, zIndex: 11, width: windowHeight * .2, padding: 10, marginRight: 20, borderRadius: 14, backgroundColor: 'rgba(0,0,0,.4)' }}>
                     <Text style={{ color: 'white', fontSize: 16, fontWeight: 600 }}>Meet Natalia</Text>
                     <Text style={{ color: 'white', fontSize: 11, }}>Teacher</Text>
 
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={{ position: 'absolute', top: 14, right: 20, zIndex: 11, zIndex: 98, borderRadius: 20, paddingTop: 0, marginLeft: -10 }} name="arrow-back-ios" size={24} color="black" >
+                    <View style={{ position: 'absolute', top: 14, right: 20, zIndex: 11, zIndex: 98, borderRadius: 20, paddingTop: 0, marginLeft: -10 }} name="arrow-back-ios" size={24} color="black" >
                         <MaterialIcons style={{ marginLeft: 10 }} name="arrow-forward-ios" size={16} color="white" />
-                    </TouchableOpacity>
+                    </View>
 
-                </View>
+                </TouchableOpacity>
 
 
                 <Video
@@ -71,7 +71,7 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                     <View style={{}}>
                         {/* <Ionicons name="checkmark-circle-outline" size={24} color="black" /> */}
                         <Text style={{ fontSize: 24 }}>Book with confidence.</Text>
-                        <Text style={{ fontSize: 18 }}>Our babysitters are teachers at Park City daycares and pre-schools.</Text>
+                        <Text style={{ fontSize: 18 }}>Our babysitters are real teachers at Park City daycares and pre-schools.</Text>
 
                         <View style={{ width: '88%', alignSelf: 'center', marginTop: 10 }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -90,7 +90,7 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                     </View>
                 </View>
                 <View style={{ alignSelf: 'flex-end', marginRight: windowWidth * .1 }}>
-                    <Text style={{ fontSize: 17, textDecorationLine: 'underline', fontWeight:500}}>Read More</Text>
+                    <Text style={{ fontSize: 17, textDecorationLine: 'underline', fontWeight: 500 }}>Read More</Text>
                 </View>
             </View>
 
@@ -125,52 +125,69 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
             </View>
 
 
+            <View style={{ width: '100%', }}>
+                <View style={{ marginVertical: 30, marginHorizontal: 10 }}>
+                    <View style={{ flex: 1, }}>
+                        <View style={{ borderRadius: 30, marginRight: 0, alignItems: 'center', paddingBottom: 30, borderWidth: 0 }}>
+                            <Text style={{ fontWeight: 600, fontSize: 32, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', }}>F.A.Q</Text>
+
+                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>What are your rates?</Text>
+                            </View>
+
+                            <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}><Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$25</Text>/hour when booking through with the Easy Book form above. Sitters have individual rates when they are requested specifically. Additional children add <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$5</Text>. </Text>
+                            </View>
 
 
-            {/* <View style={{}}>
+                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Who will I get?</Text>
+                            </View>
+
+                            <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>You're matched with a sitter based on availability. Every one of our sitters is trusted by families throughout Park City as a professional teacher and childcare provider.</Text>
+                            </View>
 
 
-                <View style={{ zIndex: 100, width: '100%', }}>
-                  
+
+                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>When will I receive confirmation?</Text>
+                            </View>
+
+                            <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>After you submit your booking, a member of the team will reach out to confirm within an hour.</Text>
+                            </View>
 
 
 
-                    <View style={{ flexDirection: 'row', marginTop: 10, marginHorizontal: 20 }}>
+                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Can I request a specific sitter?</Text>
+                            </View>
 
 
-                        <View style={{ flex: 1, marginRight: 20, }}>
-                            <Text style={{ fontWeight: 600, fontSize: 22, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', }}>Café</Text>
+                            <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Yep, go over to our sitters page and find your favorite person. Please note that sitters name their own rates when booked individually.</Text>
+                            </View>
 
-                            <TouchableOpacity onPress={() => { navigation.navigate('Partner', { selectedPartner: 'Daily Rise' }) }} style={{ height: windowHeight * .22, borderRadius: 30, marginRight: 0, alignItems: 'center', paddingVertical: 0 }}>
-                                <Image style={{ width: '100%', height: '100%', borderRadius: 30, }} resizeMode='cover' source={require('../assets/dailyrise.jpeg')} />
-                                <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, bottom: 20, justifyContent: 'center', position: 'absolute' }}>
-                                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Daily Rise</Text>
-                                </View>
-                            </TouchableOpacity>
+
+                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>I have more questions.</Text>
+                            </View>
+
+
+                            <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>You can call us directly at any time for questions or help of any sort.</Text>
+                            </View>
+
+
+
+
                         </View>
-
-
-
-                        <View style={{ flex: 1, }}>
-                            <Text style={{ fontWeight: 600, fontSize: 22, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', }}>Mediterranean</Text>
-
-                            <TouchableOpacity onPress={() => { navigation.navigate('Partner', { selectedPartner: 'Nosh' }) }} style={{ height: windowHeight * .22, borderRadius: 30, marginRight: 0, alignItems: 'center', paddingVertical: 0 }}>
-                                <Image style={{ width: '100%', height: '100%', borderRadius: 30, }} resizeMode='cover' source={require('../assets/nosh.jpeg')} />
-                                <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, bottom: 20, justifyContent: 'center', position: 'absolute' }}>
-                                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Nosh</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-
                     </View>
-
-
-
-
-
-
                 </View>
-            </View > */}
+            </View>
+
+
 
         </ScrollView>
 
