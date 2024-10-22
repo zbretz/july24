@@ -18,16 +18,41 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
 
         <ScrollView style={{ backgroundColor: '#fff', height: '100%' }}>
 
-            <View style={{ padding: 20, marginTop:20 }}>
-                <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 32, marginTop: 0, }}>Childcare</Text>
-                <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 12, marginTop: 0, }}>in Park City</Text>
+
+
+            <View style={{ padding: 20, marginTop: 20, flexDirection: 'row' }}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={{ backgroundColor: '#fff', zIndex: 98, borderRadius: 20, paddingTop: 10, marginLeft: -10 }} name="arrow-back-ios" size={24} color="black" >
+                    <MaterialIcons style={{ marginLeft: 10 }} name="arrow-back-ios" size={20} color="black" />
+                </TouchableOpacity>
+
+                <View>
+                    <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 32, marginTop: 0, }}>Childcare</Text>
+                    <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 12, marginTop: 0, }}>in Park City</Text>
+                </View>
             </View>
 
             <View style={{ position: 'absolute', top: 40, right: 20, backgroundColor: '#FFCF56', height: 48, width: 48, zIndex: 98, borderRadius: 30, alignItems: 'center', justifyContent: 'center' }} name="arrow-back-ios" size={24} color="black" >
                 <Image style={{ height: 40, width: 40, borderRadius: 30 }} source={require('../assets/yellow-icon-bold.png')} />
             </View>
 
-            <View style={{ height: '100%', width: '100%', alignItems: 'center', }}>
+            <View style={{ alignItems: 'center', }}>
+
+                {/* <View style={{ position: 'absolute', bottom: 20, right: 20, zIndex: 11, backgroundColor: 'blue', width: windowHeight * .2, padding: 10, marginRight: 20, borderRadius: 14, backgroundColor: 'rgba(0,0,0,.4)' }}>
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 600 }}>Natalia</Text>
+                    <Text style={{ color: 'white', fontSize: 11, }}>Teacher</Text>
+                </View> */}
+
+                <View style={{ position: 'absolute', bottom: 20, right: 20, zIndex: 11, width: windowHeight * .2, padding: 10, marginRight: 20, borderRadius: 14, backgroundColor: 'rgba(0,0,0,.4)' }}>
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 600 }}>Meet Natalia</Text>
+                    <Text style={{ color: 'white', fontSize: 11, }}>Teacher</Text>
+
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={{ position: 'absolute', top: 14, right: 20, zIndex: 11, zIndex: 98, borderRadius: 20, paddingTop: 0, marginLeft: -10 }} name="arrow-back-ios" size={24} color="black" >
+                        <MaterialIcons style={{ marginLeft: 10 }} name="arrow-forward-ios" size={16} color="white" />
+                    </TouchableOpacity>
+
+                </View>
+
+
                 <Video
                     ref={video}
                     style={{ height: windowWidth * .9, width: windowWidth * .9, marginTop: 0, borderRadius: 20 }}
@@ -41,94 +66,72 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                 />
             </View>
 
-            {/* <View style={{ backgroundColor: '#FFCF56', margin: 20, marginBottom: 0, borderRadius: 40, padding: 10, paddingVertical: 30, }}>
+            <View style={{ alignItems: 'center', }}>
+                <View style={{ width: windowWidth * .9, marginTop: 10, borderRadius: 20, borderWidth: 0 }}>
+                    <View style={{}}>
+                        {/* <Ionicons name="checkmark-circle-outline" size={24} color="black" /> */}
+                        <Text style={{ fontSize: 24 }}>Book with confidence.</Text>
+                        <Text style={{ fontSize: 18 }}>Our babysitters are teachers at Park City daycares and pre-schools.</Text>
 
-                <View style={{ zIndex: 11, }}>
-                    <TouchableOpacity style={{ position: 'absolute', top: 3, left: 0, }} onPress={() => navigation.goBack()}>
-                        <MaterialIcons style={{ marginLeft: 10 }} name="arrow-back-ios" size={24} color="black" />
-                    </TouchableOpacity>
-                </View>
-
-                <View style={{}}>
-                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 40, marginBottom: -14, textAlign: 'center' }} adjustsFontSizeToFit={true} numberOfLines={1}>   Locals    Takeout</Text>
-                </View>
-
-
-                <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 20, }}>
-                    {masterState.user &&
-                        <View style={{}}>
-                            <TouchableOpacity onPress={comingSoonAlert} style={{ alignSelf: 'center', alignItems: 'center', justifyContent: 'center', borderRadius: 40, padding: 10, height: 50, backgroundColor: '#fff' }} >
-                                <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Aristotelica-Regular', marginBottom: -8 }}>Order History</Text>
-                            </TouchableOpacity>
-                        </View>
-                    }
-
-                    {
-                        masterState.user?.user_type === 'driver' &&
-                        <View style={{}}>
-                            <View style={{ alignSelf: 'center', alignItems: 'center', flexDirection: 'row', borderRadius: 40, padding: 0, }} >
-                                <Entypo style={{}} name="wallet" size={44} color="black" />
-                                <View style={{ alignItems: 'flex-end' }}>
-                                    <Text style={{ marginVertical: 0, fontSize: 17, fontFamily: 'Aristotelica-Regular' }}>Wallet</Text>
-                                    <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 12, marginTop: 2, }}>${(masterState.user.wallet.balance).toFixed(2)}</Text>
-                                </View>
+                        <View style={{ width: '88%', alignSelf: 'center', marginTop: 10 }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Ionicons name="checkmark-circle-outline" size={24} color="black" />
+                                <Text style={{ marginLeft: 6, fontSize: 16 }}>Professional childcare providers</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Ionicons name="checkmark-circle-outline" size={24} color="black" />
+                                <Text style={{ marginLeft: 6, fontSize: 16 }}>Extensive training and experience</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Ionicons name="checkmark-circle-outline" size={24} color="black" />
+                                <Text style={{ marginLeft: 6, fontSize: 16 }}>Highly referred</Text>
                             </View>
                         </View>
-                    }
-
+                    </View>
                 </View>
+                <View style={{ alignSelf: 'flex-end', marginRight: windowWidth * .1 }}>
+                    <Text style={{ fontSize: 17, textDecorationLine: 'underline', fontWeight:500}}>Read More</Text>
+                </View>
+            </View>
 
-              
-
-            </View> */}
 
 
-            <View style={{}}>
+
+            <View style={{ width: '100%', }}>
+                <View style={{ marginVertical: 30, marginHorizontal: 20 }}>
+                    <View style={{ flex: 1, }}>
+                        <TouchableOpacity style={{ borderRadius: 30, marginRight: 0, alignItems: 'center', paddingBottom: 30, borderWidth: 1 }}>
+                            <Text style={{ fontWeight: 600, fontSize: 32, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', }}>Easy Book</Text>
+
+                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Age of Child(ren)</Text>
+                            </View>
+
+                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Age of Child(ren)</Text>
+                            </View>
+
+                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Date and Time</Text>
+                            </View>
+
+                            <View style={{ backgroundColor: '#ffcf56', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', alignSelf: 'center', marginTop: 30 }}>
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Book Now</Text>
+                            </View>
+
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
+
+
+
+
+            {/* <View style={{}}>
 
 
                 <View style={{ zIndex: 100, width: '100%', }}>
-                    {basket.items.length ?
-
-                        <>
-                            <Text style={{ fontWeight: 600, fontSize: 26, marginBottom: 0, padding: 20, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', marginBottom: 0 }}>My Basket</Text>
-                            <View style={{ paddingHorizontal: 20, width: '100%', marginBottom: -20, }}>
-                                <View style={{
-                                    marginVertical: 10,
-                                    flexDirection: 'row',
-                                    backgroundColor: '#e6e6e6',
-                                    borderRadius: 30,
-                                    alignItems: 'center'
-                                }}>
-                                    <Image style={{ height: '80%', width: '30%', marginHorizontal: 10 }} resizeMode='contain' source={require('../assets/basket.png')} />
-
-                                    <View style={{ padding: 10, paddingLeft: 0, flex: 1, borderTopRightRadius: 30, borderBottomRightRadius: 30, justifyContent: 'center' }}>
-
-                                        <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 16, textAlign: 'center', marginBottom: 6 }}>{basket.partner}</Text>
-
-                                        <View style={{ backgroundColor: '#fff', borderRadius: 20, padding: 8, paddingHorizontal: 20 }}>
-                                            {basket.items.map((item, idx) => {
-                                                return (
-                                                    <View key={idx} style={{ borderRadius: 20, width: '100%', marginBottom: 0, paddingVertical: 0, }}>
-                                                        <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 12, }}>{item.name} <Text style={{ color: '#a9a9a9' }}>... </Text>{item.qty}</Text>
-                                                    </View>
-                                                )
-                                            })}
-                                        </View>
-
-                                        <TouchableOpacity onPress={() => setShowBasket(true)} style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#ffcf56', borderRadius: 20, marginTop: 8, justifyContent: 'center' }}>
-                                            <Text style={{ padding: 10, fontSize: 14, fontFamily: 'PointSoftSemiBold', textAlign: 'center' }}>Open Basket</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            </View>
-                        </>
-                        :
-                        <View style={{ flexDirection: 'row', margin: 20, marginBottom: -10, padding: 0, borderRadius: 30, borderColor: '#666', borderWidth: 0, justifyContent: 'center', alignItems: 'center', }}>
-                            <Image style={{ height: '100%', width: '40%', marginHorizontal: 0, minHeight: 120 }} resizeMode='contain' source={require('../assets/food-package.png')} />
-                            <Text style={{ flex: 3, padding: 0, fontFamily: 'Aristotelica-Regular', fontSize: 40, marginRight: 6 }} adjustsFontSizeToFit={true} numberOfLines={3} >Some of Park City's best local spots. Discover and order.</Text>
-                        </View>
-                    }
-
+                  
 
 
 
@@ -138,7 +141,6 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                         <View style={{ flex: 1, marginRight: 20, }}>
                             <Text style={{ fontWeight: 600, fontSize: 22, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', }}>Café</Text>
 
-                            {/* <TouchableOpacity onPress={() => { setPartner(partnerData['Daily Rise']); navigation.navigate('Partner') }} style={{ height: windowHeight * .22, borderRadius: 30, marginRight: 0, alignItems: 'center', paddingVertical: 0 }}> */}
                             <TouchableOpacity onPress={() => { navigation.navigate('Partner', { selectedPartner: 'Daily Rise' }) }} style={{ height: windowHeight * .22, borderRadius: 30, marginRight: 0, alignItems: 'center', paddingVertical: 0 }}>
                                 <Image style={{ width: '100%', height: '100%', borderRadius: 30, }} resizeMode='cover' source={require('../assets/dailyrise.jpeg')} />
                                 <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, bottom: 20, justifyContent: 'center', position: 'absolute' }}>
@@ -165,40 +167,10 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
 
 
 
-                    <View style={{ flexDirection: 'row', marginTop: 10, marginHorizontal: 20 }}>
-
-
-                        <View style={{ flex: 1, marginRight: 20, }}>
-                            <Text style={{ fontWeight: 600, fontSize: 22, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', }}>Lunch</Text>
-
-                            <TouchableOpacity onPress={() => { navigation.navigate('Partner', { selectedPartner: "Clockwork" }) }} style={{ height: windowHeight * .22, borderRadius: 30, marginRight: 0, alignItems: 'center', paddingVertical: 0 }}>
-                                <Image style={{ width: '100%', height: '100%', borderRadius: 30, }} resizeMode='cover' source={require('../assets/Clockwork2.jpeg')} />
-                                <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, bottom: 20, justifyContent: 'center', position: 'absolute' }}>
-                                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Clockwork</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-
-
-
-                        <View style={{ flex: 1, }}>
-                            <Text style={{ fontWeight: 600, fontSize: 22, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', }}>Bakery</Text>
-
-                            <TouchableOpacity onPress={() => { navigation.navigate('Partner', { selectedPartner: "Auntie Ems" }) }} style={{ height: windowHeight * .22, borderRadius: 30, marginRight: 0, alignItems: 'center', paddingVertical: 0 }}>
-                                <Image style={{ width: '100%', height: '100%', borderRadius: 30, }} resizeMode='cover' source={require('../assets/auntie_cover.jpg')} />
-                                <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, bottom: 20, justifyContent: 'center', position: 'absolute' }}>
-                                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Auntie Em's</Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-
-                    </View>
-
-
 
 
                 </View>
-            </View >
+            </View > */}
 
         </ScrollView>
 
