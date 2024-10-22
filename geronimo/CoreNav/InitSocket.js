@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LocalRideNav from '../LocalRides/LocalRideNav';
 import ScheduleRide from '../ScheduleRides/ScheduleRide';
 import Locals from '../Locals/LocalsNav';
+import Childcare from '../Childcare/ChildcareNav';
 
 const Stack = createStackNavigator();
 
@@ -175,6 +176,10 @@ export default function InitSocket({ masterState, setMasterState }) {
 
         <Stack.Screen name="Locals">
           {props => <Locals {...props} type={'signup'} masterState={masterState} setMasterState={setMasterState} />}
+        </Stack.Screen>
+
+        <Stack.Screen name="Childcare">
+          {props => <Childcare {...props} type={'signup'} masterState={masterState} setMasterState={setMasterState} />}
         </Stack.Screen>
 
 

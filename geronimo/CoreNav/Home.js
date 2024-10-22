@@ -133,10 +133,17 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => setModalVisible(true)} style={{ backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, marginLeft: 10, alignItems: 'center', paddingVertical: 20, }}>
+                    {/* <TouchableOpacity onPress={() => setModalVisible(true)} style={{ backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, marginLeft: 10, alignItems: 'center', paddingVertical: 20, }}>
                         <Image style={{ flex: 1, width: '100%' }} resizeMode='contain' source={require('../assets/cleaning.png')} />
                         <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center' }}>
                             <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Coming ...</Text>
+                        </View>
+                    </TouchableOpacity> */}
+
+                    <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{ backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, marginRight: 10, alignItems: 'center', paddingVertical: 20 }}>
+                        <Image style={{ flex: 1, width: '100%' }} resizeMode='contain' source={require('../assets/coffee.png')} />
+                        <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center' }}>
+                            <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Childcare</Text>
                         </View>
                     </TouchableOpacity>
 
