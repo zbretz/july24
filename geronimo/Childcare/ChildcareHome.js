@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, ScrollView, Modal } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, ScrollView, TouchableWithoutFeedback, Animated } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { AntDesign, MaterialIcons, Ionicons, Entypo } from '@expo/vector-icons';
 import { Video, ResizeMode } from 'expo-av';
@@ -11,9 +11,6 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
     const video = useRef(null);
 
     return (
-
-
-
 
 
         <ScrollView style={{ backgroundColor: '#fff', height: '100%' }}>
@@ -71,7 +68,15 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                     <View style={{}}>
                         {/* <Ionicons name="checkmark-circle-outline" size={24} color="black" /> */}
                         <Text style={{ fontSize: 24 }}>Book with confidence.</Text>
-                        <Text style={{ fontSize: 18 }}>Our babysitters are real teachers at Park City daycares and pre-schools.</Text>
+                        <Text style={{ fontSize: 18 }}>Connect with sitters who are <Text style={{ backgroundColor: '#ffcf56', borderRadius: 10, borderWidth: 1, borderColor: 'black' }}>real <Image style={{ height: 20, width: 30, borderRadius: 30, marginBottom: -4 }} source={require('../assets/yellow-icon-bold.png')} />
+                        </Text> teachers at Park City daycares and pre-schools.</Text>
+                        {/* <View style={{flexDirection:'row', display:'inline'}}><Text style={{ fontSize: 18 }}>Our babysitters are</Text><Text style={{backgroundColor:'#ffcf56', borderRadius:10, borderWidth:1, borderColor:'black', height:10}}>real</Text><Text style={{fontSize: 18}}>teachers at Park City daycares and pre-schools.</Text></View> */}
+
+
+                        {/* <View>
+                            <Text style={{ fontSize: 18, position: 'absolute', zIndex:-1, color:'transparent', top:10 }}>Connect with sitters who are <Text style={{ backgroundColor: '#ffcf56',top:100, left:90 }}>real</Text> teachers at Park City daycares and pre-schools.</Text>
+                            <Text style={{ fontSize: 18, }}>Connect with sitters who are <Text style={{ }}>real</Text> teachers at Park City daycares and pre-schools.</Text>
+                        </View> */}
 
                         <View style={{ width: '88%', alignSelf: 'center', marginTop: 10 }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -131,32 +136,42 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                         <View style={{ borderRadius: 30, marginRight: 0, alignItems: 'center', paddingBottom: 30, borderWidth: 0 }}>
                             <Text style={{ fontWeight: 600, fontSize: 32, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', }}>F.A.Q</Text>
 
-                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>What are your rates?</Text>
-                            </View>
-
-                            <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}><Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$25</Text>/hour when booking through with the Easy Book form above. Sitters have individual rates when they are requested specifically. Additional children add <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$5</Text>. </Text>
-                            </View>
 
 
-                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Who will I get?</Text>
-                            </View>
 
-                            <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>You're matched with a sitter based on availability. Every one of our sitters is trusted by families throughout Park City as a professional teacher and childcare provider.</Text>
+
+
+                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                <CollapsibleView title="What are your rates?">
+                                    <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
+                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}><Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$25</Text>/hour when booking through with the Easy Book form above. Sitters have individual rates when they are requested specifically. Additional children add <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$5</Text>. </Text>
+                                    </View>
+                                </CollapsibleView>
                             </View>
 
 
 
-                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>When will I receive confirmation?</Text>
+                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                <CollapsibleView title="Who will I get?">
+                                    <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
+                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>You're matched with a sitter based on availability. Every one of our sitters is trusted by families throughout Park City as a professional teacher and childcare provider.<Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$5</Text>. </Text>
+                                    </View>
+                                </CollapsibleView>
                             </View>
 
-                            <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>After you submit your booking, a member of the team will reach out to confirm within an hour.</Text>
+                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                <CollapsibleView title="When will I receive confirmation?">
+                                    <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
+                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>After you submit your booking, a member of the team will reach out to confirm within an hour.</Text>
+                                    </View>
+                                </CollapsibleView>
                             </View>
+
+
+
+
+
+
 
 
 
@@ -199,3 +214,45 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
     );
 }
 
+
+
+
+const CollapsibleView = ({ title, children }) => {
+    const [collapsed, setCollapsed] = useState(true);
+    const [animation] = useState(new Animated.Value(0));
+
+    const toggleCollapse = () => {
+        if (collapsed) {
+            Animated.timing(animation, {
+                toValue: 1,
+                duration: 300,
+                useNativeDriver: false
+            }).start();
+        } else {
+            Animated.timing(animation, {
+                toValue: 0,
+                duration: 300,
+                useNativeDriver: false
+            }).start();
+        }
+        setCollapsed(!collapsed);
+    };
+
+    const heightInterpolate = animation.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 140]
+    });
+
+    return (
+        <View>
+            <TouchableWithoutFeedback onPress={toggleCollapse}>
+                <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
+                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, }}>{title}</Text>
+                </View>
+            </TouchableWithoutFeedback>
+            <Animated.View style={{ height: heightInterpolate }}>
+                {children}
+            </Animated.View>
+        </View>
+    );
+};
