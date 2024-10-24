@@ -1,7 +1,8 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, ScrollView, TouchableWithoutFeedback, Animated } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, ScrollView, TouchableWithoutFeedback, Platform, LayoutAnimation, TextInput } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { AntDesign, MaterialIcons, Ionicons, Entypo } from '@expo/vector-icons';
 import { Video, ResizeMode } from 'expo-av';
+import LottieView from 'lottie-react-native';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -9,6 +10,27 @@ const windowWidth = Dimensions.get('window').width;
 export default ChildcareHome = ({ isConnected, masterState, setMasterState, navigation, basket, setBasket, partner, setPartner }) => {
 
     const video = useRef(null);
+
+    const [age1, setAge1] = useState(null)
+    const [age2, setAge2] = useState(null)
+    const [age3, setAge3] = useState(null)
+    const [age4, setAge4] = useState(null)
+    const [numOfChildren, setNumOfChildren] = useState(1)
+    const [dateTime, setDateTime] = useState('')
+    const [notes, setNotes] = useState('')
+    const [showNotes, setShowNotes] = useState(false)
+
+    const changeNumOfChild = (inc_dec) => {
+        if (inc_dec == 'inc' && numOfChildren < 4) {
+            // setNumOfChildren(num => {
+            //     if (num < 4) return num+1
+            // })
+            setNumOfChildren((num) => num + 1)
+
+        } else if (inc_dec == 'dec' && numOfChildren > 1) {
+            setNumOfChildren((num) => num - 1)
+        }
+    }
 
     return (
 
@@ -66,29 +88,21 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
             <View style={{ alignItems: 'center', }}>
                 <View style={{ width: windowWidth * .9, marginTop: 10, borderRadius: 20, borderWidth: 0 }}>
                     <View style={{}}>
-                        {/* <Ionicons name="checkmark-circle-outline" size={24} color="black" /> */}
-                        <Text style={{ fontSize: 24 }}>Book with confidence.</Text>
-                        <Text style={{ fontSize: 18 }}>Connect with sitters who are <Text style={{ backgroundColor: '#ffcf56', borderRadius: 10, borderWidth: 1, borderColor: 'black' }}>real <Image style={{ height: 20, width: 30, borderRadius: 30, marginBottom: -4 }} source={require('../assets/yellow-icon-bold.png')} />
-                        </Text> teachers at Park City daycares and pre-schools.</Text>
-                        {/* <View style={{flexDirection:'row', display:'inline'}}><Text style={{ fontSize: 18 }}>Our babysitters are</Text><Text style={{backgroundColor:'#ffcf56', borderRadius:10, borderWidth:1, borderColor:'black', height:10}}>real</Text><Text style={{fontSize: 18}}>teachers at Park City daycares and pre-schools.</Text></View> */}
+                        <Text style={{ fontSize: 30 }}>Book with confidence.</Text>
+                        <Text style={{ fontSize: 18 }}>Connect with sitters who are <Image style={{ height: 12, width: 40, paddingLeft: 30, position: 'absolute' }} source={require('../assets/underline.png')} />real teachers at Park City daycares and pre-schools.</Text>
 
-
-                        {/* <View>
-                            <Text style={{ fontSize: 18, position: 'absolute', zIndex:-1, color:'transparent', top:10 }}>Connect with sitters who are <Text style={{ backgroundColor: '#ffcf56',top:100, left:90 }}>real</Text> teachers at Park City daycares and pre-schools.</Text>
-                            <Text style={{ fontSize: 18, }}>Connect with sitters who are <Text style={{ }}>real</Text> teachers at Park City daycares and pre-schools.</Text>
-                        </View> */}
 
                         <View style={{ width: '88%', alignSelf: 'center', marginTop: 10 }}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Ionicons name="checkmark-circle-outline" size={24} color="black" />
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: -6 }}>
+                                <LottieView speed={.25} style={{ height: 34, width: 34, alignSelf: 'center', margin: 0 }} source={require('../assets/checkmark.json')} autoPlay loop='false' />
                                 <Text style={{ marginLeft: 6, fontSize: 16 }}>Professional childcare providers</Text>
                             </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Ionicons name="checkmark-circle-outline" size={24} color="black" />
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: -6 }}>
+                                <LottieView speed={.25} style={{ height: 34, width: 34, alignSelf: 'center', margin: 0 }} source={require('../assets/checkmark.json')} autoPlay loop='false' />
                                 <Text style={{ marginLeft: 6, fontSize: 16 }}>Extensive training and experience</Text>
                             </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Ionicons name="checkmark-circle-outline" size={24} color="black" />
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: -6 }}>
+                                <LottieView speed={.25} style={{ height: 34, width: 34, alignSelf: 'center', margin: 0 }} source={require('../assets/checkmark.json')} autoPlay loop='false' />
                                 <Text style={{ marginLeft: 6, fontSize: 16 }}>Highly referred</Text>
                             </View>
                         </View>
@@ -104,62 +118,193 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
 
             <View style={{ width: '100%', }}>
                 <View style={{ marginVertical: 30, marginHorizontal: 20 }}>
-                    <View style={{ flex: 1, }}>
-                        <TouchableOpacity style={{ borderRadius: 30, marginRight: 0, alignItems: 'center', paddingBottom: 30, borderWidth: 1 }}>
-                            <Text style={{ fontWeight: 600, fontSize: 32, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', }}>Easy Book</Text>
+                    <View style={{
+                        borderRadius: 30, paddingBottom: 30, borderWidth: 0, backgroundColor: '#e6e6e6', shadowColor: '#000',
+                        shadowOpacity: 0.38,
+                        shadowRadius: 6,
+                        shadowOffset: {
+                            width: 0,
+                            height: 0,
+                        },
+                    }}>
+                        <Text style={{ fontWeight: 600, fontSize: 32, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', textAlign: 'center' }}>Easy Book</Text>
 
-                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Age of Child(ren)</Text>
+
+
+                        <View style={{ padding: 20, marginTop: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
+                            <View style={{ borderRadius: 10, backgroundColor: '#f2f2f2', padding: 10, }}>
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 22 }}>Age of Child</Text>
+                            </View>
+                            <TextInput
+                                inputMode='numeric'
+                                placeholderTextColor={'#a1a1a1'}
+                                placeholder='age'
+                                // textAlignVertical='top'
+                                value={age1}
+                                onChangeText={(text) => setAge1(text)}
+                                style={{ maxHeight: 120, width: 80, textAlign: 'center', fontSize: 20, backgroundColor: '#fff', borderColor: '#000', borderRadius: 20, padding: 10, paddingHorizontal: 20, fontFamily: 'PointSoftSemiBold', }}
+                            />
+
+                        </View>
+
+                        {numOfChildren > 1 &&
+                            <View style={{ padding: 20, marginTop: -20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
+                                <View style={{ borderRadius: 10, backgroundColor: '#f2f2f2', padding: 10, flexDirection: 'row', alignItems: 'center', }}>
+                                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 22, marginRight: 10 }}>Age of Child</Text>
+                                    {numOfChildren == 2 &&
+                                        <TouchableOpacity onPress={() => changeNumOfChild('dec')}>
+                                            <Ionicons style={{ marginTop: -6 }} name="remove-circle-outline" size={22} color="red" />
+                                        </TouchableOpacity>}
+                                </View>
+                                <TextInput
+                                    inputMode='numeric'
+                                    placeholderTextColor={'#a1a1a1'}
+                                    placeholder='age'
+                                    // textAlignVertical='top'
+                                    value={age2}
+                                    onChangeText={(text) => setAge2(text)}
+                                    style={{ maxHeight: 120, width: 80, textAlign: 'center', fontSize: 20, backgroundColor: '#fff', borderColor: '#000', borderRadius: 20, padding: 10, paddingHorizontal: 20, fontFamily: 'PointSoftSemiBold', }}
+                                />
+
                             </View>
 
-                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Age of Child(ren)</Text>
+                        }
+
+                        {numOfChildren > 2 &&
+                            <View style={{ padding: 20, marginTop: -20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
+                                <View style={{ borderRadius: 10, backgroundColor: '#f2f2f2', padding: 10, flexDirection: 'row', alignItems: 'center', }}>
+                                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 22, marginRight: 10 }}>Age of Child</Text>
+                                    {numOfChildren == 3 &&
+                                        <TouchableOpacity onPress={() => changeNumOfChild('dec')}>
+                                            <Ionicons style={{ marginTop: -6 }} name="remove-circle-outline" size={22} color="red" />
+                                        </TouchableOpacity>}
+
+                                </View>
+                                <TextInput
+                                    inputMode='numeric'
+                                    placeholderTextColor={'#a1a1a1'}
+                                    placeholder='age'
+                                    // textAlignVertical='top'
+                                    value={age3}
+                                    onChangeText={(text) => setAge3(text)}
+                                    style={{ maxHeight: 120, width: 80, textAlign: 'center', fontSize: 20, backgroundColor: '#fff', borderColor: '#000', borderRadius: 20, padding: 10, paddingHorizontal: 20, fontFamily: 'PointSoftSemiBold', }}
+                                />
+
+                            </View>
+                        }
+
+                        {numOfChildren > 3 &&
+                            <View style={{ padding: 20, marginTop: -20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
+                                <View style={{ borderRadius: 10, backgroundColor: '#f2f2f2', padding: 10, flexDirection: 'row', alignItems: 'center', }}>
+                                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 22, marginRight: 10 }}>Age of Child</Text>
+                                    {numOfChildren == 4 &&
+                                        <TouchableOpacity onPress={() => changeNumOfChild('dec')}>
+                                            <Ionicons style={{ marginTop: -6 }} name="remove-circle-outline" size={22} color="red" />
+                                        </TouchableOpacity>}
+
+                                </View>
+                                <TextInput
+                                    inputMode='numeric'
+                                    placeholderTextColor={'#a1a1a1'}
+                                    placeholder='age'
+                                    // textAlignVertical='top'
+                                    value={age4}
+                                    onChangeText={(text) => setAge4(text)}
+                                    style={{ maxHeight: 120, width: 80, textAlign: 'center', fontSize: 20, backgroundColor: '#fff', borderColor: '#000', borderRadius: 20, padding: 10, paddingHorizontal: 20, fontFamily: 'PointSoftSemiBold', }}
+                                />
+
                             </View>
 
-                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Date and Time</Text>
-                            </View>
+                        }
 
-                            <View style={{ backgroundColor: '#ffcf56', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', alignSelf: 'center', marginTop: 30 }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Book Now</Text>
-                            </View>
 
+
+                        {numOfChildren < 4 &&
+
+                            <TouchableOpacity onPress={() => changeNumOfChild('inc')} style={{ marginHorizontal: 20, marginBottom: 10, flexDirection: 'row', alignItems: 'center' }}>
+                                <Ionicons style={{ marginTop: -6 }} name="add-circle-outline" size={22} color="black" />
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 22, }}> add child</Text>
+                            </TouchableOpacity>
+                        }
+                        <View style={{ marginHorizontal: 20, borderBottomColor: '#d9d9d9', borderBottomWidth: 2 }} />
+
+
+
+                        <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, marginLeft: 20, marginTop: 10, alignSelf: 'flex-start' }}>
+                            <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 22 }}>Date and Time</Text>
+                        </View>
+                        <TextInput
+                            placeholderTextColor={'#a1a1a1'}
+                            placeholder='eg. Sunday 12/18 10am-3pm'
+                            // textAlignVertical='top'
+                            value={dateTime}
+                            onChangeText={(text) => setDateTime(text)}
+                            style={{ maxHeight: 120, fontSize: 16, backgroundColor: '#fff', borderColor: '#000', borderRadius: 20, padding: 10, marginHorizontal: 20, paddingHorizontal: 20, marginTop: 10, fontFamily: 'PointSoftSemiBold', }}
+                        />
+
+                        <View style={{ marginHorizontal: 20, borderBottomColor: '#d9d9d9', borderBottomWidth: 2, marginTop: 20 }} />
+
+
+                        <TouchableOpacity onPress={() => setShowNotes(true)} style={{ margin: 20, marginBottom: 10, flexDirection: 'row', alignItems: 'center' }}>
+                            <Ionicons style={{ marginTop: -6 }} name="add-circle-outline" size={22} color="black" />
+                            <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 22, }}>Add Notes</Text>
                         </TouchableOpacity>
+
+                        {showNotes &&
+                            <TextInput
+                                multiline
+                                placeholderTextColor={'#a1a1a1'}
+                                placeholder='Notes'
+                                // textAlignVertical='top'
+                                value={notes}
+                                onChangeText={(text) => setNotes(text)}
+                                style={{ maxHeight: 90, fontSize: 16, backgroundColor: '#fff', borderColor: '#000', borderRadius: 20, padding: 10, marginHorizontal: 20, paddingHorizontal: 20, marginTop: 0, fontFamily: 'PointSoftSemiBold', }}
+                            />
+                        }
+
+
+
+                        <View style={{ backgroundColor: '#ffcf56', padding: 14, paddingHorizontal: 18, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', alignSelf: 'center', marginTop: 20 }}>
+                            <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 26, marginBottom: -6 }}>Book Now</Text>
+                        </View>
+
                     </View>
                 </View>
             </View>
 
 
             <View style={{ width: '100%', }}>
-                <View style={{ marginVertical: 30, marginHorizontal: 10 }}>
-                    <View style={{ flex: 1, }}>
+                <View style={{ marginVertical: 0, marginHorizontal: 10 }}>
+                    <View style={{}}>
                         <View style={{ borderRadius: 30, marginRight: 0, alignItems: 'center', paddingBottom: 30, borderWidth: 0 }}>
                             <Text style={{ fontWeight: 600, fontSize: 32, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', }}>F.A.Q</Text>
 
 
-
-
-
-
-                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <View style={{ width: '100%' }}>
                                 <CollapsibleView title="What are your rates?">
                                     <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
-                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}><Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$25</Text>/hour when booking through with the Easy Book form above. Sitters have individual rates when they are requested specifically. Additional children add <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$5</Text>. </Text>
+                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}><Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$25</Text>/hour when booking through the Easy Book form above. Sitters have individual rates when they are requested specifically. Additional children add <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$5</Text>. </Text>
                                     </View>
                                 </CollapsibleView>
                             </View>
 
-
-
-                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <View style={{ width: '100%' }}>
                                 <CollapsibleView title="Who will I get?">
-                                    <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
-                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>You're matched with a sitter based on availability. Every one of our sitters is trusted by families throughout Park City as a professional teacher and childcare provider.<Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$5</Text>. </Text>
+                                    <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0, width: '90%', }}>
+                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>You're matched with a sitter based on availability. Every one of our sitters is trusted by families throughout Park City as a professional teacher and childcare provider.</Text>
                                     </View>
                                 </CollapsibleView>
                             </View>
 
-                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <View style={{ width: '100%' }}>
+                                <CollapsibleView title="Can I request a specific sitter?">
+                                    <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
+                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Yep, go over to our sitters page and find your favorite person. Please note that sitters name their own rates when booked individually.</Text>
+                                    </View>
+                                </CollapsibleView>
+                            </View>
+
+                            <View style={{ width: '100%' }}>
                                 <CollapsibleView title="When will I receive confirmation?">
                                     <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
                                         <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>After you submit your booking, a member of the team will reach out to confirm within an hour.</Text>
@@ -168,33 +313,13 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                             </View>
 
 
-
-
-
-
-
-
-
-                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Can I request a specific sitter?</Text>
+                            <View style={{ width: '100%' }}>
+                                <CollapsibleView title="I have more questions!">
+                                    <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
+                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>And we have answers! Call us directly at any time for questions or help of any sort.</Text>
+                                    </View>
+                                </CollapsibleView>
                             </View>
-
-
-                            <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Yep, go over to our sitters page and find your favorite person. Please note that sitters name their own rates when booked individually.</Text>
-                            </View>
-
-
-                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>I have more questions.</Text>
-                            </View>
-
-
-                            <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>You can call us directly at any time for questions or help of any sort.</Text>
-                            </View>
-
-
 
 
                         </View>
@@ -218,30 +343,17 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
 
 
 const CollapsibleView = ({ title, children }) => {
-    const [collapsed, setCollapsed] = useState(true);
-    const [animation] = useState(new Animated.Value(0));
+
+    if (Platform.OS === 'ios') {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    }
+
+    const [collapsed, setCollapsed] = useState(false);
+
 
     const toggleCollapse = () => {
-        if (collapsed) {
-            Animated.timing(animation, {
-                toValue: 1,
-                duration: 300,
-                useNativeDriver: false
-            }).start();
-        } else {
-            Animated.timing(animation, {
-                toValue: 0,
-                duration: 300,
-                useNativeDriver: false
-            }).start();
-        }
         setCollapsed(!collapsed);
     };
-
-    const heightInterpolate = animation.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, 140]
-    });
 
     return (
         <View>
@@ -250,9 +362,11 @@ const CollapsibleView = ({ title, children }) => {
                     <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, }}>{title}</Text>
                 </View>
             </TouchableWithoutFeedback>
-            <Animated.View style={{ height: heightInterpolate }}>
-                {children}
-            </Animated.View>
+            {collapsed &&
+                <View style={{}}>
+                    {children}
+                </View>
+            }
         </View>
     );
 };

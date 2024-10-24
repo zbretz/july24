@@ -141,7 +141,7 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                     </TouchableOpacity> */}
 
                     <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{ backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, marginRight: 10, alignItems: 'center', paddingVertical: 20 }}>
-                        <Image style={{ flex: 1, width: '100%' }} resizeMode='contain' source={require('../assets/coffee.png')} />
+                        <Image style={{ flex: 1, margin:10 }} resizeMode='contain' source={require('../assets/stroller.png')} />
                         <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center' }}>
                             <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Childcare</Text>
                         </View>
