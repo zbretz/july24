@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import { useFocusEffect, useNavigationContainerRef, } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import ChildcareHome from './ChildcareHome';
+import Booking from './Booking';
 import SitterPage from './SitterPage';
 import { StripeProvider } from '@stripe/stripe-react-native';
 
@@ -27,26 +28,35 @@ export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatL
         }, [])
     )
 
+    const booking = true
+
     return (
         <StripeProvider
             // publishableKey="pk_test_51Nj9WRAUREUmtjLCVtihPOMA6K9A28JW0goEfBW14Poj6Y6AJJUBBXcHhwUfrTsEQEJ15S26FBGDGbkVjm84x8f900VG5onWlT"
             publishableKey="pk_live_51Nj9WRAUREUmtjLCliIgWk6tgmUXBHSOGsmmaNIC6Tb9UT4BVNEAK40DNXsrljEJHLHxJsj0CyU0qdU5ozO4I1Eb00SdEyvrQ9"
         >
 
-          
+
             <Stack.Navigator
                 screenOptions={{
                     headerShown: false
                 }}
             >
-                <Stack.Screen name="ChildcareHome">
-                    {props => <ChildcareHome {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} basket={basket} setBasket={setBasket} partner={partner} setPartner={setPartner} />}
-                </Stack.Screen>
-             
+
+                {!booking ?
+                    <Stack.Screen name="ChildcareHome">
+                        {props => <ChildcareHome {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} basket={basket} setBasket={setBasket} partner={partner} setPartner={setPartner} />}
+                    </Stack.Screen>
+                    :
+                    <Stack.Screen name="Booking">
+                        {props => <Booking {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} basket={basket} setBasket={setBasket} partner={partner} setPartner={setPartner} />}
+                    </Stack.Screen>
+                }
+
                 <Stack.Screen name="SitterPage" options={{ presentation: "modal" }}>
                     {props => <SitterPage {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} basket={basket} setBasket={setBasket} item={item} setItem={setItem} partner={partner} setPartner={setPartner} />}
                 </Stack.Screen>
-               
+
             </Stack.Navigator>
         </StripeProvider>
     )
