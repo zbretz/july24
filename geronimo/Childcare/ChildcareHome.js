@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, ScrollView, TouchableWithoutFeedback, Platform, LayoutAnimation, TextInput } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, ScrollView, TouchableWithoutFeedback, Platform, LayoutAnimation, TextInput, } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { AntDesign, MaterialIcons, Ionicons, Entypo } from '@expo/vector-icons';
 import { Video, ResizeMode } from 'expo-av';
@@ -22,14 +22,35 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
 
     const changeNumOfChild = (inc_dec) => {
         if (inc_dec == 'inc' && numOfChildren < 4) {
-            // setNumOfChildren(num => {
-            //     if (num < 4) return num+1
-            // })
             setNumOfChildren((num) => num + 1)
-
         } else if (inc_dec == 'dec' && numOfChildren > 1) {
             setNumOfChildren((num) => num - 1)
         }
+    }
+
+    const bookNow = () => {
+        // axios.post(`${locals_url}/locals/placeOrder`, { user: masterState.user, basket, timeOfOrder: timeOfOrder, useWallet })
+        // .then(res => {
+        //     console.log('DATA: ', res.data)
+        //     if (res.data[0]) {
+        //         console.log('count: ', res.data[0].count)
+
+        //         Alert.alert('Order Placed', 'Your order will be ready for pickup shortly. Just give your name at the counter!');
+        //         navigation.navigate('LocalsHome')
+        //         setBasket({ partner: null, items: [], pickupTime: '20 mins' })
+
+        //        useWallet && setMasterState(masterState => {
+        //             return {...masterState, user: {...masterState.user, wallet: {...masterState.user.wallet, balance: res.data[1] }}}
+        //         })
+        //     } else {
+        //         console.log('nada')
+        //     }
+        // })
+        // .catch(e => console.log('order  error: ', e))    }
+
+
+        Alert.alert('Order Placed', 'Your order will be ready for pickup shortly. Just give your name at the counter!');
+    
     }
 
     return (
@@ -39,16 +60,14 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
 
 
 
-            <View style={{ padding: 20, marginTop: 20, flexDirection: 'row' }}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={{ backgroundColor: '#fff', zIndex: 98, borderRadius: 20, paddingTop: 10, marginLeft: -10 }} name="arrow-back-ios" size={24} color="black" >
-                    <MaterialIcons style={{ marginLeft: 10 }} name="arrow-back-ios" size={20} color="black" />
-                </TouchableOpacity>
-
+            <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: 20, marginTop: 20, flexDirection: 'row' }} name="arrow-back-ios" size={24} color="black" >
+                <MaterialIcons style={{ marginLeft: 10, paddingTop: 10, marginLeft: -10 }} name="arrow-back-ios" size={24} color="black" />
                 <View>
                     <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 32, marginTop: 0, }}>Childcare</Text>
                     <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 12, marginTop: 0, }}>in Park City</Text>
                 </View>
-            </View>
+            </TouchableOpacity>
+
 
             <View style={{ position: 'absolute', top: 40, right: 20, backgroundColor: '#FFCF56', height: 48, width: 48, zIndex: 98, borderRadius: 30, alignItems: 'center', justifyContent: 'center' }} name="arrow-back-ios" size={24} color="black" >
                 <Image style={{ height: 40, width: 40, borderRadius: 30 }} source={require('../assets/yellow-icon-bold.png')} />
@@ -61,7 +80,7 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                     <Text style={{ color: 'white', fontSize: 11, }}>Teacher</Text>
                 </View> */}
 
-                <TouchableOpacity onPress={() => navigation.navigate('SitterPage')} style={{ position: 'absolute', bottom: 20, right: 20, zIndex: 11, width: windowHeight * .2, padding: 10, marginRight: 20, borderRadius: 14, backgroundColor: 'rgba(0,0,0,.4)' }}>
+                <TouchableOpacity onPress={() => navigation.navigate('SitterPage')} style={{ position: 'absolute', bottom: 20, right: 20, zIndex: 11, width: windowHeight * .2, padding: 10, marginRight: 20, borderRadius: 14, backgroundColor: 'rgba(0,0,0,.6)' }}>
                     <Text style={{ color: 'white', fontSize: 16, fontWeight: 600 }}>Meet Natalia</Text>
                     <Text style={{ color: 'white', fontSize: 11, }}>Teacher</Text>
 
@@ -264,9 +283,9 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
 
 
 
-                        <View style={{ backgroundColor: '#ffcf56', padding: 14, paddingHorizontal: 18, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', alignSelf: 'center', marginTop: 20 }}>
+                        <TouchableOpacity onPress={bookNow} style={{ backgroundColor: '#ffcf56', padding: 14, paddingHorizontal: 18, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', alignSelf: 'center', marginTop: 20 }}>
                             <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 26, marginBottom: -6 }}>Book Now</Text>
-                        </View>
+                        </TouchableOpacity>
 
                     </View>
                 </View>
@@ -281,7 +300,7 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
 
 
                             <View style={{ width: '100%' }}>
-                                <CollapsibleView title="What are your rates?">
+                                <CollapsibleView title="What are the sitters' rates?">
                                     <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
                                         <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}><Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$25</Text>/hour when booking through the Easy Book form above. Sitters have individual rates when they are requested specifically. Additional children add <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$5</Text>. </Text>
                                     </View>
