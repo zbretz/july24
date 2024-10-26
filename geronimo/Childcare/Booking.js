@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, ScrollView, Linking } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, ScrollView, Linking, Platform, LayoutAnimation } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { AntDesign, MaterialIcons, Feather } from '@expo/vector-icons';
 import { Video, ResizeMode } from 'expo-av';
@@ -9,7 +9,12 @@ const windowWidth = Dimensions.get('window').width;
 
 export default ChildcareHome = ({ isConnected, masterState, setMasterState, navigation, basket, setBasket, partner, setPartner }) => {
 
+    if (Platform.OS === 'ios') {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    }
+
     const video = useRef(null);
+    const [showBookingOptions, setShowBookingOptions] = useState(false)
 
     const bookingDetails = {
         childrenAges: [1, 5, 8],
@@ -23,7 +28,7 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
     return (
 
 
-        <View style={{ backgroundColor: '#fff', height: '100%' }}>
+        <ScrollView style={{ backgroundColor: '#fff', height: '100%' }}>
 
 
 
@@ -40,10 +45,42 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                 <Image style={{ height: 40, width: 40, borderRadius: 30 }} source={require('../assets/yellow-icon-bold.png')} />
             </View>
 
+            <TouchableOpacity onPress={() => setShowBookingOptions(options => !options)} style={{ backgroundColor: '#e6e6e6', marginHorizontal: 20, padding: 8, borderRadius: 20, }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <Text style={{ fontSize: 20, color: '#000', marginRight: 10 }}>Book another date</Text>
+                    <AntDesign name="pluscircleo" size={20} color="#000" />
+                </View>
+            </TouchableOpacity>
+
+            {showBookingOptions &&
+                <View style={{ borderWidth: 0, margin: 0, borderColor: '#fff', marginTop: 10, flexDirection: 'row', marginHorizontal:10, padding: 8, borderRadius: 20, }}>
+                   <TouchableOpacity onPress={() => navigation.navigate('EasyBook')} style={{ backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, marginRight: 10, alignItems: 'center', paddingVertical: 20 }}>
+                        <Image style={{ flex: 1, width: '100%' }} resizeMode='contain' source={require('../assets/coffee.png')} />
+                        <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, justifyContent: 'center' }}>
+                            <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Easy Book</Text>
+                        </View>
+                    </TouchableOpacity>
+
+
+                    <TouchableOpacity onPress={() => navigation.navigate('SitterList')} style={{  backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, marginLeft: 10, alignItems: 'center', paddingVertical: 20, }}>
+                        <Image style={{ flex: 1, width:'100%', margin:8  }} resizeMode='contain' source={require('../assets/stroller.png')} />
+                        <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10,  justifyContent: 'center' }}>
+                            <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Search Sitters</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                       </View>
+            }
+
+
+
 
             <View style={{ marginHorizontal: 20, marginTop: 10, borderRadius: 20, borderWidth: 0 }}>
                 <View style={{}}>
-                    <Text style={{ fontSize: 30 }}>Current Booking</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <Text style={{ fontSize: 30 }}>Current Booking</Text>
+                        {/* <AntDesign name="pluscircleo" size={30} color="black" /> */}
+                    </View>
                     <Text style={{ fontSize: 20 }}>{bookingDetails.dateTime}</Text>
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={{ fontSize: 18 }}>{bookingDetails.childrenAges.length} children:  </Text>
@@ -108,7 +145,7 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                 </View>
             </View>
 
-        </View>
+        </ScrollView>
 
 
 
