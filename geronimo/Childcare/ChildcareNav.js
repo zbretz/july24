@@ -14,11 +14,14 @@ const Stack = createStackNavigator();
 
 export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatLog, setChatLog, navigation }) => {
 
-    // const [basket, setBasket] = useState({
-    //     partner: null, items: [], pickupTime: '20 mins'
-    // })
+   
 
-    const [booking, setBooking] = useState(true)
+    const [booking, setBooking] = useState({
+        age1:1, age2:3, dateTime:'Next tuesday  1pm-4pm', notes: 'no notes', babysitter:null, babysitterMessage:null
+    })
+
+    // const [booking, setBooking] = useState(null)
+
     const bookNow = () => {
         setBooking(true)
         // axios.post(`${locals_url}/locals/placeOrder`, { user: masterState.user, basket, timeOfOrder: timeOfOrder, useWallet })
@@ -63,7 +66,7 @@ export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatL
                     </Stack.Screen>
                     :
                     <Stack.Screen name="Booking">
-                        {props => <Booking {...props} masterState={masterState} setMasterState={setMasterState} />}
+                        {props => <Booking {...props} masterState={masterState} setMasterState={setMasterState} booking={booking} />}
                     </Stack.Screen>
                 }
 

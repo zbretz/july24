@@ -7,7 +7,7 @@ import LottieView from 'lottie-react-native';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
-export default ChildcareHome = ({ isConnected, masterState, setMasterState, navigation, basket, setBasket, partner, setPartner }) => {
+export default ChildcareHome = ({ isConnected, masterState, setMasterState, navigation, booking }) => {
 
     if (Platform.OS === 'ios') {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -16,12 +16,14 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
     const video = useRef(null);
     const [showBookingOptions, setShowBookingOptions] = useState(false)
 
-    const bookingDetails = {
-        childrenAges: [1, 5, 8],
-        dateTime: 'Dec 21 8am-1pm',
-        sitter: 'Natalia',
-        notes: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-    }
+    let numOfChildren = 1 + (!booking.age2 ? 0 : 1 + (!booking.age3 ? 0 : 1 + (!booking.age4 ? 0 : 1)))
+
+    // const booking = {
+    //     childrenAges: [1, 5, 8],
+    //     dateTime: 'Dec 21 8am-1pm',
+    //     sitter: 'Natalia',
+    //     notes: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+    // }
 
 
 
@@ -53,8 +55,8 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
             </TouchableOpacity>
 
             {showBookingOptions &&
-                <View style={{ borderWidth: 0, margin: 0, borderColor: '#fff', marginTop: 10, flexDirection: 'row', marginHorizontal:10, padding: 8, borderRadius: 20, }}>
-                   <TouchableOpacity onPress={() => navigation.navigate('EasyBook')} style={{ backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, marginRight: 10, alignItems: 'center', paddingVertical: 20 }}>
+                <View style={{ borderWidth: 0, margin: 0, borderColor: '#fff', marginTop: 10, flexDirection: 'row', marginHorizontal: 10, padding: 8, borderRadius: 20, }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('EasyBook')} style={{ backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, marginRight: 10, alignItems: 'center', paddingVertical: 20 }}>
                         <Image style={{ flex: 1, width: '100%' }} resizeMode='contain' source={require('../assets/coffee.png')} />
                         <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, justifyContent: 'center' }}>
                             <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Easy Book</Text>
@@ -62,14 +64,14 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                     </TouchableOpacity>
 
 
-                    <TouchableOpacity onPress={() => navigation.navigate('SitterList')} style={{  backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, marginLeft: 10, alignItems: 'center', paddingVertical: 20, }}>
-                        <Image style={{ flex: 1, width:'100%', margin:8  }} resizeMode='contain' source={require('../assets/stroller.png')} />
-                        <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10,  justifyContent: 'center' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('SitterList')} style={{ backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, marginLeft: 10, alignItems: 'center', paddingVertical: 20, }}>
+                        <Image style={{ flex: 1, width: '100%', margin: 8 }} resizeMode='contain' source={require('../assets/stroller.png')} />
+                        <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, justifyContent: 'center' }}>
                             <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Search Sitters</Text>
                         </View>
                     </TouchableOpacity>
 
-                       </View>
+                </View>
             }
 
 
@@ -81,22 +83,27 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                         <Text style={{ fontSize: 30 }}>Current Booking</Text>
                         {/* <AntDesign name="pluscircleo" size={30} color="black" /> */}
                     </View>
-                    <Text style={{ fontSize: 20 }}>{bookingDetails.dateTime}</Text>
+                    <Text style={{ fontSize: 20 }}>{booking.dateTime}</Text>
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ fontSize: 18 }}>{bookingDetails.childrenAges.length} children:  </Text>
-                        {bookingDetails.childrenAges.map((age) => {
+                        <Text style={{ fontSize: 18 }}>{numOfChildren} children. Ages: </Text>
+
+                        {booking.age1 && <Text style={{ fontSize: 18 }}> {booking.age1}</Text>}
+                        {booking.age2 && <Text style={{ fontSize: 18 }}>, {booking.age2}</Text>}
+                        {booking.age3 && <Text style={{ fontSize: 18 }}>, {booking.age3}</Text>}
+                        {booking.age4 && <Text style={{ fontSize: 18 }}>, {booking.age4}</Text>}
+                        {/* {booking.childrenAges.map((age) => {
                             return (
                                 <Text style={{ fontSize: 18 }}>{age}yo, </Text>
                             )
-                        })}
+                        })} */}
                         <Text style={{ fontSize: 18 }}></Text>
                     </View>
-                    <Text style={{ fontSize: 18 }}>Notes: {bookingDetails.notes}</Text>
+                    <Text style={{ fontSize: 18 }}>Notes: {booking.notes}</Text>
                 </View>
             </View>
 
             <View style={{ width: '100%' }}>
-                <View style={{ marginHorizontal: 20, marginTop: 10, borderRadius: 20, borderWidth: 1, borderColor: '#999' }} />
+                <View style={{ marginHorizontal: 20, marginTop: 10, borderRadius: 20, borderWidth: 1, borderColor: '#c9c9c9' }} />
             </View>
 
             <View style={{ marginHorizontal: 20, marginTop: 10, borderRadius: 20, borderWidth: 0 }}>

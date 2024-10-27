@@ -60,7 +60,7 @@ export default SitterList = ({ isConnected, masterState, setMasterState, navigat
 
 
 
-            <TouchableOpacity onPress={()=>navigation.navigate('SitterPage')} style={{ marginHorizontal: 20, flexDirection: 'row' }}>
+            <TouchableOpacity onPress={() => navigation.navigate('SitterPage', { name: 'Natalia' })} style={{ marginHorizontal: 20, flexDirection: 'row' }}>
 
                 <Video
                     ref={video}
@@ -73,13 +73,13 @@ export default SitterList = ({ isConnected, masterState, setMasterState, navigat
                     isMuted
                 // onPlaybackStatusUpdate={status => setStatus(() => status)}
                 />
-                <View onPress={() => navigation.navigate('SitterPage')} style={{ width: windowWidth * .6, height: windowWidth * .4, paddingHorizontal: 10, marginRight: 0, borderRadius: 14, flex: 1, }}>
+                <View style={{ width: windowWidth * .6, height: windowWidth * .4, paddingHorizontal: 10, marginRight: 0, borderRadius: 14, flex: 1, }}>
                     <Text style={{ color: '#000', fontSize: 22, fontWeight: 500 }}>Natalia</Text>
                     <Text style={{ color: '#000', fontSize: 19, fontWeight: 400 }}  >Hi Katie, I' Natalia. I'm looking forward to spending a few hours with your kids this Saturday.</Text>
                 </View>
             </TouchableOpacity>
 
-            <View style={{ marginHorizontal: 20, marginVertical: 30, flexDirection: 'row' }}>
+            <TouchableOpacity onPress={() => navigation.navigate('SitterPage', { name: 'Natalia1' })} style={{ marginHorizontal: 20, marginVertical: 30, flexDirection: 'row' }}>
 
                 <Video
                     ref={video}
@@ -92,12 +92,13 @@ export default SitterList = ({ isConnected, masterState, setMasterState, navigat
                     isMuted
                 // onPlaybackStatusUpdate={status => setStatus(() => status)}
                 />
-                <View onPress={() => navigation.navigate('SitterPage')} style={{ width: windowWidth * .6, height: windowWidth * .4, paddingHorizontal: 10, marginRight: 0, borderRadius: 14, flex: 1, }}>
+                <View style={{ width: windowWidth * .6, height: windowWidth * .4, paddingHorizontal: 10, marginRight: 0, borderRadius: 14, flex: 1, }}>
                     <Text style={{ color: '#000', fontSize: 22, fontWeight: 500 }}>Natalia</Text>
                     <Text style={{ color: '#000', fontSize: 19, fontWeight: 400 }}  >Hi Katie, I' Natalia. I'm looking forward to spending a few hours with your kids this Saturday.</Text>
                 </View>
-            </View>
-            <View style={{ marginHorizontal: 20, flexDirection: 'row' }}>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigation.navigate('SitterPage', { name: 'Natalia1' })} style={{ marginHorizontal: 20, flexDirection: 'row' }}>
 
                 <Video
                     ref={video}
@@ -110,11 +111,11 @@ export default SitterList = ({ isConnected, masterState, setMasterState, navigat
                     isMuted
                 // onPlaybackStatusUpdate={status => setStatus(() => status)}
                 />
-                <View onPress={() => navigation.navigate('SitterPage')} style={{ width: windowWidth * .6, height: windowWidth * .4, paddingHorizontal: 10, marginRight: 0, borderRadius: 14, flex: 1, }}>
+                <View style={{ width: windowWidth * .6, height: windowWidth * .4, paddingHorizontal: 10, marginRight: 0, borderRadius: 14, flex: 1, }}>
                     <Text style={{ color: '#000', fontSize: 22, fontWeight: 500 }}>Natalia</Text>
                     <Text style={{ color: '#000', fontSize: 19, fontWeight: 400 }}  >Hi Katie, I' Natalia. I'm looking forward to spending a few hours with your kids this Saturday.</Text>
                 </View>
-            </View>
+            </TouchableOpacity>
 
 
 

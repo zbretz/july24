@@ -28,6 +28,8 @@ export default EasyBook = ({ isConnected, masterState, setMasterState, navigatio
         }
     }
 
+    const request = {age1, age2, age3, age4, dateTime, notes}
+
     const bookNow = () => {
         // axios.post(`${locals_url}/locals/placeOrder`, { user: masterState.user, basket, timeOfOrder: timeOfOrder, useWallet })
         // .then(res => {
@@ -49,7 +51,7 @@ export default EasyBook = ({ isConnected, masterState, setMasterState, navigatio
         // .catch(e => console.log('order  error: ', e))    }
 
 
-        Alert.alert('Order Placed', 'Your order will be ready for pickup shortly. Just give your name at the counter!');
+        Alert.alert('Order Placed', JSON.stringify(request));
 
     }
 
