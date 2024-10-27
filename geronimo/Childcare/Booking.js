@@ -56,7 +56,7 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
 
             {showBookingOptions &&
                 <View style={{ borderWidth: 0, margin: 0, borderColor: '#fff', marginTop: 10, flexDirection: 'row', marginHorizontal: 10, padding: 8, borderRadius: 20, }}>
-                    <TouchableOpacity onPress={() => navigation.navigate('EasyBook')} style={{ backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, marginRight: 10, alignItems: 'center', paddingVertical: 20 }}>
+                    <TouchableOpacity onPress={() => {navigation.navigate('EasyBook');setShowBookingOptions(false)}} style={{ backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, marginRight: 10, alignItems: 'center', paddingVertical: 20 }}>
                         <Image style={{ flex: 1, width: '100%' }} resizeMode='contain' source={require('../assets/coffee.png')} />
                         <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, justifyContent: 'center' }}>
                             <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Easy Book</Text>
@@ -64,7 +64,7 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                     </TouchableOpacity>
 
 
-                    <TouchableOpacity onPress={() => navigation.navigate('SitterList')} style={{ backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, marginLeft: 10, alignItems: 'center', paddingVertical: 20, }}>
+                    <TouchableOpacity onPress={() => {navigation.navigate('SitterList');setShowBookingOptions(false)}} style={{ backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, marginLeft: 10, alignItems: 'center', paddingVertical: 20, }}>
                         <Image style={{ flex: 1, width: '100%', margin: 8 }} resizeMode='contain' source={require('../assets/stroller.png')} />
                         <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, justifyContent: 'center' }}>
                             <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Search Sitters</Text>
@@ -77,6 +77,7 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
 
 
 
+
             <View style={{ marginHorizontal: 20, marginTop: 10, borderRadius: 20, borderWidth: 0 }}>
                 <View style={{}}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -85,7 +86,7 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                     </View>
                     <Text style={{ fontSize: 20 }}>{booking.dateTime}</Text>
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ fontSize: 18 }}>{numOfChildren} children. Ages: </Text>
+                        <Text style={{ fontSize: 18 }}>{numOfChildren} {booking.age2 ? <Text>children. Ages: </Text> : <Text>child. Age:</Text>}</Text>
 
                         {booking.age1 && <Text style={{ fontSize: 18 }}> {booking.age1}</Text>}
                         {booking.age2 && <Text style={{ fontSize: 18 }}>, {booking.age2}</Text>}
@@ -103,7 +104,7 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
             </View>
 
             <View style={{ width: '100%' }}>
-                <View style={{ marginHorizontal: 20, marginTop: 10, borderRadius: 20, borderWidth: 1, borderColor: '#c9c9c9' }} />
+                <View style={{ marginHorizontal: 20, marginTop: 10, borderRadius: 20, borderWidth: .5, borderColor: '#d9d9d9' }} />
             </View>
 
             <View style={{ marginHorizontal: 20, marginTop: 10, borderRadius: 20, borderWidth: 0 }}>
@@ -114,43 +115,70 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
 
 
 
-            <View style={{ marginHorizontal: 20, flexDirection: 'row' }}>
 
+            {booking.sitter ?
 
+                <>
+                    <View style={{ marginHorizontal: 20, flexDirection: 'row' }}>
+                        <Video
+                            ref={video}
+                            style={{ width: windowWidth * .4, height: windowWidth * .4, marginTop: 0, borderRadius: 20 }}
+                            source={require('../assets/babysitter.mov')}
+                            useNativeControls
+                            resizeMode={ResizeMode.COVER}
+                            isLooping
+                            // shouldPlay
+                            isMuted
+                        // onPlaybackStatusUpdate={status => setStatus(() => status)}
+                        />
+                        <View onPress={() => navigation.navigate('SitterPage')} style={{ width: windowWidth * .6, height: windowWidth * .4, paddingHorizontal: 10, marginRight: 0, borderRadius: 14, flex: 1, }}>
+                            <Text style={{ color: '#000', fontSize: 22, fontWeight: 500 }}>Natalia</Text>
+                            <Text style={{ color: '#000', fontSize: 19, fontWeight: 400 }}  >Hi Katie, I' Natalia. I'm looking forward to spending a few hours with your kids this Saturday.</Text>
+                            <Text style={{ color: '#000', fontSize: 12, fontWeight: 400 }}  >12/23/22</Text>
+                        </View>
+                    </View>
 
-                <Video
-                    ref={video}
-                    style={{ width: windowWidth * .4, height: windowWidth * .4, marginTop: 0, borderRadius: 20 }}
-                    source={require('../assets/babysitter.mov')}
-                    useNativeControls
-                    resizeMode={ResizeMode.COVER}
-                    isLooping
-                    // shouldPlay
-                    isMuted
-                // onPlaybackStatusUpdate={status => setStatus(() => status)}
-                />
-                <View onPress={() => navigation.navigate('SitterPage')} style={{ width: windowWidth * .6, height: windowWidth * .4, paddingHorizontal: 10, marginRight: 0, borderRadius: 14, flex: 1, }}>
-                    <Text style={{ color: '#000', fontSize: 22, fontWeight: 500 }}>Natalia</Text>
-                    <Text style={{ color: '#000', fontSize: 19, fontWeight: 400 }}  >Hi Katie, I' Natalia. I'm looking forward to spending a few hours with your kids this Saturday.</Text>
-                    <Text style={{ color: '#000', fontSize: 12, fontWeight: 400 }}  >12/23/22</Text>
+                    <View style={{ marginVertical: 30, marginHorizontal: 20, alignSelf: 'flex-end' }}>
+                        <View style={{
+                            borderRadius: 30, borderWidth: 0, backgroundColor: '#e6e6e6', shadowColor: '#000', padding: 10, paddingHorizontal: 20,
+                            shadowOpacity: 0.28,
+                            shadowRadius: 2,
+                            shadowOffset: {
+                                width: 0,
+                                height: 0,
+                            }
+                        }}>
+                            <TouchableOpacity onPress={() => { Linking.openURL(`tel:${9175751955}`) }} style={{ borderRadius: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                <Feather style={{ marginRight: 10 }} name="phone" size={22} color="#000" /><Text style={{ fontWeight: 600, fontSize: 22, fontFamily: 'Aristotelica-Regular', textAlign: 'center' }}>Call Natalia</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </>
+
+                :
+                <View style={{ marginHorizontal: 20, flexDirection: 'row' }}>
+
+                    <View style={{ marginTop: 0, borderRadius: 2, width: windowWidth * .4, height: windowWidth * .4, backgroundColor: '#e6e6e6', borderRadius: 20, alignItems: 'center', justifyContent: 'center' }}>
+                        <Image style={{ flex: 1, width: windowWidth * .3, height: windowWidth * .3, }} resizeMode='contain' source={require('../assets/person.png')} />
+                    </View>
+                    <View onPress={() => navigation.navigate('SitterPage')} style={{ width: windowWidth * .6, height: windowWidth * .4, paddingHorizontal: 10, borderRadius: 14, flex: 1, }}>
+                        <View style={{ flexDirection: 'row', flex:1 }}>
+                            <Text style={{ color: '#000', fontSize: 19, fontWeight: 400, textAlign: 'left' }}  >Hi! Your sitter is being assigned. Give us a call if you'd like a faster update.</Text>
+                            <TouchableOpacity onPress={() => { Linking.openURL(`tel:${9175751955}`) }} style={{ borderRadius: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffcf56', alignSelf: 'flex-end', padding: 10, position: 'absolute', bottom: 20, right: 0 }}>
+                                <Feather style={{}} name="phone" size={22} color="#000" />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </View>
-            </View>
+            }
 
-            <View style={{ marginVertical: 30, marginHorizontal: 20, alignSelf: 'flex-end' }}>
-                <View style={{
-                    borderRadius: 30, borderWidth: 0, backgroundColor: '#e6e6e6', shadowColor: '#000', padding: 10, paddingHorizontal: 20,
-                    shadowOpacity: 0.28,
-                    shadowRadius: 2,
-                    shadowOffset: {
-                        width: 0,
-                        height: 0,
-                    }
-                }}>
-                    <TouchableOpacity onPress={() => { Linking.openURL(`tel:${9175751955}`) }} style={{ borderRadius: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                        <Feather style={{ marginRight: 10 }} name="phone" size={22} color="#000" /><Text style={{ fontWeight: 600, fontSize: 22, fontFamily: 'Aristotelica-Regular', textAlign: 'center' }}>Call Natalia</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+
+
+
+
+
+
+
 
         </ScrollView>
 

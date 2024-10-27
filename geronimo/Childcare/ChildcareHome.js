@@ -9,7 +9,7 @@ import Faq from './Faq'
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
-export default ChildcareHome = ({ isConnected, masterState, setMasterState, navigation, basket, setBasket, partner, setPartner }) => {
+export default ChildcareHome = ({  masterState, setMasterState, navigation, setBooking }) => {
 
     const video = useRef(null);
 
@@ -95,7 +95,7 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
             </View>
 
 
-            <EasyBook />
+            <EasyBook setBooking={setBooking} navigation={navigation} />
 
             <TouchableOpacity onPress={()=>navigation.navigate('SitterList')} style={{ marginTop: 10, borderRadius: 20, borderWidth: 0, marginVertical: 10 }}>
                 <Text style={{ fontSize: 30, textAlign: 'center' }}>Meet the Sitters</Text>

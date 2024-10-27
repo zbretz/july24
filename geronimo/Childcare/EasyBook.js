@@ -7,9 +7,8 @@ import LottieView from 'lottie-react-native';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
-export default EasyBook = ({ isConnected, masterState, setMasterState, navigation, basket, setBasket, partner, setPartner }) => {
+export default EasyBook = ({ masterState, setMasterState, sitter, navigation, booking, setBooking }) => {
 
-    const video = useRef(null);
 
     const [age1, setAge1] = useState(null)
     const [age2, setAge2] = useState(null)
@@ -28,9 +27,19 @@ export default EasyBook = ({ isConnected, masterState, setMasterState, navigatio
         }
     }
 
-    const request = {age1, age2, age3, age4, dateTime, notes}
+    const request = { age1, age2, age3, age4, dateTime, notes }
 
     const bookNow = () => {
+
+        setBooking(booking => {
+            // return ({ age1: 1, age2: 3, dateTime: 'Next tuesday  1pm-4pm', notes: 'no notes', sitter: null, sitterMessage: null })
+            return ({ age1, age2, age3, age4, dateTime, notes, sitter, sitterMessage: null })
+            // return ({...booking, sitter:'Natalia'})
+        })
+
+        booking && navigation.navigate('Booking')
+
+
         // axios.post(`${locals_url}/locals/placeOrder`, { user: masterState.user, basket, timeOfOrder: timeOfOrder, useWallet })
         // .then(res => {
         //     console.log('DATA: ', res.data)
@@ -69,7 +78,12 @@ export default EasyBook = ({ isConnected, masterState, setMasterState, navigatio
                         height: 0,
                     },
                 }}>
-                    <Text style={{ fontWeight: 600, fontSize: 32, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', textAlign: 'center' }}>Easy Book</Text>
+
+                    {sitter ?
+                        <Text style={{ fontWeight: 600, fontSize: 32, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', textAlign: 'center' }}>Book {sitter.name}</Text>
+                        :
+                        <Text style={{ fontWeight: 600, fontSize: 32, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', textAlign: 'center' }}>Easy Book</Text>
+                    }
 
 
 

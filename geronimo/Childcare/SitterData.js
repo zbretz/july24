@@ -1,24 +1,27 @@
 const SitterData = {
 
     'Natalia': {
-        bio: 'Located inside of The Market, this is our favorite place in all of Park City to get a coffee.',
-        funFacts: 'hours',
+        name:'Natalia',
+        bio: 'Expert baby hairstylist. Get your baby looking fa-resh.',
+        funFacts: ['fact1','fact2','fact3'],
         cover_photo: require('../assets/dailyrise.jpeg'),
         rate: 28
     },
 
     'Natalia1': {
-        bio: 'Located inside of The Market, this is our favorite place in all of Park City to get a coffee.',
-        funFacts: 'hours',
+        name:'Natalia1',
+        bio: 'Expert baby hairstylist. Get your baby looking fa-resh.',
+        funFacts: ['fact1','fact2','fact3'],
         cover_photo: require('../assets/dailyrise.jpeg'),
-        rate: 30
+        rate: 28
     },
 
     'Natalia2': {
-        bio: 'Located inside of The Market, this is our favorite place in all of Park City to get a coffee.',
-        funFacts: 'hours',
+        name:'Natalia2',
+        bio: 'Expert baby hairstylist. Get your baby looking fa-resh.',
+        funFacts: ['fact1','fact2','fact3'],
         cover_photo: require('../assets/dailyrise.jpeg'),
-        rate: 32
+        rate: 28
     },
 
 

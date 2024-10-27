@@ -16,37 +16,12 @@ export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatL
 
    
 
-    const [booking, setBooking] = useState({
-        age1:1, age2:3, dateTime:'Next tuesday  1pm-4pm', notes: 'no notes', babysitter:null, babysitterMessage:null
-    })
+    // const [booking, setBooking] = useState({
+    //     age1:1, age2:3, dateTime:'Next tuesday  1pm-4pm', notes: 'no notes', sitter:null, sitterMessage:null
+    // })
 
-    // const [booking, setBooking] = useState(null)
+    const [booking, setBooking] = useState(null)
 
-    const bookNow = () => {
-        setBooking(true)
-        // axios.post(`${locals_url}/locals/placeOrder`, { user: masterState.user, basket, timeOfOrder: timeOfOrder, useWallet })
-        // .then(res => {
-        //     console.log('DATA: ', res.data)
-        //     if (res.data[0]) {
-        //         console.log('count: ', res.data[0].count)
-
-        //         Alert.alert('Order Placed', 'Your order will be ready for pickup shortly. Just give your name at the counter!');
-        //         navigation.navigate('LocalsHome')
-        //         setBasket({ partner: null, items: [], pickupTime: '20 mins' })
-
-        //        useWallet && setMasterState(masterState => {
-        //             return {...masterState, user: {...masterState.user, wallet: {...masterState.user.wallet, balance: res.data[1] }}}
-        //         })
-        //     } else {
-        //         console.log('nada')
-        //     }
-        // })
-        // .catch(e => console.log('order  error: ', e))    }
-
-
-        Alert.alert('Order Placed', 'Your order will be ready for pickup shortly. Just give your name at the counter!');
-
-    }
 
     return (
         <StripeProvider
@@ -62,7 +37,7 @@ export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatL
 
                 {!booking ?
                     <Stack.Screen name="ChildcareHome">
-                        {props => <ChildcareHome {...props} masterState={masterState} setMasterState={setMasterState} />}
+                        {props => <ChildcareHome {...props} masterState={masterState} setMasterState={setMasterState}  setBooking={setBooking}  />}
                     </Stack.Screen>
                     :
                     <Stack.Screen name="Booking">
@@ -79,7 +54,7 @@ export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatL
                 </Stack.Screen>
 
                 <Stack.Screen name="EasyBook" options={{ presentation: "modal" }}>
-                    {props => <EasyBook {...props} masterState={masterState} setMasterState={setMasterState} />}
+                    {props => <EasyBook {...props} masterState={masterState} setMasterState={setMasterState} booking={booking} setBooking={setBooking} />}
                 </Stack.Screen>
 
             </Stack.Navigator>
