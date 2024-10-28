@@ -5,15 +5,17 @@ const SitterData = {
         bio: 'Expert baby hairstylist. Get your baby looking fa-resh.',
         funFacts: ['fact1','fact2','fact3'],
         cover_photo: require('../assets/dailyrise.jpeg'),
-        rate: 28
+        rate: 28,
+        phone: '9175751955'
     },
 
-    'Natalia1': {
-        name:'Natalia1',
-        bio: 'Expert baby hairstylist. Get your baby looking fa-resh.',
+    'Lynsey': {
+        name:'Lynsey',
+        bio: 'I don\'t know Lynsey at all!',
         funFacts: ['fact1','fact2','fact3'],
         cover_photo: require('../assets/dailyrise.jpeg'),
-        rate: 28
+        rate: 28,
+        phone: '9175751955'
     },
 
     'Natalia2': {
@@ -21,7 +23,8 @@ const SitterData = {
         bio: 'Expert baby hairstylist. Get your baby looking fa-resh.',
         funFacts: ['fact1','fact2','fact3'],
         cover_photo: require('../assets/dailyrise.jpeg'),
-        rate: 28
+        rate: 28,
+        phone: '9175751955'
     },
 
 

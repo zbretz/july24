@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, Scr
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { AntDesign, MaterialIcons, Feather } from '@expo/vector-icons';
 import { Video, ResizeMode } from 'expo-av';
-import LottieView from 'lottie-react-native';
+import SitterData from './SitterData.js'
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -60,26 +60,30 @@ export default SitterList = ({ isConnected, masterState, setMasterState, navigat
 
 
 
-            <TouchableOpacity onPress={() => navigation.navigate('SitterPage', { name: 'Natalia' })} style={{ marginHorizontal: 20, flexDirection: 'row' }}>
 
-                <Video
-                    ref={video}
-                    style={{ width: windowWidth * .4, height: windowWidth * .4, marginTop: 0, borderRadius: 20 }}
-                    source={require('../assets/babysitter.mov')}
-                    useNativeControls
-                    resizeMode={ResizeMode.COVER}
-                    isLooping
-                    // shouldPlay
-                    isMuted
-                // onPlaybackStatusUpdate={status => setStatus(() => status)}
-                />
-                <View style={{ width: windowWidth * .6, height: windowWidth * .4, paddingHorizontal: 10, marginRight: 0, borderRadius: 14, flex: 1, }}>
-                    <Text style={{ color: '#000', fontSize: 22, fontWeight: 500 }}>Natalia</Text>
-                    <Text style={{ color: '#000', fontSize: 19, fontWeight: 400 }}  >Hi Katie, I' Natalia. I'm looking forward to spending a few hours with your kids this Saturday.</Text>
-                </View>
-            </TouchableOpacity>
+            {Object.values(SitterData).map(sitter => {
+                return (
+                    <TouchableOpacity onPress={() => navigation.navigate('SitterPage', { name: sitter.name })} style={{ marginHorizontal: 20, flexDirection: 'row', marginBottom:20 }}>
+                        <Video
+                            ref={video}
+                            style={{ width: windowWidth * .4, height: windowWidth * .4, marginTop: 0, borderRadius: 20 }}
+                            source={require('../assets/babysitter.mov')}
+                            useNativeControls
+                            resizeMode={ResizeMode.COVER}
+                            isLooping
+                            // shouldPlay
+                            isMuted
+                        // onPlaybackStatusUpdate={status => setStatus(() => status)}
+                        />
+                        <View style={{ width: windowWidth * .6, height: windowWidth * .4, paddingHorizontal: 10, marginRight: 0, borderRadius: 14, flex: 1, }}>
+                            <Text style={{ color: '#000', fontSize: 22, fontWeight: 500 }}>{sitter.name}</Text>
+                            <Text style={{ color: '#000', fontSize: 19, fontWeight: 400 }}  >{sitter.bio}</Text>
+                        </View>
+                    </TouchableOpacity>
+                )
+            })}
 
-            <TouchableOpacity onPress={() => navigation.navigate('SitterPage', { name: 'Natalia1' })} style={{ marginHorizontal: 20, marginVertical: 30, flexDirection: 'row' }}>
+            {/* <TouchableOpacity onPress={() => navigation.navigate('SitterPage', { name: 'Natalia1' })} style={{ marginHorizontal: 20, marginVertical: 30, flexDirection: 'row' }}>
 
                 <Video
                     ref={video}
@@ -115,13 +119,7 @@ export default SitterList = ({ isConnected, masterState, setMasterState, navigat
                     <Text style={{ color: '#000', fontSize: 22, fontWeight: 500 }}>Natalia</Text>
                     <Text style={{ color: '#000', fontSize: 19, fontWeight: 400 }}  >Hi Katie, I' Natalia. I'm looking forward to spending a few hours with your kids this Saturday.</Text>
                 </View>
-            </TouchableOpacity>
-
-
-
-
-
-
+            </TouchableOpacity> */}
 
         </ScrollView>
 

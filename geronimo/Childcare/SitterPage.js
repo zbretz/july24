@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, Scr
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { AntDesign, MaterialIcons, Ionicons, Octicons } from '@expo/vector-icons';
 import { Video, ResizeMode } from 'expo-av';
-import SitterData from './sitterData.js'
+import SitterData from './SitterData.js'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -16,7 +16,6 @@ export default SitterPage = ({ route, isConnected, masterState, setMasterState, 
 
     return (
         <ScrollView style={{ backgroundColor: '#fff', height: '100%' }}>
-
 
 
             <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: 20, marginTop: 20, flexDirection: 'row' }}>
