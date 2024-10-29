@@ -95,7 +95,7 @@ export default ChildcareHome = ({  masterState, setMasterState, navigation, setB
             </View>
 
 
-            <EasyBook setBooking={setBooking} navigation={navigation} />
+            <EasyBook masterState={masterState} setBooking={setBooking} navigation={navigation} setMasterState={setMasterState} />
 
             <TouchableOpacity onPress={()=>navigation.navigate('SitterList')} style={{ marginTop: 10, borderRadius: 20, borderWidth: 0, marginVertical: 10 }}>
                 <Text style={{ fontSize: 30, textAlign: 'center' }}>Meet the Sitters</Text>

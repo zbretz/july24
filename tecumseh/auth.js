@@ -77,7 +77,7 @@ router.post('/userCode', async (req, res) => {
         if (stripped_phone === '5551234567' && code === 9991) {
             //code for app store testing
             console.log('correct: ', code)
-            user = await db__.collection('users').findOneAndUpdate({ phone: stripped_phone }, { $set: { confirmedWithCode: true  } }, { returnDocument: "after" });
+            user = await db__.collection('users').findOneAndUpdate({ phone: stripped_phone }, { $set: { confirmedWithCode: true } }, { returnDocument: "after" });
             res.status(200).send({ status: 'ok', user: user })
             return
         }
@@ -110,6 +110,67 @@ router.post('/userCode', async (req, res) => {
     res.status(200).send({ status: 'incorrect' });
 
 });
+
+router.post('/childcareSignIn', async (req, res) => {
+    const code = Math.floor(1000 + Math.random() * 9000);
+
+    let user = req.body.user
+    let stripped_phone = user.phone.replace(/[^0-9]/g, "")
+
+    console.log('code: ', code, 'sign in user: ', user)
+    console.log('stipped phone:', stripped_phone)
+
+    try {
+        let saved_user = await db__.collection('users').findOneAndUpdate({ phone: stripped_phone }, { $set: { confirmationCode: code, confirmedWithCode: false, } }, { returnDocument: "after" })
+        console.log('auth user?: ', saved_user)
+
+        if (saved_user) {
+            console.log('saved user: ', saved_user)
+            // res.status(200).send(false);
+            sendCode(saved_user.phone, code)
+            res.status(200).send('ok');
+        } else {
+            registrationCodes[stripped_phone] = code
+            console.log('registration codes: ', registrationCodes)
+            await db__.collection('users').insertOne({ firstName: user.firstName, lastName: user.lastName, phone: stripped_phone, confirmationCode: code, signupDate: Date.now(), confirmedWithCode: false, driver: null, activeRides: [], registeredViaChildcare:true })
+            sendCode(stripped_phone, code)
+            res.status(200).send('ok');
+
+        }
+    } catch (e) {
+        console.log('sign in error: ', e)
+    }
+
+    // res.status(200).send('ok');
+
+});
+
+
+
+
+router.post('/childcareCode', async (req, res) => {
+    let phone = req.body.phone
+    let code = Number(req.body.code)
+    let stripped_phone = phone.replace(/[^0-9]/g, "")
+
+    console.log('userrrr:', phone)
+
+    user = await db__.collection('users').findOne({ phone: stripped_phone })
+
+    if (code === user.confirmationCode) {
+        console.log('OK!')
+        user = await db__.collection('users').findOneAndUpdate({ phone: stripped_phone }, { $set: { confirmedWithCode: true } }, { returnDocument: "after" });
+        console.log('code user: ', user)
+        res.status(200).send({ status: 'ok', user: user })
+        return
+    }
+
+    console.log('signin NOT OK!')
+    res.status(200).send({ status: 'incorrect' });
+
+});
+
+
 
 
 
