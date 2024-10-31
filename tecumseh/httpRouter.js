@@ -275,11 +275,11 @@ router.post('/payment-sheet', async (req, res) => {
         currency: 'usd',
         customer: stripe_customer_id,
         payment_method_types: ['card'],
-        ...(rideDetail.user.autoReceipts && rideDetail.user.email) && {receipt_email: rideDetail.user.email}     // Object.assign
+        ...(rideDetail.user.autoReceipts && rideDetail.user.email) && { receipt_email: rideDetail.user.email }     // Object.assign
     }
 
     const paymentIntent = await stripe.paymentIntents.create(initIntent);
-    
+
     console.log("PI: ", paymentIntent)
     res.json({
         ephemeralKey: ephemeralKey.secret,
@@ -367,6 +367,18 @@ router.post('/local-payment-sheet', async (req, res) => {
         // publishableKey: 'pk_test_51Nj9WRAUREUmtjLCVtihPOMA6K9A28JW0goEfBW14Poj6Y6AJJUBBXcHhwUfrTsEQEJ15S26FBGDGbkVjm84x8f900VG5onWlT' // test key
 
     });
+
+});
+
+router.post('/booking', async (req, res) => {
+    console.log('childcare booking: ', req.body)
+
+    try {
+        res.status(200).send(true);
+
+    } catch (e) {
+        console.log('fetchchatlog error: ', e)
+    }
 
 });
 

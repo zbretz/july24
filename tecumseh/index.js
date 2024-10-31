@@ -25,6 +25,7 @@ app.set('socketio', io); // https://stackoverflow.com/questions/18856190/use-soc
 app.use('/user', user);
 app.use('/driver', driver);
 app.use('/auth', auth);
+app.use('/childcare', httpRouter);
 app.use('/', httpRouter);
 
 

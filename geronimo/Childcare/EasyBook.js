@@ -6,7 +6,7 @@ import axios from 'axios';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
-export default EasyBook = ({ masterState, setMasterState, sitter=null, navigation, booking, setBooking }) => {
+export default EasyBook = ({ masterState, setMasterState, sitter = null, navigation, booking, setBooking }) => {
 
 
     const [age1, setAge1] = useState(null)
@@ -18,6 +18,8 @@ export default EasyBook = ({ masterState, setMasterState, sitter=null, navigatio
     const [notes, setNotes] = useState('')
     const [showNotes, setShowNotes] = useState(false)
     // const [error, setError] = useState()
+
+    const booking1 = { age1, age2, age3, age4, dateTime, notes, sitter, sitterMessage: null }
 
     const changeNumOfChild = (inc_dec) => {
         if (inc_dec == 'inc' && numOfChildren < 4) {
@@ -37,45 +39,26 @@ export default EasyBook = ({ masterState, setMasterState, sitter=null, navigatio
 
         // Alert.alert('Booking Placed', JSON.stringify(request));
 
+        axios.post(`${url}/childcare/booking`, { booking1 })
+            .then(res => {
+                if (res.data) {
+                    console.log(res.data)
 
-        // console.log('proceed with booking')
-
-
-        setBooking(booking => {
-            // return ({ age1: 1, age2: 3, dateTime: 'Next tuesday  1pm-4pm', notes: 'no notes', sitter: null, sitterMessage: null })
-            return ({ age1, age2, age3, age4, dateTime, notes, sitter, sitterMessage: null })
-            // return ({...booking, sitter:'Natalia'})
-        })
-
-        booking && navigation.navigate('Booking')
-
-
-
-
-
-
-        // axios.post(`${locals_url}/locals/placeOrder`, { user: masterState.user, basket, timeOfOrder: timeOfOrder, useWallet })
-        // .then(res => {
-        //     console.log('DATA: ', res.data)
-        //     if (res.data[0]) {
-        //         console.log('count: ', res.data[0].count)
-
-        //         Alert.alert('Order Placed', 'Your order will be ready for pickup shortly. Just give your name at the counter!');
-        //         navigation.navigate('LocalsHome')
-        //         setBasket({ partner: null, items: [], pickupTime: '20 mins' })
-
-        //        useWallet && setMasterState(masterState => {
-        //             return {...masterState, user: {...masterState.user, wallet: {...masterState.user.wallet, balance: res.data[1] }}}
-        //         })
-        //     } else {
-        //         console.log('nada')
-        //     }
-        // })
-        // .catch(e => console.log('order  error: ', e))    }
-
-
-
+                    setBooking(booking => {
+                        // return ({ age1: 1, age2: 3, dateTime: 'Next tuesday  1pm-4pm', notes: 'no notes', sitter: null, sitterMessage: null })
+                        return ({ age1, age2, age3, age4, dateTime, notes, sitter, sitterMessage: null })
+                        // return ({...booking, sitter:'Natalia'})
+                    })
+                    booking && navigation.navigate('Booking')
+                } else {
+                    console.log('nada')
+                }
+            })
+            .catch(e => console.log('order  error: ', e))
     }
+
+
+
 
 
 
