@@ -3,6 +3,8 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import { AntDesign, MaterialIcons, Ionicons, Entypo } from '@expo/vector-icons';
 import { url } from '../url_toggle'
 import axios from 'axios';
+import populateData from '../CoreNav/populateData';
+
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
@@ -34,7 +36,12 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
     const bookNow = async () => {
 
         if (!masterState.user) {
-            await signIn()
+            let signInSuccessful = await signIn()
+            console.log('sigin success', signInSuccessful)
+
+            if (!signInSuccessful){ 
+                console.log('abort'); return 
+            }
         }
 
         // Alert.alert('Booking Placed', JSON.stringify(request));
@@ -74,7 +81,6 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
     const [error, setError] = useState()
 
     const [modalVisible, setModalVisible] = useState(false)
-    const userRef = useRef()
 
     const errorTimeout = (msg,) => {
         setError(msg)
@@ -94,27 +100,13 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
 
     const signIn = async () => {
 
-        if (!isValidName(firstName, lastName)) { errorTimeout("Please enter a valid name"); return }
-        if (!isValidPhone(phone)) { errorTimeout("Please enter valid phone number"); return }
-
-        console.log('first name: ', firstName)
+        if (!isValidName(firstName, lastName)) { errorTimeout("Please enter a valid name"); return false }
+        if (!isValidPhone(phone)) { errorTimeout("Please enter valid phone number"); return false }
 
         let signIn = await axios.post(`${url}/auth/childcareSignIn`, { user: { firstName, lastName, phone } })
-
         console.log('sign in response: ', signIn.data)
-        // .then(res => {
-        //     if (res.data) {
-        //         console.log('register user response: ', res.data)
 
-        await awaitCode()
-        console.log('stop waiting')
-
-
-        //     }
-        // })
-
-
-
+        return await awaitCode()
     }
 
     const promiseref = useRef(null)
@@ -122,17 +114,9 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
     const awaitCode = () => {
         setModalVisible(true)
         return new Promise((resolve, reject) => {
-
             promiseref.current = resolve
-            // setTimeout(() => {
-            //     setModalVisible(false)
-            //     resolve()
-            // }, 3000)
-
-
         })
     }
-
 
 
     const [code, setCode] = useState('')
@@ -142,29 +126,22 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
         setCode(code)
 
         if (code.length === 4) {
-            //     promiseref.current()
-            // }
             axios.post(`${url}/auth/childcareCode`, { phone: phone, code })
                 .then(async (res) => {
                     if (res.data.status == 'ok') {
                         console.log('user code response: ', res.data.user)
-                        setMasterState(masterState => ({ ...masterState, user: res.data.user }))
-                        promiseref.current('logged in')
+                        populateData({masterState, setMasterState, loginUser:res.data.user})
+                        promiseref.current(true)
                         setModalVisible(false)
                     } else {
                         setCode('')
                         errorTimeout('Incorrect Code')
                     }
-
                 })
         }
-
     }
 
-
-
     return (
-
 
         <View style={{ width: '100%', }}>
 
@@ -180,9 +157,6 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
 
                     <View style={{ backgroundColor: '#f2f2f2', top: windowHeight * .1, alignSelf: 'center', borderRadius: 20, padding: 20, justifyContent: 'center' }}>
                         <View style={{ backgroundColor: '#e6e6e6', borderRadius: 20, padding: 20, alignItems: 'center', justifyContent: 'center', }}>
-
-                            {/* <TouchableOpacity onPress={async () => { await enterCode(); console.log('post-promise') }} style={{ height: 100, width: 100, backgroundColor: 'green', }} /> */}
-                            <TouchableOpacity onPress={() => { promiseref.current(); console.log('post-promise') }} style={{ height: 100, width: 100, backgroundColor: 'green', }} />
 
                             <View style={{ borderRadius: 30, }}>
                                 <>
