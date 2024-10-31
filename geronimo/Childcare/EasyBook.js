@@ -44,6 +44,10 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
             }
         }
 
+
+        if (!age1) { errorTimeout("Please enter child's age"); return}
+        if (!dateTime) { errorTimeout("Please enter date and time"); return}
+
         // Alert.alert('Booking Placed', JSON.stringify(request));
 
         axios.post(`${url}/childcare/booking`, { booking1 })
@@ -328,9 +332,9 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
 
                     {numOfChildren < 4 &&
 
-                        <TouchableOpacity onPress={() => changeNumOfChild('inc')} style={{ marginHorizontal: 20, marginBottom: 10, flexDirection: 'row', alignItems: 'center' }}>
+                        <TouchableOpacity onPress={() => changeNumOfChild('inc')} style={{ marginHorizontal: 20, marginBottom: 10, flexDirection: 'row', alignItems: 'center', }}>
                             <Ionicons style={{ marginTop: -6 }} name="add-circle-outline" size={22} color="black" />
-                            <Text style={{ marginBottom: -4, fontFamily: 'Aristotelica-Regular', fontSize: 22, }}> add child</Text>
+                            <Text style={{ marginBottom: 0, fontFamily: 'Aristotelica-Regular', fontSize: 22, }}> Add child</Text>
                         </TouchableOpacity>
                     }
                     <View style={{ marginHorizontal: 20, borderBottomColor: '#d9d9d9', borderBottomWidth: 2 }} />
@@ -352,9 +356,9 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
                     <View style={{ marginHorizontal: 20, borderBottomColor: '#d9d9d9', borderBottomWidth: 2, marginTop: 20 }} />
 
 
-                    <TouchableOpacity onPress={() => setShowNotes(true)} style={{ margin: 20, marginBottom: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <TouchableOpacity onPress={() => setShowNotes(show=>!show)} style={{ margin: 20, marginBottom: 10, flexDirection: 'row', alignItems: 'center' }}>
                         <Ionicons style={{ marginTop: -6 }} name="add-circle-outline" size={22} color="black" />
-                        <Text style={{ marginBottom: -4, fontFamily: 'Aristotelica-Regular', fontSize: 22, }}>Add Notes</Text>
+                        <Text style={{ marginBottom: 0, fontFamily: 'Aristotelica-Regular', fontSize: 22, }}> Add Notes</Text>
                     </TouchableOpacity>
 
                     {showNotes &&
