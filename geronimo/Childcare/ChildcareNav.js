@@ -19,7 +19,7 @@ export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatL
     //     if (masterState
     // },[])
 
-    const upcomingBooking = masterState.user?.childcareBookings.length ? masterState.user.childcareBookings[0] : null
+    let upcomingBooking = masterState.user?.childcareBookings.length ? masterState.user.childcareBookings[0] : null
 
     console.log('upcoming booking: ', upcomingBooking)
 
@@ -28,12 +28,16 @@ export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatL
     //     age1:1, age2:3, dateTime:'Next tuesday  1pm-4pm', notes: 'no notes', sitter:null, sitterMessage:null
     // })
 
-    const [booking, setBooking] = useState(upcomingBooking)
+    upcomingBooking = { age1: 1, age2: 3, dateTime: 'Next tuesday  1pm-4pm', notes: 'no notes', sitter: 'Natalia', sitterMessage: null }
+
+
+    // const [booking, setBooking] = useState(upcomingBooking)
+    const [booking, setBooking] = useState(null)
 
     useEffect(() => {
         setBooking(upcomingBooking)
-    }, [upcomingBooking])
-
+        // }, [upcomingBooking])
+    }, [])
 
     return (
         <StripeProvider

@@ -372,8 +372,21 @@ router.post('/local-payment-sheet', async (req, res) => {
 
 router.post('/booking', async (req, res) => {
     console.log('childcare booking: ', req.body)
+    let {booking1} = req.body
 
     try {
+        let updateRide = await db__.collection('users').updateOne(
+            { _id: new ObjectId(String(booking1.user._id)) },
+            {
+                $push: {
+                    childcareBookings: booking1
+                },
+            },
+            { returnDocument: 'after' }
+        )
+
+        console.log('update ride: ', updateRide)
+
         res.status(200).send(true);
 
     } catch (e) {

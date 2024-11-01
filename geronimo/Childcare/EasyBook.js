@@ -21,7 +21,13 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
     const [showNotes, setShowNotes] = useState(false)
     // const [error, setError] = useState()
 
-    const booking1 = { age1, age2, age3, age4, dateTime, notes, sitter, sitterMessage: null }
+    const user = masterState.user
+
+    const booking1 = {
+        user:
+            { firstName: user.firstName, lastName: user.lastName, phone: user.phone, _id: user._id },
+        age1, age2, age3, age4, dateTime, notes, sitter, sitterMessage: null
+    }
 
     const changeNumOfChild = (inc_dec) => {
         if (inc_dec == 'inc' && numOfChildren < 4) {
@@ -39,14 +45,14 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
             let signInSuccessful = await signIn()
             console.log('sigin success', signInSuccessful)
 
-            if (!signInSuccessful){ 
-                console.log('abort'); return 
+            if (!signInSuccessful) {
+                console.log('abort'); return
             }
         }
 
 
-        if (!age1) { errorTimeout("Please enter child's age"); return}
-        if (!dateTime) { errorTimeout("Please enter date and time"); return}
+        if (!age1) { errorTimeout("Please enter child's age"); return }
+        if (!dateTime) { errorTimeout("Please enter date and time"); return }
 
         // Alert.alert('Booking Placed', JSON.stringify(request));
 
@@ -134,7 +140,7 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
                 .then(async (res) => {
                     if (res.data.status == 'ok') {
                         console.log('user code response: ', res.data.user)
-                        populateData({masterState, setMasterState, loginUser:res.data.user})
+                        populateData({ masterState, setMasterState, loginUser: res.data.user })
                         promiseref.current(true)
                         setModalVisible(false)
                     } else {
@@ -356,7 +362,7 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
                     <View style={{ marginHorizontal: 20, borderBottomColor: '#d9d9d9', borderBottomWidth: 2, marginTop: 20 }} />
 
 
-                    <TouchableOpacity onPress={() => setShowNotes(show=>!show)} style={{ margin: 20, marginBottom: 10, flexDirection: 'row', alignItems: 'center' }}>
+                    <TouchableOpacity onPress={() => setShowNotes(show => !show)} style={{ margin: 20, marginBottom: 10, flexDirection: 'row', alignItems: 'center' }}>
                         <Ionicons style={{ marginTop: -6 }} name="add-circle-outline" size={22} color="black" />
                         <Text style={{ marginBottom: 0, fontFamily: 'Aristotelica-Regular', fontSize: 22, }}> Add Notes</Text>
                     </TouchableOpacity>
