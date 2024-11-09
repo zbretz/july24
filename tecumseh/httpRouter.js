@@ -19,7 +19,7 @@ const moment = require('moment-timezone');
 
 moment.tz.setDefault('America/Denver');
 
-const { db__, db_locals } = require('./mongoConnection.js')
+const { db__, db_childcare } = require('./mongoConnection.js')
 
 
 router.get('/test', async (req, res) => {
@@ -370,9 +370,26 @@ router.post('/local-payment-sheet', async (req, res) => {
 
 });
 
+router.get('/bookings', async (req, res) => {
+    console.log('childcare booking: ', req.body)
+
+    try {
+        bookings = await db_childcare.collection('bookings').find().toArray();
+        providers = await db_childcare.collection('providers').find().toArray();
+
+        console.log('update ride: ', bookings, providers)
+        res.status(200).send({bookings, providers});
+        // res.status(200).send(JSON.stringify({bookings, providers}));
+    } catch (e) {
+        console.log('fetchchatlog error: ', e)
+    }
+
+});
+
+
 router.post('/booking', async (req, res) => {
     console.log('childcare booking: ', req.body)
-    let {booking1} = req.body
+    let { booking1 } = req.body
 
     try {
         let updateRide = await db__.collection('users').updateOne(

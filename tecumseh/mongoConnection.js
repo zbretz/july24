@@ -16,6 +16,8 @@ const client9100 = new MongoClient(uri);
 const db_prod = client9100.db('v6');
 // locals prod
 const db_locals = client9100.db('Partners');
+// childcare prod
+const db_childcare = client9100.db('Childcare');
 
 // testing
 const db_test = client9100.db('v6Testing');
@@ -24,6 +26,7 @@ const db_locals_test = client9100.db('PartnersTesting');
 
 
 module.exports = {
-    db__: db_prod,
+    db__: db_test,
     db_locals: db_locals,
+    db_childcare: db_childcare
 }

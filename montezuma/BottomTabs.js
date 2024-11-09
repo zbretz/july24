@@ -2,16 +2,19 @@ import { StyleSheet, Text, TouchableOpacity, View, TextInput, Image, Dimensions,
 import { useFonts } from 'expo-font';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Ionicons, FontAwesome, Entypo } from '@expo/vector-icons';
+import { Ionicons, FontAwesome, Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LocalRidesStack from './Local/LocalRidesStack';
 import ScheduleRides from './Scheduled/ScheduleRides';
+import Childcare from './Childcare';
 import MyAccount from './MyAccount';
 
 const Tab = createBottomTabNavigator();
 
 export default BottomTabs = ({ navigation, isConnected, masterState, setMasterState, newLocalRides, setNewLocalRides, myLocalRides, setMyLocalRides, newScheduledRides, setNewScheduledRides, myScheduledRides, setMyScheduledRides, rideTakenModal, setRideTakenModal, removeLocalRide }) => {
+
+    let showChildcare = masterState.user.firstName == "jake"// "Zach"
 
     return (
 
@@ -54,14 +57,13 @@ export default BottomTabs = ({ navigation, isConnected, masterState, setMasterSt
                     },
                     tabBarIcon: () => {
                         return (
-                            <FontAwesome name="calendar-o" size={24} color={"#666"}/>
+                            <FontAwesome name="calendar-o" size={24} color={"#666"} />
                         )
                     }
                 }}
             >
                 {props => <ScheduleRides {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} newScheduledRides={newScheduledRides} setNewScheduledRides={setNewScheduledRides} myScheduledRides={myScheduledRides} setMyScheduledRides={setMyScheduledRides} rideTakenModal={rideTakenModal} setRideTakenModal={setRideTakenModal} />}
             </Tab.Screen>
-
 
 
 
@@ -81,6 +83,25 @@ export default BottomTabs = ({ navigation, isConnected, masterState, setMasterSt
             >
                 {props => <MyAccount {...props} masterState={masterState} setMasterState={setMasterState} />}
             </Tab.Screen>
+
+
+            {showChildcare &&
+                <Tab.Screen name="Childcare"
+                    options={{
+                        tabBarLabel: ({ focused }) => {
+                            return (
+                                <Text style={{ color: focused ? '#fff' : '#666', fontWeight: 500, fontSize: 12 }}>Childcare</Text>
+                            )
+                        }, tabBarIcon: () => {
+                            return (
+                                <MaterialCommunityIcons name="baby-bottle-outline" size={28} tabBarIconStyle={{ margin: 16 }} color={"#666"} />
+                            )
+                        }
+                    }}
+                >
+                    {props => <Childcare {...props} masterState={masterState} setMasterState={setMasterState} />}
+                </Tab.Screen>
+            }
 
 
         </Tab.Navigator>
