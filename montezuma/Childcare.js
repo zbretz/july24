@@ -2,6 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, TouchableHighlight, View, TextInput
 import { useEffect, useState, useCallback, useRef } from 'react';
 import url from './url_toggle'
 import axios from 'axios';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -59,23 +60,28 @@ export default Childcare = ({ navigation, masterState, setMasterState }) => {
 
                 <Text style={{ textAlign: 'center' }}>Bookings</Text>
 
-                {bookings.map(bookings => {
+                {bookings && bookings.map(booking => {
                     return (
                         <View
-                            style={{ minHeight:100, backgroundColor: '#eee', borderRadius: 20, margin: 10, padding:20 }}>
+                            style={{ minHeight: 100, backgroundColor: '#eee', borderRadius: 20, margin: 10, padding: 20 }}>
                             <View style={{ backgroundColor: 'rgba(255,255,255,.7)', width: '100%', position: 'absolute', zIndex: 99 }} />
-                            <Text>{bookings.dateTime}</Text>
-                            <Text>{bookings.user.firstName}</Text>
-                            <Text>{bookings.notes}</Text>
+                            <Text>{booking.dateTime}</Text>
+                            <Text>{booking.user.firstName}</Text>
+                            <Text>{booking.notes}</Text>
+                            <Text>{booking._id}</Text>
+
+                            <View style={{ borderTopWidth: 1, marginVertical: 10 }} />
+
+                            {booking.provider ?
+                                <Text>{booking.provider.firstName}</Text>
+                                :
+                                <SitterPicker providers={providers} setProviders={setProviders} setBookings={setBookings} booking_id={booking._id} />
+                            }
+
                         </View>
                     )
                 })
                 }
-
-                {/* <TouchableOpacity onPressIn={fetchBookings} style={{ flex: 1, backgroundColor: '#eee', borderRadius: 20, margin: 10 }}>
-                    <View style={{ backgroundColor: 'rgba(255,255,255,.7)', height: '100%', width: '100%', position: 'absolute', zIndex: 99 }} />
-                    <Image style={{ height: '80%', width: '100%', backgroundColor: null, }} source={require('./assets/profile.png')} resizeMode='contain' />
-                </TouchableOpacity> */}
 
 
             </View>
@@ -84,4 +90,46 @@ export default Childcare = ({ navigation, masterState, setMasterState }) => {
 
     );
 
+}
+
+
+
+
+
+function SitterPicker({ providers, bookings, setBookings, booking_id }) {
+
+    const [open, setOpen] = useState(false)
+    const [provider, setProvider] = useState(null)
+
+
+    providers = providers.map(provider => { return { label: provider.firstName, value: provider } })
+
+    const assignSitter = (provider) => {
+        console.log('assign: ', provider)
+
+        setBookings(bookings => {
+            console.log('bookings: ',bookings)
+            bookings = bookings.map(booking => { return booking._id === booking_id ? { ...booking, provider: provider.value } : booking })
+            return [ ...bookings ]
+        })
+
+    }
+
+    return (
+
+        <DropDownPicker
+            dropDownContainerStyle={{}}
+            itemKey="label"
+            open={open}
+            onClose={() => setOpen(false)}
+            value={provider}
+            items={providers}
+            setOpen={setOpen}
+            onSelectItem={assignSitter}
+            // setValue={setProvider}
+            // setItems={setProviders}
+            placeholder={'Choose a provider.'}
+        />
+
+    );
 }
