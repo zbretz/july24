@@ -15,20 +15,19 @@ const Stack = createStackNavigator();
 export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatLog, setChatLog, navigation }) => {
 
 
-    let upcomingBooking = masterState.user?.childcareBookings?.length ? masterState.user.childcareBookings[0] : null
+    let booking = masterState.user?.childcareBookings?.length ? masterState.user.childcareBookings[0] : null
 
-    console.log('upcoming booking: ', upcomingBooking)
+    console.log('upcoming booking: ', booking)
 
 
-    // const [booking, setBooking] = useState({
-    //     age1:1, age2:3, dateTime:'Next tuesday  1pm-4pm', notes: 'no notes', sitter:null, sitterMessage:null
-    // })
+
 
     // upcomingBooking = null
-    
+
     // {
     //     age1: 1, age2: 3, dateTime: 'Next tuesday  1pm-4pm', notes: 'no notes',
-    //     sitter: {
+    //     sitter: 
+    // {
     //         firstName: 'Natalia',
     //         lastName: 'Last Name',
     //         bio: 'Expert baby hairstylist. Get your baby looking fa-resh.',
@@ -40,12 +39,17 @@ export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatL
     //     sitterMessage: null
     // }
 
+
+
     // const [booking, setBooking] = useState(upcomingBooking)
-    const [booking, setBooking] = useState(null)
 
     useEffect(() => {
-        setBooking(upcomingBooking)
-        }, [upcomingBooking])
+        // setBooking(upcomingBooking)
+    }, [masterState.user.childcareBookings])
+
+
+
+
     // }, [])
 
     return (
@@ -60,13 +64,23 @@ export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatL
                 }}
             >
 
-                {!booking ?
+                {/* {!booking ?
                     <Stack.Screen name="ChildcareHome">
-                        {props => <ChildcareHome {...props} masterState={masterState} setMasterState={setMasterState} setBooking={setBooking} />}
+                        {props => <ChildcareHome {...props} masterState={masterState} setMasterState={setMasterState}  />}
                     </Stack.Screen>
                     :
                     <Stack.Screen name="Booking">
                         {props => <Booking {...props} masterState={masterState} setMasterState={setMasterState} booking={booking} />}
+                    </Stack.Screen>
+                } */}
+
+                {!booking ?
+                    <Stack.Screen name="ChildcareHome">
+                        {props => <ChildcareHome {...props} masterState={masterState} setMasterState={setMasterState} />}
+                    </Stack.Screen>
+                    :
+                    <Stack.Screen name="Booking">
+                        {props => <Booking {...props} masterState={masterState} setMasterState={setMasterState} />}
                     </Stack.Screen>
                 }
 
@@ -79,7 +93,8 @@ export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatL
                 </Stack.Screen>
 
                 <Stack.Screen name="EasyBook" options={{ presentation: "modal" }}>
-                    {props => <EasyBook {...props} masterState={masterState} setMasterState={setMasterState} booking={booking} setBooking={setBooking} />}
+                    {/* {props => <EasyBook {...props} masterState={masterState} setMasterState={setMasterState} booking={booking} setBooking={setBooking} />} */}
+                    {props => <EasyBook {...props} masterState={masterState} setMasterState={setMasterState} />}
                 </Stack.Screen>
 
             </Stack.Navigator>

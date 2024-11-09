@@ -406,23 +406,20 @@ router.post('/assignProvider', async (req, res) => {
 
 router.post('/booking', async (req, res) => {
     console.log('childcare booking: ', req.body)
-    let { booking1 } = req.body
+    let { newBooking } = req.body
 
     try {
-        let updateRide = await db__.collection('users').updateOne(
-            { _id: new ObjectId(String(booking1.user._id)) },
-            {
-                $push: {
-                    childcareBookings: booking1
-                },
-            },
+
+        let createBooking = await db_childcare.collection('bookings').insertOne(newBooking)
+
+        let addBookingToUser = await db__.collection('users').updateOne(
+            { _id: new ObjectId(String(newBooking.user._id)) },
+            { $push: { childcareBookings: newBooking }, },
             { returnDocument: 'after' }
         )
 
-        console.log('update ride: ', updateRide)
-
+        // console.log('update ride: ', booking)
         res.status(200).send(true);
-
     } catch (e) {
         console.log('fetchchatlog error: ', e)
     }

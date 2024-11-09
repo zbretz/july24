@@ -7,7 +7,9 @@ import SitterData from './SitterData.js';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
-export default ChildcareHome = ({ isConnected, masterState, setMasterState, navigation, booking }) => {
+export default Booking = ({ isConnected, masterState, setMasterState, navigation }) => {
+
+    let booking = masterState.user?.childcareBookings?.length ? masterState.user.childcareBookings[0] : null
 
     if (Platform.OS === 'ios') {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -19,17 +21,6 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
     let numOfChildren = 1 + (!booking.age2 ? 0 : 1 + (!booking.age3 ? 0 : 1 + (!booking.age4 ? 0 : 1)))
 
     const sitter = booking.sitter
-
-    console.log('sssssitter: ', sitter)
-
-    // const booking = {
-    //     childrenAges: [1, 5, 8],
-    //     dateTime: 'Dec 21 8am-1pm',
-    //     sitter: 'Natalia',
-    //     notes: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-    // }
-
-
 
     return (
 
@@ -60,7 +51,7 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
 
             {showBookingOptions &&
                 <View style={{ borderWidth: 0, margin: 0, borderColor: '#fff', marginTop: 10, flexDirection: 'row', marginHorizontal: 10, padding: 8, borderRadius: 20, }}>
-                    <TouchableOpacity onPress={() => {navigation.navigate('EasyBook');setShowBookingOptions(false)}} style={{ backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, marginRight: 10, alignItems: 'center', paddingVertical: 20 }}>
+                    <TouchableOpacity onPress={() => { navigation.navigate('EasyBook'); setShowBookingOptions(false) }} style={{ backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, marginRight: 10, alignItems: 'center', paddingVertical: 20 }}>
                         <Image style={{ flex: 1, width: '100%' }} resizeMode='contain' source={require('../assets/coffee.png')} />
                         <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, justifyContent: 'center' }}>
                             <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Easy Book</Text>
@@ -68,7 +59,7 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                     </TouchableOpacity>
 
 
-                    <TouchableOpacity onPress={() => {navigation.navigate('SitterList');setShowBookingOptions(false)}} style={{ backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, marginLeft: 10, alignItems: 'center', paddingVertical: 20, }}>
+                    <TouchableOpacity onPress={() => { navigation.navigate('SitterList'); setShowBookingOptions(false) }} style={{ backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .22, borderRadius: 30, marginLeft: 10, alignItems: 'center', paddingVertical: 20, }}>
                         <Image style={{ flex: 1, width: '100%', margin: 8 }} resizeMode='contain' source={require('../assets/stroller.png')} />
                         <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, justifyContent: 'center' }}>
                             <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Search Sitters</Text>
@@ -165,7 +156,7 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                         <Image style={{ flex: 1, width: windowWidth * .3, height: windowWidth * .3, }} resizeMode='contain' source={require('../assets/person.png')} />
                     </View>
                     <View onPress={() => navigation.navigate('SitterPage')} style={{ width: windowWidth * .6, height: windowWidth * .4, paddingHorizontal: 10, borderRadius: 14, flex: 1, }}>
-                        <View style={{ flexDirection: 'row', flex:1 }}>
+                        <View style={{ flexDirection: 'row', flex: 1 }}>
                             <Text style={{ color: '#000', fontSize: 19, fontWeight: 400, textAlign: 'left' }}  >Hi! Your sitter is being assigned. Give us a call if you'd like a faster update.</Text>
                             <TouchableOpacity onPress={() => { Linking.openURL(`tel:${9175751955}`) }} style={{ borderRadius: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffcf56', alignSelf: 'flex-end', padding: 10, position: 'absolute', bottom: 20, right: 0 }}>
                                 <Feather style={{}} name="phone" size={22} color="#000" />

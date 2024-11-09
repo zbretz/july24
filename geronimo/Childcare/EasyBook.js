@@ -8,7 +8,9 @@ import populateData from '../CoreNav/populateData';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
-export default EasyBook = ({ masterState, setMasterState, sitter = null, navigation, booking, setBooking }) => {
+export default EasyBook = ({ masterState, setMasterState, sitter = null, navigation, booking }) => {
+
+    console.log('sdfsdfsdf: ', masterState.user.childcareBookings)
 
 
     const [age1, setAge1] = useState(null)
@@ -19,13 +21,12 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
     const [dateTime, setDateTime] = useState('')
     const [notes, setNotes] = useState('')
     const [showNotes, setShowNotes] = useState(false)
-    // const [error, setError] = useState()
 
     const user = masterState.user
 
-    const booking1 = {
+    const newBooking = {
         user: user ? { firstName: user.firstName, lastName: user.lastName, phone: user.phone, _id: user._id } : null,
-        age1, age2, age3, age4, dateTime, notes, sitter, sitterMessage: null
+        age1, age2, age3, age4, dateTime, notes, provider: null, providerMessage: null
     }
 
     const changeNumOfChild = (inc_dec) => {
@@ -35,8 +36,6 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
             setNumOfChildren((num) => num - 1)
         }
     }
-
-    const request = { age1, age2, age3, age4, dateTime, notes }
 
     const bookNow = async () => {
 
@@ -53,19 +52,18 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
         if (!age1) { errorTimeout("Please enter child's age"); return }
         if (!dateTime) { errorTimeout("Please enter date and time"); return }
 
-        // Alert.alert('Booking Placed', JSON.stringify(request));
 
-        axios.post(`${url}/childcare/booking`, { booking1 })
+        axios.post(`${url}/childcare/booking`, { newBooking })
             .then(res => {
                 if (res.data) {
                     console.log(res.data)
+                    console.log('new booking: ', newBooking)
 
-                    setBooking(booking => {
-                        // return ({ age1: 1, age2: 3, dateTime: 'Next tuesday  1pm-4pm', notes: 'no notes', sitter: null, sitterMessage: null })
-                        return ({ age1, age2, age3, age4, dateTime, notes, sitter, sitterMessage: null })
-                        // return ({...booking, sitter:'Natalia'})
+                    setMasterState(masterState => {
+                        return ({ ...masterState, user: { ...masterState.user, childcareBookings: masterState.user.childcareBookings ? [...masterState.user.childcareBookings, newBooking] : [newBooking] }, })
                     })
-                    booking && navigation.navigate('Booking')
+
+                    navigation.navigate('Booking')
                 } else {
                     console.log('nada')
                 }
