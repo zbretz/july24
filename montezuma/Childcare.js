@@ -54,12 +54,11 @@ export default Childcare = ({ navigation, masterState, setMasterState }) => {
 
 
             <View style={{ padding: 20, flex: 1 }}>
-                <Text style={{ textAlign: 'center' }}>Providers</Text>
 
-                {providers.map(provider => <Text>{provider.firstName}</Text>)}
+                {/* <Text style={{ textAlign: 'center' }}>Providers</Text>
+                {providers.map(provider => <Text>{provider.firstName}</Text>)} */}
 
                 <Text style={{ textAlign: 'center' }}>Bookings</Text>
-
                 {bookings && bookings.map(booking => {
                     return (
                         <View
@@ -68,7 +67,6 @@ export default Childcare = ({ navigation, masterState, setMasterState }) => {
                             <Text>{booking.dateTime}</Text>
                             <Text>{booking.user.firstName}</Text>
                             <Text>{booking.notes}</Text>
-                            <Text>{booking._id}</Text>
 
                             <View style={{ borderTopWidth: 1, marginVertical: 10 }} />
 
@@ -105,12 +103,26 @@ function SitterPicker({ providers, bookings, setBookings, booking_id }) {
     providers = providers.map(provider => { return { label: provider.firstName, value: provider } })
 
     const assignSitter = (provider) => {
+        provider = provider.value
         console.log('assign: ', provider)
 
+
+        axios.post(`${url}/assignProvider`, { booking_id, provider })
+            .then(res => {
+                if (res.data) {
+                    setModalVisible(true)
+                } else {
+                    null
+                }
+            })
+            .catch(e => console.log('sign in error: ', e))
+
+
+
         setBookings(bookings => {
-            console.log('bookings: ',bookings)
-            bookings = bookings.map(booking => { return booking._id === booking_id ? { ...booking, provider: provider.value } : booking })
-            return [ ...bookings ]
+            console.log('bookings: ', bookings)
+            bookings = bookings.map(booking => { return booking._id === booking_id ? { ...booking, provider: provider } : booking })
+            return [...bookings]
         })
 
     }

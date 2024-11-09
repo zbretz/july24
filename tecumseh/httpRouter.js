@@ -378,8 +378,25 @@ router.get('/bookings', async (req, res) => {
         providers = await db_childcare.collection('providers').find().toArray();
 
         console.log('update ride: ', bookings, providers)
-        res.status(200).send({bookings, providers});
-        // res.status(200).send(JSON.stringify({bookings, providers}));
+        res.status(200).send({ bookings, providers });
+    } catch (e) {
+        console.log('fetchchatlog error: ', e)
+    }
+
+});
+
+
+router.post('/assignProvider', async (req, res) => {
+    console.log('provider assignemnt: ', req.body)
+    let { booking_id, provider } = req.body
+
+    try {
+        let updateBooking = await db_childcare.collection('bookings').updateOne(
+            { _id: new ObjectId(String(booking_id)) },
+            { $set: { provider } },
+        )
+        res.status(200).send(true);
+
     } catch (e) {
         console.log('fetchchatlog error: ', e)
     }
