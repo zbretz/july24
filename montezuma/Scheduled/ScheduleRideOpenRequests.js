@@ -27,7 +27,7 @@ export default ScheduleRideOpenRequests = ({ navigation, isConnected, masterStat
     return (
         <SafeAreaView style={{ height: '100%', backgroundColor: '#fff' }}>
 
-            <View>
+            {/* <View>
 
                 <TouchableOpacity onPress={() => { wallet('inc')}} style={{ borderColor: '#000', borderWidth: 1, borderRadius: 20, margin: 10, padding: 30 }}>
                     <Text>Wallet Test Inc</Text>
@@ -37,7 +37,7 @@ export default ScheduleRideOpenRequests = ({ navigation, isConnected, masterStat
                     <Text>Wallet Test Dec</Text>
                 </TouchableOpacity>
 
-            </View>
+            </View> */}
 
             <Text style={{ fontSize: 20, fontWeight: '600', color: "#000", textAlign: 'center', position: 'absolute', top: 80, alignSelf: 'center' }}>Open Requests</Text>
             <ScrollView style={{ paddingTop: 60, paddingBottom: 70 }}>
