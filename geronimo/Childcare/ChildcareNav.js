@@ -15,10 +15,6 @@ const Stack = createStackNavigator();
 export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatLog, setChatLog, navigation }) => {
 
 
-    // useEffect(()=>{
-    //     if (masterState
-    // },[])
-
     let upcomingBooking = masterState.user?.childcareBookings.length ? masterState.user.childcareBookings[0] : null
 
     console.log('upcoming booking: ', upcomingBooking)
@@ -28,8 +24,21 @@ export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatL
     //     age1:1, age2:3, dateTime:'Next tuesday  1pm-4pm', notes: 'no notes', sitter:null, sitterMessage:null
     // })
 
-    upcomingBooking = { age1: 1, age2: 3, dateTime: 'Next tuesday  1pm-4pm', notes: 'no notes', sitter: 'Natalia', sitterMessage: null }
-
+    upcomingBooking = null
+    
+    // {
+    //     age1: 1, age2: 3, dateTime: 'Next tuesday  1pm-4pm', notes: 'no notes',
+    //     sitter: {
+    //         firstName: 'Natalia',
+    //         lastName: 'Last Name',
+    //         bio: 'Expert baby hairstylist. Get your baby looking fa-resh.',
+    //         funFacts: ['fact1', 'fact2', 'fact3'],
+    //         cover_photo: require('../assets/dailyrise.jpeg'),
+    //         rate: 28,
+    //         phone: '9175751955'
+    //     },
+    //     sitterMessage: null
+    // }
 
     // const [booking, setBooking] = useState(upcomingBooking)
     const [booking, setBooking] = useState(null)

@@ -18,7 +18,7 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
 
     let numOfChildren = 1 + (!booking.age2 ? 0 : 1 + (!booking.age3 ? 0 : 1 + (!booking.age4 ? 0 : 1)))
 
-    const sitter = SitterData[booking.sitter]
+    const sitter = booking.sitter
 
     console.log('sssssitter: ', sitter)
 
@@ -120,7 +120,7 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
 
 
 
-            {booking.sitter ?
+            {sitter ?
 
                 <>
                     <View style={{ marginHorizontal: 20, flexDirection: 'row' }}>
@@ -136,9 +136,8 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                         // onPlaybackStatusUpdate={status => setStatus(() => status)}
                         />
                         <View onPress={() => navigation.navigate('SitterPage')} style={{ width: windowWidth * .6, height: windowWidth * .4, paddingHorizontal: 10, marginRight: 0, borderRadius: 14, flex: 1, }}>
-                            <Text style={{ color: '#000', fontSize: 22, fontWeight: 500 }}>{booking.sitter}</Text>
+                            <Text style={{ color: '#000', fontSize: 22, fontWeight: 500 }}>{sitter.firstName}</Text>
                             <Text style={{ color: '#000', fontSize: 19, fontWeight: 400 }}  >{booking.sitterMessage}</Text>
-                            {/* <Text style={{ color: '#000', fontSize: 12, fontWeight: 400 }}  >12/23/22</Text> */}
                         </View>
                     </View>
 
@@ -153,7 +152,7 @@ export default ChildcareHome = ({ isConnected, masterState, setMasterState, navi
                             }
                         }}>
                             <TouchableOpacity onPress={() => { Linking.openURL(`tel:${sitter.phone}`) }} style={{ borderRadius: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                <Feather style={{ marginRight: 10 }} name="phone" size={22} color="#000" /><Text style={{ fontWeight: 600, fontSize: 22, fontFamily: 'Aristotelica-Regular', textAlign: 'center' }}>Call {booking.sitter}</Text>
+                                <Feather style={{ marginRight: 10 }} name="phone" size={22} color="#000" /><Text style={{ fontWeight: 600, fontSize: 22, fontFamily: 'Aristotelica-Regular', textAlign: 'center' }}>Call {sitter.firstName}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
