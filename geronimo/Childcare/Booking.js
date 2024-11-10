@@ -20,7 +20,7 @@ export default Booking = ({ isConnected, masterState, setMasterState, navigation
 
     let numOfChildren = 1 + (!booking.age2 ? 0 : 1 + (!booking.age3 ? 0 : 1 + (!booking.age4 ? 0 : 1)))
 
-    const sitter = booking.sitter
+    const sitter = booking.provider
 
     return (
 
@@ -128,7 +128,7 @@ export default Booking = ({ isConnected, masterState, setMasterState, navigation
                         />
                         <View onPress={() => navigation.navigate('SitterPage')} style={{ width: windowWidth * .6, height: windowWidth * .4, paddingHorizontal: 10, marginRight: 0, borderRadius: 14, flex: 1, }}>
                             <Text style={{ color: '#000', fontSize: 22, fontWeight: 500 }}>{sitter.firstName}</Text>
-                            <Text style={{ color: '#000', fontSize: 19, fontWeight: 400 }}  >{booking.sitterMessage}</Text>
+                            <Text style={{ color: '#000', fontSize: 19, fontWeight: 400 }}  >{booking.providerMessage}</Text>
                         </View>
                     </View>
 

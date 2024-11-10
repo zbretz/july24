@@ -388,13 +388,22 @@ router.get('/bookings', async (req, res) => {
 
 router.post('/assignProvider', async (req, res) => {
     console.log('provider assignemnt: ', req.body)
-    let { booking_id, provider } = req.body
+    let { booking_id, user_id, provider } = req.body
 
     try {
         let updateBooking = await db_childcare.collection('bookings').updateOne(
             { _id: new ObjectId(String(booking_id)) },
             { $set: { provider } },
         )
+
+        let updateBookingOnUser = await db__.collection('users').updateOne(
+            { _id: new ObjectId(String(user_id)), "childcareBookings._id": new ObjectId(String(booking_id)) },
+            { $set: { "childcareBookings.$.provider": provider } }, //https://stackoverflow.com/a/10523963
+            { returnDocument: "after" }
+        )
+
+        console.log('user booking: ', user)
+
         res.status(200).send(true);
 
     } catch (e) {

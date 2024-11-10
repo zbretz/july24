@@ -40,7 +40,6 @@ export default Childcare = ({ navigation, masterState, setMasterState }) => {
     useEffect(() => {
         fetchBookings()
         // fetchProviders()
-
     }, [])
 
 
@@ -51,6 +50,11 @@ export default Childcare = ({ navigation, masterState, setMasterState }) => {
 
     return (
         <SafeAreaView style={{ height: '100%', backgroundColor: '#fff', }}>
+
+            <TouchableOpacity onPress={fetchBookings}>
+                <Text>Refresh</Text>
+            </TouchableOpacity>
+
 
 
             <View style={{ padding: 20, flex: 1 }}>
@@ -66,6 +70,7 @@ export default Childcare = ({ navigation, masterState, setMasterState }) => {
                             <View style={{ backgroundColor: 'rgba(255,255,255,.7)', width: '100%', position: 'absolute', zIndex: 99 }} />
                             <Text>{booking.dateTime}</Text>
                             <Text>{booking.user.firstName}</Text>
+                            <Text>{booking.user._id}</Text>
                             <Text>{booking.notes}</Text>
 
                             <View style={{ borderTopWidth: 1, marginVertical: 10 }} />
@@ -73,7 +78,7 @@ export default Childcare = ({ navigation, masterState, setMasterState }) => {
                             {booking.provider ?
                                 <Text>{booking.provider.firstName}</Text>
                                 :
-                                <SitterPicker providers={providers} setProviders={setProviders} setBookings={setBookings} booking_id={booking._id} />
+                                <SitterPicker providers={providers} setProviders={setProviders} setBookings={setBookings} booking_id={booking._id} user_id={booking.user._id} />
                             }
 
                         </View>
@@ -94,7 +99,7 @@ export default Childcare = ({ navigation, masterState, setMasterState }) => {
 
 
 
-function SitterPicker({ providers, bookings, setBookings, booking_id }) {
+function SitterPicker({ providers, bookings, setBookings, booking_id, user_id }) {
 
     const [open, setOpen] = useState(false)
     const [provider, setProvider] = useState(null)
@@ -107,7 +112,7 @@ function SitterPicker({ providers, bookings, setBookings, booking_id }) {
         console.log('assign: ', provider)
 
 
-        axios.post(`${url}/assignProvider`, { booking_id, provider })
+        axios.post(`${url}/assignProvider`, { booking_id, provider, user_id })
             .then(res => {
                 if (res.data) {
                     setModalVisible(true)
