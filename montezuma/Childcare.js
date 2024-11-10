@@ -12,7 +12,7 @@ export default Childcare = ({ navigation, masterState, setMasterState }) => {
     const [bookings, setBookings] = useState([])
     const [providers, setProviders] = useState([])
 
-    let fetchBookings = () =>
+    let fetchBookings = () => {
 
         axios.get(`${url}/bookings`)
             .then(res => {
@@ -23,23 +23,25 @@ export default Childcare = ({ navigation, masterState, setMasterState }) => {
             })
             .catch(e => console.log('error: ', e))
 
+    }
 
+    let removeBooking = (booking_id, user_id) => {
 
-    // let fetchProviders = () =>
+        console.log("booking_id: ", typeof booking_id)
 
-    //     axios.get(`${url}/bookings`)
-    //         .then(res => {
-    //             if (!res.data) {
-    //                 return
-    //             }
-    //             setBookings(res.data)
-    //         })
-    //         .catch(e => console.log('error: ', e))
-
+        axios.delete(`${url}/booking`, { data: { booking_id, user_id } })
+            .then(res => {
+                setBookings(bookings => {
+                    console.log('bookings: ', bookings)
+                    let new_bookings = bookings.filter(booking => booking._id !== booking_id)
+                    return [...new_bookings]
+                });
+            })
+            .catch(e => console.log('error: ', e))
+    }
 
     useEffect(() => {
         fetchBookings()
-        // fetchProviders()
     }, [])
 
 
@@ -80,6 +82,10 @@ export default Childcare = ({ navigation, masterState, setMasterState }) => {
                                 :
                                 <SitterPicker providers={providers} setProviders={setProviders} setBookings={setBookings} booking_id={booking._id} user_id={booking.user._id} />
                             }
+
+                            <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => removeBooking(booking._id, booking.user._id)}>
+                                <Text>Remove</Text>
+                            </TouchableOpacity>
 
                         </View>
                     )
@@ -135,6 +141,7 @@ function SitterPicker({ providers, bookings, setBookings, booking_id, user_id })
     return (
 
         <DropDownPicker
+            style={{ marginBottom: 10 }}
             dropDownContainerStyle={{}}
             itemKey="label"
             open={open}

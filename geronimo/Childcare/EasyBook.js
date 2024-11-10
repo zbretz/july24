@@ -26,7 +26,7 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
 
     const newBooking = {
         user: user ? { firstName: user.firstName, lastName: user.lastName, phone: user.phone, _id: user._id } : null,
-        age1, age2, age3, age4, dateTime, notes, provider: null, providerMessage: null
+        age1, age2, age3, age4, dateTime, notes, provider: null, providerMessage: null, completed:false, canceled:false
     }
 
     const changeNumOfChild = (inc_dec) => {
