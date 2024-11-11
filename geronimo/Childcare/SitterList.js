@@ -7,7 +7,7 @@ import SitterData from './SitterData.js'
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
-export default SitterList = ({ isConnected, masterState, setMasterState, navigation, basket, setBasket, partner, setPartner }) => {
+export default SitterList = ({ isConnected, masterState, setMasterState, navigation, providers }) => {
 
     if (Platform.OS === 'ios') {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -30,8 +30,6 @@ export default SitterList = ({ isConnected, masterState, setMasterState, navigat
 
         <ScrollView style={{ backgroundColor: '#fff', height: '100%' }}>
 
-
-
             <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: 20, marginTop: 20, flexDirection: 'row' }} name="arrow-back-ios" size={24} color="black" >
                 <MaterialIcons style={{ marginLeft: 10, paddingTop: 10, marginLeft: -10 }} name="arrow-back-ios" size={24} color="black" />
                 <View>
@@ -40,17 +38,9 @@ export default SitterList = ({ isConnected, masterState, setMasterState, navigat
                 </View>
             </TouchableOpacity>
 
-
             <View style={{ position: 'absolute', top: 40, right: 20, backgroundColor: '#FFCF56', height: 48, width: 48, zIndex: 98, borderRadius: 30, alignItems: 'center', justifyContent: 'center' }} name="arrow-back-ios" size={24} color="black" >
                 <Image style={{ height: 40, width: 40, borderRadius: 30 }} source={require('../assets/yellow-icon-bold.png')} />
             </View>
-
-
-
-
-
-
-
 
             <View style={{ marginHorizontal: 20, marginVertical: 20, borderRadius: 20, borderWidth: 0 }}>
                 <View style={{}}>
@@ -58,12 +48,9 @@ export default SitterList = ({ isConnected, masterState, setMasterState, navigat
                 </View>
             </View>
 
-
-
-
-            {Object.values(SitterData).map(sitter => {
+            {Object.values(providers).map(sitter => {
                 return (
-                    <TouchableOpacity onPress={() => navigation.navigate('SitterPage', { name: sitter.name })} style={{ marginHorizontal: 20, flexDirection: 'row', marginBottom:20 }}>
+                    <TouchableOpacity key={sitter._id} onPress={() => navigation.navigate('SitterPage', { name: sitter.firstName })} style={{ marginHorizontal: 20, flexDirection: 'row', marginBottom:20 }}>
                         <Video
                             ref={video}
                             style={{ width: windowWidth * .4, height: windowWidth * .4, marginTop: 0, borderRadius: 20 }}
@@ -76,57 +63,14 @@ export default SitterList = ({ isConnected, masterState, setMasterState, navigat
                         // onPlaybackStatusUpdate={status => setStatus(() => status)}
                         />
                         <View style={{ width: windowWidth * .6, height: windowWidth * .4, paddingHorizontal: 10, marginRight: 0, borderRadius: 14, flex: 1, }}>
-                            <Text style={{ color: '#000', fontSize: 22, fontWeight: 500 }}>{sitter.name}</Text>
+                            <Text style={{ color: '#000', fontSize: 22, fontWeight: 500 }}>{sitter.firstName}</Text>
                             <Text style={{ color: '#000', fontSize: 19, fontWeight: 400 }}  >{sitter.bio}</Text>
                         </View>
                     </TouchableOpacity>
                 )
             })}
 
-            {/* <TouchableOpacity onPress={() => navigation.navigate('SitterPage', { name: 'Natalia1' })} style={{ marginHorizontal: 20, marginVertical: 30, flexDirection: 'row' }}>
-
-                <Video
-                    ref={video}
-                    style={{ width: windowWidth * .4, height: windowWidth * .4, marginTop: 0, borderRadius: 20 }}
-                    source={require('../assets/babysitter.mov')}
-                    useNativeControls
-                    resizeMode={ResizeMode.COVER}
-                    isLooping
-                    // shouldPlay
-                    isMuted
-                // onPlaybackStatusUpdate={status => setStatus(() => status)}
-                />
-                <View style={{ width: windowWidth * .6, height: windowWidth * .4, paddingHorizontal: 10, marginRight: 0, borderRadius: 14, flex: 1, }}>
-                    <Text style={{ color: '#000', fontSize: 22, fontWeight: 500 }}>Natalia</Text>
-                    <Text style={{ color: '#000', fontSize: 19, fontWeight: 400 }}  >Hi Katie, I' Natalia. I'm looking forward to spending a few hours with your kids this Saturday.</Text>
-                </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => navigation.navigate('SitterPage', { name: 'Natalia1' })} style={{ marginHorizontal: 20, flexDirection: 'row' }}>
-
-                <Video
-                    ref={video}
-                    style={{ width: windowWidth * .4, height: windowWidth * .4, marginTop: 0, borderRadius: 20 }}
-                    source={require('../assets/babysitter.mov')}
-                    useNativeControls
-                    resizeMode={ResizeMode.COVER}
-                    isLooping
-                    // shouldPlay
-                    isMuted
-                // onPlaybackStatusUpdate={status => setStatus(() => status)}
-                />
-                <View style={{ width: windowWidth * .6, height: windowWidth * .4, paddingHorizontal: 10, marginRight: 0, borderRadius: 14, flex: 1, }}>
-                    <Text style={{ color: '#000', fontSize: 22, fontWeight: 500 }}>Natalia</Text>
-                    <Text style={{ color: '#000', fontSize: 19, fontWeight: 400 }}  >Hi Katie, I' Natalia. I'm looking forward to spending a few hours with your kids this Saturday.</Text>
-                </View>
-            </TouchableOpacity> */}
-
         </ScrollView>
-
-
-
-
-
 
     );
 }

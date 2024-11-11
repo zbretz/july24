@@ -7,10 +7,10 @@ import SitterData from './SitterData.js'
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export default SitterPage = ({ route, isConnected, masterState, setMasterState, navigation, }) => {
+export default SitterPage = ({ route, isConnected, masterState, setMasterState, navigation, providers }) => {
 
     let { name } = route.params
-    let sitter = SitterData[name]
+    let sitter = providers.find(provider => provider.firstName==name)
 
     const video = useRef(null);
 
@@ -57,10 +57,10 @@ export default SitterPage = ({ route, isConnected, masterState, setMasterState, 
 
                         <View style={{ width: '88%', alignSelf: 'center', marginTop: 10 }}>
 
-                            {sitter.funFacts.map(fact => {
+                            {sitter.funFacts.map((fact, idx) => {
 
                                 return (
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <View key={idx} style={{ flexDirection: 'row', alignItems: 'center' }}>
                                         <Octicons name="dot-fill" size={20} color="black" />
                                         <Text style={{ marginLeft: 6, fontSize: 16 }}>{fact}</Text>
                                     </View>
@@ -73,39 +73,7 @@ export default SitterPage = ({ route, isConnected, masterState, setMasterState, 
 
             </View>
 
-
-            {/* <View style={{ width: '100%' }}><View style={{ marginHorizontal: 20, marginTop: 10, borderRadius: 20, borderWidth: .5, borderColor: '#c9c9c9' }} /></View> */}
-
-
-            {/* <View style={{ width: '100%', }}>
-                <View style={{ marginVertical: 30, marginHorizontal: 20 }}>
-                    <View style={{ flex: 1, }}>
-                        <TouchableOpacity style={{ borderRadius: 30, marginRight: 0, alignItems: 'center', paddingBottom: 30, borderWidth: 1 }}>
-                            <Text style={{ fontWeight: 600, fontSize: 32, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', }}>Book Natalia</Text>
-
-                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Age of Child(ren)</Text>
-                            </View>
-
-                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Age of Child(ren)</Text>
-                            </View>
-
-                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 10 }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Date and Time</Text>
-                            </View>
-
-                            <View style={{ backgroundColor: '#ffcf56', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', alignSelf: 'center', marginTop: 30 }}>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Book Now</Text>
-                            </View>
-
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </View> */}
-
-            <EasyBook sitter={sitter} />
-
+            <EasyBook masterState={masterState}  navigation={navigation} setMasterState={setMasterState} sitter={sitter}/>
 
         </ScrollView>
 

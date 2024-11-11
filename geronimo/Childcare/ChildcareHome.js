@@ -9,7 +9,7 @@ import Faq from './Faq'
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
-export default ChildcareHome = ({  masterState, setMasterState, navigation, setBooking }) => {
+export default ChildcareHome = ({  masterState, setMasterState, navigation }) => {
 
     const video = useRef(null);
 
@@ -68,21 +68,21 @@ export default ChildcareHome = ({  masterState, setMasterState, navigation, setB
                 <View style={{ width: windowWidth * .9, marginTop: 10, borderRadius: 20, borderWidth: 0 }}>
                     <View style={{}}>
                         <Text style={{ fontSize: 30 }}>Book with confidence.</Text>
-                        <Text style={{ fontSize: 18 }}>Connect with sitters who are <Image style={{ height: 12, width: 40, paddingLeft: 30, position: 'absolute' }} source={require('../assets/underline.png')} />real teachers at Park City daycares and pre-schools.</Text>
+                        <Text style={{ fontSize: 18 }}>Whether it's Date Night or you need coverage for a day on the slopes, our sitters have you covered.</Text>
 
 
                         <View style={{ width: '88%', alignSelf: 'center', marginTop: 10 }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: -6 }}>
                                 <LottieView speed={.25} style={{ height: 34, width: 34, alignSelf: 'center', margin: 0 }} source={require('../assets/checkmark.json')} autoPlay loop='false' />
-                                <Text style={{ marginLeft: 6, fontSize: 16 }}>Professional childcare providers</Text>
+                                <Text style={{ marginLeft: 6, fontSize: 16 }}>Background and reference checked</Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: -6 }}>
                                 <LottieView speed={.25} style={{ height: 34, width: 34, alignSelf: 'center', margin: 0 }} source={require('../assets/checkmark.json')} autoPlay loop='false' />
-                                <Text style={{ marginLeft: 6, fontSize: 16 }}>Extensive training and experience</Text>
+                                <Text style={{ marginLeft: 6, fontSize: 16 }}>Deep childcare experience</Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: -6 }}>
                                 <LottieView speed={.25} style={{ height: 34, width: 34, alignSelf: 'center', margin: 0 }} source={require('../assets/checkmark.json')} autoPlay loop='false' />
-                                <Text style={{ marginLeft: 6, fontSize: 16 }}>Highly referred</Text>
+                                <Text style={{ marginLeft: 6, fontSize: 16 }}>All ages: infants to teens</Text>
                             </View>
                         </View>
                     </View>
@@ -95,7 +95,7 @@ export default ChildcareHome = ({  masterState, setMasterState, navigation, setB
             </View>
 
 
-            <EasyBook masterState={masterState} setBooking={setBooking} navigation={navigation} setMasterState={setMasterState} />
+            <EasyBook masterState={masterState}  navigation={navigation} setMasterState={setMasterState} />
 
             <TouchableOpacity onPress={()=>navigation.navigate('SitterList')} style={{ marginTop: 10, borderRadius: 20, borderWidth: 0, marginVertical: 10 }}>
                 <Text style={{ fontSize: 30, textAlign: 'center' }}>Meet the Sitters</Text>

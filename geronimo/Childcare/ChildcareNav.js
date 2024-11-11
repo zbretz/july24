@@ -7,6 +7,8 @@ import Booking from './Booking';
 import SitterPage from './SitterPage';
 import SitterList from './SitterList';
 import { StripeProvider } from '@stripe/stripe-react-native';
+import axios from 'axios';
+import { url } from '../url_toggle'
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -14,43 +16,24 @@ const Stack = createStackNavigator();
 
 export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatLog, setChatLog, navigation }) => {
 
+    const [providers, setProviders] = useState([])
 
     let booking = masterState.user?.childcareBookings?.length ? masterState.user.childcareBookings[0] : null
 
     console.log('upcoming booking: ', booking)
 
-
-
-
-    // upcomingBooking = null
-
-    // {
-    //     age1: 1, age2: 3, dateTime: 'Next tuesday  1pm-4pm', notes: 'no notes',
-    //     sitter: 
-    // {
-    //         firstName: 'Natalia',
-    //         lastName: 'Last Name',
-    //         bio: 'Expert baby hairstylist. Get your baby looking fa-resh.',
-    //         funFacts: ['fact1', 'fact2', 'fact3'],
-    //         cover_photo: require('../assets/dailyrise.jpeg'),
-    //         rate: 28,
-    //         phone: '9175751955'
-    //     },
-    //     sitterMessage: null
-    // }
-
-
-
-    // const [booking, setBooking] = useState(upcomingBooking)
+    const fetchProviders = () => {
+        axios.get(`${url}/childcare/fetchProviders`)
+            .then(res => {
+                console.log('providers: ', res.data)
+                setProviders(res.data)
+            })
+            .catch(e => console.log('order  error: ', e))
+    }
 
     useEffect(() => {
-        // setBooking(upcomingBooking)
-    }, [masterState.user?.childcareBookings])
-
-
-
-
-    // }, [])
+        fetchProviders()
+    }, [])
 
     return (
         <StripeProvider
@@ -64,19 +47,9 @@ export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatL
                 }}
             >
 
-                {/* {!booking ?
-                    <Stack.Screen name="ChildcareHome">
-                        {props => <ChildcareHome {...props} masterState={masterState} setMasterState={setMasterState}  />}
-                    </Stack.Screen>
-                    :
-                    <Stack.Screen name="Booking">
-                        {props => <Booking {...props} masterState={masterState} setMasterState={setMasterState} booking={booking} />}
-                    </Stack.Screen>
-                } */}
-
                 {!booking ?
                     <Stack.Screen name="ChildcareHome">
-                        {props => <ChildcareHome {...props} masterState={masterState} setMasterState={setMasterState} />}
+                        {props => <ChildcareHome {...props} masterState={masterState} setMasterState={setMasterState} providers={providers} />}
                     </Stack.Screen>
                     :
                     <Stack.Screen name="Booking">
@@ -85,11 +58,11 @@ export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatL
                 }
 
                 <Stack.Screen name="SitterList" options={{ presentation: "modal" }}>
-                    {props => <SitterList {...props} masterState={masterState} setMasterState={setMasterState} />}
+                    {props => <SitterList {...props} masterState={masterState} setMasterState={setMasterState} providers={providers} />}
                 </Stack.Screen>
 
                 <Stack.Screen name="SitterPage" options={{ presentation: "modal" }}>
-                    {props => <SitterPage {...props} masterState={masterState} setMasterState={setMasterState} />}
+                    {props => <SitterPage {...props} masterState={masterState} setMasterState={setMasterState} providers={providers}  />}
                 </Stack.Screen>
 
                 <Stack.Screen name="EasyBook" options={{ presentation: "modal" }}>

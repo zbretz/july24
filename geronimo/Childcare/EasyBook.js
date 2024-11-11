@@ -8,10 +8,9 @@ import populateData from '../CoreNav/populateData';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
-export default EasyBook = ({ masterState, setMasterState, sitter = null, navigation, booking }) => {
+export default EasyBook = ({ masterState, setMasterState, sitter = null, navigation }) => {
 
-    console.log('sdfsdfsdf: ', masterState.user?.childcareBookings)
-
+    console.log('easy book sitter: ', sitter?.firstName)
 
     const [age1, setAge1] = useState(null)
     const [age2, setAge2] = useState(null)
@@ -26,7 +25,8 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
 
     const newBooking = {
         user: user ? { firstName: user.firstName, lastName: user.lastName, phone: user.phone, _id: user._id } : null,
-        age1, age2, age3, age4, dateTime, notes, provider: null, providerMessage: null, completed: false, canceled: false
+        age1, age2, age3, age4, dateTime, notes, provider: null, providerMessage: null, completed: false, canceled: false,
+        provider: sitter
     }
 
     const changeNumOfChild = (inc_dec) => {
@@ -78,8 +78,6 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
             })
             .catch(e => console.log('order  error: ', e))
     }
-
-
 
 
 
@@ -194,8 +192,6 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
 
                 </View>
             </Modal>
-            {/* <CodeModal code={code} setCode={setCode} setBigDog={setBigDog} bigDog={bigDog} phone={phone} modalVisible={modalVisible} setModalVisible={setModalVisible} setMasterState={setMasterState} /> */}
-
             <View style={{ marginVertical: 30, marginHorizontal: 20 }}>
                 <View style={{
                     borderRadius: 30, paddingBottom: 30, borderWidth: 0, backgroundColor: '#e6e6e6', shadowColor: '#000',
@@ -208,7 +204,7 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
                 }}>
 
                     {sitter ?
-                        <Text style={{ fontWeight: 600, fontSize: 32, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', textAlign: 'center' }}>Book {sitter.name}</Text>
+                        <Text style={{ fontWeight: 600, fontSize: 32, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', textAlign: 'center' }}>Book {sitter.firstName}</Text>
                         :
                         <Text style={{ fontWeight: 600, fontSize: 32, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', textAlign: 'center' }}>Easy Book</Text>
                     }
@@ -405,122 +401,3 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
 
 
 
-const CodeModal = ({ modalVisible, setModalVisible, phone, setMasterState, setBigDog, bigDog, code, setCode }) => {
-
-    const userRef = useRef()
-    const [error, setError] = useState()
-
-
-    const errorTimeout = (msg,) => {
-        setError(msg)
-        setTimeout(() => {
-            setError(null)
-        }, 4000)
-    }
-
-    const enterCode = async (code) => {
-
-        console.log('ccode: ', code)
-
-        setCode(code)
-
-        if (code.length === 4) {
-            axios.post(`${url}/auth/childcareCode`, { phone: phone, code })
-                .then(async (res) => {
-                    if (res.data.status == 'ok') {
-                        console.log('user code response: ', res.data.user)
-                        setModalVisible(false)
-                        console.log('closing mmodal')
-                        setMasterState(masterState => ({ ...masterState, user: res.data.user }))
-
-                    } else {
-                        setCode('')
-                        errorTimeout('Incorrect Code')
-                    }
-
-                })
-        }
-    }
-    console.log('big dog: ', bigDog)
-
-    // useEffect(() => {
-
-
-    //     const awaitCode = () => {
-    //         setModalVisible(true)
-
-    //         return new Promise((resolve, reject) => {
-    //             if (bigDog) {
-    //                 console.log('yahoo')
-    //                 resolve()
-    //             }
-    //         })
-
-    //     }
-
-    // }, [bigDog])
-
-
-    // useEffect(() => {
-
-
-    //     const awaitCode = () => {
-
-    //         return new Promise((resolve, reject) => {
-    //             setModalVisible(true)
-
-    //             if (bigDog) {
-    //                 console.log('yahoo')
-    //                 resolve()
-    //             }
-    //         })
-
-    //     }
-
-    //     // awaitCode()
-
-    //     // return ()=>setBigDog(false)
-
-    // }, [bigDog])
-
-
-    return (
-
-        <Modal
-            animationType='slide'
-            transparent={true}
-            visible={modalVisible}
-            style={{ height: windowHeight, width: windowWidth, }}>
-
-            <View style={{ height: windowHeight, width: windowWidth, backgroundColor: 'rgba(0,0,0,.6)', }}>
-
-                <TouchableOpacity onPress={() => { console.log('close modal'); setModalVisible(false) }} style={{ position: 'absolute', height: '100%', width: '100%', backgroundColor: 'transparent', }} />
-
-                <View style={{ backgroundColor: '#f2f2f2', top: windowHeight * .1, alignSelf: 'center', borderRadius: 20, padding: 20, justifyContent: 'center' }}>
-                    <View style={{ backgroundColor: '#e6e6e6', borderRadius: 20, padding: 20, alignItems: 'center', justifyContent: 'center', }}>
-
-                        <TouchableOpacity onPress={() => { setBigDog(true) }} style={{ height: 100, width: 100, backgroundColor: 'green', }} />
-
-                        <View style={{ borderRadius: 30, }}>
-                            <>
-                                <Image style={{ height: 90, width: 90, alignSelf: 'center' }} source={require('../assets/unlock.png')} />
-                                <Text style={{ fontSize: 20, color: '#353431', textAlign: 'center', fontFamily: 'Aristotelica-Regular', margin: 10 }}>Please enter the verification code sent to your phone.</Text>
-                                <TextInput
-                                    keyboardType='numeric'
-                                    autoCapitalize={'none'}
-                                    autoFocus={true}
-                                    placeholderTextColor={'#000'}
-                                    value={code}
-                                    onChangeText={enterCode}
-                                    style={{ marginTop: 16, height: 40, backgroundColor: '#fff', borderRadius: 20, textAlign: 'center', fontSize: 20, width: 100, alignSelf: 'center' }}
-                                />
-                            </>
-                            {error && <Text style={{ color: '#000', fontSize: 22, fontFamily: 'Aristotelica-Regular', textAlign: 'center', marginTop: 20 }}>Incorrect Code</Text>}
-                        </View>
-                    </View>
-                </View>
-
-            </View>
-        </Modal>
-    )
-}

@@ -385,6 +385,18 @@ router.get('/bookings', async (req, res) => {
 
 });
 
+router.get('/fetchProviders', async (req, res) => {
+
+    try {
+        providers = await db_childcare.collection('providers').find().toArray();
+        console.log('providers: ',  providers)
+        res.status(200).send(providers );
+    } catch (e) {
+        console.log('fetchchatlog error: ', e)
+    }
+
+});
+
 
 router.post('/assignProvider', async (req, res) => {
     console.log('provider assignemnt: ', req.body)
