@@ -436,35 +436,22 @@ router.post('/booking', async (req, res) => {
 });
 
 router.delete('/booking', async (req, res) => {
-
     let { booking_id, user_id } = req.body
-
-    let updateBooking = await db_childcare.collection('bookings').updateOne(
-        { _id: new ObjectId(String(booking_id)) },
-        { $set: { completed: true, canceled: true } },
-    )
-
-    let updateBookingOnUser = await db__.collection('users').updateOne(
-        { _id: new ObjectId(String(user_id)) },
-        { $pull: { "childcareBookings": { _id: new ObjectId(String(booking_id)) } } }, //https://stackoverflow.com/a/10523963
-        { returnDocument: "after" }
-    )
-
-
-
-    // try {
-    //     let userId = req.body.userId
-    //     let user = await db__.collection('users').findOne({ _id: new ObjectId(String(userId)) });
-    //     console.log('user - dete: ', user)
-    //     if (user.activeRides.length) {
-    //         //don't permit account deletion if they have an active ride
-    //         res.status(200).send(false);
-    //     } else {
-    //         res.status(200).send('ok');
-    //     }
-    // } catch (e) {
-    //     console.log('driver push token save error: ', e)
-    // }
+    try {
+        let updateBooking = await db_childcare.collection('bookings').updateOne(
+            { _id: new ObjectId(String(booking_id)) },
+            { $set: { completed: true, canceled: true } },
+        )
+        let updateBookingOnUser = await db__.collection('users').updateOne(
+            { _id: new ObjectId(String(user_id)) },
+            { $pull: { "childcareBookings": { _id: new ObjectId(String(booking_id)) } } }, //https://stackoverflow.com/a/10523963
+            { returnDocument: "after" }
+        )
+        res.status(200).send('ok');
+    } catch (e) {
+        console.log('driver push token save error: ', e)
+        res.status(200).send(false);
+    }
 });
 
 module.exports = router;

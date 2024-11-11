@@ -10,7 +10,7 @@ const windowWidth = Dimensions.get('window').width;
 
 export default EasyBook = ({ masterState, setMasterState, sitter = null, navigation, booking }) => {
 
-    console.log('sdfsdfsdf: ', masterState.user.childcareBookings)
+    console.log('sdfsdfsdf: ', masterState.user?.childcareBookings)
 
 
     const [age1, setAge1] = useState(null)
@@ -26,7 +26,7 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
 
     const newBooking = {
         user: user ? { firstName: user.firstName, lastName: user.lastName, phone: user.phone, _id: user._id } : null,
-        age1, age2, age3, age4, dateTime, notes, provider: null, providerMessage: null, completed:false, canceled:false
+        age1, age2, age3, age4, dateTime, notes, provider: null, providerMessage: null, completed: false, canceled: false
     }
 
     const changeNumOfChild = (inc_dec) => {
@@ -39,11 +39,16 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
 
     const bookNow = async () => {
 
-        if (!masterState.user) {
-            let signInSuccessful = await signIn()
-            console.log('sigin success', signInSuccessful)
+        let user;
 
-            if (!signInSuccessful) {
+        if (!masterState.user) {
+            user = await signIn()
+            user=user.user
+            console.log('signin success', user)
+
+            newBooking.user =  { firstName: user.firstName, lastName: user.lastName, phone: user.phone, _id: user._id } 
+            
+            if (!user) {
                 console.log('abort'); return
             }
         }
@@ -53,7 +58,10 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
         if (!dateTime) { errorTimeout("Please enter date and time"); return }
 
 
+        console.log('booking now!!!: ', newBooking)
+
         axios.post(`${url}/childcare/booking`, { newBooking })
+
             .then(res => {
                 if (res.data) {
                     console.log(res.data)
@@ -138,7 +146,7 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
                     if (res.data.status == 'ok') {
                         console.log('user code response: ', res.data.user)
                         populateData({ masterState, setMasterState, loginUser: res.data.user })
-                        promiseref.current(true)
+                        promiseref.current({ user: res.data.user })
                         setModalVisible(false)
                     } else {
                         setCode('')

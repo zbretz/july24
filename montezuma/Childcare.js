@@ -27,7 +27,7 @@ export default Childcare = ({ navigation, masterState, setMasterState }) => {
 
     let removeBooking = (booking_id, user_id) => {
 
-        console.log("booking_id: ", typeof booking_id)
+        console.log("booking_id: ", booking_id)
 
         axios.delete(`${url}/booking`, { data: { booking_id, user_id } })
             .then(res => {

@@ -45,7 +45,7 @@ export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatL
 
     useEffect(() => {
         // setBooking(upcomingBooking)
-    }, [masterState.user.childcareBookings])
+    }, [masterState.user?.childcareBookings])
 
 
 
