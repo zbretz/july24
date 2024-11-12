@@ -9,12 +9,11 @@ import Faq from './Faq'
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
-export default ChildcareHome = ({  masterState, setMasterState, navigation }) => {
+export default ChildcareHome = ({ masterState, setMasterState, navigation }) => {
 
     const video = useRef(null);
 
     return (
-
 
         <ScrollView style={{ backgroundColor: '#fff', height: '100%' }}>
 
@@ -35,10 +34,7 @@ export default ChildcareHome = ({  masterState, setMasterState, navigation }) =>
 
             <View style={{ alignItems: 'center', }}>
 
-                {/* <View style={{ position: 'absolute', bottom: 20, right: 20, zIndex: 11, backgroundColor: 'blue', width: windowHeight * .2, padding: 10, marginRight: 20, borderRadius: 14, backgroundColor: 'rgba(0,0,0,.4)' }}>
-                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 600 }}>Natalia</Text>
-                    <Text style={{ color: 'white', fontSize: 11, }}>Teacher</Text>
-                </View> */}
+
 
                 <TouchableOpacity onPress={() => navigation.navigate('SitterPage')} style={{ position: 'absolute', bottom: 20, right: 20, zIndex: 11, width: windowHeight * .2, padding: 10, marginRight: 20, borderRadius: 14, backgroundColor: 'rgba(0,0,0,.6)' }}>
                     <Text style={{ color: 'white', fontSize: 16, fontWeight: 600 }}>Meet Natalia</Text>
@@ -67,8 +63,12 @@ export default ChildcareHome = ({  masterState, setMasterState, navigation }) =>
             <View style={{ alignItems: 'center', }}>
                 <View style={{ width: windowWidth * .9, marginTop: 10, borderRadius: 20, borderWidth: 0 }}>
                     <View style={{}}>
+
+
+
                         <Text style={{ fontSize: 30 }}>Book with confidence.</Text>
-                        <Text style={{ fontSize: 18 }}>Whether it's Date Night or you need coverage for a day on the slopes, our sitters have you covered.</Text>
+
+                        <Text style={{ fontSize: 18 }}>Whether it's parent's night out, or you need support for a day on the slopes, our sitters have you covered.</Text>
 
 
                         <View style={{ width: '88%', alignSelf: 'center', marginTop: 10 }}>
@@ -95,9 +95,9 @@ export default ChildcareHome = ({  masterState, setMasterState, navigation }) =>
             </View>
 
 
-            <EasyBook masterState={masterState}  navigation={navigation} setMasterState={setMasterState} />
+            <EasyBook masterState={masterState} navigation={navigation} setMasterState={setMasterState} />
 
-            <TouchableOpacity onPress={()=>navigation.navigate('SitterList')} style={{ marginTop: 10, borderRadius: 20, borderWidth: 0, marginVertical: 10 }}>
+            <TouchableOpacity onPress={() => navigation.navigate('SitterList')} style={{ marginTop: 10, borderRadius: 20, borderWidth: 0, marginVertical: 10 }}>
                 <Text style={{ fontSize: 30, textAlign: 'center' }}>Meet the Sitters</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10 }}>
                     <View style={{ backgroundColor: '#FFCF56', height: 48, width: 48, zIndex: 98, borderRadius: 30, alignItems: 'center', justifyContent: 'center', marginRight: 10 }} name="arrow-back-ios" size={24} color="black" >

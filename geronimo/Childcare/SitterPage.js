@@ -10,7 +10,7 @@ const windowHeight = Dimensions.get('window').height;
 export default SitterPage = ({ route, isConnected, masterState, setMasterState, navigation, providers }) => {
 
     let { name } = route.params
-    let sitter = providers.find(provider => provider.firstName==name)
+    let sitter = providers.find(provider => provider.firstName == name)
 
     const video = useRef(null);
 
@@ -34,7 +34,7 @@ export default SitterPage = ({ route, isConnected, masterState, setMasterState, 
 
             <View style={{ alignItems: 'center', }}>
 
-                <Video
+                {/* <Video
                     // ref={video}
                     style={{ height: windowWidth * .9, width: windowWidth * .9, marginTop: 0, borderRadius: 20 }}
                     source={require('../assets/babysitter.mov')}
@@ -44,7 +44,20 @@ export default SitterPage = ({ route, isConnected, masterState, setMasterState, 
                     shouldPlay
                     isMuted
                 // onPlaybackStatusUpdate={status => setStatus(() => status)}
+                /> */}
+
+                <Image
+                    // ref={video}
+                    style={{ height: windowWidth * .9, width: windowWidth * .9, marginTop: 0, borderRadius: 20 }}
+                    source={{uri:'https://theparkcityapp.s3.us-east-1.amazonaws.com/393-200x300.jpg'}}
+                    useNativeControls
+                    resizeMode={ResizeMode.COVER}
+                    isLooping
+                    shouldPlay
+                    isMuted
+                // onPlaybackStatusUpdate={status => setStatus(() => status)}
                 />
+
             </View>
 
             <View style={{ alignItems: 'center', }}>
@@ -73,7 +86,7 @@ export default SitterPage = ({ route, isConnected, masterState, setMasterState, 
 
             </View>
 
-            <EasyBook masterState={masterState}  navigation={navigation} setMasterState={setMasterState} sitter={sitter}/>
+            <EasyBook masterState={masterState} navigation={navigation} setMasterState={setMasterState} sitter={sitter} />
 
         </ScrollView>
 

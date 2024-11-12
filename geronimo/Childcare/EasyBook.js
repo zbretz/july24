@@ -4,6 +4,7 @@ import { AntDesign, MaterialIcons, Ionicons, Entypo } from '@expo/vector-icons';
 import { url } from '../url_toggle'
 import axios from 'axios';
 import populateData from '../CoreNav/populateData';
+import Popover, { PopoverMode, PopoverPlacement } from 'react-native-popover-view';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -43,11 +44,11 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
 
         if (!masterState.user) {
             user = await signIn()
-            user=user.user
+            user = user.user
             console.log('signin success', user)
 
-            newBooking.user =  { firstName: user.firstName, lastName: user.lastName, phone: user.phone, _id: user._id } 
-            
+            newBooking.user = { firstName: user.firstName, lastName: user.lastName, phone: user.phone, _id: user._id }
+
             if (!user) {
                 console.log('abort'); return
             }
@@ -386,9 +387,28 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
                         </View>
                     }
 
-                    <TouchableOpacity onPress={bookNow} style={{ backgroundColor: '#ffcf56', padding: 14, paddingHorizontal: 18, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', alignSelf: 'center', marginTop: 20 }}>
-                        <Text style={{ marginBottom: -4, fontFamily: 'Aristotelica-Regular', fontSize: 26, marginBottom: -6 }}>Book Now</Text>
-                    </TouchableOpacity>
+
+                    <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+
+                        <TouchableOpacity onPress={bookNow} style={{ backgroundColor: '#ffcf56', padding: 14, paddingHorizontal: 18, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', alignSelf: 'center', marginTop: 20 }}>
+                            <Text style={{ marginBottom: -4, fontFamily: 'Aristotelica-Regular', fontSize: 26, marginBottom: -6 }}>Book Now</Text>
+                        </TouchableOpacity>
+
+                        {!sitter &&
+                            <Popover
+                                backgroundStyle={{ backgroundColor: 'rgba(0,0,0,.3)' }}
+                                popoverStyle={{ borderRadius: 20 }}
+
+                                from={(
+                                    <View style={{backgroundColor:'#fafafa',padding:4, borderRadius:5, position: 'absolute', right: 20, bottom: 10}}>
+                                        <Text style={{ fontWeight:500 }}>Rates?</Text>
+                                    </View>
+                                )}>
+                                <Text style={{ padding: 20, borderRadius: 20, fontSize: 17 }}>Booking through our general flow is $25/hour. For a specific sitter, you can find their rate on their profile page.</Text>
+                            </Popover>
+                        }
+
+                    </View>
 
 
                 </View>
