@@ -3,6 +3,7 @@
     "name": "theparkcityapp",
     "slug": "theparkcityapp",
     "version": "6.1.0",
+    "newArchEnabled": true,
     "orientation": "portrait",
     "icon": "./assets/yellow-icon-bold.png",
     "userInterfaceStyle": "light",
@@ -30,6 +31,9 @@
       "eas": {
         "projectId": "ef351239-8922-4a5d-ac35-a9d64e9afd73"
       }
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

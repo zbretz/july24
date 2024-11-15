@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View, TextInput, Image, Dimensions, FlatList, AppState, Animated } from 'react-native';
-import { useEffect, useState, useCallback, } from 'react';
+import { useEffect, useState, useRef, } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import LottieView from 'lottie-react-native';
 
@@ -53,6 +53,14 @@ export default SplashScreen = ({ appIsReady, stopAnim }) => {
 
     }, [appIsReady, animFinished])
 
+
+    const lottieRef = useRef(null)
+    useEffect(() => {
+        if (lottieRef.current) {
+            lottieRef.current.play()
+        }
+    }, [lottieRef.current]);
+
     return (
 
         <>
@@ -69,11 +77,11 @@ export default SplashScreen = ({ appIsReady, stopAnim }) => {
                         position: 'absolute',
                         zIndex: 3,
                         left: translateValueSchedule,
-                        height: 240, width: 240, 
-                       
+                        height: 240, width: 240,
+
                     },]} >
 
-                        <LottieView speed={1.2} style={{ height: 240, width: 240, }} source={require('../assets/mountain.json')} autoPlay loop={false} onAnimationFinish={() => {  setAnimFinished(true) }} />
+                        <LottieView ref={lottieRef} speed={1.2} style={{ height: 240, width: 240, }} source={require('../assets/mountain.json')} loop={false} onAnimationFinish={() => { console.log('animation finished'); setAnimFinished(true) }} />
 
                     </Animated.View>
 

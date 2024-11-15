@@ -1,5 +1,7 @@
-import registerRootComponent from 'expo/build/launch/registerRootComponent';
+// import registerRootComponent from '/expo/build/launch/registerRootComponent';
 // import { Text, AppRegistry } from 'react-native';
+import { registerRootComponent } from "expo";
+
 
 import { Text, TextInput } from 'react-native';
 
