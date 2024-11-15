@@ -9,6 +9,7 @@ import SitterList from './SitterList';
 import { StripeProvider } from '@stripe/stripe-react-native';
 import axios from 'axios';
 import { url } from '../url_toggle'
+import { MaterialIcons } from '@expo/vector-icons';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -19,8 +20,6 @@ export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatL
     const [providers, setProviders] = useState([])
 
     let booking = masterState.user?.childcareBookings?.length ? masterState.user.childcareBookings[0] : null
-
-    console.log('upcoming booking: ', booking)
 
     const fetchProviders = () => {
         axios.get(`${url}/childcare/fetchProviders`)
@@ -62,12 +61,19 @@ export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatL
                 </Stack.Screen>
 
                 <Stack.Screen name="SitterPage" options={{ presentation: "modal" }}>
-                    {props => <SitterPage {...props} masterState={masterState} setMasterState={setMasterState} providers={providers}  />}
+                    {props => <SitterPage {...props} masterState={masterState} setMasterState={setMasterState} providers={providers} />}
                 </Stack.Screen>
 
                 <Stack.Screen name="EasyBook" options={{ presentation: "modal" }}>
-                    {/* {props => <EasyBook {...props} masterState={masterState} setMasterState={setMasterState} booking={booking} setBooking={setBooking} />} */}
-                    {props => <EasyBook {...props} masterState={masterState} setMasterState={setMasterState} />}
+
+                    {props =>
+                        <View>
+                            <TouchableOpacity onPress={() => navigation.navigate('Booking')} style={{ backgroundColor: '#f2f2f2', height: 34, width: 34, zIndex: 98, borderRadius: 20, position: 'absolute', top: 45, left: 40, alignItems: 'center', justifyContent: 'center' }} name="arrow-back-ios" size={24} color="black" >
+                                <MaterialIcons style={{ marginLeft: 10 }} name="arrow-back-ios" size={20} color="black" />
+                            </TouchableOpacity>
+                            <EasyBook {...props} masterState={masterState} setMasterState={setMasterState} />
+                        </View>
+                    }
                 </Stack.Screen>
 
             </Stack.Navigator>

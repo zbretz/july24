@@ -8,8 +8,9 @@ import axios from 'axios';
 import fetchPushToken from './fetchPushToken';
 import pushConfig from './pushConfig';
 import * as Animatable from 'react-native-animatable';
-import {url} from '../url_toggle'
+import { url } from '../url_toggle'
 import populateData from '../CoreNav/populateData';
+import { version as app_version } from '../package.json';
 
 
 const Stack = createStackNavigator();
@@ -238,8 +239,8 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                 .catch((err) => console.log('push token save error: ', err))
         }
 
-        if (user){
-            populateData({masterState, setMasterState, loginUser:user})
+        if (user) {
+            populateData({ masterState, setMasterState, loginUser: user })
         }
         // setMasterState(masterState => {
         //     console.log('user123123123: ', user)
@@ -647,9 +648,12 @@ const InformationScreen = ({ navigation, }) => {
             <Image style={{ width: windowWidth * .4, height: windowWidth * .4, backgroundColor: '#fff', marginTop: 38 }} resizeMode='contain' source={require('../assets/team-work.png')} />
 
             <View style={{ backgroundColor: '#f2f2f2', padding: 20, borderRadius: 40, marginTop: -8 }}>
-                <View style={{ backgroundColor: '#fff', padding: 20, paddingVertical: 30, borderRadius: 30 }}>
+                <View style={{ backgroundColor: '#fff', paddingHorizontal: 8, paddingVertical: 20, borderRadius: 30 }}>
                     <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 18, textAlign: 'center' }} >
                         Building the future of local commerce
+                    </Text>
+                    <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18, textAlign: 'center', marginTop:2 }} >
+                        v{app_version}
                     </Text>
                 </View>
             </View>
@@ -703,7 +707,7 @@ const ReceiptScreen = ({ navigation, masterState, setMasterState }) => {
             .catch(() => null)
             .finally(() => {
                 setTimeout(() => {
-                    setLoadingPayForm(false); Alert.alert('Success', 'Preferences Saved', [], {cancelable:true})
+                    setLoadingPayForm(false); Alert.alert('Success', 'Preferences Saved', [], { cancelable: true })
                 }, 1500);
             })
     }

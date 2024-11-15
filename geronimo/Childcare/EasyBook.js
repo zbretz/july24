@@ -83,13 +83,13 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
 
 
 
-    // const [firstName, setFirstName] = useState('')
-    // const [lastName, setLastName] = useState('')
-    // const [phone, setPhone] = useState('')
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [phone, setPhone] = useState('')
 
-    const [firstName, setFirstName] = useState('cvcv')
-    const [lastName, setLastName] = useState('cvcvc')
-    const [phone, setPhone] = useState('9175751955')
+    // const [firstName, setFirstName] = useState('cvcv')
+    // const [lastName, setLastName] = useState('cvcvc')
+    // const [phone, setPhone] = useState('9175751955')
 
 
     const [error, setError] = useState()
@@ -197,7 +197,7 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
                 <View style={{
                     borderRadius: 30, paddingBottom: 30, borderWidth: 0, backgroundColor: '#e6e6e6', shadowColor: '#000',
                     shadowOpacity: 0.38,
-                    shadowRadius: 6,
+                    shadowRadius: 3,
                     shadowOffset: {
                         width: 0,
                         height: 0,
@@ -388,21 +388,20 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
                     }
 
 
-                    <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
 
-                        <TouchableOpacity onPress={bookNow} style={{ backgroundColor: '#ffcf56', padding: 14, paddingHorizontal: 18, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', alignSelf: 'center', marginTop: 20 }}>
-                            <Text style={{ marginBottom: -4, fontFamily: 'Aristotelica-Regular', fontSize: 26, marginBottom: -6 }}>Book Now</Text>
+                        <TouchableOpacity onPress={bookNow} style={{ backgroundColor: '#ffcf56', padding: 14, paddingHorizontal: 18, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 0, justifyContent: 'center', alignSelf: 'center', marginTop: 20 }}>
+                            <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 26, marginBottom: -6 }}>Book Now</Text>
                         </TouchableOpacity>
 
                         {!sitter &&
                             <Popover
                                 backgroundStyle={{ backgroundColor: 'rgba(0,0,0,.3)' }}
                                 popoverStyle={{ borderRadius: 20 }}
-
                                 from={(
-                                    <View style={{backgroundColor:'#fafafa',padding:4, borderRadius:5, position: 'absolute', right: 20, bottom: 10}}>
-                                        <Text style={{ fontWeight:500 }}>Rates?</Text>
-                                    </View>
+                                    <TouchableOpacity style={{ backgroundColor: '#fafafa', padding: 4, borderRadius: 5, position: 'absolute', right: 20, bottom: 10, zIndex: 99 }}>
+                                        <Text style={{ fontWeight: 500 }}>Rates?</Text>
+                                    </TouchableOpacity>
                                 )}>
                                 <Text style={{ padding: 20, borderRadius: 20, fontSize: 17 }}>Booking through our general flow is $25/hour. For a specific sitter, you can find their rate on their profile page.</Text>
                             </Popover>

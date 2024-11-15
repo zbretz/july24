@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, TextInput, Image, Dimensions, Modal, Animated, Linking, SafeAreaView } from 'react-native';
+import { Text, TouchableOpacity, View, Image, Dimensions, Modal, Animated } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Entypo } from '@expo/vector-icons';
@@ -28,7 +28,6 @@ export default Home = ({ isConnected, masterState, setMasterState, chatLog, setC
 const Menu = ({ isConnected, masterState, navigation, }) => {
 
     const [modalVisible, setModalVisible] = useState(false)
-
 
     return (
 

@@ -1,14 +1,15 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, ScrollView, TouchableWithoutFeedback, Platform, LayoutAnimation, TextInput, } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, ScrollView, TouchableWithoutFeedback, Platform, LayoutAnimation, Linking } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
+import { Feather } from '@expo/vector-icons';
 
 export default Faq = () => {
     // export default ChildcareHome = ({ isConnected, masterState, setMasterState, navigation, basket, setBasket, partner, setPartner }) => {
 
     return (
         <View>
-     
+
             <View style={{ width: '100%', }}>
-                <View style={{ marginVertical: 0, marginHorizontal: 10 }}>
+                <View style={{ marginVertical: 0, marginHorizontal: 0 }}>
                     <View style={{}}>
                         <View style={{ borderRadius: 30, marginRight: 0, alignItems: 'center', paddingBottom: 30, borderWidth: 0 }}>
                             <Text style={{ fontWeight: 600, fontSize: 32, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', }}>F.A.Q</Text>
@@ -17,7 +18,7 @@ export default Faq = () => {
                             <View style={{ width: '100%' }}>
                                 <CollapsibleView title="Which sitter will I get?">
                                     <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0, width: '90%', }}>
-                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>You're matched with a sitter based on availability. Every one of our sitters is trusted by families throughout Park City as a professional teacher and childcare provider.</Text>
+                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>When using Easy Book, you're matched based on sitter availability. If there's a particular sitter you'd like to book with, you can navigate to their profile and book them directly that way!</Text>
                                     </View>
                                 </CollapsibleView>
                             </View>
@@ -61,8 +62,14 @@ export default Faq = () => {
                             <View style={{ width: '100%' }}>
                                 <CollapsibleView title="I have more questions!">
                                     <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
-                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>And we have answers! Call us directly at any time for questions or help of any sort.</Text>
+                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginTop: -4 }}>
+                                            <TouchableOpacity onPress={() => { Linking.openURL(`tel:${9175751955}`) }} style={{ marginRight: 6, borderRadius: 30, alignItems: 'center', flexDirection: 'row', justifyContent: 'center', backgroundColor: '#ffcf56', paddingHorizontal: 9, paddingVertical: 6, marginTop: -4 }}>
+                                                <Feather style={{}} name="phone" size={22} color="#000" /><Text style={{ fontSize: 20 }}> Call us</Text>
+                                            </TouchableOpacity>
+                                            <Text style={{}}>directly at any time with questions or for help of any sort.</Text>
+                                        </Text>
                                     </View>
+
                                 </CollapsibleView>
                             </View>
 
