@@ -17,6 +17,7 @@ const Stack = createStackNavigator();
 
 export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatLog, setChatLog, navigation }) => {
 
+
     const [providers, setProviders] = useState([])
 
     let booking = masterState.user?.childcareBookings?.length ? masterState.user.childcareBookings[0] : null
@@ -42,7 +43,7 @@ export default ChildcareNav = ({ isConnected, masterState, setMasterState, chatL
 
             <Stack.Navigator
                 screenOptions={{
-                    headerShown: false
+                    headerShown: false,
                 }}
             >
 
