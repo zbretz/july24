@@ -21,19 +21,11 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
         <>
 
 
-            <ScrollView bounces={false} pagingEnabled={true} style={{}}>
+            <ScrollView bounces={false} pagingEnabled={!true} style={{}}>
 
+    
 
-
-                {/* <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: 20, marginTop: 20, flexDirection: 'row', position: 'absolute', zIndex: 1 }} name="arrow-back-ios" size={24} color="black" >
-                    <MaterialIcons style={{ marginLeft: 10, paddingTop: 10, marginLeft: -10 }} name="arrow-back-ios" size={24} color="#fff" />
-                    <View>
-                        <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 32, marginTop: 0, color: '#fff' }}>Childcare</Text>
-                        <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 12, marginTop: 0, color: '#fff' }}>in Park City</Text>
-                    </View>
-                </TouchableOpacity> */}
-
-                <TouchableOpacity onPress={() => scrollRef.current.scrollTo({ x: windowWidth * .19 + 30 })} style={{ padding: 20, marginTop: 20, flexDirection: 'row', position: 'absolute', zIndex: 1 }} name="arrow-back-ios" size={24} color="black" >
+                <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: 20, marginTop: 20, flexDirection: 'row', position: 'absolute', zIndex: 1 }} name="arrow-back-ios" size={24} color="black" >
                     <MaterialIcons style={{ marginLeft: 10, paddingTop: 10, marginLeft: -10 }} name="arrow-back-ios" size={24} color="#fff" />
                     <View>
                         <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 32, marginTop: 0, color: '#fff' }}>Childcare</Text>
@@ -42,37 +34,28 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
                 </TouchableOpacity>
 
 
-                {/* <View style={{ position: 'absolute', top: 40, right: 20, backgroundColor: '#FFCF56', height: 48, width: 48, zIndex: 98, borderRadius: 30, alignItems: 'center', justifyContent: 'center' }} name="arrow-back-ios" size={24} color="black" >
-                    <Image style={{ height: 40, width: 40, borderRadius: 30 }} source={require('../assets/yellow-icon-bold.png')} />
-                </View> */}
-
                 <Text style={{ position: 'absolute', top: 50, right: 0, fontFamily: 'PointSoftSemiBold', fontSize: 13, marginRight: 6, color: '#fff', textAlign: 'center' }}>Meet The Team</Text>
 
-                <ScrollView ref={scrollRef} pagingEnabled={true} contentContainerStyle={{ alignItems: 'center' }} showsHorizontalScrollIndicator={false} horizontal style={{ width: windowWidth * .19 + 30, position: 'absolute', alignSelf: 'flex-end', backgroundColor: 'rgba(0,0,0,.3)', borderTopLeftRadius: 60, borderBottomLeftRadius: 60, marginTop: 70, padding: 0, }}>
-                    <View style={{ flexDirection: 'row', }}>
+                <View style={{ width: windowWidth * .19 + 20, position: 'absolute', alignSelf: 'flex-end', backgroundColor: 'rgba(0,0,0,0)', borderTopLeftRadius: 0, borderBottomLeftRadius: 0, marginTop: 70, padding: 0, }}>
+                    <View style={{}}>
                         {Object.values(providers).slice(0, 3).map((sitter, idx) => {
                             return (
 
-                                <TouchableOpacity onPress={() => navigation.navigate('SitterList')} key={idx} style={{ alignItems: 'center', justifyContent: 'center', marginRight: 30 }} name="arrow-back-ios" size={24} color="black" >
+                                <TouchableOpacity onPress={() => navigation.navigate('SitterList')} key={idx} style={{ alignItems: 'center', justifyContent: 'center', marginRight: 20, marginBottom: 3 }} name="arrow-back-ios" size={24} color="black" >
                                     <Image style={{ width: windowWidth * .19, height: windowWidth * .19, borderRadius: 40, }} source={{ uri: sitter.cover_photo }} />
                                 </TouchableOpacity>
                             )
                         })}
                     </View>
-                    {/* <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 12, marginTop: 0, color: '#fff', textAlign: 'center' }}>Meet The Team</Text> */}
-                </ScrollView>
-
+                </View>
 
 
 
                 <View style={{ height: windowHeight * .5, justifyContent: 'center' }} />
 
+                <LinearGradient colors={['rgba(255,255,255,0)', 'rgba(255,255,255,.90)', 'rgba(255,255,255,1)']} style={{ borderWidth: 0, padding: 30, paddingBottom: 20, zIndex: 10, }}>
 
-
-                <LinearGradient colors={['rgba(255,255,255,0)', 'rgba(255,255,255,.85)', 'rgba(255,255,255,1)']} style={{ borderWidth: 0, padding: 30, paddingBottom: 20, zIndex: 10, }}>
-
-
-                    <View style={{ marginTop: 190, marginBottom: 0 }} >
+                    <View style={{ marginTop: 90, marginBottom: -20 }} >
 
                         <Text style={{ fontSize: 30, color: '#000', fontWeight: 400 }}>Book with confidence.</Text>
 
@@ -104,7 +87,7 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
                     <EasyBook masterState={masterState} navigation={navigation} setMasterState={setMasterState} />
                 </View>
 
-                <View style={{ justifyContent: 'center', backgroundColor: '#fff' }} >
+                {/* <View style={{ justifyContent: 'center', backgroundColor: '#fff' }} >
                     <View style={{ borderRadius: 10, marginRight: 10, padding: 6 }}>
                         <Text style={{ fontSize: 30, textAlign: 'center', color: '#000' }}>Meet the Team</Text>
 
@@ -120,9 +103,9 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
                         </View>
 
                     </View>
-                </View>
+                </View> */}
 
-                <View style={{ backgroundColor: '#fff' }}>
+                <View style={{ backgroundColor: '#fff', marginTop:-20 }}>
                     <Faq />
                 </View>
 
@@ -148,32 +131,6 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
                 <View style={{ backgroundColor:'transparent', top:-70 }}>
                     <EasyBook masterState={masterState} navigation={navigation} setMasterState={setMasterState} />
                 </View> */}
-
-
-             
-
-                {/* 
-<View>
-
-<Video
-                ref={video}
-                style={{ height: windowHeight, width: windowWidth, zIndex: -1 }}
-                // source={require('../assets/childcare_cover.mp4')}
-                source={require('../assets/cover_tall.mp4')}
-                // source={{ uri: 'https://theparkcityapp.s3.us-east-1.amazonaws.com/istockphoto-1369478616-640_adpp_is.mp4' }}
-                // useNativeControls
-                resizeMode={ResizeMode.COVER}
-                isLooping
-                // shouldPlay
-                isMuted
-            />
-
-
-
-
-</View> */}
-
-
 
 
 

@@ -6,11 +6,9 @@ import { Entypo } from '@expo/vector-icons';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-
 const Stack = createStackNavigator();
 
 export default Home = ({ isConnected, masterState, setMasterState, chatLog, setChatLog, navigation }) => {
-
     return (
         <Stack.Navigator
             screenOptions={{
@@ -27,6 +25,8 @@ export default Home = ({ isConnected, masterState, setMasterState, chatLog, setC
 
 const Menu = ({ isConnected, masterState, navigation, }) => {
 
+    const rref = useRef()
+
     const [modalVisible, setModalVisible] = useState(false)
 
     return (
@@ -37,7 +37,6 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                     // <View style={{ height: 100, margin: 20, backgroundColor: 'black', borderRadius: 20 }}></View>
                     <FlashingView />
                 } */}
-
 
             <Modal
                 animationType='slide'

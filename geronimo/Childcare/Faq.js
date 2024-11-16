@@ -16,18 +16,17 @@ export default Faq = () => {
 
 
                             <View style={{ width: '100%' }}>
-                                <CollapsibleView title="Which sitter will I get?">
-                                    <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0, width: '90%', }}>
-                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>When using Easy Book, you're matched based on sitter availability. If there's a particular sitter you'd like to book with, you can navigate to their profile and book them directly that way!</Text>
+                                <CollapsibleView title="What are the sitters' rates?">
+                                    <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
+                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}><Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$25</Text>/hour when booking through the Easy Book form above. Sitters have individual rates when they are requested specifically. Additional children add <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$5</Text>. </Text>
                                     </View>
                                 </CollapsibleView>
                             </View>
 
-
                             <View style={{ width: '100%' }}>
-                                <CollapsibleView title="What are the sitters' rates?">
-                                    <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
-                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}><Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$25</Text>/hour when booking through the Easy Book form above. Sitters have individual rates when they are requested specifically. Additional children add <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$5</Text>. </Text>
+                                <CollapsibleView title="Which sitter will I get?">
+                                    <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0, width: '90%', }}>
+                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>When using Easy Book, you're matched based on sitter availability. If there's a particular sitter you'd like to book with, you can navigate to their profile and book them directly that way!</Text>
                                     </View>
                                 </CollapsibleView>
                             </View>

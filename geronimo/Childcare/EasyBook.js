@@ -4,7 +4,6 @@ import { AntDesign, MaterialIcons, Ionicons, Entypo } from '@expo/vector-icons';
 import { url } from '../url_toggle'
 import axios from 'axios';
 import populateData from '../CoreNav/populateData';
-import Popover, { PopoverMode, PopoverPlacement } from 'react-native-popover-view';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -393,19 +392,6 @@ export default EasyBook = ({ masterState, setMasterState, sitter = null, navigat
                         <TouchableOpacity onPress={bookNow} style={{ backgroundColor: '#ffcf56', padding: 14, paddingHorizontal: 18, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 0, justifyContent: 'center', alignSelf: 'center', marginTop: 20 }}>
                             <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 26, marginBottom: -6 }}>Book Now</Text>
                         </TouchableOpacity>
-
-                        {!sitter &&
-                            <Popover
-                                backgroundStyle={{ backgroundColor: 'rgba(0,0,0,.3)' }}
-                                popoverStyle={{ borderRadius: 20 }}
-                                from={(
-                                    <TouchableOpacity style={{ backgroundColor: '#fafafa', padding: 4, borderRadius: 5, position: 'absolute', right: 20, bottom: 10, zIndex: 99 }}>
-                                        <Text style={{ fontWeight: 500 }}>Rates?</Text>
-                                    </TouchableOpacity>
-                                )}>
-                                <Text style={{ padding: 20, borderRadius: 20, fontSize: 17 }}>Booking through our general flow is $25/hour. For a specific sitter, you can find their rate on their profile page.</Text>
-                            </Popover>
-                        }
 
                     </View>
 
