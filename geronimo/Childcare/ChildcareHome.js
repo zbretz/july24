@@ -23,7 +23,7 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
 
             <ScrollView bounces={false} pagingEnabled={!true} style={{}}>
 
-    
+
 
                 <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: 20, marginTop: 20, flexDirection: 'row', position: 'absolute', zIndex: 1 }} name="arrow-back-ios" size={24} color="black" >
                     <MaterialIcons style={{ marginLeft: 10, paddingTop: 10, marginLeft: -10 }} name="arrow-back-ios" size={24} color="#fff" />
@@ -34,14 +34,17 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
                 </TouchableOpacity>
 
 
-                <Text style={{ position: 'absolute', top: 50, right: 0, fontFamily: 'PointSoftSemiBold', fontSize: 13, marginRight: 6, color: '#fff', textAlign: 'center' }}>Meet The Team</Text>
 
-                <View style={{ width: windowWidth * .19 + 20, position: 'absolute', alignSelf: 'flex-end', backgroundColor: 'rgba(0,0,0,0)', borderTopLeftRadius: 0, borderBottomLeftRadius: 0, marginTop: 70, padding: 0, }}>
+                <View style={{ right: 8, width: windowWidth * .19, position: 'absolute', alignSelf: 'flex-end', backgroundColor: 'rgba(0,0,0,0)', borderTopLeftRadius: 0, borderBottomLeftRadius: 0, marginTop: 70, padding: 0, }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('SitterList')} style={{ flexDirection: 'row', alignItems:'center',marginBottom: 6 }}>
+                        <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 13, color: '#fff', textAlign: 'center',  }}>Meet Us </Text>
+                        <AntDesign name="caretright" size={7} color="#fff" />
+                    </TouchableOpacity>
                     <View style={{}}>
                         {Object.values(providers).slice(0, 3).map((sitter, idx) => {
                             return (
 
-                                <TouchableOpacity onPress={() => navigation.navigate('SitterList')} key={idx} style={{ alignItems: 'center', justifyContent: 'center', marginRight: 20, marginBottom: 3 }} name="arrow-back-ios" size={24} color="black" >
+                                <TouchableOpacity onPress={() => navigation.navigate('SitterList')} key={idx} style={{ alignItems: 'center', justifyContent: 'center', marginBottom: 3 }} name="arrow-back-ios" size={24} color="black" >
                                     <Image style={{ width: windowWidth * .19, height: windowWidth * .19, borderRadius: 40, }} source={{ uri: sitter.cover_photo }} />
                                 </TouchableOpacity>
                             )
@@ -55,7 +58,7 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
 
                 <LinearGradient colors={['rgba(255,255,255,0)', 'rgba(255,255,255,.90)', 'rgba(255,255,255,1)']} style={{ borderWidth: 0, padding: 30, paddingBottom: 20, zIndex: 10, }}>
 
-                    <View style={{ marginTop: 90, marginBottom: -20 }} >
+                    <View style={{ marginTop: 90, marginBottom: -10 }} >
 
                         <Text style={{ fontSize: 30, color: '#000', fontWeight: 400 }}>Book with confidence.</Text>
 
@@ -104,9 +107,20 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
 
                     </View>
                 </View> */}
+                <View style={{ alignItems: 'center', paddingBottom: 30, borderWidth: 0, backgroundColor: '#fff' }}>
+                    <Text style={{ fontWeight: 600, fontSize: 32, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', }}>Pricing</Text>
+                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginHorizontal: 20 }}><Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$25</Text>/hour when booking through the Easy Book form above. Sitters have individual rates when they are requested specifically. Additional children add <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$5</Text>. </Text>
 
-                <View style={{ backgroundColor: '#fff', marginTop:-20 }}>
-                    <Faq />
+                </View>
+
+                {/* <View style={{ backgroundColor: '#fafafa', marginBottom: 10, padding: 8, borderRadius: 10 }}>
+                    <Text style={{ fontSize: 18 }}> <Text style={{ fontWeight: 500 }}>Base Rate:</Text> $25/hr</Text>
+                </View> */}
+
+
+
+                <View style={{ backgroundColor: '#fff', marginTop: -20 }}>
+                    <Faq navigation={navigation} />
                 </View>
 
 

@@ -1,8 +1,8 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, ScrollView, TouchableWithoutFeedback, Platform, LayoutAnimation, Linking } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, ScrollView, TouchableWithoutFeedback, Platform, LayoutAnimation, Linking, Pressable } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { Feather } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
 
-export default Faq = () => {
+export default Faq = ({ navigation }) => {
     // export default ChildcareHome = ({ isConnected, masterState, setMasterState, navigation, basket, setBasket, partner, setPartner }) => {
 
     return (
@@ -15,18 +15,18 @@ export default Faq = () => {
                             <Text style={{ fontWeight: 600, fontSize: 32, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', }}>F.A.Q</Text>
 
 
-                            <View style={{ width: '100%' }}>
+                            {/* <View style={{ width: '100%' }}>
                                 <CollapsibleView title="What are the sitters' rates?">
                                     <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
                                         <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}><Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$25</Text>/hour when booking through the Easy Book form above. Sitters have individual rates when they are requested specifically. Additional children add <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$5</Text>. </Text>
                                     </View>
                                 </CollapsibleView>
-                            </View>
+                            </View> */}
 
                             <View style={{ width: '100%' }}>
                                 <CollapsibleView title="Which sitter will I get?">
                                     <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0, width: '90%', }}>
-                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>When using Easy Book, you're matched based on sitter availability. If there's a particular sitter you'd like to book with, you can navigate to their profile and book them directly that way!</Text>
+                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>When using Easy Book, you're matched based on sitter availability. If there's a particular sitter you'd like to book with, you can navigate to <Text onPress={() => navigation.navigate('SitterList')} style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, textDecorationLine: 'underline', textDecorationColor: '#ffcf56', backgroundColor:'#ffebb3',}}>their profile</Text> and book them directly that way!</Text>
                                     </View>
                                 </CollapsibleView>
                             </View>
@@ -35,7 +35,7 @@ export default Faq = () => {
                             <View style={{ width: '100%' }}>
                                 <CollapsibleView title="Can I request a specific sitter?">
                                     <View style={{ padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center', marginTop: 0 }}>
-                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Yep, go over to our sitters page and find your favorite person. Please note that sitters name their own rates when booked individually.</Text>
+                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20 }}>Yep, go over to our <Text onPress={() => navigation.navigate('SitterList')} style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, textDecorationLine: 'underline', textDecorationColor: '#ffcf56', backgroundColor:'#ffebb3',}}>sitters page</Text> and find your favorite person. Please note that sitters name their own rates when booked individually.</Text>
                                     </View>
                                 </CollapsibleView>
                             </View>
