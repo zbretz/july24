@@ -35,7 +35,7 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
 
 
 
-                <View style={{ right: 8, width: windowWidth * .19, position: 'absolute', alignSelf: 'flex-end', backgroundColor: 'rgba(0,0,0,0)', borderTopLeftRadius: 0, borderBottomLeftRadius: 0, marginTop: 70, padding: 0, }}>
+                <View style={{ right: 8, width: windowWidth * .16, position: 'absolute', alignSelf: 'flex-end', backgroundColor: 'rgba(0,0,0,0)', borderTopLeftRadius: 0, borderBottomLeftRadius: 0, marginTop: 70, padding: 0, }}>
                     <TouchableOpacity onPress={() => navigation.navigate('SitterList')} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 6 }}>
                         <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 13, color: '#fff', textAlign: 'center', }}>Meet Us </Text>
                         <AntDesign name="caretright" size={9} color="#fff" />
@@ -45,7 +45,7 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
                             return (
 
                                 <TouchableOpacity onPress={() => navigation.navigate('SitterList')} key={idx} style={{ alignItems: 'center', justifyContent: 'center', marginBottom: 3 }} name="arrow-back-ios" size={24} color="black" >
-                                    <Image style={{ width: windowWidth * .19, height: windowWidth * .19, borderRadius: 40, }} source={{ uri: sitter.cover_photo }} />
+                                    <Image style={{ width: windowWidth * .16, height: windowWidth * .16, borderRadius: 40, }} source={{ uri: sitter.cover_photo }} />
                                 </TouchableOpacity>
                             )
                         })}
