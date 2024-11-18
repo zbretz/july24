@@ -2,7 +2,7 @@
   "expo": {
     "name": "theparkcityapp",
     "slug": "theparkcityapp",
-    "version": "6.1.0",
+    "version": "6.5.0",
     "newArchEnabled": true,
     "orientation": "portrait",
     "icon": "./assets/yellow-icon-bold.png",
