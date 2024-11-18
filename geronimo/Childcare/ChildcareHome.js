@@ -21,7 +21,7 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
         <>
 
 
-            <ScrollView bounces={false} pagingEnabled={!true} style={{}}>
+            <ScrollView showsVerticalScrollIndicator={false} bounces={false} pagingEnabled={!true} style={{}}>
 
 
 
@@ -36,9 +36,9 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
 
 
                 <View style={{ right: 8, width: windowWidth * .19, position: 'absolute', alignSelf: 'flex-end', backgroundColor: 'rgba(0,0,0,0)', borderTopLeftRadius: 0, borderBottomLeftRadius: 0, marginTop: 70, padding: 0, }}>
-                    <TouchableOpacity onPress={() => navigation.navigate('SitterList')} style={{ flexDirection: 'row', alignItems:'center',marginBottom: 6 }}>
-                        <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 13, color: '#fff', textAlign: 'center',  }}>Meet Us </Text>
-                        <AntDesign name="caretright" size={7} color="#fff" />
+                    <TouchableOpacity onPress={() => navigation.navigate('SitterList')} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 6 }}>
+                        <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 13, color: '#fff', textAlign: 'center', }}>Meet Us </Text>
+                        <AntDesign name="caretright" size={9} color="#fff" />
                     </TouchableOpacity>
                     <View style={{}}>
                         {Object.values(providers).slice(0, 3).map((sitter, idx) => {
@@ -164,7 +164,8 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
                 source={require('../assets/cover_tall.mp4')}
                 // source={{ uri: 'https://theparkcityapp.s3.us-east-1.amazonaws.com/istockphoto-1369478616-640_adpp_is.mp4' }}
                 // useNativeControls
-                resizeMode={ResizeMode.COVER}
+           
+                resizeMode={Platform.OS === 'ios'?ResizeMode.COVER :"stretch"}
                 isLooping
                 shouldPlay
                 isMuted
