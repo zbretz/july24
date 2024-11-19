@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, ScrollView, TouchableWithoutFeedback, Platform, LayoutAnimation, TextInput, } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { AntDesign, MaterialIcons, Ionicons, Entypo } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons, Octicons } from '@expo/vector-icons';
 import { Video, ResizeMode } from 'expo-av';
 import LottieView from 'lottie-react-native';
 import EasyBook from './EasyBook';
@@ -35,7 +35,7 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
 
 
 
-                <View style={{ right: 8, width: windowWidth * .16, position: 'absolute', alignSelf: 'flex-end', backgroundColor: 'rgba(0,0,0,0)', borderTopLeftRadius: 0, borderBottomLeftRadius: 0, marginTop: 70, padding: 0, }}>
+                <View style={{ zIndex: 9, right: 10, width: windowWidth * .16, position: 'absolute', alignSelf: 'flex-end', backgroundColor: 'rgba(0,0,0,0)', borderTopLeftRadius: 0, borderBottomLeftRadius: 0, marginTop: 50, padding: 0, }}>
                     <TouchableOpacity onPress={() => navigation.navigate('SitterList')} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 6 }}>
                         <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 13, color: '#fff', textAlign: 'center', }}>Meet Us </Text>
                         <AntDesign name="caretright" size={9} color="#fff" />
@@ -66,16 +66,16 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
 
 
                         <View style={{ width: '88%', alignSelf: 'center', marginTop: 10 }}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: -6 }}>
-                                <LottieView speed={.25} style={{ height: 34, width: 34, alignSelf: 'center', marginHorizontal: -6 }} source={require('../assets/checkmark.json')} autoPlay={false} loop={false} />
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 1 }}>
+                                <Octicons name="check-circle" size={16} color="green" />
                                 <Text style={{ marginHorizontal: 6, fontSize: 16, color: '#000' }}>Background and reference checked</Text>
                             </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: -6 }}>
-                                <LottieView speed={.25} style={{ height: 34, width: 34, alignSelf: 'center', marginHorizontal: -6 }} source={require('../assets/checkmark.json')} autoPlay={false} loop={false} />
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 1 }}>
+                                <Octicons name="check-circle" size={16} color="green" />
                                 <Text style={{ marginLeft: 6, fontSize: 16, color: '#000' }}>Deep childcare experience</Text>
                             </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: -6 }}>
-                                <LottieView speed={.25} style={{ height: 34, width: 34, alignSelf: 'center', marginHorizontal: -6 }} source={require('../assets/checkmark.json')} autoPlay={false} loop={false} />
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 1 }}>
+                                <Octicons name="check-circle" size={16} color="green" />
                                 <Text style={{ marginLeft: 6, fontSize: 16, color: '#000' }}>Childcare for all ages: infants to teens</Text>
                             </View>
                         </View>
@@ -164,8 +164,8 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
                 source={require('../assets/cover_tall.mp4')}
                 // source={{ uri: 'https://theparkcityapp.s3.us-east-1.amazonaws.com/istockphoto-1369478616-640_adpp_is.mp4' }}
                 // useNativeControls
-           
-                resizeMode={Platform.OS === 'ios'?ResizeMode.COVER :"stretch"}
+
+                resizeMode={Platform.OS === 'ios' ? ResizeMode.COVER : "stretch"}
                 isLooping
                 shouldPlay
                 isMuted

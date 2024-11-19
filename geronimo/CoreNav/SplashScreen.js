@@ -54,25 +54,13 @@ export default SplashScreen = ({ appIsReady, stopAnim }) => {
     }, [appIsReady, animFinished])
 
 
-    const lottieRef = useRef(null)
-    useEffect(() => {
-        if (lottieRef.current) {
-            lottieRef.current.play()
-        }
-    }, [lottieRef.current]);
-
     return (
 
         <>
             <StatusBar hidden={true} />
-
             {!showApp
-
                 ?
-
-
                 <View style={{ position: 'absolute', zIndex: 2, height: '100%', width: '100%', flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'transparent', }}>
-
                     <Animated.View style={[{
                         position: 'absolute',
                         zIndex: 3,
@@ -80,20 +68,13 @@ export default SplashScreen = ({ appIsReady, stopAnim }) => {
                         height: 240, width: 240,
 
                     },]} >
-
-                        <LottieView ref={lottieRef} speed={1.2} style={{ height: 240, width: 240, }} source={require('../assets/mountain.json')} loop={false} onAnimationFinish={() => { console.log('animation finished'); setAnimFinished(true) }} />
-
+                        <LottieView speed={1.2} style={{ height: 240, width: 240, }} source={require('../assets/mountain.json')} loop={false} autoPlay={true} onAnimationFinish={() => { console.log('animation finished'); setAnimFinished(true) }} />
                     </Animated.View>
-
-
                     <Animated.View style={{ zIndex: 2, right: translateValueSchedule2, height: '100%', width: '100%', flex: 1, backgroundColor: '#FFCF56', }} />
-
-
                 </View>
-
                 :
-                null}
-
+                null
+                }
         </>
     )
 }

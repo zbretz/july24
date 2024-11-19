@@ -14,7 +14,7 @@ const Tab = createBottomTabNavigator();
 
 export default BottomTabs = ({ navigation, isConnected, masterState, setMasterState, newLocalRides, setNewLocalRides, myLocalRides, setMyLocalRides, newScheduledRides, setNewScheduledRides, myScheduledRides, setMyScheduledRides, rideTakenModal, setRideTakenModal, removeLocalRide }) => {
 
-    let showChildcare = masterState.user.firstName == "jake"// "Zach"
+    let showChildcare = masterState.user.firstName == "Zach"
 
     return (
 
