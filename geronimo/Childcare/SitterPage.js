@@ -1,8 +1,7 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, ScrollView, TouchableWithoutFeedback, Animated } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Dimensions, Alert, ScrollView, TouchableWithoutFeedback, Animated } from 'react-native';
+import { Image } from 'expo-image'; //https://github.com/echowaves/expo-cached-image
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { MaterialIcons, Octicons } from '@expo/vector-icons';
-import { Video, ResizeMode } from 'expo-av';
-import SitterData from './SitterData.js'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -34,23 +33,10 @@ export default SitterPage = ({ route, isConnected, masterState, setMasterState, 
 
             <View style={{ alignItems: 'center', }}>
 
-                {/* <Video
-                    // ref={video}
-                    style={{ height: windowWidth * .9, width: windowWidth * .9, marginTop: 0, borderRadius: 20 }}
-                    source={require('../assets/babysitter.mov')}
-                    useNativeControls
-                    resizeMode={ResizeMode.COVER}
-                    isLooping
-                    shouldPlay
-                    isMuted
-                // onPlaybackStatusUpdate={status => setStatus(() => status)}
-                /> */}
-
                 <Image
                     style={{ height: windowWidth * .6, width: windowWidth * .9, marginTop: 0, borderRadius: 20 }}
-                    source={{ uri: sitter.cover_photo }}
-                    resizeMode={ResizeMode.COVER}
-                />
+                    // onLoadEnd={() => Image.getCachePathAsync(sitter.cover_photo).then(uri => console.log(uri))}
+                    cachePolicy='disk' source={{ uri: sitter.cover_photo }} />
 
             </View>
 
@@ -87,7 +73,7 @@ export default SitterPage = ({ route, isConnected, masterState, setMasterState, 
                         </View>
 
                         <View style={{ backgroundColor: '#fafafa', marginBottom: 10, padding: 8, borderRadius: 10 }}>
-                            <Text style={{ fontSize: 18 }}> <Text style={{fontWeight:500}}>Base Rate:</Text> ${sitter.rate}/hr</Text>
+                            <Text style={{ fontSize: 18 }}> <Text style={{ fontWeight: 500 }}>Base Rate:</Text> ${sitter.rate}/hr</Text>
                         </View>
 
                     </View>

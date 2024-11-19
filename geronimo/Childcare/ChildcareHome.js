@@ -1,4 +1,5 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, ScrollView, TouchableWithoutFeedback, Platform, LayoutAnimation, TextInput, } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Dimensions, Alert, ScrollView, TouchableWithoutFeedback, Platform, LayoutAnimation, TextInput, } from 'react-native';
+import { Image } from 'expo-image'; //https://github.com/echowaves/expo-cached-image
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { AntDesign, MaterialIcons, Octicons } from '@expo/vector-icons';
 import { Video, ResizeMode } from 'expo-av';
@@ -45,7 +46,9 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
                             return (
 
                                 <TouchableOpacity onPress={() => navigation.navigate('SitterList')} key={idx} style={{ alignItems: 'center', justifyContent: 'center', marginBottom: 3 }} name="arrow-back-ios" size={24} color="black" >
-                                    <Image style={{ width: windowWidth * .16, height: windowWidth * .16, borderRadius: 40, }} source={{ uri: sitter.cover_photo }} />
+                                    <Image
+                                        // onLoadEnd={() => Image.getCachePathAsync(sitter.cover_photo).then(uri => console.log(uri))}
+                                        cachePolicy='disk' style={{ width: windowWidth * .16, height: windowWidth * .16, borderRadius: 40, }} source={{ uri: sitter.cover_photo }} />
                                 </TouchableOpacity>
                             )
                         })}

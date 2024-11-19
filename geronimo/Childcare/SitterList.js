@@ -1,25 +1,12 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, ScrollView, Linking, Platform, LayoutAnimation } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Dimensions, Alert, ScrollView, Linking, Platform, LayoutAnimation } from 'react-native';
+import { Image } from 'expo-image'; //https://github.com/echowaves/expo-cached-image
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { MaterialIcons, Octicons} from '@expo/vector-icons';
-import { Video, ResizeMode } from 'expo-av';
-import SitterData from './SitterData.js'
+import { MaterialIcons, Octicons } from '@expo/vector-icons';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
 export default SitterList = ({ isConnected, masterState, setMasterState, navigation, providers }) => {
-
-    const video = useRef(null);
-    const [showBookingOptions, setShowBookingOptions] = useState(false)
-
-    const bookingDetails = {
-        childrenAges: [1, 5, 8],
-        dateTime: 'Dec 21 8am-1pm',
-        sitter: 'Natalia',
-        notes: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-    }
-
-
 
     return (
 
@@ -54,20 +41,21 @@ export default SitterList = ({ isConnected, masterState, setMasterState, navigat
                 {Object.values(providers).map(sitter => {
                     return (
                         <TouchableOpacity key={sitter._id} onPress={() => navigation.navigate('SitterPage', { name: sitter.firstName })} style={{ marginHorizontal: 20, flexDirection: 'row', marginBottom: 20 }}>
+
                             <Image
                                 style={{ width: windowWidth * .4, height: windowWidth * .4, marginTop: 0, borderRadius: 20 }}
-                                source={{ uri: sitter.cover_photo }}
-                                resizeMode={ResizeMode.COVER}
-                            />
+                                // onLoadEnd={() => Image.getCachePathAsync(sitter.cover_photo).then(uri => console.log(uri))}
+                                cachePolicy='disk' source={{ uri: sitter.cover_photo }} />
+
                             <View style={{ width: windowWidth * .6, height: windowWidth * .4, paddingHorizontal: 10, marginRight: 0, borderRadius: 14, flex: 1, }}>
-                                <Text style={{ color: '#000', fontSize: 21, fontWeight: 500, marginBottom:4 }}>{sitter.firstName}</Text>
+                                <Text style={{ color: '#000', fontSize: 21, fontWeight: 500, marginBottom: 4 }}>{sitter.firstName}</Text>
                                 {/* <Text style={{ color: '#000', fontSize: 16, fontWeight: 400 }}  >{sitter.bio_short}</Text> */}
 
                                 {sitter.bio_short && sitter.bio_short.split('.').map((fact, idx) => {
 
                                     return (
-                                        <View key={idx} style={{ flexDirection: 'row',  }}>
-                                            <Octicons style={{marginTop:8,marginRight:-1}} name="dot-fill" size={8} color="black" />
+                                        <View key={idx} style={{ flexDirection: 'row', }}>
+                                            <Octicons style={{ marginTop: 8, marginRight: -1 }} name="dot-fill" size={8} color="black" />
                                             <Text style={{ marginLeft: 6, fontSize: 16 }}>{fact}</Text>
                                         </View>
                                     )
@@ -77,7 +65,7 @@ export default SitterList = ({ isConnected, masterState, setMasterState, navigat
                     )
                 })}
 
-                <View style={{height:90}}/>
+                <View style={{ height: 90 }} />
 
             </ScrollView>
         </View>
