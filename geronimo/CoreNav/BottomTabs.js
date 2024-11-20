@@ -6,6 +6,7 @@ import { Ionicons, AntDesign } from '@expo/vector-icons';
 import axios from 'axios';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './Home';
+import Home2 from './Home2';
 import MyAccount from '../Account/MyAccount'
 
 const Tab = createBottomTabNavigator();
@@ -39,7 +40,7 @@ export default BottomTabs = ({ isConnected, masterState, setMasterState, chatLog
                 options={{
                     tabBarLabel: ({ focused }) => {
                         return (
-                            <Text style={{fontFamily:'Aristotelica-SmallCaps', marginBottom:-6, color: focused ? '#55c1ff' : '#1E201F', fontWeight: 500, fontSize: 14 }}>Home</Text>
+                            <Text style={{ fontFamily: 'Aristotelica-SmallCaps', marginBottom: -6, color: focused ? '#55c1ff' : '#1E201F', fontWeight: 500, fontSize: 14 }}>Home</Text>
                         )
                     },
                     tabBarIcon: () => {
@@ -50,14 +51,15 @@ export default BottomTabs = ({ isConnected, masterState, setMasterState, chatLog
                     }
                 }}
             >
-                {props => <Home {...props} isConnected={isConnected} masterState={masterState} setMasterState={setMasterState} chatLog={chatLog} setChatLog={setChatLog} localRideRequest={localRideRequest} setLocalRideRequest={setLocalRideRequest} />}
+                {/* {props => <Home {...props} isConnected={isConnected} masterState={masterState} setMasterState={setMasterState} chatLog={chatLog} setChatLog={setChatLog} localRideRequest={localRideRequest} setLocalRideRequest={setLocalRideRequest} />} */}
+                {props => <Home2 {...props} isConnected={isConnected} masterState={masterState} setMasterState={setMasterState} chatLog={chatLog} setChatLog={setChatLog} localRideRequest={localRideRequest} setLocalRideRequest={setLocalRideRequest} />}
             </Tab.Screen>
 
             <Tab.Screen name="Account"
                 options={{
                     tabBarLabel: ({ focused }) => {
                         return (
-                            <Text style={{fontFamily:'Aristotelica-SmallCaps', marginBottom:-6, color: focused ? '#55c1ff' : '#1E201F', fontWeight: 500, fontSize: 14 }}>Account</Text>
+                            <Text style={{ fontFamily: 'Aristotelica-SmallCaps', marginBottom: -6, color: focused ? '#55c1ff' : '#1E201F', fontWeight: 500, fontSize: 14 }}>Account</Text>
                         )
                     }, tabBarIcon: () => {
                         return (

@@ -19,6 +19,10 @@ export default function App() {
 
     'PointSoftSemiBold': require('../assets/fonts/PointSoft/PointSoftSemiBold.otf'),
     'PointSoftLight': require('../assets/fonts/PointSoft/PointSoftLight.otf'),
+
+    'LexendRegular': require('../assets/fonts/Lexend/Lexend-Regular.ttf'),
+    'LexendMedium': require('../assets/fonts/Lexend/Lexend-Medium.ttf'),
+    'LexendLight': require('../assets/fonts/Lexend/Lexend-Light.ttf'),
   });
 
   // const getUser = async () => {
