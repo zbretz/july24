@@ -19,9 +19,16 @@ export default BottomTabs = ({ isConnected, masterState, setMasterState, chatLog
                 return {
                     headerShown: false,
                     tabBarStyle: {
-                        paddingTop: 8,
-                        backgroundColor: route.name === 'Account' && !masterState.user ? '#ffcf56' : '#fff',
-                        borderTopWidth: 0
+                        // paddingTop: 8,
+                        // backgroundColor: route.name === 'Account' && !masterState.user ? '#ffcf56' : '#fff',
+                        // borderTopWidth: 0,
+                        backgroundColor: 'rgba(255, 255, 255, 0.9)', // Adjust the transparency as needed
+                        position: 'absolute', // Important for the translucent effect
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        elevation: 0,
+                        borderTopWidth: 0,
                     }
 
                 }
