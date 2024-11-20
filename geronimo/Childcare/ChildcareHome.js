@@ -21,10 +21,7 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
 
         <>
 
-
             <ScrollView showsVerticalScrollIndicator={false} bounces={false} pagingEnabled={!true} style={{}}>
-
-
 
                 <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: 20, marginTop: 20, flexDirection: 'row', position: 'absolute', zIndex: 1 }} name="arrow-back-ios" size={24} color="black" >
                     <MaterialIcons style={{ marginLeft: 10, paddingTop: 10, marginLeft: -10 }} name="arrow-back-ios" size={24} color="#fff" />
@@ -33,7 +30,6 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
                         <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 12, marginTop: 0, color: '#fff' }}>in Park City</Text>
                     </View>
                 </TouchableOpacity>
-
 
 
                 <View style={{ zIndex: 9, right: 10, width: windowWidth * .16, position: 'absolute', alignSelf: 'flex-end', backgroundColor: 'rgba(0,0,0,0)', borderTopLeftRadius: 0, borderBottomLeftRadius: 0, marginTop: 50, padding: 0, }}>
@@ -54,7 +50,6 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
                         })}
                     </View>
                 </View>
-
 
 
                 <View style={{ height: windowHeight * .5, justifyContent: 'center' }} />
@@ -88,95 +83,33 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
                 </LinearGradient>
 
 
-
                 <View style={{ backgroundColor: '#fff' }}>
                     <EasyBook masterState={masterState} navigation={navigation} setMasterState={setMasterState} />
                 </View>
 
-                {/* <View style={{ justifyContent: 'center', backgroundColor: '#fff' }} >
-                    <View style={{ borderRadius: 10, marginRight: 10, padding: 6 }}>
-                        <Text style={{ fontSize: 30, textAlign: 'center', color: '#000' }}>Meet the Team</Text>
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10 }}>
-                            {Object.values(providers).slice(0, 3).map((sitter, idx) => {
-                                return (
-
-                                    <TouchableOpacity onPress={() => navigation.navigate('SitterList')} key={idx} style={{ alignItems: 'center', justifyContent: 'center', }} name="arrow-back-ios" size={24} color="black" >
-                                        <Image style={{ width: windowWidth * .16, height: windowWidth * .16, borderRadius: 30 }} source={{ uri: sitter.cover_photo }} />
-                                    </TouchableOpacity>
-                                )
-                            })}
-                        </View>
-
-                    </View>
-                </View> */}
+    
                 <View style={{ alignItems: 'center', paddingBottom: 30, borderWidth: 0, backgroundColor: '#fff' }}>
                     <Text style={{ fontWeight: 600, fontSize: 32, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', }}>Pricing</Text>
                     <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginHorizontal: 20 }}><Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$25</Text>/hour when booking through the Easy Book form above. Sitters have individual rates when they are requested specifically. Additional children add <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$5</Text>. </Text>
 
                 </View>
 
-                {/* <View style={{ backgroundColor: '#fafafa', marginBottom: 10, padding: 8, borderRadius: 10 }}>
-                    <Text style={{ fontSize: 18 }}> <Text style={{ fontWeight: 500 }}>Base Rate:</Text> $25/hr</Text>
-                </View> */}
-
-
-
                 <View style={{ backgroundColor: '#fff', marginTop: -20 }}>
                     <Faq navigation={navigation} />
                 </View>
 
 
-                {/* <View style={{ justifyContent: 'center', backgroundColor: '#fff' }} >
-                    <View style={{ borderRadius: 10, marginTop: 30, padding: 0}}>
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 0 }}>
-                            {Object.values(providers).slice(0, 1).map((sitter, idx) => {
-                                return (
-
-                                    <TouchableOpacity onPress={() => navigation.navigate('SitterList')} key={idx} style={{ alignItems: 'center', justifyContent: 'center'}} name="arrow-back-ios" size={24} color="black" >
-                                        <Image style={{ width: windowWidth * .9, height: windowWidth * .7, borderRadius: 3 0 }} source={{ uri: sitter.cover_photo }} />
-                                        <Text style={{ fontSize: 30, textAlign: 'center', color: '#000', position:'absolute', color:'white' }}>Meet the Team</Text>
-                                    </TouchableOpacity>
-                                )
-                            })}
-                        </View>
-
-                    </View>
-                </View>
-
-                <View style={{ backgroundColor:'transparent', top:-70 }}>
-                    <EasyBook masterState={masterState} navigation={navigation} setMasterState={setMasterState} />
-                </View> */}
-
-
-
-
-
-
-
             </ScrollView>
-
-
-
 
             <Video
                 ref={video}
                 style={{ height: windowHeight, width: windowWidth, position: 'absolute', zIndex: -1 }}
-                // source={require('../assets/childcare_cover.mp4')}
                 source={require('../assets/cover_tall.mp4')}
-                // source={{ uri: 'https://theparkcityapp.s3.us-east-1.amazonaws.com/istockphoto-1369478616-640_adpp_is.mp4' }}
-                // useNativeControls
-
                 resizeMode={Platform.OS === 'ios' ? ResizeMode.COVER : "stretch"}
                 isLooping
                 shouldPlay
                 isMuted
             />
-
-
-
-
 
 
         </>
