@@ -91,17 +91,17 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                     <View style={{ flexDirection: 'row', marginHorizontal: 10, marginBottom: 10 }}>
                         <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#ffcf56', width: windowWidth * .5, height: windowWidth * .5, borderRadius: 30, marginRight: 20, alignItems: 'center', justifyContent: 'center', paddingVertical: 20 }}>
                             <View>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: windowWidth * .15, marginVertical: windowHeight < 800 ? 0 : 0, }}
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: windowWidth * .14, marginVertical: windowHeight < 800 ? 0 : 0, }}
                                     adjustsFontSizeToFit={true}
                                     numberOfLines={1}
                                 >The</Text>
 
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: windowWidth * .22, marginVertical: -19, }}
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: windowWidth * .21, marginVertical: -19, }}
                                     adjustsFontSizeToFit={true}
                                     numberOfLines={1}
                                 >
                                     Park</Text>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: windowWidth * .12, marginVertical: windowHeight < 800 ? -4 : -4, }}
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: windowWidth * .11, marginVertical: windowHeight < 800 ? -4 : -4, }}
                                     adjustsFontSizeToFit={true}
                                     numberOfLines={1}
 
@@ -114,10 +114,8 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                         <View style={{}}>
                             <View style={{ flex: 1, width: windowWidth * .5 - 50, alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ fontSize: 30, marginBottom: 0, fontFamily: 'LexendMedium', }}>Welcome.</Text>
-                                {/* <Text style={{ fontSize: 18, marginBottom: 0, }}>llkmsdflkmsfd sldkmlksmdf lskdlksdf</Text> */}
                                 <Text style={{ fontSize: 21, marginBottom: 0, fontFamily: 'LexendRegular' }}>We're stoked you're here.</Text>
-                                {/* <Text style={{ fontSize: 18, marginBottom: 0, fontFamily: 'LexendRegular' }}>For locals. For visitors.</Text> */}
-
+                                {/* <Text style={{ fontSize: 21, marginBottom: 0, fontFamily: 'LexendRegular' }}>We're glad you made it.</Text> */}
                             </View>
                         </View>
                     </View>
@@ -136,18 +134,18 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                         <View showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 
 
-                            <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions, borderRadius: 30, alignItems: 'center', padding: 10, }}>
+                            <TouchableOpacity onPress={() => navigation.navigate('ScheduleRide')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions, borderRadius: 30, alignItems: 'center', padding: 10, }}>
                                 <Image style={{ flex: 1, width: '80%', margin: -28 }} resizeMode='contain' source={require('../assets/car-schedule.png')} />
-                                <View style={{ backgroundColor: null, padding: 0, borderRadius: 10, alignSelf: 'center', justifyContent: 'center', marginTop: 6 }}>
-                                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8, paddingHorizontal: 8 }}>Schedule</Text>
-                                </View>
+                                {/* <View style={{ backgroundColor: null, padding: 0, borderRadius: 10, alignSelf: 'center', justifyContent: 'center', marginTop: 0 }}> */}
+                                <Text style={{ fontFamily: 'Lexend-Regular', fontSize: 18, marginBottom: 0, paddingHorizontal: 8 }}>Schedule</Text>
+                                {/* </View> */}
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions, borderRadius: 30, alignItems: 'center', padding: 10, }}>
                                 <Image style={{ flex: 1, width: '90%', margin: -28 }} resizeMode='contain' source={require('../assets/car-location.png')} />
-                                <View style={{ backgroundColor: null, padding: 0, borderRadius: 10, alignSelf: 'center', justifyContent: 'center', marginTop: 6 }}>
-                                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8, paddingHorizontal: 8 }}>Go Now</Text>
-                                </View>
+                                {/* <View style={{ backgroundColor: null, padding: 0, borderRadius: 10, alignSelf: 'center', justifyContent: 'center', marginTop: 0 }}> */}
+                                <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, marginBottom: 0, paddingHorizontal: 8 }}>Ride Now</Text>
+                                {/* </View> */}
                             </TouchableOpacity>
 
 
@@ -155,28 +153,26 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
                         <View showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
 
-
-                            <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions, borderRadius: 30, alignItems: 'center', padding: 10, }}>
-                                <Image style={{ flex: 1, width: '80%', margin: -28 }} resizeMode='contain' source={require('../assets/car-schedule.png')} />
-                                <View style={{ backgroundColor: null, padding: 0, borderRadius: 10, alignSelf: 'center', justifyContent: 'center', marginTop: 6 }}>
-                                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8, paddingHorizontal: 8 }}>Schedule</Text>
+                            <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions, borderRadius: 30, alignItems: 'center', padding: 10, }}>
+                                <Image style={{ flex: 1, width: '65%', margin: -28 }} resizeMode='contain' source={require('../assets/stroller.png')} />
+                                <View style={{ backgroundColor: null, padding: 0, borderRadius: 10, alignSelf: 'center', justifyContent: 'center', marginTop: 0 }}>
+                                    <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, marginBottom: 0, paddingHorizontal: 8 }}>Childcare</Text>
                                 </View>
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions, borderRadius: 30, alignItems: 'center', padding: 10, }}>
-                                <Image style={{ flex: 1, width: '90%', margin: -28 }} resizeMode='contain' source={require('../assets/car-location.png')} />
-                                <View style={{ backgroundColor: null, padding: 0, borderRadius: 10, alignSelf: 'center', justifyContent: 'center', marginTop: 6 }}>
-                                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8, paddingHorizontal: 8 }}>Go Now</Text>
+                            <TouchableOpacity onPress={() => navigation.navigate('Locals')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions, borderRadius: 30, alignItems: 'center', padding: 10, }}>
+                                <Image style={{ flex: 1, width: '70%', margin: -28 }} resizeMode='contain' source={require('../assets/coffee.png')} />
+                                <View style={{ backgroundColor: null, padding: 0, borderRadius: 10, alignSelf: 'center', justifyContent: 'center', marginTop: 0 }}>
+                                    <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, marginBottom: 0, paddingHorizontal: 8 }}>Order</Text>
                                 </View>
                             </TouchableOpacity>
-
 
                         </View>
 
                     </View>
 
                     <View style={{ marginHorizontal: 10, backgroundColor: null, marginTop: 20 }}>
-                        <Text style={{ fontSize: 24, marginBottom: 20, fontWeight: 500, textAlign: 'center', fontFamily: 'LexendRegular' }}>Feature Spotlight</Text>
+                        <Text style={{ fontSize: 24, marginBottom: 10, fontWeight: 500, textAlign: 'center', fontFamily: 'LexendRegular' }}>Feature Spotlight</Text>
 
                         <Text style={{ fontSize: 20, marginBottom: 8, fontWeight: 500, fontFamily: 'LexendRegular' }}>Reserve a driver</Text>
 

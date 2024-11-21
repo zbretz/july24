@@ -34,7 +34,7 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
 
                 <View style={{ zIndex: 9, right: 10, width: windowWidth * .16, position: 'absolute', alignSelf: 'flex-end', backgroundColor: 'rgba(0,0,0,0)', borderTopLeftRadius: 0, borderBottomLeftRadius: 0, marginTop: 50, padding: 0, }}>
                     <TouchableOpacity onPress={() => navigation.navigate('SitterList')} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 6 }}>
-                        <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 13, color: '#fff', textAlign: 'center', }}>Meet Us </Text>
+                        <Text style={{ fontFamily: 'LexendRegular', fontSize: 13, color: '#fff', textAlign: 'center', }}>Meet Us </Text>
                         <AntDesign name="caretright" size={9} color="#fff" />
                     </TouchableOpacity>
                     <View style={{}}>
@@ -58,23 +58,23 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
 
                     <View style={{ marginTop: 90, marginBottom: -10 }} >
 
-                        <Text style={{ fontSize: 30, color: '#000', fontWeight: 400 }}>Book with confidence.</Text>
+                        <Text style={{ fontSize: 30, color: '#000', fontWeight: 400, fontFamily: 'LexendRegular' }}>Book with confidence.</Text>
 
-                        <Text style={{ fontSize: 18, color: '#000' }}>Whether it's parent's night out, or you need support for a day on the slopes, our sitters have you covered.</Text>
+                        <Text style={{ fontSize: 18, color: '#000', fontFamily: 'LexendLight' }}>Whether it's parent's night out, or you need support for a day on the slopes, our sitters have you covered.</Text>
 
 
                         <View style={{ width: '88%', alignSelf: 'center', marginTop: 10 }}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 1 }}>
-                                <Octicons name="check-circle" size={16} color="green" />
-                                <Text style={{ marginHorizontal: 6, fontSize: 16, color: '#000' }}>Background and reference checked</Text>
+                            <View style={{ flexDirection: 'row', marginVertical: 1 }}>
+                                <Octicons style={{ marginTop: 3 }} name="check-circle" size={16} color="green" />
+                                <Text style={{ marginHorizontal: 6, fontSize: 16, color: '#000', fontFamily: 'LexendLight' }}>Background and reference checked</Text>
                             </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 1 }}>
-                                <Octicons name="check-circle" size={16} color="green" />
-                                <Text style={{ marginLeft: 6, fontSize: 16, color: '#000' }}>Deep childcare experience</Text>
+                            <View style={{ flexDirection: 'row', marginVertical: 1 }}>
+                                <Octicons style={{ marginTop: 3 }} name="check-circle" size={16} color="green" />
+                                <Text style={{ marginLeft: 6, fontSize: 16, color: '#000', fontFamily: 'LexendLight' }}>Deep childcare experience</Text>
                             </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 1 }}>
-                                <Octicons name="check-circle" size={16} color="green" />
-                                <Text style={{ marginLeft: 6, fontSize: 16, color: '#000' }}>Childcare for all ages: infants to teens</Text>
+                            <View style={{ flexDirection: 'row', marginVertical: 1 }}>
+                                <Octicons style={{ marginTop: 3 }} name="check-circle" size={16} color="green" />
+                                <Text style={{ marginLeft: 6, fontSize: 16, color: '#000', fontFamily: 'LexendLight' }}>Childcare for all ages: infants to teens</Text>
                             </View>
                         </View>
                     </View>
@@ -87,11 +87,10 @@ export default ChildcareHome = ({ masterState, setMasterState, navigation, provi
                     <EasyBook masterState={masterState} navigation={navigation} setMasterState={setMasterState} />
                 </View>
 
-    
-                <View style={{ alignItems: 'center', paddingBottom: 30, borderWidth: 0, backgroundColor: '#fff' }}>
-                    <Text style={{ fontWeight: 600, fontSize: 32, marginTop: 20, padding: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', }}>Pricing</Text>
-                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginHorizontal: 20 }}><Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$25</Text>/hour when booking through the Easy Book form above. Sitters have individual rates when they are requested specifically. Additional children add <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18 }}>$5</Text>. </Text>
-
+                <View style={{  paddingBottom: 30, borderWidth: 0, backgroundColor: '#fff' }}>
+                    <Text style={{ fontWeight: 600, fontSize: 28, marginVertical: 10, padding: 0, paddingBottom: 0, fontFamily: 'LexendRegular', textAlign:'center' }}>Pricing</Text>
+                    <Text style={{ fontFamily: 'LexendLight', fontSize: 18, marginHorizontal: 20 }}>25/hour when booking through the Easy Book form above. Additional children add 5.</Text>
+                    <Text style={{ fontFamily: 'LexendLight', fontSize: 18, marginHorizontal: 20, marginTop:10 }}>Sitters have individual rates when they are requested specifically.</Text>
                 </View>
 
                 <View style={{ backgroundColor: '#fff', marginTop: -20 }}>
