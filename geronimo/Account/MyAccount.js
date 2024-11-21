@@ -404,12 +404,12 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                                         placeholder='Phone Number'
                                         value={accountInput.phone}
                                         onChangeText={text => setAccountInput({ ...accountInput, phone: text })}
-                                        style={{ backgroundColor: '#fff', borderRadius: 24, color: '#333', fontWeight: '500', marginVertical: 0, padding: 10, paddingLeft: 6, fontSize: Platform.OS === 'ios' ? '22em' : 22, textAlign: 'center', fontFamily: 'PointSoftSemiBold', width: '100%' }}
+                                        style={{ backgroundColor: '#fff', borderRadius: 24, color: '#333', fontWeight: '500', marginVertical: 0, padding: 10, paddingLeft: 6, fontSize: Platform.OS === 'ios' ? '22' : 22, textAlign: 'center', fontFamily: 'PointSoftSemiBold', width: '100%' }}
                                     />
 
 
                                     <TouchableOpacity onPress={() => { Keyboard.dismiss(); signIn() }} style={{ marginTop: 10, backgroundColor: '#ffcf56', borderRadius: 24, textAlign: 'center', justifyContent: 'center', width: '100%', padding: 10, }}>
-                                        <Text style={{ lineHeight: 20, textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20em' : 20, color: '#000', fontFamily: 'PointSoftSemiBold', }}>Sign In</Text>
+                                        <Text style={{ lineHeight: 20, textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20' : 20, color: '#000', fontFamily: 'PointSoftSemiBold', }}>Sign In</Text>
                                     </TouchableOpacity>
 
                                 </View>
@@ -421,10 +421,10 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                                     :
 
                                     <View style={{}}>
-                                        <Text style={{ textAlign: 'center', fontSize: Platform.OS === 'ios' ? '18em' : 18, color: '#000', fontFamily: 'PointSoftSemiBold', margin: 10 }}>Or</Text>
+                                        <Text style={{ textAlign: 'center', fontSize: Platform.OS === 'ios' ? '18' : 18, color: '#000', fontFamily: 'PointSoftSemiBold', margin: 10 }}>Or</Text>
 
                                         <TouchableOpacity onPress={() => navigation.navigate('SignUp')} style={{ backgroundColor: '#ffcf56', borderRadius: 24, textAlign: 'center', padding: 10, paddingHorizontal: 16, marginHorizontal: 60 }}>
-                                            <Text style={{ lineHeight: 20, textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20em' : 20, color: '#000', fontFamily: 'PointSoftSemiBold' }}>New Account</Text>
+                                            <Text style={{ lineHeight: 20, textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20' : 20, color: '#000', fontFamily: 'PointSoftSemiBold' }}>New Account</Text>
                                         </TouchableOpacity>
                                     </View>
                                 }
@@ -461,7 +461,7 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                                         placeholder='First Name'
                                         value={accountInput.firstName}
                                         onChangeText={text => setAccountInput({ ...accountInput, firstName: text })}
-                                        style={{ backgroundColor: '#fff', borderRadius: 24, color: '#333', fontWeight: '500', marginVertical: 0, padding: 10, paddingLeft: 6, fontSize: Platform.OS === 'ios' ? '22em' : 22, textAlign: 'center', fontFamily: 'PointSoftSemiBold', width: '100%' }}
+                                        style={{ backgroundColor: '#fff', borderRadius: 24, color: '#333', fontWeight: '500', marginVertical: 0, padding: 10, paddingLeft: 6, fontSize: Platform.OS === 'ios' ? '22' : 22, textAlign: 'center', fontFamily: 'PointSoftSemiBold', width: '100%' }}
                                     />
 
                                     <TextInput
@@ -473,7 +473,7 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                                         value={accountInput.lastName}
                                         // onChangeText={text => setMasterState((masterState) => ({ ...masterState, user: { ...masterState.user, lastName: text } }))}
                                         onChangeText={text => setAccountInput({ ...accountInput, lastName: text })}
-                                        style={{ backgroundColor: '#fff', borderRadius: 24, color: '#333', fontWeight: '500', marginVertical: 10, padding: 10, paddingLeft: 6, fontSize: Platform.OS === 'ios' ? '22em' : 22, textAlign: 'center', fontFamily: 'PointSoftSemiBold', width: '100%' }}
+                                        style={{ backgroundColor: '#fff', borderRadius: 24, color: '#333', fontWeight: '500', marginVertical: 10, padding: 10, paddingLeft: 6, fontSize: Platform.OS === 'ios' ? '22' : 22, textAlign: 'center', fontFamily: 'PointSoftSemiBold', width: '100%' }}
                                     />
 
                                     <TextInput
@@ -482,12 +482,12 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                                         placeholder='Phone Number'
                                         value={accountInput.phone}
                                         onChangeText={text => setAccountInput({ ...accountInput, phone: text })}
-                                        style={{ backgroundColor: '#fff', borderRadius: 24, color: '#333', marginVertical: 0, padding: 10, paddingLeft: 6, fontSize: Platform.OS === 'ios' ? '22em' : 22, textAlign: 'center', fontFamily: 'PointSoftSemiBold', width: '100%' }}
+                                        style={{ backgroundColor: '#fff', borderRadius: 24, color: '#333', marginVertical: 0, padding: 10, paddingLeft: 6, fontSize: Platform.OS === 'ios' ? '22' : 22, textAlign: 'center', fontFamily: 'PointSoftSemiBold', width: '100%' }}
                                     />
 
 
                                     <TouchableOpacity onPress={() => { Keyboard.dismiss(); registerUser() }} style={{ marginTop: 10, backgroundColor: '#ffcf56', borderRadius: 24, textAlign: 'center', justifyContent: 'center', width: '100%' }}>
-                                        <Text style={{ textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20em' : 20, color: '#000', fontFamily: 'PointSoftSemiBold', marginBottom: 0, padding: 10, }}>Create Account</Text>
+                                        <Text style={{ textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20' : 20, color: '#000', fontFamily: 'PointSoftSemiBold', marginBottom: 0, padding: 10, }}>Create Account</Text>
                                     </TouchableOpacity>
 
 
@@ -774,7 +774,6 @@ const ReceiptScreen = ({ navigation, masterState, setMasterState }) => {
 
     )
 }
-
 
 
 

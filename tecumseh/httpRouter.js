@@ -370,6 +370,22 @@ router.post('/local-payment-sheet', async (req, res) => {
 
 });
 
+
+router.get('/rideHistory', async (req, res) => {
+
+    let userId = req.query.userId
+    console.log('user id: ', userId)
+
+    try {
+        let rideHistory = await db__.collection('rides').find({ "user._id": userId, rideCompleted: true }).toArray()
+        console.log('rideHistory: ', rideHistory)
+        res.status(200).send(rideHistory);
+    } catch (e) {
+        console.log('ride history error: ', e)
+    }
+
+});
+
 router.get('/bookings', async (req, res) => {
     console.log('childcare booking: ', req.body)
 
@@ -389,8 +405,8 @@ router.get('/fetchProviders', async (req, res) => {
 
     try {
         providers = await db_childcare.collection('providers').find().toArray();
-        console.log('providers: ',  providers)
-        res.status(200).send(providers );
+        console.log('providers: ', providers)
+        res.status(200).send(providers);
     } catch (e) {
         console.log('fetchchatlog error: ', e)
     }

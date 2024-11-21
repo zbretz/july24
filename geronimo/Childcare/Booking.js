@@ -2,7 +2,6 @@ import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions, Alert, Scr
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { AntDesign, MaterialIcons, Feather } from '@expo/vector-icons';
 import { Video, ResizeMode } from 'expo-av';
-import SitterData from './SitterData.js';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;

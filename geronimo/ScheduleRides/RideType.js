@@ -14,16 +14,16 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
     const upcomingRide = masterState.user?.activeRides?.length ? masterState.user.activeRides[0] : null
     // console.log('ride type -- active ride: ', upcomingRide)
 
-    const comingSoonAlert = (type) => {
-        const text = `This feature is not yet active. We're working on it!`
-        const title = `Coming Soon!`
-        Alert.alert(title, text, [
-            {
-                text: 'Ok', onPress: () => {
-                }
-            },
-        ])
-    }
+    // const comingSoonAlert = (type) => {
+    //     const text = `This feature is not yet active. We're working on it!`
+    //     const title = `Coming Soon!`
+    //     Alert.alert(title, text, [
+    //         {
+    //             text: 'Ok', onPress: () => {
+    //             }
+    //         },
+    //     ])
+    // }
 
     return (
 
@@ -45,13 +45,13 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
 
                 <View style={{}}>
                     <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 40, marginVertical: windowHeight < 800 ? -6 : 0, textAlign: 'center' }} adjustsFontSizeToFit={true} numberOfLines={1}>Scheduled</Text>
-                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 40, marginBottom:-8, textAlign: 'center' }} adjustsFontSizeToFit={true} >Rides</Text>
+                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 40, marginBottom: -8, textAlign: 'center' }} adjustsFontSizeToFit={true} >Rides</Text>
                 </View>
 
 
                 {masterState.user &&
                     <View style={{ marginTop: 20, marginHorizontal: 20, flexDirection: 'row' }}>
-                        <TouchableOpacity onPress={comingSoonAlert} style={{ flex: 1, height: 50, marginHorizontal: 0, borderRadius: 40, padding: 10, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' }} >
+                        <TouchableOpacity onPress={() => navigation.navigate('RideHistory')} style={{ flex: 1, height: 50, marginHorizontal: 0, borderRadius: 40, padding: 10, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' }} >
                             <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Aristotelica-Regular', marginBottom: -8 }}>Ride History</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => navigation.navigate('FutureRides')} style={{ flex: 1, height: 50, marginHorizontal: 10, borderRadius: 40, padding: 10, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' }} >
@@ -98,14 +98,14 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                                     <View style={{ padding: 20, paddingLeft: 0, flex: 1, borderTopRightRadius: 30, borderBottomRightRadius: 30, justifyContent: 'center' }}>
 
                                         <View style={{ backgroundColor: '#fff', borderRadius: 20, padding: 20, }}>
-                                            <Text  adjustsFontSizeToFit={true} numberOfLines={1} style={{ marginVertical: 0, fontSize: 21, fontFamily: 'PointSoftSemiBold', }}>{formatInTimeZone(upcomingRide.pickupDateTime, 'America/Denver', "eee',' MMMM d")}</Text>
+                                            <Text adjustsFontSizeToFit={true} numberOfLines={1} style={{ marginVertical: 0, fontSize: 21, fontFamily: 'PointSoftSemiBold', }}>{formatInTimeZone(upcomingRide.pickupDateTime, 'America/Denver', "eee',' MMMM d")}</Text>
                                             <Text style={{ marginVertical: 0, fontSize: 21, fontFamily: 'PointSoftLight', }}>{formatInTimeZone(upcomingRide.pickupDateTime, 'America/Denver', "h':'mm aa")}</Text>
                                             <Text numberOfLines={1} style={{ marginTop: 10, fontSize: 12, fontFamily: 'PointSoftLight', }}>{upcomingRide.pickupAddress}</Text>
                                             <Text numberOfLines={1} style={{ marginVertical: 0, fontSize: 12, fontFamily: 'PointSoftLight', }}>{upcomingRide.dropoffAddress}</Text>
 
                                             {upcomingRide.driver &&
                                                 <View style={{ flexDirection: 'row', alignItems: 'center', }}>
-                                                    <Text numberOfLines={1} style={{ marginVertical: 10, marginBottom:10, fontSize: 12, fontFamily: 'PointSoftSemiBold', }}>Driver Assigned</Text>
+                                                    <Text numberOfLines={1} style={{ marginVertical: 10, marginBottom: 10, fontSize: 12, fontFamily: 'PointSoftSemiBold', }}>Driver Assigned</Text>
                                                     <Image style={{ height: 20, width: 20, }} source={require('../assets/verified.png')} />
                                                 </View>
                                             }
