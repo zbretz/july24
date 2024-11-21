@@ -33,31 +33,42 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
     const rref = useRef()
 
     const [modalVisible, setModalVisible] = useState(false)
-    const [showLogo, setShowLogo] = useState(false)
+    const [logoVisible, setLogoVisibile] = useState(false)
 
     let boxDimensions = (windowWidth - 30) / 2
 
     const handleScroll = (e) => {
         const positionY = e.nativeEvent.contentOffset.y;
         console.log('positionY: ', positionY)
-        if (positionY > 20) {
-            setShowLogo(true)
-        } else {
-            setShowLogo(false)
+        if (!logoVisible && (positionY > windowWidth * .5 +50)) {
+            animateLogo('show')
+        } else if (logoVisible && (positionY < windowWidth * .5 + 50)) {
+            animateLogo('hide')
         }
+    }
+
+    const [translateLogo, setTranslatedLogo] = useState(new Animated.Value(-50))
+
+    const animateLogo = (direction) => {
+        setLogoVisibile(direction == 'show' ? true : false)
+
+        Animated.timing(translateLogo, {
+            duration: 700,
+            toValue: direction == 'show' ? 20 : -60,
+            useNativeDriver: false,
+        })
+            .start(({ finished }) => {
+            })
     }
 
     return (
 
         <View>
 
-            {showLogo &&
 
-                <View style={{ position: 'absolute', top: 20, right: 20, backgroundColor: '#FFCF56', height: 48, width: 48, zIndex: 98, borderRadius: 30, alignItems: 'center', justifyContent: 'center' }} name="arrow-back-ios" size={24} color="black" >
-                    <Image style={{ height: 40, width: 40, borderRadius: 30 }} source={require('../assets/yellow-icon-bold.png')} />
-                </View>
-            }
-
+            <Animated.View style={{ position: 'absolute', top: translateLogo, right: 20, backgroundColor: '#FFCF56', height: 48, width: 48, zIndex: 98, borderRadius: 30, alignItems: 'center', justifyContent: 'center' }}  >
+                <Image style={{ height: 40, width: 40, borderRadius: 30 }} source={require('../assets/yellow-icon-bold.png')} />
+            </Animated.View>
 
 
             <ScrollView style={{ backgroundColor: 'white', paddingTop: 10 }} showsVerticalScrollIndicator={false} onScroll={(e) => handleScroll(e)}>
@@ -240,6 +251,7 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                         <LinearGradient colors={['rgba(230,230,230,.0)', 'rgba(230,230,230,.0)', 'rgba(230,230,230,.0)']} style={{ flexDirection: 'row', marginVertical: 0, padding: 10 }}>
                             <View style={{ backgroundColor: '#fff', width: '100%', padding: 10, borderRadius: 20 }}>
                                 <View style={{ flexDirection: 'row' }}>
+
                                     <Text style={{ fontSize: 20, marginBottom: 0, fontFamily: 'LexendRegular' }}>Book by the <Text style={{ textDecorationLine: 'underline' }}>hour</Text></Text>
                                     {/* <Text style={{ fontSize: 18, marginBottom: 0, fontFamily: 'LexendLight' }}>Or by the day</Text> */}
                                 </View>
