@@ -34,10 +34,12 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
     const [modalVisible, setModalVisible] = useState(false)
 
-    return (
-        <ScrollView style={{ backgroundColor: 'white', }} showsVerticalScrollIndicator={false}>
+    let boxDimensions = (windowWidth - 30) / 2
 
-            <SafeAreaView >
+    return (
+        <ScrollView style={{ backgroundColor: 'white', paddingTop: 10 }} showsVerticalScrollIndicator={false}>
+
+            <View >
 
                 {/* {masterState.user?.localRide &&
                     // <View style={{ height: 100, margin: 20, backgroundColor: 'black', borderRadius: 20 }}></View>
@@ -213,19 +215,19 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
 
                     <View style={{ flexDirection: 'row', marginHorizontal: 10, marginBottom: 10 }}>
-                        <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#ffcf56', flex: 2, height: windowHeight * .11, borderRadius: 30, marginRight: 20, alignItems: 'center', justifyContent: 'center', paddingVertical: 20 }}>
+                        <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#ffcf56', width: windowWidth * .5, height: windowWidth * .5, borderRadius: 30, marginRight: 20, alignItems: 'center', justifyContent: 'center', paddingVertical: 20 }}>
                             <View>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: windowWidth * .05, marginVertical: windowHeight < 800 ? 0 : 0, }}
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: windowWidth * .15, marginVertical: windowHeight < 800 ? 0 : 0, }}
                                     adjustsFontSizeToFit={true}
                                     numberOfLines={1}
                                 >The</Text>
 
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: windowWidth * .09, marginVertical: -4, }}
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: windowWidth * .22, marginVertical: -19, }}
                                     adjustsFontSizeToFit={true}
                                     numberOfLines={1}
                                 >
                                     Park</Text>
-                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: windowWidth * .05, marginVertical: windowHeight < 800 ? -4 : -4, }}
+                                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: windowWidth * .12, marginVertical: windowHeight < 800 ? -4 : -4, }}
                                     adjustsFontSizeToFit={true}
                                     numberOfLines={1}
 
@@ -235,8 +237,8 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                         </TouchableOpacity>
 
 
-                        <View style={{ flex: 5, }}>
-                            <View>
+                        <View style={{}}>
+                            <View style={{ flex: 1, width: windowWidth * .5 - 50, alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ fontSize: 30, marginBottom: 0, fontFamily: 'LexendMedium', }}>Welcome.</Text>
                                 {/* <Text style={{ fontSize: 18, marginBottom: 0, }}>llkmsdflkmsfd sldkmlksmdf lskdlksdf</Text> */}
                                 <Text style={{ fontSize: 21, marginBottom: 0, fontFamily: 'LexendRegular' }}>We're stoked you're here.</Text>
@@ -365,20 +367,20 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                     </View> */}
 
 
-                    <View style={{ marginHorizontal: 10, backgroundColor: '#f2f2f2', padding: 10, borderRadius: 30 }}>
+                    <View style={{ marginHorizontal: 10, padding: 0, borderRadius: 30 }}>
 
 
-                        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', }}>
+                        <View showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 
 
-                            <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#fff', flex: 1, width: windowWidth * .36, height: windowWidth * .32, borderRadius: 30, marginRight: 10, alignItems: 'center', padding: 10, }}>
+                            <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions, borderRadius: 30, alignItems: 'center', padding: 10, }}>
                                 <Image style={{ flex: 1, width: '80%', margin: -28 }} resizeMode='contain' source={require('../assets/car-schedule.png')} />
                                 <View style={{ backgroundColor: null, padding: 0, borderRadius: 10, alignSelf: 'center', justifyContent: 'center', marginTop: 6 }}>
                                     <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8, paddingHorizontal: 8 }}>Schedule</Text>
                                 </View>
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#fff', flex: 1, width: windowWidth * .36, height: windowWidth * .32, borderRadius: 30, marginRight: 10, alignItems: 'center', padding: 10, }}>
+                            <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions, borderRadius: 30, alignItems: 'center', padding: 10, }}>
                                 <Image style={{ flex: 1, width: '90%', margin: -28 }} resizeMode='contain' source={require('../assets/car-location.png')} />
                                 <View style={{ backgroundColor: null, padding: 0, borderRadius: 10, alignSelf: 'center', justifyContent: 'center', marginTop: 6 }}>
                                     <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8, paddingHorizontal: 8 }}>Go Now</Text>
@@ -386,24 +388,32 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                             </TouchableOpacity>
 
 
-                            <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#fff', flex: 1, width: windowWidth * .36, height: windowWidth * .32, borderRadius: 30, marginRight: 10, alignItems: 'center', padding: 10, }}>
-                                <Image style={{ flex: 1, width: '60%', margin: -28 }} resizeMode='contain' source={require('../assets/stroller.png')} />
+                        </View>
+
+                        <View showsHorizontalScrollIndicator={false} style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop:10 }}>
+
+
+                            <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions, borderRadius: 30, alignItems: 'center', padding: 10, }}>
+                                <Image style={{ flex: 1, width: '80%', margin: -28 }} resizeMode='contain' source={require('../assets/car-schedule.png')} />
                                 <View style={{ backgroundColor: null, padding: 0, borderRadius: 10, alignSelf: 'center', justifyContent: 'center', marginTop: 6 }}>
-                                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8, paddingHorizontal: 8 }}>Childcare</Text>
+                                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8, paddingHorizontal: 8 }}>Schedule</Text>
                                 </View>
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#fff', flex: 1, width: windowWidth * .36, height: windowWidth * .32, borderRadius: 30, marginRight: 10, alignItems: 'center', padding: 10, }}>
-                                <Image style={{ flex: 1, width: '70%', margin: -28 }} resizeMode='contain' source={require('../assets/coffee.png')} />
+                            <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions, borderRadius: 30, alignItems: 'center', padding: 10, }}>
+                                <Image style={{ flex: 1, width: '90%', margin: -28 }} resizeMode='contain' source={require('../assets/car-location.png')} />
                                 <View style={{ backgroundColor: null, padding: 0, borderRadius: 10, alignSelf: 'center', justifyContent: 'center', marginTop: 6 }}>
-                                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8, paddingHorizontal: 8 }}>Order</Text>
+                                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8, paddingHorizontal: 8 }}>Go Now</Text>
                                 </View>
                             </TouchableOpacity>
-                        </ScrollView>
+
+
+                        </View>
+
                     </View>
 
                     <View style={{ marginHorizontal: 10, backgroundColor: null, marginTop: 20 }}>
-                        <Text style={{ fontSize: 24, marginBottom: 20, fontWeight: 500, textAlign: 'center', fontFamily: 'LexendRegular' }}>Spotlight Feature</Text>
+                        <Text style={{ fontSize: 24, marginBottom: 20, fontWeight: 500, textAlign: 'center', fontFamily: 'LexendRegular' }}>Feature Spotlight</Text>
 
                         <Text style={{ fontSize: 20, marginBottom: 8, fontWeight: 500, fontFamily: 'LexendRegular' }}>Reserve a driver</Text>
 
@@ -485,33 +495,45 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
                     </View>
 
-                    <View style={{ margin: 10, }}>
+                    {/* <View style={{ margin: 10, }}>
                         <Text style={{ fontSize: 24, marginBottom: 8, fontWeight: 500, textAlign: 'center' }}>What's New</Text>
                         <View style={{}}>
                             <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{ borderRadius: 30, marginRight: 0, paddingVertical: 0, borderWidth: 6, borderColor: '#e6e6e6' }}>
-                                {/* <Text style={{ fontSize: 20, }}>Childcare</Text> */}
                                 <LinearGradient colors={['rgba(242,242,242,.0)', 'rgba(242,242,242,0)', 'rgba(242,242,242,0)', 'rgba(242,242,242,.1)', 'rgba(242,242,242,.99)']} style={{ height: 300, zIndex: 9, borderRadius: 20 }} />
                                 <Image style={{ height: 300, width: '100%', position: 'absolute', zIndex: -1, borderRadius: 20, }} resizeMode='contain' source={require('../assets/babysittercover.jpeg')} />
-                                {/* <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 30, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center' }}> */}
-                                {/* </View> */}
-                                {/* </LinearGradient> */}
                             </TouchableOpacity>
-                            {/* 
-                            <TouchableOpacity onPress={() => navigation.navigate('Locals')} style={{ backgroundColor: '#e6e6e6', flex: 1, height: windowHeight * .31, borderRadius: 30, marginRight: 0, alignItems: 'center', paddingVertical: 20 }}>
-                                <Image style={{ flex: 1, width: '100%' }} resizeMode='contain' source={require('../assets/coffee.png')} />
-                                <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'flex-start', marginLeft: 20, justifyContent: 'center' }}>
-                                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Order</Text>
-                                </View>
-                            </TouchableOpacity> */}
+                        </View>
+                    </View> */}
+
+
+                    <View style={{ margin: 10, }}>
+                        <Text style={{ fontSize: 24, marginVertical: 8, fontWeight: 500, textAlign: 'center' }}>Coming Soon</Text>
+                        <Text style={{ fontSize: 20, marginBottom: 10, fontWeight: 500, fontFamily: 'LexendRegular' }}>Ski Services</Text>
+
+                        <LinearGradient colors={['rgba(230,230,230,.15)', 'rgba(230,230,230,.3)', 'rgba(230,230,230,.8)']} style={{ height: '100%', width: '100%', position: 'absolute', borderRadius: 30, zIndex: 2 }} />
+
+
+                        <View style={{}}>
+                            <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{ borderRadius: 30, marginRight: 0, paddingVertical: 0, borderWidth: 6, borderColor: '#e6e6e6' }}>
+                                <Video style={{ height: 210, width: '100%', borderRadius: 20, backgroundColor: 'green' }} shouldPlay resizeMode='contain' source={require('../assets/tuning_cover.mov')} />
+                            </TouchableOpacity>
+                            <View style={{ position: 'absolute', bottom: 20, right: 20, padding: 8, borderRadius: 10, zIndex: 3 }}>
+                                <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendMedium' }}>Emergenskis Mobile Tuning</Text>
+                            </View>
+
+                            <Image style={{ height: 90, width: 90, alignSelf: 'center', position: 'absolute', top: 20, left: 20, zIndex: 3 }} source={require('../assets/emergenskis.webp')} />
+
+
                         </View>
                     </View>
+
 
 
                 </View>
 
                 <View style={{ height: 100 }} />
 
-            </SafeAreaView >
+            </View >
         </ScrollView>
 
     );
