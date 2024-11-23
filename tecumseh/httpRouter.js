@@ -374,7 +374,7 @@ router.post('/local-payment-sheet', async (req, res) => {
 router.get('/rideHistory', async (req, res) => {
 
     let userId = req.query.userId
-    console.log('user id: ', userId)
+    console.log('RIDE HISTORY user id: ', userId)
 
     try {
         let rideHistory = await db__.collection('rides').find({ "user._id": userId, rideCompleted: true }).toArray()

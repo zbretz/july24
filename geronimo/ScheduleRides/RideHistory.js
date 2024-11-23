@@ -13,19 +13,36 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
     const { activeRides, _id } = masterState.user // add rides to user object and check on this page ebfore runnign another search
 
     const [rides, setRides] = useState([])
-    const [drivers, setDrivers] = useState([])
+    // const [drivers, setDrivers] = useState([])
+    const [drivers, setDrivers] = useState(null)
+
+    const [preferredDrivers, setPreferredDrivers] = useState(masterState.user.preferredDrivers)
 
     let fetchRideHistory = () => {
         axios.get(`${url}/rideHistory?userId=${_id}`)
             .then(res => {
-                let { rides } = res.data
-                setRides(rides)
+                let rides = res.data
+                console.log('ride history: ', rides)
+                // setRides(rides)
+                // let drivers = rides.map(ride => ride.driver.firstName)
+                // drivers = [...new Set(drivers)]
+                // setDrivers(drivers)
+
+                // let drivers = {}
+                let temp = {}
+                rides.forEach(ride => {
+                    if (drivers && drivers.hasOwnProperty(ride.driver._id)) return
+                    temp[ride.driver._id] = ride.driver
+                })
+
+                setDrivers(temp)
+
+                console.log('drivers: ', drivers)
+
             })
             .catch(e => console.log('error: ', e))
     }
 
-
-    console.log('activeRides: ', activeRides)
 
     const [emailAddress, setEmailAddress] = useState(null)
     const [autoReceipts, setAutoReceipts] = useState(null)
@@ -74,10 +91,62 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
                 </TouchableOpacity>
             </View>
 
-            {/* <View style={{ marginHorizontal: 20 }}>
+            <View style={{ marginHorizontal: 20 }}>
+
+
+                {/* {
+                    drivers && drivers.map((driver, idx) => {
+                        return (
+
+                            <View>
+                                <Text style={{ fontFamily: 'PointSoftLight' }}>{driver}</Text>
+                            </View>
+
+                        )
+                    })
+                } */}
+
+
                 {
-                    activeRides.map((ride, idx) => {
-                        console.log('active ride list: ', ride)
+                    drivers &&
+
+                    Object.values(drivers).map((driver, idx) => {
+                        return (
+
+                            <View key={idx}>
+                            <Text style={{ fontFamily: 'PointSoftLight' }}>{driver.firstName}</Text>
+                            </View>
+
+                        )
+                    })
+                }
+
+                {
+                    preferredDrivers?.length &&
+
+                    <View>
+                        <Text style={{ fontFamily: 'PointSoftLight' }}>Preferred Drivers</Text>
+
+                        {Object.values(preferredDrivers).map((driver, idx) => {
+                            return (
+
+                                <View key={idx}>
+                                    <Text style={{ fontFamily: 'PointSoftLight' }}>{driver.firstName}</Text>
+                                </View>
+
+                            )
+                        })
+                        }
+
+                    </View>
+
+                }
+
+
+
+
+                {
+                    rides && rides.map((ride, idx) => {
                         return (
 
                             <TouchableOpacity key={idx} onPress={() => { navigation.navigate('RideDetail', { rideId: ride._id }) }} style={{ backgroundColor: '#e6e6e6', borderRadius: 20, padding: 30, marginBottom: 10 }}>
@@ -97,7 +166,7 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
                         )
                     })
                 }
-            </View> */}
+            </View>
 
 
 

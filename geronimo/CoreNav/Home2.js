@@ -65,7 +65,6 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
         <View>
 
-
             <Animated.View style={{ position: 'absolute', top: translateLogo, right: 20, backgroundColor: '#FFCF56', height: 48, width: 48, zIndex: 98, borderRadius: 30, alignItems: 'center', justifyContent: 'center' }}  >
                 <Image style={{ height: 40, width: 40, borderRadius: 30 }} source={require('../assets/yellow-icon-bold.png')} />
             </Animated.View>
@@ -224,7 +223,7 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                                     null
                                 } */}
 
-                                    <LinearGradient colors={['rgba(230,230,230,.15)', 'rgba(230,230,230,.3)', 'rgba(230,230,230,.8)']} style={{ height: '100%', width: '100%', position: 'absolute', borderRadius: 30 }} />
+                                    <LinearGradient colors={['rgba(0,0,0,0)', 'rgba(0,0,0,.1)', 'rgba(0,0,0,.9)']} style={{ height: '100%', width: '100%', position: 'absolute', borderRadius: 30 }} />
 
 
                                     <Video
@@ -237,7 +236,7 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                                         rate={0.9}
                                     />
 
-                                    <View style={{ position: 'absolute', bottom: 20, right: 20, padding: 8, borderRadius: 10, }}>
+                                    <View style={{ position: 'absolute', bottom: 10, right: 20, padding: 8, borderRadius: 10, }}>
                                         <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'LexendMedium' }}>Reserve Driver</Text>
                                     </View>
 
@@ -270,14 +269,14 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                             <View style={{ flexDirection: 'row', }}>
 
 
-                                <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#fff', flex: 3, height: windowHeight * .22, borderRadius: 30, marginRight: 10, justifyContent: 'center' }}>
+                                <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{ backgroundColor: '#fff', flex: 3, height: windowHeight * .22, borderRadius: 30, marginRight: 10, justifyContent: 'center' }}>
                                     <View style={{ backgroundColor: '#fff', padding: 10, borderRadius: 10, }}>
                                         <Text style={{ fontSize: 18, fontFamily: 'LexendRegular' }}>Connect with local babysitters.</Text>
                                         <Text style={{ fontSize: 14, marginTop: 4, fontFamily: 'LexendLight' }}>Safe, simple, and reliable.</Text>
                                     </View>
                                 </TouchableOpacity>
 
-                                <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#f1f1f1', flex: 3, height: windowHeight * .22, borderRadius: 30, marginRight: 10, alignItems: 'center', paddingVertical: 20 }}>
+                                <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{ backgroundColor: '#f1f1f1', flex: 3, height: windowHeight * .22, borderRadius: 30, marginRight: 10, alignItems: 'center', paddingVertical: 20 }}>
                                     <Image style={{ flex: 1, width: '100%' }} resizeMode='contain' source={require('../assets/stroller.png')} />
                                     <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'center', justifyContent: 'center' }}>
                                         <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Childcare</Text>
