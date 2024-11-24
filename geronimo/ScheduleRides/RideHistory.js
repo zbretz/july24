@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, TextInput, Image, Dimensions, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, TextInput, Alert, Dimensions, ActivityIndicator } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { Feather, Entypo, MaterialIcons } from '@expo/vector-icons';
 import { formatInTimeZone } from "date-fns-tz";
@@ -16,7 +16,7 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
     // const [drivers, setDrivers] = useState([])
     const [drivers, setDrivers] = useState([])
 
-    const [preferredDrivers, setPreferredDrivers] = useState(masterState.user.preferredDrivers ? masterState.user.preferredDrivers  : []  )
+    const [preferredDrivers, setPreferredDrivers] = useState(masterState.user.preferredDrivers ? masterState.user.preferredDrivers : [])
     // const [preferredDrivers, setPreferredDrivers] = useState([])
 
     let fetchRideHistory = () => {
@@ -25,17 +25,20 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
                 let rides = res.data
                 console.log('ride history: ', rides)
                 let temp = {}
+        
                 rides.forEach(ride => {
+
+                    temp[ride.driver._id] = ride.driver
+
+
                     if (preferredDrivers.length) {
                         preferredDrivers.forEach(pref_driver => {
-                            if (ride.driver._id !== pref_driver._id) {
-                                temp[ride.driver._id] = ride.driver
+                            if (ride.driver._id == pref_driver._id) {
+                                delete temp[ride.driver._id]
                             }
                         })
-                    } else {
-                        temp[ride.driver._id] = ride.driver
-
                     }
+
                 })
 
                 setDrivers(temp)
@@ -53,28 +56,28 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
 
     const saveEmailPreferences = () => {
 
-        // setLoadingPayForm(true)
+        setLoadingPayForm(true)
 
-        // axios.post(`${url}/user/receiptPreferences`, { user: masterState.user, email: emailAddress, autoReceipts })
-        //     .then(res => {
-        //         if (res.data === 'ok') {
-        //             console.log('receipt preferences saved: ', res.data)
-        //             setMasterState({ ...masterState, user: { ...masterState.user, email: emailAddress, autoReceipts } })
-        //             Keyboard.dismiss()
-        //         }
-        //         else {
-        //             console.log('receipt error!')
-        //             // errorTimeout("Phone number taken.\nTry signing in!")
-        //         }
-        //     })
-        //     .catch(() => null)
-        //     .finally(() => {
-        //         setTimeout(() => {
-        //             setLoadingPayForm(false); Alert.alert('Success', 'Preferences Saved', [], { cancelable: true })
-        //         }, 1500);
-        //     })
+        axios.post(`${url}/user/driverPreferences`, { user: masterState.user, preferredDrivers })
+            .then(res => {
+                if (res.data === 'ok') {
+                    console.log('receipt preferences saved: ', res.data)
+                    setMasterState({ ...masterState, user: { ...masterState.user, preferredDrivers } })
+                    // Keyboard.dismiss()
+                }
+                else {
+                    console.log('receipt error!')
+                    // errorTimeout("Phone number taken.\nTry signing in!")
+                }
+            })
+            .catch(() => null)
+            .finally(() => {
+                setTimeout(() => {
+                    setLoadingPayForm(false); Alert.alert('Success', 'Preferences Saved', [], { cancelable: true })
+                }, 1500);
+            })
 
-        console.log('kjsdfkjbsdfkjsdkbjf: ', preferredDrivers)
+        // console.log('kjsdfkjbsdfkjsdkbjf: ', preferredDrivers)
 
     }
 

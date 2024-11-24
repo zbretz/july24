@@ -7,14 +7,14 @@ import RideType from './RideType';
 // import { DateTimePicker, DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 
-import { Entypo, Feather, Octicons, FontAwesome6, Ionicons, AntDesign } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome6, Ionicons, AntDesign } from '@expo/vector-icons';
 import Carousel from 'react-native-reanimated-carousel';
 import axios from 'axios';
 import { socket } from '../CoreNav/socket';
 import * as Animatable from 'react-native-animatable';
 import LottieView from 'lottie-react-native';
 import { formatInTimeZone } from "date-fns-tz";
-import {url} from '../url_toggle'
+import { url } from '../url_toggle'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -43,6 +43,7 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
     const [flightNumber, setFlightNumber] = useState('')
     const [typeSelected, setTypeSelected] = useState(false)
 
+    preferredDriversEnabled = user.preferredDrivers?.length
 
     const errorTimeout = () => {
         setAddressError(true)
@@ -97,8 +98,9 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
         driverHasArrived: false,
         paid: false,
         datetimeOfRequest: Date.now(),
-        user: user ? { _id: user._id, firstName: user.firstName, lastName: user.lastName, phone: user.phone, stripe_customer_id: user.stripe_customer_id, email:user.email, autoReceipts:user.autoReceipts } : null,
-        chatLog: []
+        user: user ? { _id: user._id, firstName: user.firstName, lastName: user.lastName, phone: user.phone, stripe_customer_id: user.stripe_customer_id, email: user.email, autoReceipts: user.autoReceipts } : null,
+        chatLog: [],
+        preferredDrivers: user.preferredDrivers
     }
 
 
@@ -253,7 +255,7 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
             }
 
 
-            <View style={{ height: '100%', backgroundColor: '#fff', zIndex: -1 }}>
+            <View style={{ flex: 1, backgroundColor: '#fff', }}>
 
                 <View style={{ backgroundColor: '#fff', padding: 32, }}>
                     <TouchableOpacity onPress={() => { carouselIndex === 1 ? prevPage() : navigation.goBack() }}><Ionicons name="chevron-back-outline" size={24} color="black" /></TouchableOpacity>
@@ -264,7 +266,7 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
                 </View>
 
 
-                <View style={{ marginTop: -10, paddingBottom: 76, backgroundColor: '#fff', borderTopLeftRadius: 30, borderTopRightRadius: 30, flex: 1, shadowColor: '#000', }}>
+                <View style={{ marginTop: -10, paddingBottom: 76, backgroundColor: '#fff', flex: 1, }}>
 
                     <Carousel
                         ref={carouselRef}
@@ -276,11 +278,14 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
                         onSnapToItem={(index) => console.log('current index:', index)}
                         renderItem={({ index }) => {
                             if (index == 0) return <Tab0 date={date} setDate={setDate} nextPage={nextPage} pickupLocation={pickupLocation} setPickupLocation={setPickupLocation} destination={destination} setDestination={setDestination} addressError={addressError} setAddressError={setAddressError} flightNumber={flightNumber} setFlightNumber={setFlightNumber} typeSelected={typeSelected} setTypeSelected={setTypeSelected} navigation={navigation} />
-                            if (index == 1) return <Tab3 nextPage={nextPage} date={date} pickupLocation={pickupLocation} destination={destination} fare={fare} rideType={rideType} setRideType={setRideType} typeSelected={typeSelected} flightNumber={flightNumber} />
+                            if (index == 1) return <Tab3 preferredDriversEnabled={preferredDriversEnabled} nextPage={nextPage} date={date} pickupLocation={pickupLocation} destination={destination} fare={fare} rideType={rideType} setRideType={setRideType} typeSelected={typeSelected} flightNumber={flightNumber} />
                         }}
                     />
 
+
                 </View>
+
+
 
                 {typeSelected &&
                     <TouchableOpacity onPress={() => {
@@ -642,12 +647,12 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
 
 
 
-const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType, flightNumber }) => {
+const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType, flightNumber, preferredDriversEnabled }) => {
 
     console.log('fare: ', fare)
 
     return (
-        <View style={{ height: '100%', }}>
+        <View style={{}}>
 
 
 
@@ -658,16 +663,13 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType, 
                 </View>
 
 
-                <View style={{ backgroundColor: '#e6e6e6', padding: 10, borderRadius: 20, marginTop: 0, }}>
-                    <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 14, marginTop: 0, }}>
-
-                        <Text numberOfLines={1} style={{ fontSize: 15, fontFamily: 'PointSoftSemiBold' }}>Pickup</Text>
-                        <Text numberOfLines={1} style={{ fontSize: 19, fontFamily: 'PointSoftSemiBold' }}>{pickupLocation}
-                            {flightNumber && <Text numberOfLines={1} style={{ fontSize: 16, fontFamily: 'PointSoftLight' }}> Flight {flightNumber}</Text>}
-                        </Text>
-                        <Text numberOfLines={1} style={{ fontSize: 15, fontFamily: 'PointSoftSemiBold' }}>Dropoff</Text>
-                        <Text numberOfLines={1} style={{ fontSize: 19, fontFamily: 'PointSoftSemiBold' }}>{destination}</Text>
-                    </View>
+                <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 14, marginTop: 0, }}>
+                    <Text numberOfLines={1} style={{ fontSize: 15, fontFamily: 'PointSoftSemiBold' }}>Pickup</Text>
+                    <Text numberOfLines={1} style={{ fontSize: 19, fontFamily: 'PointSoftSemiBold' }}>{pickupLocation}
+                        {flightNumber && <Text numberOfLines={1} style={{ fontSize: 16, fontFamily: 'PointSoftLight' }}> Flight {flightNumber}</Text>}
+                    </Text>
+                    <Text numberOfLines={1} style={{ fontSize: 15, fontFamily: 'PointSoftSemiBold' }}>Dropoff</Text>
+                    <Text numberOfLines={1} style={{ fontSize: 19, fontFamily: 'PointSoftSemiBold' }}>{destination}</Text>
                 </View>
 
             </View>
@@ -675,7 +677,7 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType, 
 
             <View>
 
-                <TouchableOpacity onPress={() => setRideType(1)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 1 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row', borderWidth: rideType == 1 ? 2 : 0, borderColor: '#ffcf56' }}>
+                <TouchableOpacity onPress={() => setRideType(1)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 1 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row' }}>
                     <View style={{ flexDirection: 'row' }}>
                         <Image style={{ height: 36, width: 70, }} source={require('../assets/cr-v.png')} />
                         <View style={{ marginLeft: 10 }}>
@@ -689,7 +691,7 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType, 
                     <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 18, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>${fare['1']}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => setRideType(2)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 2 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row', borderWidth: rideType == 2 ? 2 : 0, borderColor: '#ffcf56' }}>
+                <TouchableOpacity onPress={() => setRideType(2)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 2 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row' }}>
                     <View style={{ flexDirection: 'row' }}>
                         <Image style={{ height: 36, width: 70, }} source={require('../assets/cr-v.png')} />
                         <View style={{ marginLeft: 10 }}>
@@ -703,7 +705,7 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType, 
                     <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 18, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>${fare['2']}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => setRideType(3)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 3 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row', borderWidth: rideType == 3 ? 2 : 0, borderColor: '#ffcf56' }}>
+                <TouchableOpacity onPress={() => setRideType(3)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 3 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row' }}>
                     <View style={{ flexDirection: 'row' }}>
                         <Image style={{ height: 36, width: 70, }} source={require('../assets/cr-v.png')} />
                         <View style={{ marginLeft: 10 }}>
@@ -717,7 +719,7 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType, 
                     <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 18, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>${fare['3']}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => setRideType(4)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 4 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row', borderWidth: rideType == 4 ? 2 : 0, borderColor: '#ffcf56' }}>
+                <TouchableOpacity onPress={() => setRideType(4)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 4 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row' }}>
                     <View style={{ flexDirection: 'row' }}>
                         <Image style={{ height: 36, width: 70, }} source={require('../assets/cr-v.png')} />
                         <View style={{ marginLeft: 10 }}>
@@ -732,6 +734,23 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType, 
                 </TouchableOpacity>
 
             </View>
+
+
+            {preferredDriversEnabled &&
+                <View style={{ backgroundColor: '#e6e6e6', margin: 20, padding: 10, borderRadius: 8, alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'flex-start', }}>
+                    <MaterialIcons name="check" size={15} color="#000" />
+                    <View style={{ marginLeft: 6 }}>
+                        <Text style={{ fontFamily: 'LexendRegular' }}>
+                            Preferred Drivers
+                        </Text>
+                        <Text style={{ fontFamily: 'LexendLight' }}>
+                            enabled
+                        </Text>
+                    </View>
+                </View>
+            }
+
         </View>
+
     )
 }
