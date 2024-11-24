@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, TextInput, Image, Dimensions, FlatList, SafeAreaView, ScrollView, Animated } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, TextInput, Image, Dimensions, ActivityIndicator } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { Feather, Entypo, MaterialIcons } from '@expo/vector-icons';
 import { formatInTimeZone } from "date-fns-tz";
@@ -10,29 +10,32 @@ const windowHeight = Dimensions.get('window').height;
 
 export default RideHistory = ({ navigation, masterState, setMasterState, rideDetail, setRideDetail }) => {
 
-    const { activeRides, _id } = masterState.user // add rides to user object and check on this page ebfore runnign another search
+    const { _id } = masterState.user
 
     const [rides, setRides] = useState([])
     // const [drivers, setDrivers] = useState([])
-    const [drivers, setDrivers] = useState(null)
+    const [drivers, setDrivers] = useState([])
 
-    const [preferredDrivers, setPreferredDrivers] = useState(masterState.user.preferredDrivers)
+    const [preferredDrivers, setPreferredDrivers] = useState(masterState.user.preferredDrivers ? masterState.user.preferredDrivers  : []  )
+    // const [preferredDrivers, setPreferredDrivers] = useState([])
 
     let fetchRideHistory = () => {
         axios.get(`${url}/rideHistory?userId=${_id}`)
             .then(res => {
                 let rides = res.data
                 console.log('ride history: ', rides)
-                // setRides(rides)
-                // let drivers = rides.map(ride => ride.driver.firstName)
-                // drivers = [...new Set(drivers)]
-                // setDrivers(drivers)
-
-                // let drivers = {}
                 let temp = {}
                 rides.forEach(ride => {
-                    if (drivers && drivers.hasOwnProperty(ride.driver._id)) return
-                    temp[ride.driver._id] = ride.driver
+                    if (preferredDrivers.length) {
+                        preferredDrivers.forEach(pref_driver => {
+                            if (ride.driver._id !== pref_driver._id) {
+                                temp[ride.driver._id] = ride.driver
+                            }
+                        })
+                    } else {
+                        temp[ride.driver._id] = ride.driver
+
+                    }
                 })
 
                 setDrivers(temp)
@@ -50,26 +53,29 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
 
     const saveEmailPreferences = () => {
 
-        setLoadingPayForm(true)
+        // setLoadingPayForm(true)
 
-        axios.post(`${url}/user/receiptPreferences`, { user: masterState.user, email: emailAddress, autoReceipts })
-            .then(res => {
-                if (res.data === 'ok') {
-                    console.log('receipt preferences saved: ', res.data)
-                    setMasterState({ ...masterState, user: { ...masterState.user, email: emailAddress, autoReceipts } })
-                    Keyboard.dismiss()
-                }
-                else {
-                    console.log('receipt error!')
-                    // errorTimeout("Phone number taken.\nTry signing in!")
-                }
-            })
-            .catch(() => null)
-            .finally(() => {
-                setTimeout(() => {
-                    setLoadingPayForm(false); Alert.alert('Success', 'Preferences Saved', [], { cancelable: true })
-                }, 1500);
-            })
+        // axios.post(`${url}/user/receiptPreferences`, { user: masterState.user, email: emailAddress, autoReceipts })
+        //     .then(res => {
+        //         if (res.data === 'ok') {
+        //             console.log('receipt preferences saved: ', res.data)
+        //             setMasterState({ ...masterState, user: { ...masterState.user, email: emailAddress, autoReceipts } })
+        //             Keyboard.dismiss()
+        //         }
+        //         else {
+        //             console.log('receipt error!')
+        //             // errorTimeout("Phone number taken.\nTry signing in!")
+        //         }
+        //     })
+        //     .catch(() => null)
+        //     .finally(() => {
+        //         setTimeout(() => {
+        //             setLoadingPayForm(false); Alert.alert('Success', 'Preferences Saved', [], { cancelable: true })
+        //         }, 1500);
+        //     })
+
+        console.log('kjsdfkjbsdfkjsdkbjf: ', preferredDrivers)
+
     }
 
     useEffect(() => {
@@ -108,37 +114,79 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
 
 
                 {
-                    drivers &&
+                    Object.values(drivers).length ?
 
-                    Object.values(drivers).map((driver, idx) => {
-                        return (
-
-                            <View key={idx}>
-                            <Text style={{ fontFamily: 'PointSoftLight' }}>{driver.firstName}</Text>
-                            </View>
-
-                        )
-                    })
-                }
-
-                {
-                    preferredDrivers?.length &&
-
-                    <View>
-                        <Text style={{ fontFamily: 'PointSoftLight' }}>Preferred Drivers</Text>
-
-                        {Object.values(preferredDrivers).map((driver, idx) => {
+                        Object.values(drivers).map((driver, idx) => {
                             return (
 
-                                <View key={idx}>
+                                <TouchableOpacity onPress={
+                                    () => {
+                                        delete drivers[driver._id]
+                                        setPreferredDrivers(preferredDrivers => {
+
+                                            // preferredDrivers = preferredDrivers.filter(driver2=> driver2._id !== driver._id)
+
+                                            return ([...preferredDrivers, driver])
+                                            // return ([... new Set([...preferredDrivers, driver])])
+
+
+                                        })
+                                    }
+                                }
+                                    style={{ flexDirection: 'row', padding: 20 }} key={idx}>
                                     <Text style={{ fontFamily: 'PointSoftLight' }}>{driver.firstName}</Text>
-                                </View>
+                                    <MaterialIcons name="check-box-outline-blank" size={28} color="black" />
+                                </TouchableOpacity>
 
                             )
                         })
-                        }
+                        :
 
-                    </View>
+                        preferredDrivers.length ?
+
+                            <Text>All available drivers are selected</Text>
+
+                            :
+
+                            <Text>No ride history</Text>
+
+                }
+
+
+                <Text style={{ fontFamily: 'PointSoftLight' }}>Preferred Drivers</Text>
+
+                {
+                    preferredDrivers?.length ?
+
+                        <View>
+
+                            {preferredDrivers.map((driver, idx) => {
+                                return (
+
+                                    <TouchableOpacity onPress={
+                                        () => {
+                                            setPreferredDrivers(preferredDrivers => { return ([...preferredDrivers.filter(preferred => preferred._id !== driver._id)]) })
+                                            setDrivers(drivers => {
+                                                drivers[driver._id] = driver
+                                                return drivers
+                                            })
+                                        }
+                                    }
+
+                                        style={{ flexDirection: 'row', padding: 20 }} key={idx}>
+                                        <Text style={{ fontFamily: 'Lexend-Regular' }}>{driver?.firstName}</Text>
+                                        <MaterialIcons name="check-box" size={28} color="black" />
+                                    </TouchableOpacity>
+
+                                )
+                            })
+                            }
+
+                        </View>
+
+                        :
+
+                        <Text>none selected </Text>
 
                 }
 
@@ -186,20 +234,8 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
                     </Text>
 
 
-                    <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, textAlign: 'left' }} >
-                        Email Address
-                    </Text>
-                    <TextInput style={{ paddingLeft: 10, backgroundColor: null, backgroundColor: '#f2f2f2', padding: 10, marginVertical: 10, borderRadius: 10, fontFamily: 'PointSoftSemiBold', fontSize: 16 }} onChangeText={(text) => { setEmailAddress(text) }} value={emailAddress} />
 
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, textAlign: 'left', marginTop: 10 }} >
-                            Receipts Enabled
-                        </Text>
 
-                        <TouchableOpacity onPress={() => setAutoReceipts(!autoReceipts)}>
-                            {autoReceipts ? <MaterialIcons name="check-box" size={28} color="black" /> : <MaterialIcons name="check-box-outline-blank" size={28} color="black" />}
-                        </TouchableOpacity>
-                    </View>
 
                     {loadingPayForm ?
                         <View style={{ alignItems: 'center', backgroundColor: '#ffcf56', borderRadius: 30, height: 54, marginTop: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} >
