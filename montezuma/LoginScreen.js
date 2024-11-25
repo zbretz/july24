@@ -114,11 +114,11 @@ export default LoginScreen = ({ isConnected, masterState, setMasterState }) => {
                         setModalVisible(false)
                         setModalVisible2(true)
 
-                        // AsyncStorage.setItem('User', JSON.stringify(driver))
+                        AsyncStorage.setItem('User', JSON.stringify(driver))
 
-                        // setMasterState(masterState => {
-                        //     return { ...masterState, user: driver, myScheduledRides: driver.activeRides, myLocalRides: driver.localRides, appIsReady: true }
-                        // })
+                        setMasterState(masterState => {
+                            return { ...masterState, user: driver, myScheduledRides: driver.activeRides, myLocalRides: driver.localRides, appIsReady: true }
+                        })
 
                     } else {
                         errorTimeout('Incorrect Code')
