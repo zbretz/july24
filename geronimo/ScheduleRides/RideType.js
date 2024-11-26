@@ -39,7 +39,7 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                 </View>
 
                 <View style={{}}>
-                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: windowWidth * .078, marginVertical: windowHeight < 800 ? -6 : 0, textAlign: 'center' }} adjustsFontSizeToFit={true} numberOfLines={1}>Scheduled Rides</Text>
+                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: windowWidth * .078,  textAlign: 'center', marginBottom:-8 }} adjustsFontSizeToFit={true} numberOfLines={1}>Scheduled Rides</Text>
                 </View>
 
 
