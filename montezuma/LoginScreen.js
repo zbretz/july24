@@ -112,13 +112,15 @@ export default LoginScreen = ({ isConnected, masterState, setMasterState }) => {
                         console.log('code: ok')
 
                         setModalVisible(false)
-                        setModalVisible2(true)
 
-                        AsyncStorage.setItem('User', JSON.stringify(driver))
+                        setTimeout(()=>{  setModalVisible2(true)}, 1000)
+                      
 
-                        setMasterState(masterState => {
-                            return { ...masterState, user: driver, myScheduledRides: driver.activeRides, myLocalRides: driver.localRides, appIsReady: true }
-                        })
+                        // AsyncStorage.setItem('User', JSON.stringify(driver))
+
+                        // setMasterState(masterState => {
+                        //     return { ...masterState, user: driver, myScheduledRides: driver.activeRides, myLocalRides: driver.localRides, appIsReady: true }
+                        // })
 
                     } else {
                         errorTimeout('Incorrect Code')
@@ -136,7 +138,7 @@ export default LoginScreen = ({ isConnected, masterState, setMasterState }) => {
     }
 
     return (
-        <SafeAreaView style={{ height: '100%', backgroundColor: '#fff', alignItems: 'center', marginTop: 160 }}>
+        <SafeAreaView style={{ height: '100%', backgroundColor: '#fff', alignItems: 'center', }}>
 
             <TouchableOpacity onPress={logout}><Text>logout</Text></TouchableOpacity>
 

@@ -53,6 +53,11 @@ message = async (io, data) => {
 
 requestScheduledRide = async (io, rideRequest, callback) => {
 
+
+    // console.log('preferred drivers: ', rideRequest.preferredDrivers)
+    // return
+
+
     let ride = await db__.collection('rides').insertOne({ ...rideRequest })
     console.log('   RIDE:   ', ride)
     rideRequest = { ...rideRequest, _id: ride.insertedId }
@@ -79,7 +84,7 @@ requestScheduledRide = async (io, rideRequest, callback) => {
     console.log('callback data: ', ride.insertedId)
     callback(ride.insertedId)
     // callback() for testing
-    notifyAllDrivers('Scheduled', rideRequest.pickupAddress, rideRequest.dropoffAddress, new Date(rideRequest.pickupDateTime))
+    notifyAllDrivers('Scheduled', rideRequest.pickupAddress, rideRequest.dropoffAddress, new Date(rideRequest.pickupDateTime), rideRequest.preferredDrivers)
     // console.log('Scheduled ride requested:', rideRequest);
     io.to('drivers').emit('request_scheduled_ride', rideRequest);
 };

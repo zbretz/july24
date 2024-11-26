@@ -4,7 +4,7 @@ var ObjectId = require('mongodb').ObjectId;
 const { smsNotifyUser, smsNotifyDriver } = require("./sms.js");
 let expo = new Expo();
 
-const notifyUser = async ({userid, text, type}) => {
+const notifyUser = async ({ userid, text, type }) => {
 
     let notifications = {
         'confirmedByDriver': ["Your ride has been accepted."],
@@ -14,7 +14,7 @@ const notifyUser = async ({userid, text, type}) => {
         "message": ["New message", text]
     }
 
-    let rider = await db__.collection('users').findOne({ _id: new ObjectId(String(userid))})
+    let rider = await db__.collection('users').findOne({ _id: new ObjectId(String(userid)) })
     console.log('rider: ', rider)
 
     try {
@@ -39,9 +39,9 @@ const notifyUser = async ({userid, text, type}) => {
 
 }
 
-const notifyDriver = async ({driverid, text, type}) => {
+const notifyDriver = async ({ driverid, text, type }) => {
 
-    let driver = await db__.collection('drivers').findOne({  _id: new ObjectId(String(driverid)) })
+    let driver = await db__.collection('drivers').findOne({ _id: new ObjectId(String(driverid)) })
     console.log('driver: ', driver)
 
     let notifications = {
@@ -68,11 +68,15 @@ const notifyDriver = async ({driverid, text, type}) => {
     }
 }
 
-const notifyAllDrivers = async (type, pickup, dropoff, date) => {
+const notifyAllDrivers = async (type, pickup, dropoff, date, preferredDrivers) => {
 
-    let drivers = await db__.collection('drivers').find({}).toArray()
+    let drivers = preferredDrivers.length ? preferredDrivers : await db__.collection('drivers').find({ driverIsAuthorized: true }).toArray()
+
+    console.log('preferred drivers?: ', preferredDrivers)
 
     drivers.forEach(async (driver) => {
+
+        console.log('driver push token: ', driver.expoPushToken)
 
         let messageDriver = {
             to: driver.expoPushToken,

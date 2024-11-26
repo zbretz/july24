@@ -148,8 +148,8 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
                             <View style={{}}>
                                 <View style={{ flex: 1, width: windowWidth * .5 - 50, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: 30, marginBottom: 0, fontFamily: 'LexendMedium', }}>Welcome.</Text>
-                                    <Text style={{ fontSize: 21, marginBottom: 0, fontFamily: 'LexendRegular' }}>We're stoked you're here.</Text>
+                                    <Text style={{ fontSize: windowWidth * .081, marginBottom: 0, fontFamily: 'LexendMedium', textAlign:'left' }}>Welcome</Text>
+                                    <Text style={{ fontSize: windowWidth * .055, marginBottom: 0, fontFamily: 'LexendRegular' }}>We're stoked you're here.</Text>
                                     {/* <Text style={{ fontSize: 21, marginBottom: 0, fontFamily: 'LexendRegular' }}>We're glad you made it.</Text> */}
                                 </View>
                             </View>

@@ -43,7 +43,7 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
     const [flightNumber, setFlightNumber] = useState('')
     const [typeSelected, setTypeSelected] = useState(false)
 
-    preferredDriversEnabled = user.preferredDrivers?.length
+    preferredDriversEnabled = user?.preferredDrivers?.length
 
     const errorTimeout = () => {
         setAddressError(true)
@@ -100,7 +100,7 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
         datetimeOfRequest: Date.now(),
         user: user ? { _id: user._id, firstName: user.firstName, lastName: user.lastName, phone: user.phone, stripe_customer_id: user.stripe_customer_id, email: user.email, autoReceipts: user.autoReceipts } : null,
         chatLog: [],
-        preferredDrivers: user.preferredDrivers
+        preferredDrivers: user?.preferredDrivers
     }
 
 
