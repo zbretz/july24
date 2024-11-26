@@ -61,7 +61,7 @@ export default MyAccount = ({ navigation, masterState, setMasterState }) => {
 
                 </View>
             </View>
-            {/* <TouchableOpacity onPress={logout}><Text>logout</Text></TouchableOpacity> */}
+            <TouchableOpacity onPress={logout}><Text>logout</Text></TouchableOpacity>
 
 
         </SafeAreaView>

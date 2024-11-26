@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { formatInTimeZone } from "date-fns-tz";
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -14,16 +14,16 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
     const upcomingRide = masterState.user?.activeRides?.length ? masterState.user.activeRides[0] : null
     // console.log('ride type -- active ride: ', upcomingRide)
 
-    // const comingSoonAlert = (type) => {
-    //     const text = `This feature is not yet active. We're working on it!`
-    //     const title = `Coming Soon!`
-    //     Alert.alert(title, text, [
-    //         {
-    //             text: 'Ok', onPress: () => {
-    //             }
-    //         },
-    //     ])
-    // }
+    const comingSoonAlert = (type) => {
+        const text = `This feature is not yet active. We're working on it!`
+        const title = `Coming Soon!`
+        Alert.alert(title, text, [
+            {
+                text: 'Ok', onPress: () => {
+                }
+            },
+        ])
+    }
 
     return (
 
@@ -50,11 +50,11 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
 
 
                 {masterState.user &&
-                    <View style={{ marginTop: 20, marginHorizontal: 20, flexDirection: 'row' }}>
-                        <TouchableOpacity onPress={() => navigation.navigate('RideHistory')} style={{ flex: 1, height: 50, marginHorizontal: 0, borderRadius: 40, padding: 10, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' }} >
-                            <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Aristotelica-Regular', marginBottom: -8 }}>Ride History</Text>
+                    <View style={{ marginTop: 20, marginHorizontal: 0, flexDirection: 'row', justifyContent: 'space-around' }}>
+                        <TouchableOpacity onPress={() => navigation.navigate('RideHistory')} style={{ borderRadius: 40, padding: 14, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' }} >
+                            <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Aristotelica-Regular', marginBottom: -8 }}>Preferences</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate('FutureRides')} style={{ flex: 1, height: 50, marginHorizontal: 10, borderRadius: 40, padding: 10, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' }} >
+                        <TouchableOpacity onPress={() => navigation.navigate('FutureRides')} style={{ borderRadius: 40, padding: 14, alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' }} >
                             <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Aristotelica-Regular', marginBottom: -8 }}>Future Rides</Text>
                         </TouchableOpacity>
                     </View>
@@ -93,21 +93,29 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                                     // height: windowHeight * .22,
                                     borderRadius: 30,
                                 }}>
-                                    <Image style={{ height: '100%', width: '30%', marginHorizontal: 10 }} resizeMode='contain' source={require('../assets/car-schedule.png')} />
+                                    {/* <Image style={{ height: '100%', width: '30%', marginHorizontal: 10 }} resizeMode='contain' source={require('../assets/car-schedule.png')} /> */}
 
-                                    <View style={{ padding: 20, paddingLeft: 0, flex: 1, borderTopRightRadius: 30, borderBottomRightRadius: 30, justifyContent: 'center' }}>
+                                    <View style={{ padding: 10, flex: 1, borderTopRightRadius: 30, borderBottomRightRadius: 30, justifyContent: 'center' }}>
 
-                                        <View style={{ backgroundColor: '#fff', borderRadius: 20, padding: 20, }}>
+                                        <View style={{ backgroundColor: '#fff', borderRadius: 20, padding: 10, paddingHorizontal: 20 }}>
                                             <Text adjustsFontSizeToFit={true} numberOfLines={1} style={{ marginVertical: 0, fontSize: 21, fontFamily: 'PointSoftSemiBold', }}>{formatInTimeZone(upcomingRide.pickupDateTime, 'America/Denver', "eee',' MMMM d")}</Text>
                                             <Text style={{ marginVertical: 0, fontSize: 21, fontFamily: 'PointSoftLight', }}>{formatInTimeZone(upcomingRide.pickupDateTime, 'America/Denver', "h':'mm aa")}</Text>
                                             <Text numberOfLines={1} style={{ marginTop: 10, fontSize: 12, fontFamily: 'PointSoftLight', }}>{upcomingRide.pickupAddress}</Text>
                                             <Text numberOfLines={1} style={{ marginVertical: 0, fontSize: 12, fontFamily: 'PointSoftLight', }}>{upcomingRide.dropoffAddress}</Text>
 
-                                            {upcomingRide.driver &&
-                                                <View style={{ flexDirection: 'row', alignItems: 'center', }}>
-                                                    <Text numberOfLines={1} style={{ marginVertical: 10, marginBottom: 10, fontSize: 12, fontFamily: 'PointSoftSemiBold', }}>Driver Assigned</Text>
+                                            {upcomingRide.driver ?
+                                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent:'center' }}>
+                                                    <Text numberOfLines={1} style={{ marginVertical: 10, marginBottom: 10, fontSize: 12, fontFamily: 'PointSoftSemiBold', marginRight:6 }}>Driver Assigned</Text>
                                                     <Image style={{ height: 20, width: 20, }} source={require('../assets/verified.png')} />
                                                 </View>
+
+                                                :
+
+                                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent:'center' }}>
+                                                    <Text numberOfLines={1} style={{ marginVertical: 10, marginBottom: 10, fontSize: 14, fontFamily: 'PointSoftSemiBold', marginRight:6}}>View more</Text>
+                                                    <AntDesign name="rightcircle" size={17} color="#00d0ff" />
+                                                </View>
+
                                             }
                                         </View>
 

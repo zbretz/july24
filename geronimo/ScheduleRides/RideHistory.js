@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View, TextInput, Alert, Dimensions, ActivityIndicator } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { Feather, Entypo, MaterialIcons } from '@expo/vector-icons';
+import { Feather, Entypo, MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { formatInTimeZone } from "date-fns-tz";
 import axios from 'axios';
 import { url } from '../url_toggle'
@@ -25,7 +25,7 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
                 let rides = res.data
                 console.log('ride history: ', rides)
                 let temp = {}
-        
+
                 rides.forEach(ride => {
 
                     temp[ride.driver._id] = ride.driver
@@ -50,8 +50,6 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
     }
 
 
-    const [emailAddress, setEmailAddress] = useState(null)
-    const [autoReceipts, setAutoReceipts] = useState(null)
     const [loadingPayForm, setLoadingPayForm] = useState(false)
 
     const saveEmailPreferences = () => {
@@ -63,11 +61,9 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
                 if (res.data === 'ok') {
                     console.log('receipt preferences saved: ', res.data)
                     setMasterState({ ...masterState, user: { ...masterState.user, preferredDrivers } })
-                    // Keyboard.dismiss()
                 }
                 else {
                     console.log('receipt error!')
-                    // errorTimeout("Phone number taken.\nTry signing in!")
                 }
             })
             .catch(() => null)
@@ -77,14 +73,10 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
                 }, 1500);
             })
 
-        // console.log('kjsdfkjbsdfkjsdkbjf: ', preferredDrivers)
-
     }
 
     useEffect(() => {
         fetchRideHistory()
-        // setEmailAddress(masterState.user.email)
-        // setAutoReceipts(masterState.user.autoReceipts)
     }, [])
 
 
@@ -100,24 +92,24 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
                 </TouchableOpacity>
             </View>
 
+
+
             <View style={{ marginHorizontal: 20 }}>
+                <View style={{ padding: 10 }}>
+
+                    <Text style={{ fontFamily: 'LexendRegular', fontSize: 16, textAlign: 'left' }} >
+                        Find drivers you've ridden with.
+                    </Text>
+                    <Text style={{ fontFamily: 'LexendRegular', fontSize: 16, textAlign: 'left' }} >
+                        We will do our best to match you with your preferred drivers.
+                    </Text>
+                </View>
 
 
-                {/* {
-                    drivers && drivers.map((driver, idx) => {
-                        return (
+                <View style={{ backgroundColor: '#f2f2f2', borderRadius: 20, minHeight: 120, paddingVertical: 10 }}>
 
-                            <View>
-                                <Text style={{ fontFamily: 'PointSoftLight' }}>{driver}</Text>
-                            </View>
-
-                        )
-                    })
-                } */}
-
-
-                {
-                    Object.values(drivers).length ?
+                    {
+                        // Object.values(drivers).length &&
 
                         Object.values(drivers).map((driver, idx) => {
                             return (
@@ -126,40 +118,26 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
                                     () => {
                                         delete drivers[driver._id]
                                         setPreferredDrivers(preferredDrivers => {
-
-                                            // preferredDrivers = preferredDrivers.filter(driver2=> driver2._id !== driver._id)
-
                                             return ([...preferredDrivers, driver])
-                                            // return ([... new Set([...preferredDrivers, driver])])
-
-
                                         })
                                     }
                                 }
-                                    style={{ flexDirection: 'row', padding: 20 }} key={idx}>
-                                    <Text style={{ fontFamily: 'PointSoftLight' }}>{driver.firstName}</Text>
-                                    <MaterialIcons name="check-box-outline-blank" size={28} color="black" />
+                                    style={{ flexDirection: 'row', padding: 20, paddingVertical: 10 }} key={idx}>
+                                    <AntDesign name="hearto" size={20} color="#5a5a5a" />
+
+                                    <Text style={{ fontFamily: 'Lexend-Regular', marginLeft: 10, color: '#5a5a5a' }}>{driver.firstName}</Text>
                                 </TouchableOpacity>
 
                             )
                         })
-                        :
-
-                        preferredDrivers.length ?
-
-                            <Text>All available drivers are selected</Text>
-
-                            :
-
-                            <Text>No ride history</Text>
-
-                }
 
 
-                <Text style={{ fontFamily: 'PointSoftLight' }}>Preferred Drivers</Text>
 
-                {
-                    preferredDrivers?.length ?
+
+                    }
+
+                    {
+                        // preferredDrivers?.length &&
 
                         <View>
 
@@ -176,9 +154,9 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
                                         }
                                     }
 
-                                        style={{ flexDirection: 'row', padding: 20 }} key={idx}>
-                                        <Text style={{ fontFamily: 'Lexend-Regular' }}>{driver?.firstName}</Text>
-                                        <MaterialIcons name="check-box" size={28} color="black" />
+                                        style={{ flexDirection: 'row', padding: 20, paddingVertical: 10 }} key={idx}>
+                                        <AntDesign name="heart" size={20} color="black" />
+                                        <Text style={{ fontFamily: 'Lexend-Medium', marginLeft: 10, }}>{driver.firstName}</Text>
                                     </TouchableOpacity>
 
                                 )
@@ -187,13 +165,18 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
 
                         </View>
 
-                        :
 
-                        <Text>none selected </Text>
+                    }
 
-                }
+                    {
+                        !preferredDrivers?.length && !Object.values(drivers).length &&
 
+                        <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                            <Text style={{ fontFamily: 'Lexend-Regular', marginLeft: 10, color: '#5a5a5a' }}>No ride history</Text>
+                        </View>
+                    }
 
+                </View>
 
 
                 {
@@ -226,27 +209,16 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
             <View style={{ padding: 10, height: '100%', backgroundColor: '#fff' }}>
 
 
-
-
                 <View style={{ padding: 10, borderRadius: 30, marginBottom: 20, }}>
-                    <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, textAlign: 'left' }} >
-                        Find drivers you've ridden with.
-                    </Text>
-                    <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, textAlign: 'left' }} >
-                        We will do our best to match you with your preferred drivers.
-                    </Text>
-
-
-
 
 
                     {loadingPayForm ?
-                        <View style={{ alignItems: 'center', backgroundColor: '#ffcf56', borderRadius: 30, height: 54, marginTop: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} >
+                        <View style={{ alignItems: 'center', backgroundColor: '#ffcf56', borderRadius: 30, height: 42, marginTop: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} >
                             <ActivityIndicator />
                         </View>
                         :
-                        <TouchableOpacity onPress={saveEmailPreferences} style={{ alignItems: 'center', backgroundColor: '#ffcf56', borderRadius: 30, marginTop: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <Text style={{ fontFamily: 'LexendRegular', fontSize: 20, marginTop: 0, textAlign: 'center', padding: 20, paddingHorizontal: 16, marginBottom: -8 }} adjustsFontSizeToFit={true} numberOfLines={1}>Save</Text>
+                        <TouchableOpacity onPress={saveEmailPreferences} style={{ alignItems: 'center', backgroundColor: '#ffcf56', borderRadius: 30, marginTop: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, marginTop: 0, textAlign: 'center', padding: 10, paddingHorizontal: 16, }} adjustsFontSizeToFit={true} numberOfLines={1}>Save</Text>
                         </TouchableOpacity>
                     }
 
