@@ -283,7 +283,7 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                                     />
 
                                     <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'center', justifyContent: 'center', position: 'absolute', bottom: 10 }}>
-                                        <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginBottom: -8 }}>Childcare</Text>
+                                        <Text style={{ fontFamily: 'LexendRegular', fontSize: 18 }}>Childcare</Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>

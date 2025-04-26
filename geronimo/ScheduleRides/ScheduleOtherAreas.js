@@ -492,7 +492,7 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
 
 
             {addressError &&
-                <View style={{ position: 'absolute', bottom: 10, backgroundColor: '#55c1ff', borderRadius: 20, marginHorizontal: 20, alignSelf: 'center', padding: 20 }}>
+                <View style={{ position: 'absolute', bottom: 10, backgroundColor: '#000', borderRadius: 20, marginHorizontal: 20, alignSelf: 'center', padding: 20 }}>
                     <Text style={{ fontSize: 20, fontFamily: 'Aristotelica-Regular', color: '#fff', }}>Address not recognized. Please re-input your missing location.</Text>
                 </View>
             }
@@ -503,240 +503,6 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
 
 
 
-
-// const Tab1 = ({ pickupLocation, setPickupLocation, setPickupAddressNotRecognized, addressError }) => {
-
-//     const pickupRef = useRef(null);
-
-//     // const [searchResults, setSearchResults] = useState([1, 1, 1, 1, 1])
-//     const [searchResults, setSearchResults] = useState([])
-
-//     const validateAddress = (param) => {
-//         param = param.toLowerCase().replaceAll(' ', '+')
-//         console.log('param: ', param)
-//         axios
-//             .request({
-//                 method: 'post',
-//                 url: `https://maps.googleapis.com/maps/api/geocode/json?address=${param}&key=AIzaSyBTBjSD9lnO2dmVBCt3Lm8LS3OhDckcrEI`,
-//             })
-//             .then((response) => {
-//                 console.log('address recognized?: ', !!response.data.results.length);
-
-//                 if (!response.data.results.length) setPickupAddressNotRecognized(true)
-//                 else setPickupAddressNotRecognized(false)
-
-//             })
-//             .catch((e) => {
-//                 console.log('catch: ', e.response);
-//             })
-//     }
-
-//     const API_KEY = 'AIzaSyBTBjSD9lnO2dmVBCt3Lm8LS3OhDckcrEI';
-//     const searchLocation = async (text) => {
-
-//         if (!text.length) { setSearchResults([]); return }
-
-//         console.log(text)
-//         axios
-//             .request({
-//                 method: 'post',
-//                 url: `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${API_KEY}&input=${text}&location=40.6856%111.5563&radius=50000&region=US`,
-//             })
-//             .then((response) => {
-//                 setSearchResults(response.data.predictions)
-//             })
-//             .catch((e) => {
-//                 console.log(e.response);
-//             })
-
-//     };
-
-
-//     return (
-//         <ScrollView scrollEnabled={false}>
-
-//             <View style={{ padding: 20 }}>
-//                 <Text style={{ marginBottom: 10, fontSize: 24, fontWeight: '600', textAlign: 'center' }}>Pickup Location</Text>
-
-//                 <TextInput style={{ height: 50, borderRadius: 10, borderColor: '#666', borderWidth: 2, backgroundColor: 'white', paddingHorizontal: 8, fontSize: 16 }}
-//                     ref={pickupRef}
-//                     autoCapitalize={'none'}
-//                     placeholderTextColor={'#77756e'}
-//                     placeholder={'Pickup Address'}
-//                     value={pickupLocation}
-//                     // value={searchKeyword}
-//                     // onChangeText={(text) => setRideRequest(rideRequest => ({ ...rideRequest, pickup: text }))}
-//                     onChangeText={(text) => { searchLocation(text); setPickupLocation(text); validateAddress(text); if (text.length === 0) setPickupAddressNotRecognized(true); }}
-//                 />
-
-//                 <View style={{
-//                     width: '100%',
-//                     zIndex: 10,
-//                     borderBottomLeftRadius: 10,
-//                     borderBottomRightRadius: 10,
-
-//                 }}>
-
-
-
-
-
-//                     {addressError ?
-//                         <>
-//                             <Text style={{ marginTop: 20, fontSize: 20, fontFamily: 'Lato-Regular' }}>Address not recognized.</Text>
-//                             <Text style={{ marginTop: 20, fontSize: 20, fontFamily: 'Lato-Regular' }}>Please select from dropdown list or enter a full address that we can locate.</Text>
-//                         </>
-//                         :
-
-//                         <>
-//                             {
-//                                 searchResults.map((item, index) => {
-//                                     return (
-//                                         <View style={{ borderTopWidth: index == 0 ? 0 : 1, borderTopColor: '#b2b9ac', }} key={item.place_id}>
-//                                             <TouchableHighlight
-//                                                 underlayColor="#DDDDDD"
-//                                                 style={{ zIndex: 10, flexDirection: 'row', paddingVertical: 10, alignItems: 'center', backgroundColor: '#fff' }}
-//                                                 onPress={() => { setPickupLocation(item.description); setPickupAddressNotRecognized(false); pickupRef.current.blur(); }}
-//                                             >
-//                                                 <>
-//                                                     <FontAwesome6 name="location-dot" size={14} color="#999" />
-//                                                     <Text numberOfLines={2} style={{ padding: 6, fontSize: 16, flex: 1, color: '#000' }}>{item.description}</Text>
-//                                                 </>
-//                                             </TouchableHighlight>
-//                                         </View>
-//                                     );
-//                                 })
-//                             }
-//                         </>
-//                     }
-
-//                 </View>
-//             </View>
-
-//         </ScrollView>
-//     )
-// }
-
-
-
-
-
-// const Tab2 = ({ destination, setDestination, setDropoffAddressNotRecognized, addressError }) => {
-
-//     const pickupRef = useRef(null);
-
-//     // const [searchResults, setSearchResults] = useState([1, 1, 1, 1, 1])
-//     const [searchResults, setSearchResults] = useState([])
-
-//     const validateAddress = (param) => {
-
-//         param = param.toLowerCase().replaceAll(' ', '+')
-
-//         console.log('param: ', param)
-
-//         axios
-//             .request({
-//                 method: 'post',
-//                 url: `https://maps.googleapis.com/maps/api/geocode/json?address=${param}&key=AIzaSyBTBjSD9lnO2dmVBCt3Lm8LS3OhDckcrEI`,
-//             })
-//             .then((response) => {
-//                 console.log('address recognized?: ', !!response.data.results.length);
-
-//                 if (!response.data.results.length) setDropoffAddressNotRecognized(true)
-//                 else setDropoffAddressNotRecognized(false)
-
-//             })
-//             .catch((e) => {
-//                 console.log('catch: ', e.response);
-//             })
-//     }
-
-
-//     const API_KEY = 'AIzaSyBTBjSD9lnO2dmVBCt3Lm8LS3OhDckcrEI';
-//     const searchLocation = async (text) => {
-
-//         if (!text.length) { setSearchResults([]); return }
-
-//         console.log(text)
-//         axios
-//             .request({
-//                 method: 'post',
-//                 url: `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${API_KEY}&input=${text}&location=40.6856%111.5563&radius=50000&region=US`,
-//             })
-//             .then((response) => {
-//                 setSearchResults(response.data.predictions)
-//             })
-//             .catch((e) => {
-//                 console.log(e.response);
-//             })
-
-//     };
-
-
-//     return (
-//         <ScrollView scrollEnabled={false}>
-
-//             <View style={{ padding: 20 }}>
-//                 <Text style={{ marginBottom: 10, fontSize: 24, fontWeight: '600', textAlign: 'center' }}>Dropoff Location</Text>
-
-//                 <TextInput style={{ height: 50, borderRadius: 10, borderColor: '#666', borderWidth: 2, backgroundColor: 'white', paddingHorizontal: 8, fontSize: 16 }}
-//                     ref={pickupRef}
-//                     autoCapitalize={'none'}
-//                     placeholderTextColor={'#77756e'}
-//                     placeholder={'Dropoff Address'}
-//                     value={destination}
-//                     // value={searchKeyword}
-//                     // onChangeText={(text) => setRideRequest(rideRequest => ({ ...rideRequest, pickup: text }))}
-//                     onChangeText={(text) => { searchLocation(text); setDestination(text); validateAddress(text); if (text.length === 0) setDropoffAddressNotRecognized(true) }}
-//                 />
-
-//                 <View style={{
-//                     width: '100%',
-//                     zIndex: 10,
-//                     borderBottomLeftRadius: 10,
-//                     borderBottomRightRadius: 10,
-
-//                 }}>
-
-
-
-
-
-//                     {addressError ?
-//                         <>
-//                             <Text style={{ marginTop: 20, fontSize: 20, fontFamily: 'Lato-Regular' }}>Address not recognized.</Text>
-//                             <Text style={{ marginTop: 20, fontSize: 20, fontFamily: 'Lato-Regular' }}>Please select from dropdown list or enter a full address that we can locate.</Text>
-//                         </>
-//                         :
-
-//                         <>
-//                             {
-//                                 searchResults.map((item, index) => {
-//                                     return (
-//                                         <View style={{ borderTopWidth: index == 0 ? 0 : 1, borderTopColor: '#b2b9ac', }} key={item.place_id}>
-//                                             <TouchableHighlight
-//                                                 underlayColor="#DDDDDD"
-//                                                 style={{ zIndex: 10, flexDirection: 'row', paddingVertical: 10, alignItems: 'center', backgroundColor: '#fff' }}
-//                                                 onPress={() => { setDestination(item.description); setDropoffAddressNotRecognized(false); pickupRef.current.blur(); }}
-//                                             >
-//                                                 <>
-//                                                     <FontAwesome6 name="location-dot" size={14} color="#999" />
-//                                                     <Text numberOfLines={2} style={{ padding: 6, fontSize: 16, flex: 1, color: '#000' }}>{item.description}</Text>
-//                                                 </>
-//                                             </TouchableHighlight>
-//                                         </View>
-//                                     );
-//                                 })
-//                             }
-//                         </>
-//                     }
-
-//                 </View>
-//             </View>
-
-//         </ScrollView>
-//     )
-// }
 
 const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType }) => {
 
@@ -754,7 +520,7 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType }
                 </View>
 
 
-                <View style={{ backgroundColor: '#e6e6e6', padding: 10, borderRadius: 20, marginTop: 0, }}>
+                <View style={{ backgroundColor: '#e6e6e6', padding: 0, borderRadius: 20, marginTop: 0, }}>
                     <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 14, marginTop: 0, }}>
 
                         <Text numberOfLines={1} style={{ fontSize: 15, fontFamily: 'PointSoftSemiBold' }}>Pickup</Text>
@@ -769,7 +535,7 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType }
 
             <View>
 
-                <TouchableOpacity onPress={() => setRideType(1)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 1 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row', borderWidth: rideType == 1 ? 2 : 0, borderColor: '#ffcf56' }}>
+                <TouchableOpacity onPress={() => setRideType(1)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 1 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row',  }}>
                     <View style={{ flexDirection: 'row' }}>
                         <Image style={{ height: 36, width: 70, }} source={require('../assets/cr-v.png')} />
                         <View style={{ marginLeft: 10 }}>
@@ -783,9 +549,9 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType }
                     <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 18, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>${fare['1']}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => setRideType(2)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 2 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row', borderWidth: rideType == 2 ? 2 : 0, borderColor: '#ffcf56' }}>
+                <TouchableOpacity onPress={() => setRideType(2)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 2 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row',  }}>
                     <View style={{ flexDirection: 'row' }}>
-                        <Image style={{ height: 36, width: 70, }} source={require('../assets/cr-v.png')} />
+                    <Image style={{ height: 40, width: 70, }} source={require('../assets/tesla.webp')} />
                         <View style={{ marginLeft: 10 }}>
                             <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 16, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>Premium</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -797,9 +563,9 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType }
                     <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 18, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>${fare['2']}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => setRideType(3)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 3 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row', borderWidth: rideType == 3 ? 2 : 0, borderColor: '#ffcf56' }}>
+                <TouchableOpacity onPress={() => setRideType(3)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 3 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row', }}>
                     <View style={{ flexDirection: 'row' }}>
-                        <Image style={{ height: 36, width: 70, }} source={require('../assets/cr-v.png')} />
+                    <Image style={{ height: 40, width: 76, marginHorizontal: -3 }} source={require('../assets/kia.png')} />
                         <View style={{ marginLeft: 10 }}>
                             <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 16, fontWeight: 500, color: rideType === 1 ? '#000' : '#504e49' }}>XL</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -811,13 +577,13 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType }
                     <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 18, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>${fare['3']}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => setRideType(4)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 4 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row', borderWidth: rideType == 4 ? 2 : 0, borderColor: '#ffcf56' }}>
+                <TouchableOpacity onPress={() => setRideType(4)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 4 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row',  }}>
                     <View style={{ flexDirection: 'row' }}>
-                        <Image style={{ height: 36, width: 70, }} source={require('../assets/cr-v.png')} />
+                    <Image style={{ height: 40, width: 90, marginHorizontal: -10 }} source={require('../assets/suburban.png')} />
                         <View style={{ marginLeft: 10 }}>
                             <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 16, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>Premium XL</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 16, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>5</Text>
+                                <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 16, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>6</Text>
                                 <Ionicons name="person" size={16} color="black" />
                             </View>
                         </View>

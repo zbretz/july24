@@ -25,6 +25,10 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
         ])
     }
 
+    useEffect(() => {
+        // comingSoonAlert()
+    }, [])
+
     return (
 
         <View style={{ backgroundColor: '#fff', height: '100%' }}>
@@ -39,12 +43,8 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                 </View>
 
                 <View style={{}}>
-                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: windowWidth * .078,  textAlign: 'center', marginBottom:-8 }} adjustsFontSizeToFit={true} numberOfLines={1}>Scheduled Rides</Text>
+                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: windowWidth * .078, textAlign: 'center', marginBottom: -8 }} adjustsFontSizeToFit={true} numberOfLines={1}>Scheduled Rides</Text>
                 </View>
-
-
-
-
 
             </View>
 
@@ -54,19 +54,18 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                 {!upcomingRide &&
                     <View style={{
                         flexDirection: 'row',
-                        // backgroundColor: '#9adfc2',
-                        margin: 20, marginBottom: -10, padding: 0, borderRadius: 30, borderColor: '#666', borderWidth: 0, justifyContent: 'center', alignItems: 'center',
+                        margin: 24, marginBottom: 0, padding: 0, borderRadius: 30, borderColor: '#666', borderWidth: 0, justifyContent: 'center', alignItems: 'center',
                     }}>
                         <Image style={{ height: '100%', width: '30%', marginHorizontal: 0, }} resizeMode='contain' source={require('../assets/car-schedule.png')} />
-                        <Text style={{ flexWrap: 'wrap', flex: 3, fontSize: 18, padding: 0, fontFamily: 'Aristotelica-Regular', }}>Park City drivers are dedicated to great service and punctual pickups.</Text>
+                        <Text style={{ flexWrap: 'wrap', flex: 3, fontSize: 16, padding: 0, fontFamily: 'LexendRegular', }}>Park City drivers are dedicated to great service and punctual pickups.</Text>
 
                     </View>
                 }
 
 
                 {masterState.user &&
-                    <TouchableOpacity onPress={() => navigation.navigate('RideHistory')} style={{ borderRadius: 40, padding:4, paddingHorizontal: 10, marginHorizontal:20, marginTop:10, alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffe5ea', justifyContent: 'space-around', alignSelf: 'flex-start', flexDirection:'row' }} >
-                        <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Aristotelica-Regular', marginBottom: -8, marginRight:10 }}>My Drivers</Text> 
+                    <TouchableOpacity onPress={() => navigation.navigate('RideHistory')} style={{ borderRadius: 40, padding: 4, paddingHorizontal: 10, marginHorizontal: 20, marginTop: 10, alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffe5ea', justifyContent: 'space-around', alignSelf: 'flex-start', flexDirection: 'row' }} >
+                        <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Aristotelica-Regular', marginBottom: -8, marginRight: 10 }}>My Drivers</Text>
                         <AntDesign name="rightcircle" size={17} color="#ff99ad" />
 
                     </TouchableOpacity>
@@ -78,20 +77,14 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                         <>
                             <View style={{ flexDirection: 'row', padding: 10, paddingHorizontal: 20, }}>
                                 <Text style={{ fontWeight: 600, fontSize: 26, marginBottom: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', marginBottom: 0 }}>Upcoming Ride</Text>
-                                {/* <TouchableOpacity onPress={() => navigation.navigate('FutureRides')} style={{ backgroundColor: '#f2f2f2', borderRadius: 40, padding: 10, flexDirection: 'row', }} >
-                                    <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Lexend-Regular', marginRight: 10 }}>Future Rides</Text>
-                                    <AntDesign name="rightcircle" size={17} color="#5a5a5a" />
-                                </TouchableOpacity> */}
                             </View>
 
                             <View style={{ paddingHorizontal: 20, width: '100%', marginBottom: 0, }}>
                                 <TouchableOpacity onPress={() => navigation.navigate('RideDetail', { rideId: upcomingRide._id })} style={{
                                     flexDirection: 'row',
                                     backgroundColor: '#e6e6e6',
-                                    // height: windowHeight * .22,
                                     borderRadius: 30,
                                 }}>
-                                    {/* <Image style={{ height: '100%', width: '30%', marginHorizontal: 10 }} resizeMode='contain' source={require('../assets/car-schedule.png')} /> */}
 
                                     <View style={{ padding: 10, flex: 1, borderTopRightRadius: 30, borderBottomRightRadius: 30, justifyContent: 'center' }}>
 
@@ -132,6 +125,22 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                         </>
                     }
 
+
+
+                    {!masterState.user &&
+
+                        <View style={{ backgroundColor: '#fff5f7', margin: 20, marginBottom:0, borderRadius: 20 }}>
+                            <TouchableOpacity onPress={() => navigation.navigate('Account')} style={{ borderRadius: 40, padding: 8, paddingHorizontal: 10, marginHorizontal: 20, marginTop: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffe5ea', justifyContent: 'space-around', alignSelf: 'flex-start', flexDirection: 'row' }} >
+                                <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'LexendMedium', marginRight: 10, fontWeight: '600' }}>Sign In</Text>
+                                <AntDesign name="rightcircle" size={17} color="#ff99ad" />
+                            </TouchableOpacity>
+
+                            <Text style={{ fontSize: 16, padding: 20, paddingTop:10, fontFamily: 'LexendRegular', }}>In order to request a ride, you'll need to sign in. But you can check out our rates using the options below.</Text>
+
+                        </View>
+                    }
+
+
                     <Text style={{ fontWeight: 600, fontSize: 26, marginTop: 0, marginBottom: -10, padding: 20, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', }}>Book Ride</Text>
 
                     <View style={{ flexDirection: 'row', margin: 20 }}>
@@ -151,59 +160,6 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                             </View>
                         </TouchableOpacity>
                     </View>
-
-                    {/* <View style={{ paddingHorizontal: 20, width: '100%', }}>
-                        <TouchableOpacity onPress={() => navigation.navigate('Airport')} style={{
-                            marginVertical: 10,
-                            flexDirection: 'row',
-                            backgroundColor: '#fff', height: 130, borderRadius: 30,
-                            shadowColor: '#000',
-                            shadowOpacity: 0.38,
-                            shadowRadius: 2,
-                            shadowOffset: {
-                                width: 1,
-                                height: 1,
-                            },
-                        }}>
-                            <Image style={{ height: '100%', width: '50%', borderRadius: 30, }} resizeMode='contain' source={require('../assets/passport3d.png')} />
-                            <View style={{ padding: 20 }}>
-                                <Text style={{ marginVertical: 0, fontSize: 23, fontWeight: '500' }}>Airport</Text>
-                                <Text style={{ marginVertical: 0, fontSize: 16 }}>Pickups &</Text>
-                                <Text style={{ marginVertical: 0, fontSize: 16 }}>Dropoffs</Text>
-                            </View>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate('OtherAreas')}
-                            style={{
-                                marginHorizontal: 0,
-                                flexDirection: 'row',
-                                backgroundColor: '#fff', height: 130, borderRadius: 20,
-                                shadowColor: '#000',
-                                shadowOpacity: 0.38,
-                                shadowRadius: 6,
-                                shadowOffset: {
-                                    width: 0,
-                                    height: 4,
-                                },
-                            }}>
-                            <View style={{ height: '100%', width: '50%', overflow: 'hidden', borderRadius: 20, }}>
-                                <Image style={{ left: -25, width: '140%', borderRadius: 20, backgroundColor: 'blue', flex: 1, }} resizeMode='cover' source={require('../assets/10.png')} />
-                            </View>
-                            <View style={{ padding: 20 }}>
-                                <Text style={{ marginVertical: 0, fontSize: 23, fontWeight: '500' }}>Other Areas</Text>
-                                <Text style={{ marginVertical: 0, fontSize: 16 }}>Main Street</Text>
-                                <Text style={{ marginVertical: 0, fontSize: 16 }}>SLC</Text>
-                                <Text style={{ marginVertical: 0, fontSize: 16 }}>Heber</Text>
-                                <Text style={{ marginVertical: 0, fontSize: 16 }}>Midway and more</Text>
-                            </View>
-                        </TouchableOpacity>
-
-                    </View> */}
-
-
-
-
 
 
 

@@ -255,7 +255,7 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
             }
 
 
-            <View style={{ flex: 1, backgroundColor: '#fff', }}>
+            <View style={{ flex: 1, }}>
 
                 <View style={{ backgroundColor: '#fff', padding: 32, }}>
                     <TouchableOpacity onPress={() => { carouselIndex === 1 ? prevPage() : navigation.goBack() }}><Ionicons name="chevron-back-outline" size={24} color="black" /></TouchableOpacity>
@@ -266,7 +266,7 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
                 </View>
 
 
-                <View style={{ marginTop: -10, paddingBottom: 76, backgroundColor: '#fff', flex: 1, }}>
+                <View style={{ marginTop: -10, paddingBottom: 6, backgroundColor: '#fff', flex: 1, }}>
 
                     <Carousel
                         ref={carouselRef}
@@ -290,7 +290,7 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
                 {typeSelected &&
                     <TouchableOpacity onPress={() => {
                         carouselIndex == 1 ? requestSchedule() : nextPage()
-                    }} style={{ backgroundColor: '#ffcf56', height: 56, width: '85%', alignSelf: 'center', position: 'absolute', bottom: 20, borderRadius: 30, justifyContent: 'center', alignItems: 'center' }} >
+                    }} style={{ backgroundColor: '#ffcf56', height: 56, width: '85%', alignSelf: 'center', zIndex: 1, position: 'absolute', bottom: 20, borderRadius: 30, justifyContent: 'center', alignItems: 'center' }} >
                         <Text style={{ color: '#000', fontSize: 24, fontFamily: 'Aristotelica-Regular', marginBottom: -8 }}>{carouselIndex == 1 ? 'Book Ride' : 'Next'}</Text>
                     </TouchableOpacity>
                 }
@@ -392,7 +392,7 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
 
 
     return (
-        <>
+        <View style={{ flex: 1, }}>
 
             {!inputFocused &&
 
@@ -569,7 +569,7 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
                                 <View style={{ borderRadius: 20, backgroundColor: '#f2f2f2', }}>
                                     <DateTimePicker
                                         timeZoneName={'America/Denver'}
-                                        style={{ marginTop: -10, backgroundColor: '#f2f2f2', transform: [{ scale: .84 }], alignSelf: 'center', height: windowHeight < 800 ? 150 : 180 }}
+                                        style={{ margin: -10, backgroundColor: '#f2f2f2', transform: [{ scale: .84 }], alignSelf: 'center' }}
                                         testID="dateTimePicker"
                                         value={date}
                                         mode={'datetime'}
@@ -636,11 +636,13 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
 
 
             {addressError &&
-                <View style={{ position: 'absolute', bottom: 10, backgroundColor: '#55c1ff', borderRadius: 20, marginHorizontal: 20, alignSelf: 'center', padding: 20 }}>
-                    <Text style={{ fontSize: 20, fontFamily: 'Aristotelica-Regular', color: '#fff', }}>Address not recognized. Please re-input your missing location.</Text>
-                </View>
+                // <View style={{ backgroundColor: 'rgba(0,0,0,.4)', flex: 1, height: '100%', width: '100%', position: 'absolute', zIndex: 9 }}>
+                    <View style={{ position: 'absolute', bottom: 80, zIndex: 3, backgroundColor: '#000', borderRadius: 20, marginHorizontal: 20, alignSelf: 'center', padding: 20, }}>
+                        <Text style={{ fontSize: 20, fontFamily: 'Aristotelica-Regular', color: '#fff', }}>Address not recognized. Please re-input your missing location.</Text>
+                    </View>
+                // </View>
             }
-        </>
+        </View>
     )
 }
 
@@ -679,7 +681,7 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType, 
 
                 <TouchableOpacity onPress={() => setRideType(1)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 1 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row' }}>
                     <View style={{ flexDirection: 'row' }}>
-                        <Image style={{ height: 36, width: 70, }} source={require('../assets/cr-v.png')} />
+                        <Image style={{ height: 40, width: 70, }} source={require('../assets/cr-v.png')} />
                         <View style={{ marginLeft: 10 }}>
                             <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 16, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>Standard</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -693,7 +695,7 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType, 
 
                 <TouchableOpacity onPress={() => setRideType(2)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 2 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row' }}>
                     <View style={{ flexDirection: 'row' }}>
-                        <Image style={{ height: 36, width: 70, }} source={require('../assets/cr-v.png')} />
+                        <Image style={{ height: 40, width: 70, }} source={require('../assets/tesla.webp')} />
                         <View style={{ marginLeft: 10 }}>
                             <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 16, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>Premium</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -707,7 +709,7 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType, 
 
                 <TouchableOpacity onPress={() => setRideType(3)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 3 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row' }}>
                     <View style={{ flexDirection: 'row' }}>
-                        <Image style={{ height: 36, width: 70, }} source={require('../assets/cr-v.png')} />
+                        <Image style={{ height: 40, width: 76, marginHorizontal: -3 }} source={require('../assets/kia.png')} />
                         <View style={{ marginLeft: 10 }}>
                             <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 16, fontWeight: 500, color: rideType === 1 ? '#000' : '#504e49' }}>XL</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -721,11 +723,11 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType, 
 
                 <TouchableOpacity onPress={() => setRideType(4)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 4 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row' }}>
                     <View style={{ flexDirection: 'row' }}>
-                        <Image style={{ height: 36, width: 70, }} source={require('../assets/cr-v.png')} />
+                        <Image style={{ height: 40, width: 90, marginHorizontal: -10 }} source={require('../assets/suburban.png')} />
                         <View style={{ marginLeft: 10 }}>
                             <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 16, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>Premium XL</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 16, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>5</Text>
+                                <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 16, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>6</Text>
                                 <Ionicons name="person" size={16} color="black" />
                             </View>
                         </View>
