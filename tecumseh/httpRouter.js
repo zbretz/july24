@@ -218,21 +218,25 @@ router.get('/determineFare', async (req, res) => {
 
 router.post('/payment-sheet', async (req, res) => {
 
-    let charge = req.query.charge
-    // console.log('ride: ', JSON.parse(req.query.ride))
-    let rideDetail = JSON.parse(req.query.ride)
 
-    // let rideDetail = JSON.parse(req.query.ride)
-    console.log('active ride: ', rideDetail)
+
+    const { charge, rideDetail } = req.body;
+    console.log('charge: ', charge)
+    console.log('query string charge: ', req.query.charge)
+    console.log('query string ride: ', req.query.ride)
+
+
+    //  rideDetail = JSON.parse(req.query.ride)
+     console.log('ride: ', rideDetail)
+
 
     let ride_id = rideDetail._id
 
-    // let stripe_customer_id = 'cus_PaPI1VLGHW6olo'//rideDetail.stripe_customer_id
-    let stripe_customer_id = rideDetail.user.stripe_customer_id // 'cus_PaVZC6DadyHv7A'//
+    let stripe_customer_id =  rideDetail.user.stripe_customer_id //  'cus_SCNcJnuQuHOzuY'//
+
     let customer
 
     if (!stripe_customer_id) {
-        // new ObjectId(String(rideRequest._id))
         const user = await db__.collection('users').findOne({ _id: new ObjectId(String(rideDetail.user._id)) });
 
         console.log('stripe customer id user: ', user)
@@ -260,8 +264,6 @@ router.post('/payment-sheet', async (req, res) => {
         console.log('stripe customer exists', stripe_customer_id)
     }
 
-    // 'cus_PaPI1VLGHW6olo'
-
     console.log('charge: ', charge)
     console.log('ride_id: ', ride_id)
 
@@ -271,7 +273,7 @@ router.post('/payment-sheet', async (req, res) => {
     );
 
     let initIntent = {
-        amount: req.query.charge * 100,
+        amount: charge * 100,
         currency: 'usd',
         customer: stripe_customer_id,
         payment_method_types: ['card'],

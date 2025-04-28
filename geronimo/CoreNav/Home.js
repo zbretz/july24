@@ -259,21 +259,20 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                         <View style={{ margin: 10, marginVertical: 20 }}>
                             <Text style={{ fontSize: 24, marginBottom: 20, fontWeight: 500, textAlign: 'center', fontFamily: 'LexendRegular' }}>What's New</Text>
 
-                            <View style={{ flexDirection: 'row', }}>
 
 
-                                <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{ backgroundColor: '#fff', flex: 3, height: windowHeight * .22, borderRadius: 30, marginRight: 10, justifyContent: 'center' }}>
-                                    <View style={{ backgroundColor: '#fff', padding: 10, borderRadius: 10, }}>
-                                        <Text style={{ fontSize: 18, fontFamily: 'LexendRegular' }}>Connect with local babysitters</Text>
+
+                            {/* <View style={{ width:boxDimensions, backgroundColor:'#ecf6f8',borderRadius: 30, padding:10 }}>
+
+
+                                        <Text style={{ fontSize: 18, fontFamily: 'LexendRegular' }}>Local Babysitters</Text>
                                         <Text style={{ fontSize: 14, marginTop: 4, fontFamily: 'LexendLight' }}>Safe, simple, and reliable.</Text>
-                                    </View>
-                                </TouchableOpacity>
+                                 
 
-                                <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{ backgroundColor: '#f1f1f1', flex: 3, height: windowHeight * .22, borderRadius: 30, marginRight: 10, alignItems: 'center', paddingVertical: 0 }}>
-                                    {/* <Image style={{ flex: 1, width: '100%' }} resizeMode='contain' source={require('../assets/stroller.png')} /> */}
+                                <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{ backgroundColor: '#f1f1f1', flex: 3, height: boxDimensions/2.5, width:boxDimensions/2.5, borderRadius: 20, marginRight: 10, alignItems: 'center', paddingVertical: 0 }}>
 
                                     <Video
-                                        style={{ height: '100%', width: '100%', zIndex: -1, borderRadius: 30, }} // opacity: .27, 
+                                        style={{ height: '100%', width: '100%', zIndex: -1, borderRadius: 20, }} // opacity: .27, 
                                         source={require('../assets/cover_tall.mp4')}
                                         resizeMode={Platform.OS === 'ios' ? ResizeMode.COVER : "stretch"}
                                         isLooping
@@ -282,25 +281,53 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                                         rate={0.9}
                                     />
 
-                                    <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderRadius: 10, alignSelf: 'center', justifyContent: 'center', position: 'absolute', bottom: 10 }}>
-                                        <Text style={{ fontFamily: 'LexendRegular', fontSize: 18 }}>Childcare</Text>
-                                    </View>
                                 </TouchableOpacity>
-                            </View>
+
+                            </View> */}
 
 
+
+
+                        <View style={{ flexDirection: 'row', backgroundColor:'#ecf6f8', borderRadius:30 }}>
+
+
+                            <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{  flex: 3, height: windowHeight * .22, borderRadius: 30, marginRight: 10, justifyContent: 'center' }}>
+                                <View style={{  padding: 10, borderRadius: 10, }}>
+                                    <Text style={{ fontSize: 18, fontFamily: 'LexendRegular' }}>Connect with local babysitters</Text>
+                                    <Text style={{ fontSize: 14, marginTop: 4, fontFamily: 'LexendLight' }}>Safe, simple, and reliable.</Text>
+                                </View>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{  flex: 3, height: windowHeight * .22, borderRadius: 30, marginRight: 0, alignItems: 'center', padding:10 }}>
+                                {/* <Image style={{ flex: 1, width: '100%' }} resizeMode='contain' source={require('../assets/stroller.png')} /> */}
+
+                                <Video
+                                    style={{ height: '100%', width: '100%', zIndex: -1, borderRadius: 30, }} // opacity: .27, 
+                                    source={require('../assets/cover_tall.mp4')}
+                                    resizeMode={Platform.OS === 'ios' ? ResizeMode.COVER : "stretch"}
+                                    isLooping
+                                    shouldPlay
+                                    isMuted
+                                    rate={0.9}
+                                />
+
+                              
+                            </TouchableOpacity>
                         </View>
 
 
-                        <View style={{ margin: 10, marginTop: 30 }}>
-
-                            <View style={{ flexDirection: 'row', }}>
+                    </View>
 
 
-                                <TouchableOpacity onPress={() => navigation.navigate('ScheduleRide')} style={{ backgroundColor: '#f1f1f1', flex: 3,padding:0, borderRadius: 30,  marginRight: 10, alignItems: 'center', justifyContent:'center'}}>
-                                    <Image style={{  borderRadius: 20, height: windowHeight * .2-20, width: windowHeight * .2 -20, }} resizeMode='cover' source={require('../assets/drivers_coming.jpeg')} />
+                    <View style={{ margin: 10, marginTop: 30 }}>
 
-                                    {/* <Video
+                        <View style={{ flexDirection: 'row', }}>
+
+
+                            <TouchableOpacity onPress={() => navigation.navigate('ScheduleRide')} style={{ backgroundColor: '#f1f1f1', flex: 3, padding: 0, borderRadius: 30, marginRight: 10, alignItems: 'center', justifyContent: 'center' }}>
+                                <Image style={{ borderRadius: 20, height: windowHeight * .2 - 20, width: windowHeight * .2 - 20, }} resizeMode='cover' source={require('../assets/drivers_coming.jpeg')} />
+
+                                {/* <Video
                                         style={{ height: '100%', width: '100%', zIndex: -1, borderRadius: 30, }} // opacity: .27, 
                                         source={require('../assets/cover_tall.mp4')}
                                         resizeMode={Platform.OS === 'ios' ? ResizeMode.COVER : "stretch"}
@@ -310,23 +337,23 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                                         rate={0.9}
                                     /> */}
 
-                                  
-                                </TouchableOpacity>
 
-                                <TouchableOpacity onPress={() => navigation.navigate('ScheduleRide')} style={{ backgroundColor: '#fff', flex: 3, height: windowHeight * .22, borderRadius: 30, marginRight: 10, justifyContent: 'center' }}>
-                                    <View style={{ backgroundColor: '#fff', padding: 10, borderRadius: 10, }}>
-                                        <Text style={{ fontSize: 18, fontFamily: 'LexendRegular' }}>Favorite Drivers</Text>
-                                        <Text style={{ fontSize: 14, marginTop: 4, fontFamily: 'LexendLight' }}>Indicate your favorites and we'll try our best to match you again.</Text>
-                                    </View>
-                                </TouchableOpacity>
+                            </TouchableOpacity>
 
-
-                            </View>
+                            <TouchableOpacity onPress={() => navigation.navigate('ScheduleRide')} style={{ backgroundColor: '#fff', flex: 3, height: windowHeight * .22, borderRadius: 30, marginRight: 10, justifyContent: 'center' }}>
+                                <View style={{ backgroundColor: '#fff', padding: 10, borderRadius: 10, }}>
+                                    <Text style={{ fontSize: 18, fontFamily: 'LexendRegular' }}>Favorite Drivers</Text>
+                                    <Text style={{ fontSize: 14, marginTop: 4, fontFamily: 'LexendLight' }}>Indicate your favorites and we'll try our best to match you again.</Text>
+                                </View>
+                            </TouchableOpacity>
 
 
                         </View>
 
-                        {/* <View style={{ margin: 10, }}>
+
+                    </View>
+
+                    {/* <View style={{ margin: 10, }}>
                             <Text style={{ fontSize: 24, marginVertical: 8, fontWeight: 500, textAlign: 'center' }}>Coming Soon</Text>
                             <Text style={{ fontSize: 20, marginBottom: 10, fontWeight: 500, fontFamily: 'LexendRegular' }}>Ski Services</Text>
 
@@ -349,13 +376,13 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
 
 
-                    </View>
+                </View>
 
-                    <View style={{ height: 100 }} />
+                <View style={{ height: 100 }} />
 
-                </SafeAreaView >
-            </ScrollView>
-        </View>
+            </SafeAreaView >
+        </ScrollView>
+        </View >
 
     );
 }

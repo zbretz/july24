@@ -2,30 +2,30 @@ import { useState, useEffect } from 'react';
 import { Platform, Text, View, Dimensions, TouchableOpacity, ScrollView, Image, Alert } from 'react-native';
 import { socket } from '../CoreNav/socket';
 import { StripeProvider, useStripe } from '@stripe/stripe-react-native';
-import {url} from '../url_toggle'
+import { url } from '../url_toggle'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 export default function ScheduleRideStripeConfig(rideDetail, setLoadingPayForm, masterState, setMasterState, navigation) {
 
-    console.log('stripe config ride detail', rideDetail)
-
     let charge = rideDetail.fare + rideDetail.tipAmount
     charge = charge.toFixed(2)
 
     let { tipAmount } = rideDetail
 
-    console.log('scheduled rides checkout charge: ', charge)
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
     const fetchPaymentSheetParams = async () => {
-        // console.log('payment sheet params -- ride detail', rideDetail)
 
-        const response = await fetch(`${url}/payment-sheet?charge=${charge}&ride=${JSON.stringify(rideDetail)}`, {
+        const response = await fetch(`${url}/payment-sheet`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify({
+                charge,
+                rideDetail,
+            }),
         });
 
         const { paymentIntent, ephemeralKey, customer } = await response.json();

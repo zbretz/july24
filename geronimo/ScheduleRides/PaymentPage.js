@@ -25,7 +25,7 @@ export default PaymentPage = ({ masterState, setMasterState, navigation, route }
     const [loadingPayForm, setLoadingPayForm] = useState(false)
     const [keyboardFocused, setKeyboardFocused] = useState(false)
 
-    rideDetail = { ...rideDetail, tipAmount }
+    rideDetail = { tipAmount, fare: rideDetail.fare, _id: rideDetail._id, user: rideDetail.user }
 
     let openPaymentSheet = ScheduleRideStripeConfig(rideDetail, setLoadingPayForm, masterState, setMasterState, navigation)
 
@@ -125,16 +125,16 @@ export default PaymentPage = ({ masterState, setMasterState, navigation, route }
                         </View>
 
 
-                        
+
                     </View>
                 </View>
 
-                    <TouchableOpacity onPress={() => navigation.navigate('Account', { screen: 'ReceiptScreen' })}
-                        style={{ borderRadius: 30, padding: 8, backgroundColor: '#fff', padding:20,paddingHorizontal:28, borderRadius:80,alignItems: 'center', justifyContent: 'center', position:'absolute', bottom:40, right:40  }} >
-                             <Ionicons name="receipt-outline" size={38} color="black" />
-                             <Text style={{ color: '#000', fontSize: 14, fontFamily: 'Aristotelica-Regular', marginBottom: -4, textAlign: 'center' }}>Receipt</Text>
-                             <Text style={{ color: '#000', fontSize: 14, fontFamily: 'Aristotelica-Regular', marginBottom: -4, textAlign: 'center' }}>Options</Text>
-                    </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Account', { screen: 'ReceiptScreen' })}
+                    style={{ borderRadius: 30, padding: 8, backgroundColor: '#fff', padding: 20, paddingHorizontal: 28, borderRadius: 80, alignItems: 'center', justifyContent: 'center', position: 'absolute', bottom: 40, right: 40 }} >
+                    <Ionicons name="receipt-outline" size={38} color="black" />
+                    <Text style={{ color: '#000', fontSize: 14, fontFamily: 'Aristotelica-Regular', marginBottom: -4, textAlign: 'center' }}>Receipt</Text>
+                    <Text style={{ color: '#000', fontSize: 14, fontFamily: 'Aristotelica-Regular', marginBottom: -4, textAlign: 'center' }}>Options</Text>
+                </TouchableOpacity>
 
 
             </SafeAreaView>
