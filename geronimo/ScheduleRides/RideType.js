@@ -69,6 +69,18 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                     </TouchableOpacity>
                 } */}
 
+                <View style={{flexDirection:'row'}}>
+                    <TouchableOpacity onPress={() => navigation.navigate('FutureRides')} style={{ backgroundColor: '#f2f2f2', marginTop: 10, marginHorizontal: 20, borderRadius: 40, padding: 10, justifyContent: 'flex-start', alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', }} >
+                        <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Lexend-Regular', marginRight: 10 }}>Future Rides</Text>
+                        <AntDesign name="rightcircle" size={17} color="#5a5a5a" />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => navigation.navigate('RideHistory')} style={{ backgroundColor: '#f2f2f2', marginTop: 10, marginHorizontal: 20, borderRadius: 40, padding: 10, justifyContent: 'flex-start', alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', }} >
+                        <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Lexend-Regular', marginRight: 10 }}>Ride History</Text>
+                        <AntDesign name="rightcircle" size={17} color="#5a5a5a" />
+                    </TouchableOpacity>
+                </View>
+
                 <View style={{ zIndex: 100, width: '100%', }}>
                     {upcomingRide &&
                         <>
@@ -114,10 +126,7 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                                 </TouchableOpacity>
                             </View>
 
-                            <TouchableOpacity onPress={() => navigation.navigate('FutureRides')} style={{ backgroundColor: '#f2f2f2', marginTop: 10, marginHorizontal: 20, borderRadius: 40, padding: 10, justifyContent: 'flex-start', alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', }} >
-                                <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Lexend-Regular', marginRight: 10 }}>Future Rides</Text>
-                                <AntDesign name="rightcircle" size={17} color="#5a5a5a" />
-                            </TouchableOpacity>
+
 
                         </>
                     }
@@ -126,13 +135,13 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
 
                     {!masterState.user &&
 
-                        <View style={{ backgroundColor: '#fff5f7', margin: 20, marginBottom:0, borderRadius: 20 }}>
+                        <View style={{ backgroundColor: '#fff5f7', margin: 20, marginBottom: 0, borderRadius: 20 }}>
                             <TouchableOpacity onPress={() => navigation.navigate('Account')} style={{ borderRadius: 40, padding: 8, paddingHorizontal: 10, marginHorizontal: 20, marginTop: 20, alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffe5ea', justifyContent: 'space-around', alignSelf: 'flex-start', flexDirection: 'row' }} >
                                 <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'LexendMedium', marginRight: 10, fontWeight: '600' }}>Sign In</Text>
                                 <AntDesign name="rightcircle" size={17} color="#ff99ad" />
                             </TouchableOpacity>
 
-                            <Text style={{ fontSize: 16, padding: 20, paddingTop:10, fontFamily: 'LexendRegular', }}>In order to request a ride, you'll need to sign in. But you can check out our rates using the options below.</Text>
+                            <Text style={{ fontSize: 16, padding: 20, paddingTop: 10, fontFamily: 'LexendRegular', }}>In order to request a ride, you'll need to sign in. But you can check out our rates using the options below.</Text>
 
                         </View>
                     }

@@ -7,10 +7,17 @@ import { socket } from '../CoreNav/socket';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export default RideDetail = ({ route, isConnected, masterState, navigation, }) => {
+export default RideDetail = ({ route, isConnected, masterState, navigation, rideHistory }) => {
 
-    const { rideId } = route.params;
-    let rideDetail = masterState.user.activeRides.length ? masterState.user.activeRides.find(ride => ride._id == rideId) : null
+    const { rideId, type } = route.params;
+    let rideDetail;
+
+    if (type == "history") {
+        rideDetail = rideHistory.find(ride => ride._id == rideId)
+    } else {
+        rideDetail = masterState.user.activeRides.length ? masterState.user.activeRides.find(ride => ride._id == rideId) : null
+    }
+
     const chatLog = rideDetail?.chatLog
 
 
@@ -90,7 +97,7 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, }) =
                             <Text numberOfLines={1} adjustsFontSizeToFit={true} style={{ fontSize: 36, fontFamily: 'Aristotelica-Regular', textAlign: 'center' }}>Status: Driver En Route</Text>
                         </View>
                         :
-                        <View style={{marginBottom:10}}>
+                        <View style={{ marginBottom: 10 }}>
                             <Text style={{ marginVertical: 0, fontSize: 26, fontFamily: 'PointSoftSemiBold', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "eee',' MMMM d")}</Text>
                             <Text style={{ marginVertical: 0, fontSize: 26, fontFamily: 'PointSoftLight', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "h':'mm aa")}</Text>
                         </View>
@@ -123,12 +130,12 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, }) =
 
 
 
-                    <View style={{ marginTop: 10,}}>
+                    <View style={{ marginTop: 10, }}>
 
 
 
 
-                        {rideDetail.driver ?
+                        {rideDetail.driver && type !== "history"?
                             <>
                                 {chatLog.length ?
                                     <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId: rideDetail._id }) }} style={{ backgroundColor: '#ffcf56', borderRadius: 20, borderColor: '#c4a73b', padding: 10, paddingVertical: 20, }} >

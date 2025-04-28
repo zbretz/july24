@@ -7,6 +7,7 @@ import RideType from './RideType';
 import ScheduleOtherAreas from './ScheduleOtherAreas';
 import Chat from './Chat';
 import FutureRides from './FutureRides'
+import RideHistory from './RideHistory'
 import PreferredDrivers from './PreferredDrivers'
 import PaymentPage from './PaymentPage';
 import RideDetail from './RideDetail';
@@ -18,6 +19,7 @@ const Stack = createStackNavigator();
 export default ScheduleRide = ({ isConnected, masterState, setMasterState, chatLog, setChatLog }) => {
 
     const [rideDetail, setRideDetail] = useState(null)
+    const [rideHistory, setRideHistory] = useState(null)
 
     return (
         <Stack.Navigator
@@ -35,13 +37,16 @@ export default ScheduleRide = ({ isConnected, masterState, setMasterState, chatL
                 {props => <ScheduleOtherAreas {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} />}
             </Stack.Screen>
             <Stack.Screen name="RideDetail" options={{ presentation: "modal" }}>
-                {props => <RideDetail {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} />}
+                {props => <RideDetail {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} rideDetail={rideDetail} rideHistory={rideHistory} />}
             </Stack.Screen>
             <Stack.Screen name="PaymentPage" options={{ presentation: "modal" }}>
                 {props => <PaymentPage {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} />}
             </Stack.Screen>
             <Stack.Screen name="FutureRides" options={{ presentation: "modal" }}>
                 {props => <FutureRides {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} rideDetail={rideDetail} setRideDetail={setRideDetail} />}
+            </Stack.Screen>
+            <Stack.Screen name="RideHistory" options={{ presentation: "modal" }}>
+                {props => <RideHistory {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} rideHistory={rideHistory} setRideHistory={setRideHistory} />}
             </Stack.Screen>
             <Stack.Screen name="PreferredDrivers" options={{ presentation: "modal" }}>
                 {props => <PreferredDrivers {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} rideDetail={rideDetail} setRideDetail={setRideDetail} />}

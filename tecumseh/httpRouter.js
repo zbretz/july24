@@ -227,12 +227,12 @@ router.post('/payment-sheet', async (req, res) => {
 
 
     //  rideDetail = JSON.parse(req.query.ride)
-     console.log('ride: ', rideDetail)
+    console.log('ride: ', rideDetail)
 
 
     let ride_id = rideDetail._id
 
-    let stripe_customer_id =  rideDetail.user.stripe_customer_id //  'cus_SCNcJnuQuHOzuY'//
+    let stripe_customer_id = rideDetail.user.stripe_customer_id //  'cus_SCNcJnuQuHOzuY'//
 
     let customer
 
@@ -381,7 +381,7 @@ router.get('/rideHistory', async (req, res) => {
     try {
         let rideHistory = await db__.collection('rides').find({ "user._id": userId, rideCompleted: true }).toArray()
         console.log('rideHistory: ', rideHistory)
-        res.status(200).send(rideHistory);
+        res.status(200).send(rideHistory)
     } catch (e) {
         console.log('ride history error: ', e)
     }

@@ -32,7 +32,7 @@ export default FutureRides = ({ navigation, masterState, setMasterState, rideDet
                         console.log('active ride list: ', ride)
                         return (
 
-                            <TouchableOpacity key={idx} onPress={() => { navigation.navigate('RideDetail', { rideId: ride._id }) }} style={{ backgroundColor:'#e6e6e6', borderRadius: 20, padding: 30, marginBottom:10 }}>
+                            <TouchableOpacity key={idx} onPress={() => { navigation.navigate('RideDetail', { rideId: ride._id, type:'future' }) }} style={{ backgroundColor:'#e6e6e6', borderRadius: 20, padding: 30, marginBottom:10 }}>
                                 <Text style={{ fontWeight: '600', fontSize: 16,fontFamily: 'PointSoftSemiBold' }}>{formatInTimeZone(ride.pickupDateTime, 'America/Denver', "eee',' MMMM do h':'mm aa")}</Text>
                                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
                                     <View style={{ marginRight: -4, marginTop: -3 }}>
