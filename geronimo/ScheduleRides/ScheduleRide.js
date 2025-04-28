@@ -7,7 +7,7 @@ import RideType from './RideType';
 import ScheduleOtherAreas from './ScheduleOtherAreas';
 import Chat from './Chat';
 import FutureRides from './FutureRides'
-import RideHistory from './RideHistory'
+import PreferredDrivers from './PreferredDrivers'
 import PaymentPage from './PaymentPage';
 import RideDetail from './RideDetail';
 import ScheduleAirport from './ScheduleAirport';
@@ -43,8 +43,8 @@ export default ScheduleRide = ({ isConnected, masterState, setMasterState, chatL
             <Stack.Screen name="FutureRides" options={{ presentation: "modal" }}>
                 {props => <FutureRides {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} rideDetail={rideDetail} setRideDetail={setRideDetail} />}
             </Stack.Screen>
-            <Stack.Screen name="RideHistory" options={{ presentation: "modal" }}>
-                {props => <RideHistory {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} rideDetail={rideDetail} setRideDetail={setRideDetail} />}
+            <Stack.Screen name="PreferredDrivers" options={{ presentation: "modal" }}>
+                {props => <PreferredDrivers {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} rideDetail={rideDetail} setRideDetail={setRideDetail} />}
             </Stack.Screen>
             <Stack.Screen name="Chat" options={{ presentation: "modal" }}>
                 {props => <Chat {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} chatLog={chatLog} setChatLog={setChatLog} />}

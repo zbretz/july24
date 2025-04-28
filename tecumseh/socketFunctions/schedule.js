@@ -85,7 +85,6 @@ requestScheduledRide = async (io, rideRequest, callback) => {
     callback(ride.insertedId)
     // callback() for testing
     notifyAllDrivers('Scheduled', rideRequest.pickupAddress, rideRequest.dropoffAddress, new Date(rideRequest.pickupDateTime), rideRequest.preferredDrivers)
-    // console.log('Scheduled ride requested:', rideRequest);
     io.to('drivers').emit('request_scheduled_ride', rideRequest);
 };
 

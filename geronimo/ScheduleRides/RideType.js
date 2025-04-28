@@ -62,15 +62,12 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                     </View>
                 }
 
-
-                {masterState.user &&
-                    <TouchableOpacity onPress={() => navigation.navigate('RideHistory')} style={{ borderRadius: 40, padding: 4, paddingHorizontal: 10, marginHorizontal: 20, marginTop: 10, alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffe5ea', justifyContent: 'space-around', alignSelf: 'flex-start', flexDirection: 'row' }} >
+                {/* {masterState.user &&
+                    <TouchableOpacity onPress={() => navigation.navigate('PreferredDrivers')} style={{ borderRadius: 40, padding: 4, paddingHorizontal: 10, marginHorizontal: 20, marginTop: 10, alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffe5ea', justifyContent: 'space-around', alignSelf: 'flex-start', flexDirection: 'row' }} >
                         <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Aristotelica-Regular', marginBottom: -8, marginRight: 10 }}>My Drivers</Text>
                         <AntDesign name="rightcircle" size={17} color="#ff99ad" />
-
                     </TouchableOpacity>
-                }
-
+                } */}
 
                 <View style={{ zIndex: 100, width: '100%', }}>
                     {upcomingRide &&

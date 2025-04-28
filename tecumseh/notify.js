@@ -70,9 +70,10 @@ const notifyDriver = async ({ driverid, text, type }) => {
 
 const notifyAllDrivers = async (type, pickup, dropoff, date, preferredDrivers) => {
 
-    let drivers = preferredDrivers.length ? preferredDrivers : await db__.collection('drivers').find({ driverIsAuthorized: true }).toArray()
+    // let drivers = preferredDrivers.length ? preferredDrivers : await db__.collection('drivers').find({ driverIsAuthorized: true }).toArray()
+    // console.log('preferred drivers?: ', preferredDrivers)
 
-    console.log('preferred drivers?: ', preferredDrivers)
+    let drivers = await db__.collection('drivers').find({ driverIsAuthorized: true }).toArray()
 
     drivers.forEach(async (driver) => {
 

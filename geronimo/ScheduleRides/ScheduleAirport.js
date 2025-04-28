@@ -43,7 +43,7 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
     const [flightNumber, setFlightNumber] = useState('')
     const [typeSelected, setTypeSelected] = useState(false)
 
-    preferredDriversEnabled = user?.preferredDrivers?.length
+    preferredDriversEnabled = false//user?.preferredDrivers?.length
 
     const errorTimeout = () => {
         setAddressError(true)
@@ -100,7 +100,7 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
         datetimeOfRequest: Date.now(),
         user: user ? { _id: user._id, firstName: user.firstName, lastName: user.lastName, phone: user.phone, stripe_customer_id: user.stripe_customer_id, email: user.email, autoReceipts: user.autoReceipts } : null,
         chatLog: [],
-        preferredDrivers: user?.preferredDrivers
+        // preferredDrivers: user?.preferredDrivers
     }
 
 
@@ -637,9 +637,9 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
 
             {addressError &&
                 // <View style={{ backgroundColor: 'rgba(0,0,0,.4)', flex: 1, height: '100%', width: '100%', position: 'absolute', zIndex: 9 }}>
-                    <View style={{ position: 'absolute', bottom: 80, zIndex: 3, backgroundColor: '#000', borderRadius: 20, marginHorizontal: 20, alignSelf: 'center', padding: 20, }}>
-                        <Text style={{ fontSize: 20, fontFamily: 'Aristotelica-Regular', color: '#fff', }}>Address not recognized. Please re-input your missing location.</Text>
-                    </View>
+                <View style={{ position: 'absolute', bottom: 80, zIndex: 3, backgroundColor: '#000', borderRadius: 20, marginHorizontal: 20, alignSelf: 'center', padding: 20, }}>
+                    <Text style={{ fontSize: 20, fontFamily: 'Aristotelica-Regular', color: '#fff', }}>Address not recognized. Please re-input your missing location.</Text>
+                </View>
                 // </View>
             }
         </View>
@@ -738,7 +738,7 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType, 
             </View>
 
 
-            {preferredDriversEnabled &&
+            {/* {preferredDriversEnabled &&
                 <View style={{ backgroundColor: '#e6e6e6', margin: 20, padding: 10, borderRadius: 8, alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'flex-start', }}>
                     <MaterialIcons name="check" size={15} color="#000" />
                     <View style={{ marginLeft: 6 }}>
@@ -750,7 +750,7 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType, 
                         </Text>
                     </View>
                 </View>
-            }
+            } */}
 
         </View>
 

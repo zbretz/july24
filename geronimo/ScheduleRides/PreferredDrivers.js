@@ -8,7 +8,7 @@ import { url } from '../url_toggle'
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export default RideHistory = ({ navigation, masterState, setMasterState, rideDetail, setRideDetail }) => {
+export default PreferredDrivers = ({ navigation, masterState, setMasterState, rideDetail, setRideDetail }) => {
 
     const { _id } = masterState.user
 
@@ -19,7 +19,7 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
     const [preferredDrivers, setPreferredDrivers] = useState(masterState.user.preferredDrivers ? masterState.user.preferredDrivers : [])
     // const [preferredDrivers, setPreferredDrivers] = useState([])
 
-    let fetchRideHistory = () => {
+    let fetchPreferredDrivers = () => {
         axios.get(`${url}/rideHistory?userId=${_id}`)
             .then(res => {
                 let rides = res.data
@@ -76,7 +76,7 @@ export default RideHistory = ({ navigation, masterState, setMasterState, rideDet
     }
 
     useEffect(() => {
-        fetchRideHistory()
+        fetchPreferredDrivers()
     }, [])
 
 
