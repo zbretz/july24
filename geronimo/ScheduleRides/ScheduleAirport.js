@@ -43,7 +43,7 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
     const [flightNumber, setFlightNumber] = useState('')
     const [typeSelected, setTypeSelected] = useState(false)
 
-    preferredDriversEnabled = false//user?.preferredDrivers?.length
+    let preferredDriversEnabled = false//user?.preferredDrivers?.length
 
     const errorTimeout = () => {
         setAddressError(true)
@@ -311,7 +311,7 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
     const inputRef = useRef(null);
     const flightNumberRef = useRef(null);
     const [searchResults, setSearchResults] = useState([])
-
+    const [addressModal, setAddressModal] = useState(false)
 
 
 
@@ -391,8 +391,29 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
     }, [typeSelected])
 
 
+
+
     return (
         <View style={{ flex: 1, }}>
+
+            <Modal visible={addressModal}
+                animationType='slide'
+                transparent={true}
+                style={{ flex: 1, zIndex: 11 }}>
+                <View style={{ height: '100%', width: '100%', backgroundColor: 'rgba(0,0,0,.2)', alignItems: 'center', justifyContent: 'center' }}>
+                    <View style={{ width: '100%', alignItems: 'center', }} onPress={() => setAddressModal(false)}>
+                        <View style={{ width: '90%', backgroundColor: '#fff', padding: 10, borderRadius: 20 }}>
+                            <View style={{ marginBottom: 0, padding:10 }}>
+                                <Text style={{ textAlign: 'center', fontFamily: 'LexendMedium', fontSize: 18 }}>Please select an address from the dropdown options.</Text>
+                            </View>
+                            <View style={{ borderBottomWidth: 1, width: '100%', }} />
+                            <TouchableOpacity onPress={()=>setAddressModal(false)} style={{   padding: 14 }}>
+                                <Text style={{ textAlign: 'center', fontFamily: 'LexendMedium', fontSize: 18 }}>Ok</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
 
             {!inputFocused &&
 
@@ -448,6 +469,10 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
 
             }
 
+
+
+
+
             <View style={{ marginTop: 0, marginHorizontal: 20, justifyContent: 'center', backgroundColor: '#e6e6e6', borderRadius: 30, padding: 20, paddingBottom: 0 }}>
 
                 {!typeSelected ?
@@ -483,11 +508,26 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
                                 // onChangeText={(text) => setRideRequest(rideRequest => ({ ...rideRequest, pickup: text }))}
                                 onChangeText={(text) => {
                                     if (typeSelected == 'arrivals') {
-                                        searchLocation(text); setDestination(text); validateAddress(text); if (text.length === 0) setDropoffAddressNotRecognized(true)
+                                        searchLocation(text); setDestination(text);
+                                        //  validateAddress(text); 
+                                        if (text.length === 0) setDropoffAddressNotRecognized(true)
                                     } else {
-                                        searchLocation(text); setPickupLocation(text); validateAddress(text); if (text.length === 0) setPickupAddressNotRecognized(true)
+                                        searchLocation(text); setPickupLocation(text);
+                                        // validateAddress(text); 
+                                        if (text.length === 0) setPickupAddressNotRecognized(true)
                                     }
                                 }}
+
+                                blurOnSubmit={false}
+                                onSubmitEditing={() => {
+
+                                    setAddressModal(true)
+                                    // Do nothing or prevent behavior
+                                }}
+
+
+
+
                             />
                         </View>
 
@@ -496,52 +536,9 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
 
 
 
-
-
-
-
-
-
-                {/* {(!inputFocused || inputFocused == 'pickup') &&
-                    <>
-                        <Text style={{ marginLeft: 10, fontSize: 24, fontWeight: '600', textAlign: 'left', fontFamily: 'Aristotelica-Regular' }}>Pickup</Text>
-
-                        <TextInput style={{ height: 40, borderRadius: 16, backgroundColor: '#f2f2f2', paddingHorizontal: 8, fontSize: 16, fontFamily: 'PointSoftSemiBold' }}
-                            ref={pickupRef}
-                            autoCapitalize={'none'}
-                            placeholderTextColor={'#77756e'}
-                            onFocus={() => setInputFocused('pickup')}
-                            onBlur={() => { setInputFocused(false); setSearchResults([]) }}
-                            // placeholder={'Pickup Address'}
-                            value={pickupLocation}
-                            // value={searchKeyword}
-                            // onChangeText={(text) => setRideRequest(rideRequest => ({ ...rideRequest, pickup: text }))}
-                            onChangeText={(text) => { searchLocation(text); setPickupLocation(text); validateAddress(text); if (text.length === 0) setPickupAddressNotRecognized(true) }}
-                        />
-                    </>
-                }
-
-
-                {(!inputFocused || inputFocused == 'dropoff') &&
-                    <>
-                        <Text style={{ marginTop: 10, marginLeft: 10, fontSize: 24, fontWeight: '600', textAlign: 'left', fontFamily: 'Aristotelica-Regular' }}>Dropoff</Text>
-
-                        <TextInput style={{ height: 40, borderRadius: 16, backgroundColor: '#f2f2f2', paddingHorizontal: 8, fontSize: 16, fontFamily: 'PointSoftSemiBold' }}
-                            ref={dropoffRef}
-                            autoCapitalize={'none'}
-                            placeholderTextColor={'#77756e'}
-                            onFocus={() => setInputFocused('dropoff')}
-                            onBlur={() => { setInputFocused(false); setSearchResults([]) }}
-                            // placeholder={'Pickup Address'}
-                            value={destination}
-                            // value={searchKeyword}
-                            // onChangeText={(text) => setRideRequest(rideRequest => ({ ...rideRequest, pickup: text }))}
-                            onChangeText={(text) => { searchLocation(text); setDestination(text); validateAddress(text); if (text.length === 0) setDropoffAddressNotRecognized(true) }}
-                        />
-                    </>
-                } */}
-
             </View>
+
+
 
             {typeSelected == 'arrivals' && !inputFocused &&
                 <View style={{ marginTop: 10, marginHorizontal: 20, justifyContent: 'center', backgroundColor: '#e6e6e6', borderRadius: 30, padding: 20, paddingBottom: 0 }}>
@@ -638,7 +635,7 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
             {addressError &&
                 // <View style={{ backgroundColor: 'rgba(0,0,0,.4)', flex: 1, height: '100%', width: '100%', position: 'absolute', zIndex: 9 }}>
                 <View style={{ position: 'absolute', bottom: 80, zIndex: 3, backgroundColor: '#000', borderRadius: 20, marginHorizontal: 20, alignSelf: 'center', padding: 20, }}>
-                    <Text style={{ fontSize: 20, fontFamily: 'Aristotelica-Regular', color: '#fff', }}>Address not recognized. Please re-input your missing location.</Text>
+                    <Text style={{ fontSize: 20, fontFamily: 'LexendMedium', color: '#fff', }}>Address not recognized. Please re-input your missing location.</Text>
                 </View>
                 // </View>
             }
