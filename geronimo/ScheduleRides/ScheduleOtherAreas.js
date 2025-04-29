@@ -7,7 +7,7 @@ import axios from 'axios';
 import { socket } from '../CoreNav/socket';
 import * as Animatable from 'react-native-animatable';
 import { formatInTimeZone } from "date-fns-tz";
-import {url} from '../url_toggle'
+import { url } from '../url_toggle'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -284,6 +284,7 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
     const [dropoffAddressNotRecognized, setDropoffAddressNotRecognized] = useState(true)
     const [inputFocused, setInputFocused] = useState(false)
 
+    const [addressModal, setAddressModal] = useState(false)
 
 
 
@@ -362,6 +363,27 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
     return (
         <>
 
+
+            <Modal visible={addressModal}
+                animationType='slide'
+                transparent={true}
+                style={{ flex: 1, zIndex: 11 }}>
+                <View style={{ height: '100%', width: '100%', backgroundColor: 'rgba(0,0,0,.2)', alignItems: 'center', justifyContent: 'center' }}>
+                    <View style={{ width: '100%', alignItems: 'center', }} onPress={() => setAddressModal(false)}>
+                        <View style={{ width: '90%', backgroundColor: '#fff', padding: 10, borderRadius: 20 }}>
+                            <View style={{ marginBottom: 0, padding: 10 }}>
+                                <Text style={{ textAlign: 'center', fontFamily: 'LexendMedium', fontSize: 18 }}>Please select an address from the dropdown options.</Text>
+                            </View>
+                            <View style={{ borderBottomWidth: 1, width: '100%', }} />
+                            <TouchableOpacity onPress={() => setAddressModal(false)} style={{ padding: 14 }}>
+                                <Text style={{ textAlign: 'center', fontFamily: 'LexendMedium', fontSize: 18 }}>Ok</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+
+
             {!inputFocused &&
 
                 <>
@@ -432,9 +454,10 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
                             onBlur={() => { setInputFocused(false); setSearchResults([]) }}
                             // placeholder={'Pickup Address'}
                             value={pickupLocation}
-                            // value={searchKeyword}
-                            // onChangeText={(text) => setRideRequest(rideRequest => ({ ...rideRequest, pickup: text }))}
-                            onChangeText={(text) => { searchLocation(text); setPickupLocation(text); validateAddress(text); if (text.length === 0) setPickupAddressNotRecognized(true) }}
+                            onChangeText={(text) => { searchLocation(text); setPickupLocation(text); if (text.length === 0) setPickupAddressNotRecognized(true) }}
+
+                            blurOnSubmit={false}
+                            onSubmitEditing={() => { setAddressModal(true) }}
                         />
                     </>
                 }
@@ -452,9 +475,10 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
                             onBlur={() => { setInputFocused(false); setSearchResults([]) }}
                             // placeholder={'Pickup Address'}
                             value={destination}
-                            // value={searchKeyword}
-                            // onChangeText={(text) => setRideRequest(rideRequest => ({ ...rideRequest, pickup: text }))}
-                            onChangeText={(text) => { searchLocation(text); setDestination(text); validateAddress(text); if (text.length === 0) setDropoffAddressNotRecognized(true) }}
+                            onChangeText={(text) => { searchLocation(text); setDestination(text); if (text.length === 0) setDropoffAddressNotRecognized(true) }}
+
+                            blurOnSubmit={false}
+                            onSubmitEditing={() => { setAddressModal(true) }}
                         />
                     </>
                 }
@@ -493,7 +517,7 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
 
             {addressError &&
                 <View style={{ position: 'absolute', bottom: 10, backgroundColor: '#000', borderRadius: 20, marginHorizontal: 20, alignSelf: 'center', padding: 20 }}>
-                    <Text style={{ fontSize: 20, fontFamily: 'Aristotelica-Regular', color: '#fff', }}>Address not recognized. Please re-input your missing location.</Text>
+                    <Text style={{ fontSize: 20, fontFamily: 'LexendMedium', color: '#fff', }}>Address not recognized. Please re-input your missing location.</Text>
                 </View>
             }
         </>
@@ -535,7 +559,7 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType }
 
             <View>
 
-                <TouchableOpacity onPress={() => setRideType(1)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 1 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row',  }}>
+                <TouchableOpacity onPress={() => setRideType(1)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 1 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row', }}>
                     <View style={{ flexDirection: 'row' }}>
                         <Image style={{ height: 36, width: 70, }} source={require('../assets/cr-v.png')} />
                         <View style={{ marginLeft: 10 }}>
@@ -549,9 +573,9 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType }
                     <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 18, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>${fare['1']}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => setRideType(2)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 2 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row',  }}>
+                <TouchableOpacity onPress={() => setRideType(2)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 2 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row', }}>
                     <View style={{ flexDirection: 'row' }}>
-                    <Image style={{ height: 40, width: 70, }} source={require('../assets/tesla.webp')} />
+                        <Image style={{ height: 40, width: 70, }} source={require('../assets/tesla.webp')} />
                         <View style={{ marginLeft: 10 }}>
                             <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 16, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>Premium</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -565,7 +589,7 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType }
 
                 <TouchableOpacity onPress={() => setRideType(3)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 3 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row', }}>
                     <View style={{ flexDirection: 'row' }}>
-                    <Image style={{ height: 40, width: 76, marginHorizontal: -3 }} source={require('../assets/kia.png')} />
+                        <Image style={{ height: 40, width: 76, marginHorizontal: -3 }} source={require('../assets/kia.png')} />
                         <View style={{ marginLeft: 10 }}>
                             <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 16, fontWeight: 500, color: rideType === 1 ? '#000' : '#504e49' }}>XL</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -577,9 +601,9 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType }
                     <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 18, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>${fare['3']}</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => setRideType(4)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 4 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row',  }}>
+                <TouchableOpacity onPress={() => setRideType(4)} style={{ justifyContent: 'space-between', backgroundColor: rideType == 4 ? '#fff1cc' : '#fff', borderRadius: 20, marginHorizontal: 10, padding: 10, paddingVertical: 16, flexDirection: 'row', }}>
                     <View style={{ flexDirection: 'row' }}>
-                    <Image style={{ height: 40, width: 90, marginHorizontal: -10 }} source={require('../assets/suburban.png')} />
+                        <Image style={{ height: 40, width: 90, marginHorizontal: -10 }} source={require('../assets/suburban.png')} />
                         <View style={{ marginLeft: 10 }}>
                             <Text style={{ textAlign: 'center', marginTop: 0, fontSize: 16, fontFamily: 'PointSoftSemiBold', color: rideType === 1 ? '#000' : '#504e49' }}>Premium XL</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>

@@ -316,8 +316,6 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
 
 
 
-
-
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate;
         setDate(currentDate);
@@ -403,11 +401,11 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
                 <View style={{ height: '100%', width: '100%', backgroundColor: 'rgba(0,0,0,.2)', alignItems: 'center', justifyContent: 'center' }}>
                     <View style={{ width: '100%', alignItems: 'center', }} onPress={() => setAddressModal(false)}>
                         <View style={{ width: '90%', backgroundColor: '#fff', padding: 10, borderRadius: 20 }}>
-                            <View style={{ marginBottom: 0, padding:10 }}>
+                            <View style={{ marginBottom: 0, padding: 10 }}>
                                 <Text style={{ textAlign: 'center', fontFamily: 'LexendMedium', fontSize: 18 }}>Please select an address from the dropdown options.</Text>
                             </View>
                             <View style={{ borderBottomWidth: 1, width: '100%', }} />
-                            <TouchableOpacity onPress={()=>setAddressModal(false)} style={{   padding: 14 }}>
+                            <TouchableOpacity onPress={() => setAddressModal(false)} style={{ padding: 14 }}>
                                 <Text style={{ textAlign: 'center', fontFamily: 'LexendMedium', fontSize: 18 }}>Ok</Text>
                             </TouchableOpacity>
                         </View>
@@ -503,9 +501,6 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
                                 onBlur={() => { setInputFocused(false); setSearchResults([]) }}
                                 // placeholder={'Pickup Address'}
                                 value={typeSelected == 'arrivals' ? destination : pickupLocation}
-                                // value={'kjbsdckjbadc dakjncjkndc kjnadc'}
-                                // value={searchKeyword}
-                                // onChangeText={(text) => setRideRequest(rideRequest => ({ ...rideRequest, pickup: text }))}
                                 onChangeText={(text) => {
                                     if (typeSelected == 'arrivals') {
                                         searchLocation(text); setDestination(text);
@@ -519,15 +514,7 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
                                 }}
 
                                 blurOnSubmit={false}
-                                onSubmitEditing={() => {
-
-                                    setAddressModal(true)
-                                    // Do nothing or prevent behavior
-                                }}
-
-
-
-
+                                onSubmitEditing={() => { setAddressModal(true) }}
                             />
                         </View>
 
