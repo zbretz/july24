@@ -6,6 +6,7 @@ const httpRouter = require('./httpRouter');
 const auth = require('./auth')
 const driver = require('./driver')
 const user = require('./user')
+const maskedCalling = require('./maskedCalling')
 
 // middleware to send responses as json
 app.use(express.json());
@@ -27,6 +28,7 @@ app.use('/driver', driver);
 app.use('/auth', auth);
 app.use('/childcare', httpRouter);
 app.use('/', httpRouter);
+app.use('/calling', maskedCalling);
 
 
 const socketRouter = require('./socketRouter')(io)
@@ -41,6 +43,5 @@ module.exports = {
     app: app,
     io: io
 }
-
 
 
