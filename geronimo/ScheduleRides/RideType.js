@@ -85,7 +85,7 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                     {upcomingRide &&
                         <>
                             <View style={{ flexDirection: 'row', padding: 10, paddingHorizontal: 20, }}>
-                                <Text style={{ fontWeight: 600, fontSize: 26, marginBottom: 0, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', marginBottom: 0 }}>Upcoming Ride</Text>
+                                <Text style={{ fontWeight: 600, fontSize: 22, marginBottom: 0, paddingBottom: 0, fontFamily: 'LexendRegular', marginBottom: 0 }}>Upcoming Ride</Text>
                             </View>
 
                             <View style={{ paddingHorizontal: 20, width: '100%', marginBottom: 0, }}>
@@ -147,7 +147,7 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                     }
 
 
-                    <Text style={{ fontWeight: 600, fontSize: 26, marginTop: 0, marginBottom: -10, padding: 20, paddingBottom: 0, fontFamily: 'Aristotelica-Regular', }}>Book Ride</Text>
+                    <Text style={{ fontWeight: 600, fontSize: 22, marginTop: 0, marginBottom: -10, padding: 20, paddingBottom: 0, fontFamily: 'LexendRegular', }}>Book Ride</Text>
 
                     <View style={{ flexDirection: 'row', margin: 20 }}>
                         <TouchableOpacity onPress={() => navigation.navigate('Airport')} style={{ backgroundColor: '#f2f2f2', flex: 1, height: windowHeight * .22, borderRadius: 30, marginRight: 20, alignItems: 'center', paddingVertical: 20 }}>

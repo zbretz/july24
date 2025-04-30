@@ -532,9 +532,62 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType }
 
     console.log('fare: ', fare)
 
+    const [infoModal, setInfoModal] = useState(false)
+
     return (
         <View style={{ height: '100%', }}>
 
+            <Modal visible={infoModal}
+                animationType='slide'
+                transparent={true}
+                style={{ flex: 1, zIndex: 11 }}>
+                <View style={{ backgroundColor: 'rgba(0,0,0,.2)', width: '100%', height: '100%', paddingHorizontal: 20, paddingVertical: 60, }}>
+                    <ScrollView style={{ width: '100%', height: '100%', backgroundColor: '#fff', borderRadius: 20, padding: 20 }} onPress={() => setAddressModal(false)}>
+
+                        <View style={{ marginTop: 10 }}>
+                            <TouchableOpacity style={{ zIndex: 12, position: 'absolute', right: 0 }} onPress={() => setInfoModal(false)}>
+                                <Feather style={{ marginBottom: 0 }} name="x" size={30} color="#000" />
+                            </TouchableOpacity>
+                            <Text style={{ fontFamily: 'LexendMedium', fontSize: 20 }}>Vehicle Categories</Text>
+                            <Text style={{ fontFamily: 'LexendRegular', fontSize: 16, marginVertical: 4, marginTop: 10 }}>Check out our vehicle categories for a better sense of the size and style each category offers. If you still have questions, no worries -- just give us a call!</Text>
+                        </View>
+
+                        <View style={{ flex: 1, width: '100%', borderRadius: 10, padding: 0, marginVertical: 16, }}>
+                            <Text style={{ fontFamily: 'LexendRegular', fontSize: 20 }}>Standard</Text>
+                            <Image resizeMode='cover' style={{ width: '100%', height: 200, backgroundColor: '#ecf6f8', padding: 0, borderTopLeftRadius: 10, borderTopRightRadius: 10 }} source={require('../assets/rav4.webp')} />
+                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
+                                <Text style={{ fontFamily: 'LexendRegular', fontSize: 16, marginVertical: 4, marginTop: 0 }}>Our most popular option. Room for four adults. Two or three passengers with a suitcase each.</Text>
+                            </View>
+                        </View>
+
+                        <View style={{ flex: 1, width: '100%', borderRadius: 10, padding: 0 }}>
+                            <Text style={{ fontFamily: 'LexendRegular', fontSize: 20 }}>Premium</Text>
+                            <Image resizeMode='cover' style={{ width: '100%', height: 200, backgroundColor: '#ecf6f8', padding: 0, borderTopLeftRadius: 10, borderTopRightRadius: 10 }} source={require('../assets/tesla.avif')} />
+                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
+                                <Text style={{ fontFamily: 'LexendRegular', fontSize: 16, marginVertical: 4, marginTop: 0 }}>A ride in a more upscale car. Expect a newer model year or more premium materials. Typically roomier than a standard.</Text>
+                            </View>
+                        </View>
+
+                        <View style={{ flex: 1, width: '100%', borderRadius: 10, marginVertical: 16, padding: 0 }}>
+                            <Text style={{ fontFamily: 'LexendRegular', fontSize: 20 }}>XL</Text>
+                            <Image resizeMode='cover' style={{ width: '100%', height: 200, backgroundColor: '#ecf6f8', padding: 0, borderTopLeftRadius: 10, borderTopRightRadius: 10 }} source={require('../assets/Pacifica.webp')} />
+                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
+                                <Text style={{ fontFamily: 'LexendRegular', fontSize: 16, marginVertical: 4, marginTop: 0 }}>You'll find a third row in these vehicles. If you have oversized luggage, or a larger party, this might be the right option.</Text>
+                            </View>
+                        </View>
+
+
+                        <View style={{ flex: 1, width: '100%', borderRadius: 10, marginBottom: 16, padding: 0 }}>
+                            <Text style={{ fontFamily: 'LexendRegular', fontSize: 20 }}>Premium XL</Text>
+                            <Image resizeMode='cover' style={{ width: '100%', height: 200, backgroundColor: '#ecf6f8', padding: 0, borderTopLeftRadius: 10, borderTopRightRadius: 10 }} source={require('../assets/suburban.avif')} />
+                            <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
+                                <Text style={{ fontFamily: 'LexendRegular', fontSize: 16, marginVertical: 4, marginTop: 0 }}>Executive travel or larger groups. These SUVs offer the 'black car' or 'limo' experience.</Text>
+                            </View>
+                        </View>
+
+                    </ScrollView>
+                </View>
+            </Modal >
 
 
             <View style={{ padding: 8, paddingTop: 0, }}>

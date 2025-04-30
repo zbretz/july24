@@ -94,11 +94,11 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
 
                     {rideDetail.enRoute ?
                         <View style={{ alignItems: 'center', }}>
-                            <Text numberOfLines={1} adjustsFontSizeToFit={true} style={{ fontSize: 36, fontFamily: 'Aristotelica-Regular', textAlign: 'center' }}>Status: Driver En Route</Text>
+                            <Text numberOfLines={1} adjustsFontSizeToFit={true} style={{ fontSize: 36, fontFamily: 'LexendRegular', textAlign: 'center' }}>Status: Driver En Route</Text>
                         </View>
                         :
                         <View style={{ marginBottom: 10 }}>
-                            <Text style={{ marginVertical: 0, fontSize: 26, fontFamily: 'PointSoftSemiBold', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "eee',' MMMM d")}</Text>
+                            <Text style={{ marginVertical: 0, fontSize: 26, fontFamily: 'LexendMedium', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "eee',' MMMM d")}</Text>
                             <Text style={{ marginVertical: 0, fontSize: 26, fontFamily: 'PointSoftLight', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "h':'mm aa")}</Text>
                         </View>
                     }
@@ -108,7 +108,7 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
                         <View style={{ borderTopRightRadius: 30, borderBottomRightRadius: 30, justifyContent: 'center', marginVertical: 10 }}>
                             <View style={{ backgroundColor: '#fff', borderRadius: 20, padding: 20, }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', }}>
-                                    <Text numberOfLines={1} style={{ fontSize: 18, fontFamily: 'Aristotelica-Regular', }}>Driver Assigned  </Text>
+                                    <Text numberOfLines={1} style={{ fontSize: 18, fontFamily: 'LexendRegular', }}>Driver Assigned  </Text>
                                     <Image style={{ height: 26, width: 26, marginTop: -10 }} source={require('../assets/verified.png')} />
                                 </View>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', }}>
@@ -121,9 +121,9 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
 
                     <View style={{ borderTopRightRadius: 30, borderBottomRightRadius: 30, justifyContent: 'center' }}>
                         <View style={{ backgroundColor: '#fff', borderRadius: 20, padding: 20, }}>
-                            <Text style={{ marginTop: 0, fontSize: 18, fontFamily: 'Aristotelica-Regular', }}>Pickup</Text>
+                            <Text style={{ marginTop: 0, fontSize: 18, fontFamily: 'LexendRegular', }}>Pickup</Text>
                             <Text style={{ marginTop: 0, fontSize: 18, fontFamily: 'PointSoftLight', }}>{rideDetail.pickupAddress}</Text>
-                            <Text style={{ marginTop: 10, fontSize: 18, fontFamily: 'Aristotelica-Regular', }}>Dropoff</Text>
+                            <Text style={{ marginTop: 10, fontSize: 18, fontFamily: 'LexendRegular', }}>Dropoff</Text>
                             <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'PointSoftLight', }}>{rideDetail.dropoffAddress}</Text>
                         </View>
                     </View>
@@ -149,7 +149,7 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
                                     <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId: rideDetail._id }) }} style={{ backgroundColor: '#ffcf56', borderRadius: 20, borderColor: '#c4a73b', padding: 10, paddingVertical: 20, }} >
                                         <Text style={{ marginHorizontal: 10, fontSize: 24, color: "#000", fontFamily: 'Aristotelica-SmallCaps' }}>Driver Chat</Text>
                                         <View style={{ marginHorizontal: 10, backgroundColor: '#fff', borderRadius: 20, padding: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <Text style={{ color: '#a1a1a1', fontSize: 18, fontFamily: 'PointSoftSemiBold', }}>Message Driver ...</Text>
+                                            <Text style={{ color: '#a1a1a1', fontSize: 18, fontFamily: 'LexendMedium', }}>Message Driver ...</Text>
                                             <Entypo name="chat" size={32} color="black" style={{ marginRight: 20 }} />
                                         </View>
                                     </TouchableOpacity>
