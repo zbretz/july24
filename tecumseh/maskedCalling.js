@@ -9,17 +9,20 @@ const client = require('twilio')(accountSid, authToken);
 
 const router = require("express").Router();
 
+const { db__ } = require('./mongoConnection.js')
+var ObjectId = require('mongodb').ObjectId;
+
 router.post('/create-proxy-session', async (req, res) => {
-  // const { rideId } = req.body;
 
-  const rideId = '2'
-  let ride = {
-    riderPhone: '+19175751955',
-    driverPhone: '+14358000057',
-    proxySessionSid: 'KC4b16f18300f463e89b4d625cc785085e'
-  }
 
-  // const ride = await db.getRideById(rideId);
+  const { rideId } = req.body;
+  console.log('ride id: ', rideId)
+
+  const ride = await db__.collection('rides').findOne({ _id: new ObjectId(rideId) })
+
+  // console.log('ride: ', ride)
+
+  // return
 
   // const now = new Date();
   // const pickupTime = new Date(ride.pickupDateTime);
@@ -29,48 +32,65 @@ router.post('/create-proxy-session', async (req, res) => {
   //   return res.status(403).json({ error: 'Too early to contact rider/driver' });
   // }
 
-  if (ride.proxySessionSid) {
-    const existingSession = await client.proxy.v1.services(proxySid)
-      .sessions(ride.proxySessionSid)
-      .fetch();
+  if (ride.twilio) {
+    // const existingSession = await client.proxy.v1.services(proxySid)
+    //   .sessions(ride.twilio.proxySessionSid)
+    //   .fetch();
 
-      console.log('exisintg session: ', existingSession)
+    // console.log('exisintg session: ', existingSession)
 
-    // return res.json({ proxyNumber: existingSession.participants[0].proxyIdentifier });
+    console.log('session exists!: ', ride.twilio)
+
+
 
 
     const participants = await client.proxy.v1.services(proxySid)
-    .sessions(ride.proxySessionSid)
-    .participants
-    .list();
+      .sessions(ride.twilio.proxySessionSid)
+      .participants
+      .list();
 
-    console.log('particiopants list: ', participants)
+    // console.log('particiopants list: ', participants)
+
+    return res.json({ proxyNumber: ride.twilio.riderProxyIdentifier });
+
+
   }
 
   const session = await client.proxy.v1.services(proxySid).sessions.create({
     uniqueName: `ride-${rideId}`,
     ttl: 2 * 60 * 60, // 2 hours
   })
-    // .then(res => console.log('create session res: ', res));
+  // console.log('session: ', session)
+
+  const transformPhone = (num) => {
+
+    if (num[0] == '1') {
+      return '+' + num
+    } else return '+1' + num
+  }
 
   const driver = await client.proxy.v1.services(proxySid)
     .sessions(session.sid)
     .participants
-    .create({ friendlyName: 'Driver', identifier: ride.driverPhone });
+    .create({ friendlyName: 'Driver', identifier: transformPhone(ride.driver.phone) });
 
-  console.log('driver: ', driver)
+  // console.log('driver: ', driver)
 
   const rider = await client.proxy.v1.services(proxySid)
     .sessions(session.sid)
     .participants
-    .create({ friendlyName: 'Rider', identifier: ride.riderPhone });
+    .create({ friendlyName: 'Rider', identifier: transformPhone(ride.user.phone) });
+
+  // console.log('rider: ', rider)
 
 
-    console.log('rider: ', rider)
   // Save session SID for future use
-  // await db.updateRide(rideId, { proxySessionSid: session.sid });
+  await db__.collection('rides').updateOne(
+    { _id: new ObjectId(rideId) },
+    { $set: { twilio: { proxySessionSid: session.sid, driverProxyIdentifier: driver.proxyIdentifier, riderProxyIdentifier: rider.proxyIdentifier, driverSID:driver.sid, riderSID:rider.sid } } },
+  )
 
-  return res.json({ proxyNumber: driver.proxyIdentifier });
+  return res.json({ proxyNumber: rider.proxyIdentifier });
 });
 
 

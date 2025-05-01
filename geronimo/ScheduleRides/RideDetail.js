@@ -85,6 +85,7 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
 
         console.log('mask')
         // setLoading(true);
+        
 
         let proxyNumber
 
