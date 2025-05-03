@@ -15,8 +15,10 @@ var ObjectId = require('mongodb').ObjectId;
 router.post('/create-proxy-session', async (req, res) => {
 
 
-  const { rideId } = req.body;
-  console.log('ride id: ', rideId)
+  const { rideId, userType } = req.body;
+  console.log('ride id: ', rideId, userType)
+
+  // return
 
   const ride = await db__.collection('rides').findOne({ _id: new ObjectId(rideId) })
 
@@ -41,17 +43,17 @@ router.post('/create-proxy-session', async (req, res) => {
 
     console.log('session exists!: ', ride.twilio)
 
+    const proxyNumber = userType == 'driver' ? ride.twilio.driverProxyIdentifier : ride.twilio.riderProxyIdentifier
 
 
-
-    const participants = await client.proxy.v1.services(proxySid)
-      .sessions(ride.twilio.proxySessionSid)
-      .participants
-      .list();
+    // const participants = await client.proxy.v1.services(proxySid)
+    //   .sessions(ride.twilio.proxySessionSid)
+    //   .participants
+    //   .list();
 
     // console.log('particiopants list: ', participants)
 
-    return res.json({ proxyNumber: ride.twilio.riderProxyIdentifier });
+    return res.json({ proxyNumber });
 
 
   }
@@ -61,6 +63,8 @@ router.post('/create-proxy-session', async (req, res) => {
     ttl: 2 * 60 * 60, // 2 hours
   })
   // console.log('session: ', session)
+  console.log('new session')
+
 
   const transformPhone = (num) => {
 
@@ -87,10 +91,14 @@ router.post('/create-proxy-session', async (req, res) => {
   // Save session SID for future use
   await db__.collection('rides').updateOne(
     { _id: new ObjectId(rideId) },
-    { $set: { twilio: { proxySessionSid: session.sid, driverProxyIdentifier: driver.proxyIdentifier, riderProxyIdentifier: rider.proxyIdentifier, driverSID:driver.sid, riderSID:rider.sid } } },
+    { $set: { twilio: { proxySessionSid: session.sid, driverProxyIdentifier: driver.proxyIdentifier, riderProxyIdentifier: rider.proxyIdentifier, driverSID: driver.sid, riderSID: rider.sid } } },
   )
 
-  return res.json({ proxyNumber: rider.proxyIdentifier });
+
+  const proxyNumber = userType == 'driver' ? driver.proxyIdentifier : rider.proxyIdentifier
+
+
+  return res.json({ proxyNumber});
 });
 
 

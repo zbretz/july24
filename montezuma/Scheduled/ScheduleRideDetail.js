@@ -1,7 +1,9 @@
-import { StyleSheet, Text, TouchableOpacity, TouchableHighlight, View, TextInput, Image, Dimensions, FlatList, SafeAreaView, ScrollView, Animated, Modal, Alert } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, TouchableHighlight, View, TextInput, Image, Dimensions, FlatList, SafeAreaView, Linking, Modal, Alert } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { Entypo, Feather, FontAwesome5, AntDesign } from '@expo/vector-icons';
 import { socket } from '../socket';
+import url from '../url_toggle'
+import axios from 'axios';
 
 import { formatInTimeZone } from "date-fns-tz";
 
@@ -118,6 +120,37 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
     }
 
     let rideTypeText = rideTypes[request.rideType]
+
+
+
+
+
+    const handleCall = async () => {
+
+        console.log('mask')
+        // setLoading(true);
+
+
+        let proxyNumber
+
+        axios.post(`${url}/calling/create-proxy-session`, { rideId, userType: 'driver' })
+            .then(res => {
+                if (res.data) {
+                    proxyNumber = res.data.proxyNumber
+                    console.log('proxy number: ', proxyNumber)
+                }
+                const supported = Linking.canOpenURL(`tel:${proxyNumber}`);
+                if (supported) {
+                    console.log('number2: ', proxyNumber)
+                    Linking.openURL(`tel:${proxyNumber}`);
+                } else {
+                    Alert.alert('Error', 'Device does not support phone calls.');
+
+
+                }
+            })
+            .catch(e => console.log('order  error: ', e))
+    }
 
     return (
         <SafeAreaView style={{ height: '100%', backgroundColor: '#fff' }}>
@@ -291,6 +324,10 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
 
             }
 
+
+            <TouchableOpacity onPress={handleCall} style={{ position: 'absolute', borderRadius: 20, bottom: 90, right: 20, padding: 16, alignItems: 'center', backgroundColor: '#e6e6e6' }}>
+                <Text style={{ fontFamily: 'Aristotelica-SmallCaps', fontSize: 19, marginBottom: -5, }}>make call</Text>
+            </TouchableOpacity>
 
 
 
