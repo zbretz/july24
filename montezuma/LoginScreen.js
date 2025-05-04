@@ -138,9 +138,9 @@ export default LoginScreen = ({ isConnected, masterState, setMasterState }) => {
     }
 
     return (
-        <SafeAreaView style={{ height: '100%', backgroundColor: '#fff', alignItems: 'center', }}>
+        <View style={{ height: '100%', backgroundColor: '#fff', alignItems: 'center', paddingTop:160 }}>
 
-            <TouchableOpacity onPress={logout}><Text>logout</Text></TouchableOpacity>
+            {/* <TouchableOpacity onPress={logout}><Text>logout</Text></TouchableOpacity> */}
 
             <Modal
                 animationType='slide'
@@ -205,19 +205,18 @@ export default LoginScreen = ({ isConnected, masterState, setMasterState }) => {
             <DriverPicker driver={driver} setDriver={setDriver} drivers={drivers} setDrivers={setDrivers} open={open} setOpen={setOpen} />
 
             {driver && !open &&
-                <>
+                <View style={{marginTop:160}}>
                     <View style={{ height: 100, justifyContent: 'center' }}>
                         <Text style={{ fontSize: 18 }}>{driver?.firstName}</Text>
                     </View>
                     <View style={{ height: 100, backgroundColor: null, justifyContent: 'center' }}>
-
                         <TouchableOpacity style={{ backgroundColor: '#ddd', padding: 10, borderRadius: 10, paddingHorizontal: 60 }} onPress={signIn}><Text>Next</Text></TouchableOpacity>
                     </View>
-                </>
+                </View>
 
             }
 
-        </SafeAreaView>
+        </View>
 
     );
 

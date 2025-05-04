@@ -1,3 +1,13 @@
+// ✅ Polyfills for TextEncoder/TextDecoder
+import { TextEncoder, TextDecoder } from 'text-encoding';
+
+if (typeof global.TextEncoder === 'undefined') {
+  global.TextEncoder = TextEncoder;
+}
+if (typeof global.TextDecoder === 'undefined') {
+  global.TextDecoder = TextDecoder;
+}
+
 import { StyleSheet, Text, TouchableOpacity, View, TextInput, Image, Dimensions, FlatList, AppState } from 'react-native';
 import { useFonts } from 'expo-font';
 import { useEffect, useState, useCallback, useRef } from 'react';
@@ -6,6 +16,8 @@ import populateData from './populateData';
 
 import InitSocket from './InitSocket';
 import LoginScreen from './LoginScreen';
+
+
 
 export default function App() {
   // AsyncStorage.clear()
@@ -88,6 +100,7 @@ const AppContent = ({masterState, setMasterState}) => {
   }, [masterState.user]);
 
   if (!masterState.user) return <LoginScreen masterState={masterState} setMasterState={setMasterState} />
+  // return<LoginScreen masterState={masterState} setMasterState={setMasterState} />
 
   return (
     <>
