@@ -62,7 +62,7 @@ const CallDriverButton = ({ rideId, pickupDateTime }) => {
 
     };
 
-    // if (!canCall) return null;
+    if (!canCall) return null;
 
     return (
         <View style={{ position: 'absolute', borderRadius: 20, bottom: 30, right: 20, }}>

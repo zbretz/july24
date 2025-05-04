@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { View, Text, Button, ActivityIndicator, Alert, Linking, TouchableOpacity } from 'react-native';
+import  url  from '../url_toggle'
+import axios from 'axios';
 
 const CallDriverButton = ({ rideId, pickupDateTime }) => {
     const [canCall, setCanCall] = useState(false);
@@ -12,6 +15,7 @@ const CallDriverButton = ({ rideId, pickupDateTime }) => {
             const minutesUntilPickup = (pickup - now) / 60000;
 
             setCanCall(minutesUntilPickup <= 60 && minutesUntilPickup >= -30);
+            // setCanCall(true);
         };
 
         checkTimeWindow();
@@ -28,10 +32,9 @@ const CallDriverButton = ({ rideId, pickupDateTime }) => {
         console.log('mask')
         setLoading(true);
 
-
         let proxyNumber
 
-        axios.post(`${url}/calling/create-proxy-session`, { rideId })
+        axios.post(`${url}/calling/create-proxy-session`, { rideId, userType: 'driver' })
             .then(res => {
                 if (res.data) {
                     proxyNumber = res.data.proxyNumber
@@ -64,12 +67,20 @@ const CallDriverButton = ({ rideId, pickupDateTime }) => {
     if (!canCall) return null;
 
     return (
-        <div>
-            <button onClick={handleCall} disabled={loading}>
-                {loading ? 'Connecting…' : 'Call Driver'}
-            </button>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-        </div>
+        <View style={{ position: 'absolute', borderRadius: 20, bottom: 30, right: 20, }}>
+            {loading ? (
+                <ActivityIndicator />
+            ) : (
+                <View>
+                    <TouchableOpacity onPress={handleCall} style={{ borderRadius: 20, padding: 16, alignItems: 'center', backgroundColor: '#e6e6e6' }}>
+                        <Text style={{ fontFamily: 'Aristotelica-SmallCaps', fontSize: 19, marginBottom: -5, }}>Call</Text>
+                    </TouchableOpacity>
+                    <View>
+                        <Text style={{ fontSize: 12 }}>Critical calls only</Text>
+                    </View>
+                </View>
+            )}
+        </View>
     );
 };
 

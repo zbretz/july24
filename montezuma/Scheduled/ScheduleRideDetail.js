@@ -298,14 +298,9 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
             }
 
 
-            <TouchableOpacity onPress={handleCall} style={{ position: 'absolute', borderRadius: 20, bottom: 90, right: 20, padding: 16, alignItems: 'center', backgroundColor: '#e6e6e6' }}>
-                <Text style={{ fontFamily: 'Aristotelica-SmallCaps', fontSize: 19, marginBottom: -5, }}>make call</Text>
-            </TouchableOpacity>
-
-
             <CallDriverButton style={{ position: 'absolute', borderRadius: 20, bottom: 90, right: 20, }}
                 rideId={rideId}
-                pickupDateTime={ride.pickupDateTime}
+                pickupDateTime={rideDetail.pickupDateTime}
             />
 
         </SafeAreaView>
