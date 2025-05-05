@@ -43,17 +43,7 @@ export default Chat = ({ route, navigation, masterState, setMasterState, isConne
 
 
 
-
-
-
-
-
-    //if ride canceled, close out of detail view
-    useEffect(() => {
-        if (!rideDetail) navigation.goBack()
-
-        console.log('chat page')
-
+    const markRideAsRead = () => {
 
         setMasterState(masterState => {
             let myScheduledRides = [...masterState.myScheduledRides]
@@ -67,51 +57,38 @@ export default Chat = ({ route, navigation, masterState, setMasterState, isConne
             return { ...masterState, user: { ...masterState.user, myScheduledRides } }
         })
 
-
         axios.post(`${url}/driver/messageReadStatus`, { driverId: user._id, rideId })
             .then(res => {
                 if (res.data) {
-                    // proxyNumber = res.data.proxyNumber
-                    // console.log('proxy number: ', proxyNumber)
                 }
-                // const supported = Linking.canOpenURL(`tel:${proxyNumber}`);
-                // if (supported) {
-                //     console.log('number2: ', proxyNumber)
-                //     Linking.openURL(`tel:${proxyNumber}`);
-                // } else {
-                //     Alert.alert('Error', 'Device does not support phone calls.');
-
-
-                // }
             })
             .catch(e => console.log('order  error: ', e))
 
+    }
 
 
 
-
+    //if ride canceled, close out of detail view
+    useEffect(() => {
+        if (!rideDetail) navigation.goBack()
+        console.log('chat page')
+        markRideAsRead()
     }, [rideDetail])
-
-
-
-    if (!rideDetail) { return null }
-
-
 
     // use 'blur' event listener instead:
     useFocusEffect(
         useCallback(() => {
-
             return () => {
-                console.log('ride detail leave page')
-            }
 
+                if (rideDetail.unreadMessageFromUser) {
+                    console.log('ride detail leave page')
+                    markRideAsRead()
+                }
+            }
         }, [])
     )
 
-
-
-
+    if (!rideDetail) { return null }
 
     return (
 

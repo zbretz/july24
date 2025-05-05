@@ -17,7 +17,6 @@ export default async function populateData({ masterState, setMasterState, loginU
     } else {
         user = masterState.user ? masterState.user : JSON.parse(await AsyncStorage.getItem('User'))
     }
-    // console.log('populate data user: ', user)
 
     // if (!user) {
     //     console.log('no user')

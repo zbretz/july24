@@ -99,18 +99,6 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
     //if ride canceled, close out of detail view
     useEffect(() => {
         if (!rideDetail) navigation.goBack()
-
-        // console.log('ride detail page: ', rideDetail)
-
-
-        // if (request.driver) {
-        // console.log('chatlog: ', rideDetail.chatLog)
-        // }
-
-        // return () => {
-        //      console.log('ride detail leave page')
-        // }
-
     }, [rideDetail])
     if (!rideDetail) { return null }
 
@@ -236,7 +224,7 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
 
                                     {/* {request.unreadMessageFromUser && <Text style={{ color: 'blue' }}>Unread Message</Text>} */}
 
-                                    {!request.unreadMessageFromUser &&
+                                    {request.unreadMessageFromUser &&
                                         <View style={{ marginTop: 0, alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', padding: 4, backgroundColor: '#fff', borderRadius: 8, marginBottom: 14 }} >
                                             <AntDesign name="mail" size={27} color="#ffb700" />
                                             <Text style={{ fontSize: 16, fontWeight: 600, color: '#000', marginLeft: 8 }}>Unread Message</Text>
