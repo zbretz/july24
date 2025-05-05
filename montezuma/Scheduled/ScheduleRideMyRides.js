@@ -10,7 +10,7 @@ const windowHeight = Dimensions.get('window').height;
 
 export default ScheduleRideListView = ({ navigation, isConnected, masterState }) => {
 
-    console.log('my scheduled rides: ', masterState.myScheduledRides)
+    // console.log('my scheduled rides: ', masterState.myScheduledRides)
 
     return (
         <SafeAreaView style={{ height: '100%', backgroundColor: '#fff' }}>
@@ -26,6 +26,10 @@ export default ScheduleRideListView = ({ navigation, isConnected, masterState })
 
                     return (
                         <TouchableOpacity key={idx} onPress={() => { navigation.navigate('ScheduleRideDetail', { requestType: 'assigned', rideId: request._id }) }} style={{ borderColor: '#ffb700', borderWidth: 1, borderRadius: 20, margin: 10, padding: 30, backgroundColor: '#ffcf56' }}>
+                         
+
+                         {request.unreadMessageFromUser && <Text style={{color:'blue'}}>Unread Message</Text>}
+                         
                             <View>
 
                                 {displayClock &&

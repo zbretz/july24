@@ -51,8 +51,9 @@ export default function InitSocket({ masterState, setMasterState }) {
         let myScheduledRides = [...masterState.myScheduledRides]
         for (const ride of myScheduledRides) {
           if (ride._id === data.rideid) {
-            console.log('rrrrride: ', ride)
+            // console.log('rrrrride: ', ride)
             ride.chatLog = [...ride.chatLog, data]
+            ride.unreadMessageFromUser = true
           }
         }
         // let activeRides = masterState.user.activeRides.map(ride => { console.log ('target: ', ride._id); return ride._id === data.rideid ? {...ride, chatLog: [...ride.chatLog, data]} : ride})
@@ -98,7 +99,7 @@ export default function InitSocket({ masterState, setMasterState }) {
         for (const ride of myScheduledRides) {
           console.log('ride id (scheduled ride paid): ', ride)
           if (ride._id === data._id) {
-            console.log('rrrrride: ', ride)
+            // console.log('rrrrride: ', ride)
             ride.paid = data.paid
           }
         }
@@ -115,7 +116,7 @@ export default function InitSocket({ masterState, setMasterState }) {
         for (const ride of myScheduledRides) {
           console.log('ride id (scheduled ride canceled): ', ride)
           if (ride._id === data._id) {
-            console.log('rrrrride: ', ride)
+            // console.log('rrrrride: ', ride)
             ride.rideCanceledByRider = data.rideCanceledByRider
             ride.rideCanceledByDriver = data.rideCanceledByDriver
           }

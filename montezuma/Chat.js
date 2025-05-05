@@ -2,7 +2,8 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Dimensions, Image, TextInput, ScrollView, Platform, } from 'react-native';
 import { socket } from "./socket";
 import { Feather } from '@expo/vector-icons';
-
+import axios from 'axios';
+import url from './url_toggle'
 // import fetchPushToken from './fetchPushToken';
 import useKeyboard from './useKeyboard';
 
@@ -15,7 +16,7 @@ export default Chat = ({ route, navigation, masterState, setMasterState, isConne
 
     const { rideId } = route.params;
     console.log(rideId)
-    console.log(masterState.myScheduledRides)
+    // console.log(masterState.myScheduledRides)
     let rideDetail = masterState.myScheduledRides.find(ride => ride._id == rideId)
     const { user } = masterState
     const chatLog = rideDetail.chatLog
@@ -40,9 +41,81 @@ export default Chat = ({ route, navigation, masterState, setMasterState, isConne
 
     const scrollviewRef = useRef()
 
+
+
+
+
+
+
+
+    //if ride canceled, close out of detail view
+    useEffect(() => {
+        if (!rideDetail) navigation.goBack()
+
+        console.log('chat page')
+
+
+        setMasterState(masterState => {
+            let myScheduledRides = [...masterState.myScheduledRides]
+            for (const ride of myScheduledRides) {
+                if (ride._id === rideDetail._id) {
+                    // console.log('rrrrride: ', ride)
+                    ride.unreadMessageFromUser = false
+                    // console.log('ride: ', ride)
+                }
+            }
+            return { ...masterState, user: { ...masterState.user, myScheduledRides } }
+        })
+
+
+        axios.post(`${url}/driver/messageReadStatus`, { driverId: user._id, rideId })
+            .then(res => {
+                if (res.data) {
+                    // proxyNumber = res.data.proxyNumber
+                    // console.log('proxy number: ', proxyNumber)
+                }
+                // const supported = Linking.canOpenURL(`tel:${proxyNumber}`);
+                // if (supported) {
+                //     console.log('number2: ', proxyNumber)
+                //     Linking.openURL(`tel:${proxyNumber}`);
+                // } else {
+                //     Alert.alert('Error', 'Device does not support phone calls.');
+
+
+                // }
+            })
+            .catch(e => console.log('order  error: ', e))
+
+
+
+
+
+    }, [rideDetail])
+
+
+
+    if (!rideDetail) { return null }
+
+
+
+    // use 'blur' event listener instead:
+    useFocusEffect(
+        useCallback(() => {
+
+            return () => {
+                console.log('ride detail leave page')
+            }
+
+        }, [])
+    )
+
+
+
+
+
     return (
 
-        <View style={{ padding: 20,paddingTop:30,bottom:10, zIndex: 20, maxHeight: windowHeight - 120, paddingBottom: Platform.OS == 'ios' ? keyboardHeight - 80 : 0, width: '100%', backgroundColor: 'rgba(0,0,0,0)', }}>
+        <View style={{ padding: 20, paddingTop: 30, bottom: 10, zIndex: 20, maxHeight: windowHeight - 120, paddingBottom: Platform.OS == 'ios' ? keyboardHeight - 80 : 0, width: '100%', backgroundColor: 'rgba(0,0,0,0)', }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', position: 'absolute', top: 20, right: 20 }}>
                 <View style={{ height: 9, width: 9, borderRadius: 30, backgroundColor: isConnected ? '#85ba78' : 'red' }}></View>
             </View>
@@ -52,6 +125,10 @@ export default Chat = ({ route, navigation, masterState, setMasterState, isConne
             </TouchableOpacity>
 
             <ScrollView ref={scrollviewRef} showsVerticalScrollIndicator={false} style={{ height: windowHeight, paddingTop: 20 }}>
+
+
+                {rideDetail.unReadMessageFromUser && <Text style={{ color: 'blue' }}>Unread Message</Text>}
+
 
                 {chatLog && chatLog.map((comment, idx) => {
                     let is_sender = comment.toUser
@@ -82,7 +159,7 @@ export default Chat = ({ route, navigation, masterState, setMasterState, isConne
                 <View style={{ height: 16 }} />
 
 
-                
+
             </ScrollView>
 
             {!chatLog?.length && <View style={{ position: 'absolute', bottom: windowHeight * .5, alignSelf: 'center' }}><Text style={{ color: '#77756e', fontSize: 20, }}>Chat with us</Text></View>}

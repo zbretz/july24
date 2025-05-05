@@ -9,7 +9,7 @@ export default async function populateData({ masterState, setMasterState }) {
 
     let user = masterState.user 
 
-    console.log('populate data body -- app is ready: ', masterState.appIsReady, user)
+    // console.log('populate data body -- app is ready: ', masterState.appIsReady, user)
 
 
         await axios({
@@ -17,7 +17,9 @@ export default async function populateData({ masterState, setMasterState }) {
             url: `${url}/driver/populateData?_id=${user._id}`
         })
             .then(async res => {
-                console.log('user data: ', res.data)
+                // console.log('user data: ', res.data)
+                console.log('populate data')
+
 
                 const user = res.data.driver
 
@@ -41,8 +43,8 @@ export default async function populateData({ masterState, setMasterState }) {
 
 
 
-                console.log('new scheduled rides: ', newScheduledRides)
-                console.log('new local rides: ', newLocalRides)
+                // console.log('new scheduled rides: ', newScheduledRides)
+                // console.log('new local rides: ', newLocalRides)
 
 
 

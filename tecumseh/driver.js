@@ -16,10 +16,10 @@ router.get('/populateData', async (req, res) => {
         console.log('auth driver: ', driver)
 
         if (driver) {
-            let newScheduledRides = await db__.collection('rides').find({ driver:null }).toArray()
-            let newLocalRides = await db__.collection('localRides').find({ driver:null }).toArray()
+            let newScheduledRides = await db__.collection('rides').find({ driver: null }).toArray()
+            let newLocalRides = await db__.collection('localRides').find({ driver: null }).toArray()
             console.log('open rides: ', newScheduledRides, newLocalRides)
-            res.status(200).send({driver, newScheduledRides, newLocalRides});
+            res.status(200).send({ driver, newScheduledRides, newLocalRides });
         } else {
             res.status(200).send(false);
         }
@@ -40,6 +40,30 @@ router.get('/fetchDrivers', async (req, res) => {
         res.status(200).send(drivers);
     } catch (e) {
         console.log("db error fetching inital data: ", e)
+    }
+});
+
+router.post('/messageReadStatus', async (req, res) => {
+    const { rideId, driverId } = req.body;
+    console.log('message - rideId', rideId, driverId)
+    try {
+        // db__.collection('rides').updateOne(
+        //     { _id: new ObjectId(rideId) },
+        //     { $set: { unreadMessageFromUser:false } },
+        // )
+
+        let driver = await db__.collection('drivers').updateOne(
+            { _id: new ObjectId(driverId), "activeRides._id": rideId },
+            { $set: { "activeRides.$.unreadMessageFromUser": false } }, //https://stackoverflow.com/a/10523963
+            { returnDocument: "after" }
+        )
+
+        console.log('driver: ', driver)
+
+
+        // res.status(200).send(drivers);
+    } catch (e) {
+        console.log("db error updating message status: ", e)
     }
 });
 

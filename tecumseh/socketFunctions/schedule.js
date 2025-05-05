@@ -16,6 +16,9 @@ message = async (io, data) => {
             $push: {
                 "activeRides.$.chatLog": data
             },
+            $set: {
+                "activeRides.$.unreadMessageFromUser": true
+            }
         },
         { returnDocument: 'after' }
     )
@@ -39,6 +42,8 @@ message = async (io, data) => {
         },
         { returnDocument: 'after' }
     )
+
+    // data = { ...data, unreadMessageFromUser: true }
 
     io.to(data.userid).to(data.driverid).emit('message', data);
 

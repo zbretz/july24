@@ -45,7 +45,7 @@ export default ScheduleRideOpenRequests = ({ navigation, isConnected, masterStat
             <ScrollView style={{ paddingTop: 60, paddingBottom: 70 }}>
                 {/* {[1].map(request => { */}
                 {masterState.newScheduledRides.map((request, idx) => {
-                    console.log('blurgh: ', request)
+                    // console.log('blurgh: ', request)
                     return (
                         <TouchableOpacity key={idx} onPress={() => { navigation.navigate('ScheduleRideDetail', { requestType: 'open', rideId: request._id }) }} style={{ borderColor: '#000', borderWidth: 1, borderRadius: 20, margin: 10, padding: 30 }}>
                             <Text>From: {request.pickupAddress}</Text>

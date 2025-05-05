@@ -2,8 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, TouchableHighlight, View, TextInput
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { Entypo, Feather, FontAwesome5, AntDesign } from '@expo/vector-icons';
 import { socket } from '../socket';
-import url from '../url_toggle'
-import axios from 'axios';
+import { useFocusEffect } from '@react-navigation/native';
 import CallDriverButton from './CallDriverButton';
 
 import { formatInTimeZone } from "date-fns-tz";
@@ -19,8 +18,8 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
     const { user } = masterState
     const { requestType, rideId } = route.params;
 
-    console.log('schedule ride detail: ', requestType, rideId)
-    console.log(masterState.newScheduledRides)
+    // console.log('schedule ride detail: ', requestType, rideId)
+    // console.log('new scheduled rides: ', masterState.newScheduledRides)
 
     let rideDetail = requestType == 'open' ? masterState.newScheduledRides.find(ride => ride._id == rideId) : masterState.myScheduledRides.find(ride => ride._id == rideId)
 
@@ -100,8 +99,22 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
     //if ride canceled, close out of detail view
     useEffect(() => {
         if (!rideDetail) navigation.goBack()
+
+        // console.log('ride detail page: ', rideDetail)
+
+
+        // if (request.driver) {
+        // console.log('chatlog: ', rideDetail.chatLog)
+        // }
+
+        // return () => {
+        //      console.log('ride detail leave page')
+        // }
+
     }, [rideDetail])
     if (!rideDetail) { return null }
+
+
 
 
     // display 'en route' button to driver
@@ -219,6 +232,11 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
 
                             {chatLog.length ?
                                 <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId }) }} style={{ backgroundColor: '#f2f2f2', borderRadius: 10, borderWidth: 0, borderColor: '#c4a73b', margin: 10, padding: 10 }} >
+
+
+                                    {request.unreadMessageFromUser && <Text style={{ color: 'blue' }}>Unread Message</Text>}
+
+
                                     <View style={{ alignItems: 'center', flexDirection: 'row', padding: 10 }}>
                                         <Entypo name="chat" size={24} color="black" style={{ marginRight: 20 }} />
                                         <Text style={{ fontSize: 16, fontWeight: '600', color: "#000", marginBottom: 4 }}>User Chat</Text>
