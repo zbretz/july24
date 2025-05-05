@@ -234,8 +234,14 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
                                 <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId }) }} style={{ backgroundColor: '#f2f2f2', borderRadius: 10, borderWidth: 0, borderColor: '#c4a73b', margin: 10, padding: 10 }} >
 
 
-                                    {request.unreadMessageFromUser && <Text style={{ color: 'blue' }}>Unread Message</Text>}
+                                    {/* {request.unreadMessageFromUser && <Text style={{ color: 'blue' }}>Unread Message</Text>} */}
 
+                                    {!request.unreadMessageFromUser &&
+                                        <View style={{ marginTop: 0, alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', padding: 4, backgroundColor: '#fff', borderRadius: 8, marginBottom: 14 }} >
+                                            <AntDesign name="mail" size={27} color="#ffb700" />
+                                            <Text style={{ fontSize: 16, fontWeight: 600, color: '#000', marginLeft: 8 }}>Unread Message</Text>
+                                        </View>
+                                    }
 
                                     <View style={{ alignItems: 'center', flexDirection: 'row', padding: 10 }}>
                                         <Entypo name="chat" size={24} color="black" style={{ marginRight: 20 }} />

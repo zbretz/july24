@@ -14,8 +14,8 @@ export default ScheduleRideListView = ({ navigation, isConnected, masterState })
 
     return (
         <SafeAreaView style={{ height: '100%', backgroundColor: '#fff' }}>
-            <Text style={{ fontSize: 20, fontWeight: '600', color: "#000", textAlign: 'center', position: 'absolute', top: 80, alignSelf: 'center', zIndex: 1 }}>My Rides</Text>
-            <ScrollView style={{ paddingTop: 60 }}>
+            <Text style={{ fontSize: 20, fontWeight: '600', color: "#000", textAlign: 'center', alignSelf: 'center', zIndex: 1 }}>My Rides</Text>
+            <ScrollView style={{ paddingTop: 10 }}>
                 {/* {[1].map(request => { */}
                 {masterState.myScheduledRides?.map((request, idx) => {
 
@@ -25,17 +25,22 @@ export default ScheduleRideListView = ({ navigation, isConnected, masterState })
                     let displayClock = hoursUntilPickup < 24
 
                     return (
-                        <TouchableOpacity key={idx} onPress={() => { navigation.navigate('ScheduleRideDetail', { requestType: 'assigned', rideId: request._id }) }} style={{ borderColor: '#ffb700', borderWidth: 1, borderRadius: 20, margin: 10, padding: 30, backgroundColor: '#ffcf56' }}>
-                         
+                        <TouchableOpacity key={idx} onPress={() => { navigation.navigate('ScheduleRideDetail', { requestType: 'assigned', rideId: request._id }) }} style={{ borderColor: '#ffb700', borderWidth: 1, borderRadius: 20, margin: 10, padding: 30, backgroundColor: '#ffe299' }}>
 
-                         {request.unreadMessageFromUser && <Text style={{color:'blue'}}>Unread Message</Text>}
-                         
+
+                            {request.unreadMessageFromUser &&
+                                <View style={{ marginTop: -10, alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', padding: 4, backgroundColor: '#fff', borderRadius: 8, marginBottom: 14 }} >
+                                    <AntDesign name="mail" size={24} color="#ffb700" />
+                                    <Text style={{ fontSize: 12, fontWeight: 600, color: '#000', marginLeft: 8 }}>Unread Message</Text>
+                                </View>
+                            }
+
                             <View>
 
                                 {displayClock &&
-                                    <View style={{ position: 'absolute', top: 6, right: -10 }} >
-                                        <Feather name="clock" size={44} color="green" />
-                                        <Text style={{fontSize:8, fontWeight:600, color:'green', right:-34, top:-8}}>soon</Text>
+                                    <View style={{ marginTop: -10, alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', padding: 4, backgroundColor: '#fff', borderRadius: 8, marginBottom: 4 }} >
+                                        <Feather name="clock" size={24} color="#ffb700" />
+                                        <Text style={{ fontSize: 12, fontWeight: 600, color: '#000', marginLeft: 8 }}>Approaching</Text>
                                     </View>
                                     // :
                                     // <AntDesign style={{ position: 'absolute', top: -10, right: -4 }} name="checkcircle" size={24} color="#e6a400" />

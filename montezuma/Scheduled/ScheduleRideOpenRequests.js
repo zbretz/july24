@@ -40,9 +40,9 @@ export default ScheduleRideOpenRequests = ({ navigation, isConnected, masterStat
 
             </View> */}
 
-            <Text style={{ fontSize: 20, fontWeight: '600', color: "#000", textAlign: 'center', position: 'absolute', top: 80, alignSelf: 'center' }}>Open Requests</Text>
+            <Text style={{ fontSize: 20, fontWeight: '600', color: "#000", textAlign: 'center',  alignSelf: 'center' }}>Open Requests</Text>
 
-            <ScrollView style={{ paddingTop: 60, paddingBottom: 70 }}>
+            <ScrollView style={{ paddingTop: 0, paddingBottom: 70 }}>
                 {/* {[1].map(request => { */}
                 {masterState.newScheduledRides.map((request, idx) => {
                     // console.log('blurgh: ', request)
