@@ -34,16 +34,16 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
         <View style={{ backgroundColor: '#fff', height: '100%' }}>
 
 
-            <View style={{ backgroundColor: '#FFCF56', margin: 20, marginBottom: 0, borderRadius: 40, padding: 10, paddingVertical: 30 }}>
+            <View style={{ backgroundColor: '#FFCF56', margin: 20, marginBottom: 6, borderRadius: 40, padding: 10, paddingVertical: 20 }}>
 
                 <View style={{ zIndex: 11 }}>
-                    <TouchableOpacity style={{ position: 'absolute', top: 0, left: 0, }} onPress={() => navigation.goBack()}>
+                    <TouchableOpacity style={{ position: 'absolute', top:7 }} onPress={() => navigation.goBack()}>
                         <MaterialIcons style={{ marginLeft: 10 }} name="arrow-back-ios" size={24} color="black" />
                     </TouchableOpacity>
                 </View>
 
                 <View style={{}}>
-                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: windowWidth * .078, textAlign: 'center', marginBottom: -8 }} adjustsFontSizeToFit={true} numberOfLines={1}>Scheduled Rides</Text>
+                    <Text style={{ fontFamily: 'LexendRegular', fontSize: windowWidth * .074, textAlign: 'center' }} adjustsFontSizeToFit={true} numberOfLines={1}>Scheduled Rides</Text>
                 </View>
 
             </View>

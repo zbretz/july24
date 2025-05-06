@@ -146,9 +146,22 @@ router.post('/sms', async (req, res) => {
   let user = await db__.collection('users').findOne({ phone: req.body.From.slice(2) })
 
 
-  // if no ride / driver / or like after the timeout, send twiml: no active ridemaybe instead of just next ride, maybe time-based somehow
 
   let ride = user.activeRides[0]
+
+  // if (!ride) {
+  //   const twiml = new MessagingResponse();
+  //   twiml.message("Hi there.\n\nIt appears you don't have a ride scheduled.\n\nPlease contact support for assistance: +19175751955");
+  //   res.type('text/xml').send(twiml.toString());
+  //   return
+  // }
+
+  if (ride.driver) {
+    const twiml = new MessagingResponse();
+    twiml.message("Your driver hasn't been assigned yet, but we're working on it.\n\nPlease contact support for assistance: +19175751955");
+    res.type('text/xml').send(twiml.toString());
+    return
+  }
 
   // check if ride has a driver. if not driver, no chat! <-
   // mayve no notification if text is sent...refer to schedule.js messages -- smsCommsEnabled
@@ -174,38 +187,38 @@ router.post('/sms', async (req, res) => {
 
 
 
-   let driver_chat_persist = await db__.collection('drivers').findOneAndUpdate(
-          { _id: new ObjectId(String(messageData.driverid)), "activeRides._id": (String(messageData.rideid)) },
-          {
-              $push: {
-                  "activeRides.$.chatLog": messageData
-              },
-              $set: {
-                  "activeRides.$.unreadMessageFromUser": true
-              }
-          },
-          { returnDocument: 'after' }
-      )
-  
-      let user_chat_persist = await db__.collection('users').findOneAndUpdate(
-          { _id: new ObjectId(String(messageData.userid)), "activeRides._id": new ObjectId(String(messageData.rideid)) },
-          {
-              $push: {
-                  "activeRides.$.chatLog": messageData
-              },
-          },
-          { returnDocument: 'after' }
-      )
-  
-      let ride_chat_persist = await db__.collection('rides').findOneAndUpdate(
-          { _id: new ObjectId(String(messageData.rideid)) },
-          {
-              $push: {
-                  chatLog: messageData
-              },
-          },
-          { returnDocument: 'after' }
-      )
+  let driver_chat_persist = await db__.collection('drivers').findOneAndUpdate(
+    { _id: new ObjectId(String(messageData.driverid)), "activeRides._id": (String(messageData.rideid)) },
+    {
+      $push: {
+        "activeRides.$.chatLog": messageData
+      },
+      $set: {
+        "activeRides.$.unreadMessageFromUser": true
+      }
+    },
+    { returnDocument: 'after' }
+  )
+
+  let user_chat_persist = await db__.collection('users').findOneAndUpdate(
+    { _id: new ObjectId(String(messageData.userid)), "activeRides._id": new ObjectId(String(messageData.rideid)) },
+    {
+      $push: {
+        "activeRides.$.chatLog": messageData
+      },
+    },
+    { returnDocument: 'after' }
+  )
+
+  let ride_chat_persist = await db__.collection('rides').findOneAndUpdate(
+    { _id: new ObjectId(String(messageData.rideid)) },
+    {
+      $push: {
+        chatLog: messageData
+      },
+    },
+    { returnDocument: 'after' }
+  )
 
 
 
