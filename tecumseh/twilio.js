@@ -149,21 +149,20 @@ router.post('/sms', async (req, res) => {
 
   let ride = user.activeRides[0]
 
-  // if (!ride) {
-  //   const twiml = new MessagingResponse();
-  //   twiml.message("Hi there.\n\nIt appears you don't have a ride scheduled.\n\nPlease contact support for assistance: +19175751955");
-  //   res.type('text/xml').send(twiml.toString());
-  //   return
-  // }
+  if (!ride) {
+    const twiml = new MessagingResponse();
+    twiml.message("Hi there.\n\nIt appears you don't have a ride scheduled.\n\nPlease contact support for assistance: +19175751955");
+    res.type('text/xml').send(twiml.toString());
+    return
+  }
 
-  if (ride.driver) {
+  if (!ride.driver) {
     const twiml = new MessagingResponse();
     twiml.message("Your driver hasn't been assigned yet, but we're working on it.\n\nPlease contact support for assistance: +19175751955");
     res.type('text/xml').send(twiml.toString());
     return
   }
 
-  // check if ride has a driver. if not driver, no chat! <-
   // mayve no notification if text is sent...refer to schedule.js messages -- smsCommsEnabled
   // also put smsMEssagesEnabled preference on account screen
   // test stop to turn off sms messaging

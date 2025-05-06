@@ -182,7 +182,7 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
                                     <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId: rideDetail._id }) }} style={{ backgroundColor: '#ffdb80', borderRadius: 20, borderColor: '#c4a73b', padding: 10, paddingVertical: 20, }} >
                                         <Text style={{ marginHorizontal: 10, fontSize: 18, color: "#000", fontFamily: 'LexendRegular' }}>Driver Chat</Text>
                                         <View style={{ marginHorizontal: 10, backgroundColor: '#fff', borderRadius: 20, padding: 8, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <Text style={{ color: '#a1a1a1', fontSize: 18, fontFamily: 'LexendMedium', }}>Message Driver ...</Text>
+                                            <Text style={{ color: '#a1a1a1', fontSize: 18, fontFamily: 'LexendRegular', }}>Message Driver ...</Text>
                                             <Entypo name="chat" size={32} color="black" style={{ marginRight: 20 }} />
                                         </View>
                                     </TouchableOpacity>

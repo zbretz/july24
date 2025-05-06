@@ -60,12 +60,14 @@ message = async (io, data) => {
         )
     }
 
+    let first_message_for_ride;
+    if (ride_chat_persist.chatLog.length == 1 ) first_message_for_ride = true
 
     // return
 
 
     if (data.toUser && smsEnabled) {
-        smsMessageUser(user_chat_persist.phone, data.text)
+        smsMessageUser(user_chat_persist.phone, data.text, first_message_for_ride)
     }
 
     io.to(data.userid).to(data.driverid).emit('message', data);
