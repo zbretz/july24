@@ -62,7 +62,7 @@ export default Chat = ({ navigation, route, masterState, setMasterState, isConne
                                     }
                                 </View>
                                 <View style={{ padding: 8, paddingHorizontal: 10, backgroundColor: is_sender ? '#e6e6e6' : '#f2f2f2', borderRadius: 20, maxWidth: '80%', borderWidth: 0, borderColor: 'white', alignSelf: is_sender ? 'flex-start' : 'flex-end' }}>
-                                    <Text selectable={true} style={{ fontSize: 19, fontWeight: '500', color: is_sender ? '#000' : '#000', fontFamily: 'PointSoftSemiBold', marginBottom: -0 }}>{comment.text}</Text>
+                                    <Text selectable={true} style={{ fontSize: 19, fontWeight: '500', color: is_sender ? '#000' : '#000', fontFamily: 'LexendRegular', marginBottom: -0 }}>{comment.text}</Text>
                                 </View>
                             </View>
                         </View>
@@ -84,7 +84,7 @@ export default Chat = ({ navigation, route, masterState, setMasterState, isConne
                     textAlignVertical='top'
                     value={text}
                     onChangeText={(text) => setText(text)}
-                    style={{ maxHeight: 120, fontSize: 18, backgroundColor: '#fff', flex: 1, borderWidth: 1.5, borderColor: '#000', borderRadius: 40, padding: 10, fontFamily: 'PointSoftSemiBold', }}
+                    style={{ maxHeight: 120, fontSize: 18, backgroundColor: '#fff', flex: 1, borderWidth: 1.5, borderColor: '#000', borderRadius: 40, padding: 10, fontFamily: 'LexendRegular', }}
                 />
                 <TouchableOpacity
                     onPress={() => sendMessage()}

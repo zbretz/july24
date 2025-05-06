@@ -153,6 +153,7 @@ router.post('/sms', async (req, res) => {
   // check if ride has a driver. if not driver, no chat! <-
   // mayve no notification if text is sent...refer to schedule.js messages -- smsCommsEnabled
   // also put smsMEssagesEnabled preference on account screen
+  // test stop to turn off sms messaging
 
   console.log('active ride: ', ride)
 
