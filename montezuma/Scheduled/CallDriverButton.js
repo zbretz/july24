@@ -34,7 +34,7 @@ const CallDriverButton = ({ rideId, pickupDateTime }) => {
 
         let proxyNumber
 
-        axios.post(`${url}/calling/create-proxy-session`, { rideId, userType: 'driver' })
+        axios.post(`${url}/comms/create-proxy-session`, { rideId, userType: 'driver' })
             .then(res => {
                 if (res.data) {
                     proxyNumber = res.data.proxyNumber

@@ -1,6 +1,7 @@
 const { db__, db_locals } = require('../mongoConnection.js')
 var ObjectId = require('mongodb').ObjectId;
 const { notifyUser, notifyDriver, notifyAllDrivers } = require('../notify.js');
+const { smsMessageUser } = require("../sms.js");
 
 let stripe_private_key = process.env.STRIPE_PRIVATE_KEY
 const stripe = require('stripe')(stripe_private_key);
@@ -43,7 +44,12 @@ message = async (io, data) => {
         { returnDocument: 'after' }
     )
 
-    // data = { ...data, unreadMessageFromUser: true }
+
+    let smsCommsEnabled = true
+    console.log('user chat persist: ', user_chat_persist)
+    if (data.toUser && smsCommsEnabled) {
+        smsMessageUser(user_chat_persist.phone, data.text)
+    }
 
     io.to(data.userid).to(data.driverid).emit('message', data);
 

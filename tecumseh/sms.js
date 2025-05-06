@@ -14,10 +14,10 @@ let notifications = {
     "enroute": "Your driver is en route. We'll notify you when we've arrived",
     "arrived": "Your ride has arrived! Please meet your driver outside when you're ready.",
     "chatMessage": "You have a new chat message. Read and respond on the app."
-  }
+}
 
 
-const smsRequestConfirmation = (status='confirmed', name, userPhone) => {
+const smsRequestConfirmation = (status = 'confirmed', name, userPhone) => {
     return client.messages
         .create({
             // body: `Hi ${name}, your ride request has been confirmed. View ride details on The Park City App. Thanks!`,//`Ride request: \nName: ${name}\nDate/Time: ${Object.values(pickup)}\nMessage: ${message}.\nTheir phone number: ${phone}`,
@@ -34,7 +34,7 @@ const smsNotifyUser = (userPhone, text) => {
     return client.messages
         .create({
             body:
-            `Park City App here. You have a new message:\n${text}`,
+                `Park City App here. You have a new message:\n${text}`,
             from: phoneNumber,
             to: userPhone
         })
@@ -50,7 +50,7 @@ const smsNotifyDriver = (driverPhone, text) => {
     return client.messages
         .create({
             body:
-            `Park City App here. You have a new message:\n${text}`,
+                `Park City App here. You have a new message:\n${text}`,
             from: phoneNumber,
             to: driverPhone
         })
@@ -81,9 +81,25 @@ const sendCode = (clientNumber, code) => {
         });
 }
 
+const smsMessageUser = (userPhone, text) => {
+    console.log(userPhone, text)
+    return client.messages
+        .create({
+            body: text,
+            from: '+18016182619',
+            to: userPhone
+        })
+        .then(message => console.log('sms sent: ', message.sid))
+        .catch(e => {
+            console.log('caught error!: ', e)
+            // throw new Error
+        });
+}
+
 module.exports = {
     smsRequestConfirmation,
     smsNotifyUser,
     smsNotifyDriver,
-    sendCode
+    sendCode,
+    smsMessageUser
 }; 

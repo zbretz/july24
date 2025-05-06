@@ -6,7 +6,7 @@ const httpRouter = require('./httpRouter');
 const auth = require('./auth')
 const driver = require('./driver')
 const user = require('./user')
-const maskedCalling = require('./maskedCalling')
+const twilio = require('./twilio')
 
 // middleware to send responses as json
 app.use(express.json());
@@ -28,7 +28,7 @@ app.use('/driver', driver);
 app.use('/auth', auth);
 app.use('/childcare', httpRouter);
 app.use('/', httpRouter);
-app.use('/calling', maskedCalling);
+app.use('/comms', twilio);
 
 
 const socketRouter = require('./socketRouter')(io)
