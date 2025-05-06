@@ -21,6 +21,10 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
     const chatLog = rideDetail?.chatLog
 
 
+
+    const types = { 1: ['Standard', 4], 2: ['Premium', 4], 3: ['XL', 5], 4: ['Premium XL', 6] }
+
+
     // const cancelRide = () => {
     //     Alert.alert('Cancel Ride',
     //         `
@@ -97,36 +101,53 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
                 }}>
 
 
-                    {rideDetail.enRoute ?
-                        <View style={{ alignItems: 'center', }}>
-                            <Text numberOfLines={1} adjustsFontSizeToFit={true} style={{ fontSize: 36, fontFamily: 'LexendRegular', textAlign: 'center' }}>Status: Driver En Route</Text>
+                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+                        <View>
+                            {rideDetail.enRoute ?
+                                // <View style={{ alignItems: 'center', }}>
+                                //     <Text numberOfLines={1} adjustsFontSizeToFit={true} style={{ fontSize: 20, fontFamily: 'LexendRegular', textAlign: 'center' }}>Status: Driver En Route</Text>
+                                // </View>
+                                <View style={{ marginBottom: 0, marginHorizontal: 0, padding:10, backgroundColor:'#ffccd6', borderRadius:16 }}>
+                                    <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'LexendMedium', color:'#99001f' }}>Ride Status</Text>
+                                    <Text style={{ marginVertical: 0, fontSize: 22, fontFamily: 'LexendRegular', color:'#000'}}>Driver En Route</Text>
+                                </View>
+                                :
+                                <View style={{ marginBottom: 0, marginHorizontal: 10 }}>
+                                    <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'LexendMedium', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "eeee")}</Text>
+                                    <Text style={{ marginVertical: 0, fontSize: 22, fontFamily: 'LexendMedium', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "MMMM d")}</Text>
+                                    <Text style={{ marginVertical: 0, fontSize: 22, fontFamily: 'PointSoftLight', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "h':'mm aa")}</Text>
+                                </View>
+                            }
                         </View>
-                        :
-                        <View style={{ marginBottom: 0, marginHorizontal: 10 }}>
-                            <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'LexendMedium', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "eeee")}</Text>
-                            <Text style={{ marginVertical: 0, fontSize: 22, fontFamily: 'LexendMedium', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "MMMM d")}</Text>
-                            <Text style={{ marginVertical: 0, fontSize: 22, fontFamily: 'PointSoftLight', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "h':'mm aa")}</Text>
-                        </View>
-                    }
+                        {/* <View style={{ backgroundColor: '#f2f2f2' }}> */}
+                        <View style={{ marginBottom: 0, marginHorizontal: 10, alignItems: 'flex-end', justifyContent: 'center', backgroundColor: '#f2f2f2', padding: 10, borderRadius: 16 }}>
+                            <Text style={{ marginVertical: 0, fontSize: 14, fontFamily: 'LexendMedium', }}>{types[rideDetail.rideType][0]}</Text>
 
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={{ marginVertical: 0, fontSize: 14, fontFamily: 'LexendRegular', color:'#737373'}}>{types[rideDetail.rideType][1]}</Text>
+                                <Ionicons name="person" size={16} color="#737373" />
+                            </View>
+                        </View>
+                        {/* </View> */}
+                    </View>
 
                     {rideDetail.driver &&
-                        <View style={{ borderRadius: 30, justifyContent: 'center', marginVertical: 10, borderWidth: 7, borderColor: '#e6e6e6' }}>
-                            <View style={{ backgroundColor: '#fff', borderRadius: 28, padding: 16, }}>
+                        <View style={{ borderRadius: 30, marginVertical: 10, borderWidth: 7, borderColor: '#e6e6e6', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 16, }}>
+                            <View style={{ backgroundColor: '#fff', borderRadius: 28, }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                                     <Text numberOfLines={1} style={{ fontSize: 18, fontFamily: 'LexendRegular', }}>Driver Assigned  </Text>
                                     <Image style={{ height: 26, width: 26, marginTop: 0 }} source={require('../assets/verified.png')} />
                                 </View>
-
-                                <CallDriverButton style={{}}
-                                    rideId={rideId}
-                                    pickupDateTime={rideDetail.pickupDateTime}
-                                />
-
-                                <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                                <View style={{}}>
                                     <Text style={{ fontSize: 18, fontFamily: 'PointSoftLight', }}>{rideDetail.driver.firstName}</Text>
                                 </View>
                             </View>
+
+                            <CallDriverButton style={{}}
+                                rideId={rideId}
+                                pickupDateTime={new Date()}
+                            />
+
                         </View>
                     }
 

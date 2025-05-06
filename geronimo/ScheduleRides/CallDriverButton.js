@@ -65,7 +65,7 @@ const CallDriverButton = ({ rideId, pickupDateTime }) => {
     if (!canCall) return null;
 
     return (
-        <View style={{ position: 'absolute', borderRadius: 20, bottom: 30, right: 20, }}>
+        <View style={{ borderRadius: 0,  }}>
             {loading ? (
                 <ActivityIndicator />
             ) : (

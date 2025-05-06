@@ -516,8 +516,9 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
 
 
             {addressError &&
-                <View style={{ position: 'absolute', bottom: 10, backgroundColor: '#000', borderRadius: 20, marginHorizontal: 20, alignSelf: 'center', padding: 20 }}>
-                    <Text style={{ fontSize: 20, fontFamily: 'LexendMedium', color: '#fff', }}>Address not recognized. Please re-input your missing location.</Text>
+                <View style={{ position: 'absolute', bottom: 80, zIndex: 3, backgroundColor: '#ffb3c2', borderRadius: 20, marginHorizontal: 20, alignSelf: 'center', padding: 16, paddingHorizontal: 20, borderWidth: 2, borderColor: '#cc0029' }}>
+                    <Text style={{ fontSize: 20, fontFamily: 'LexendMedium', color: '#cc0029', textAlign: 'center' }}>Address not recognized.</Text>
+                    <Text style={{ fontSize: 18, fontFamily: 'LexendRegular', color: '#cc0029', textAlign: 'center', marginTop:6 }}>Please re-input your location.</Text>
                 </View>
             }
         </>
