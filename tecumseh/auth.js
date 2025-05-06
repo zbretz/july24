@@ -50,7 +50,7 @@ router.post('/registerUser', async (req, res) => {
     } else {
         registrationCodes[stripped_phone] = code
         console.log('registration codes: ', registrationCodes)
-        await db__.collection('users').insertOne({ firstName: user.firstName, lastName: user.lastName, phone: stripped_phone, confirmationCode: code, signupDate: Date.now(), confirmedWithCode: false, driver: null, activeRides: [] })
+        await db__.collection('users').insertOne({ firstName: user.firstName, lastName: user.lastName, phone: stripped_phone, confirmationCode: code, signupDate: Date.now(), confirmedWithCode: false, driver: null, activeRides: [], smsEnabled: true })
         sendCode(stripped_phone, code)
         res.status(200).send('ok');
     }

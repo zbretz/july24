@@ -9,6 +9,7 @@ const stripe = require('stripe')(stripe_private_key);
 // const stripe = require('stripe')('sk_test_51Ov1U9JhmMKAiBpVczAh3RA7hEZfa4VRmOmyseADv5sY225uLcYlpfH4dYup6tMLkhC8YhUAt754dTmwNsLa23mo00P2T8WqN0'); // pc payments test key
 
 message = async (io, data) => {
+
     console.log('Received message:', data);
 
     let driver_chat_persist = await db__.collection('drivers').findOneAndUpdate(
@@ -45,19 +46,35 @@ message = async (io, data) => {
     )
 
 
-    let smsCommsEnabled = true
+
+    let smsEnabled = user_chat_persist.smsEnabled
     console.log('user chat persist: ', user_chat_persist)
-    if (data.toUser && smsCommsEnabled) {
+
+    console.log('smsEnabled: ', user_chat_persist.hasOwnProperty('smsEnabled'))
+
+    if (!user_chat_persist.hasOwnProperty('smsEnabled')) {
+        smsEnabled = true
+        let user_chat_persist = await db__.collection('users').updateOne(
+            { _id: new ObjectId(String(data.userid)) },
+            { $set: { smsEnabled } },
+        )
+    }
+
+
+    // return
+
+
+    if (data.toUser && smsEnabled) {
         smsMessageUser(user_chat_persist.phone, data.text)
     }
 
     io.to(data.userid).to(data.driverid).emit('message', data);
 
-    if (data.toUser) {
-        notifyUser({ ...data, type: 'message' })
-    } else {
-        notifyDriver({ ...data, type: 'message' })
-    }
+    // if (data.toUser) {
+    //     notifyUser({ ...data, type: 'message' })
+    // } else {
+    //     notifyDriver({ ...data, type: 'message' })
+    // }
 
 };
 
