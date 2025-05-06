@@ -11,7 +11,8 @@ import * as Animatable from 'react-native-animatable';
 import { url } from '../url_toggle'
 import populateData from '../CoreNav/populateData';
 import { version as app_version } from '../package.json';
-import ReceiptScreen from './ReceiptScreen';
+import ReceiptSettings from './ReceiptSettings';
+import SmsSettings from './SmsSettings';
 
 const Stack = createStackNavigator();
 const windowWidth = Dimensions.get('window').width;
@@ -45,12 +46,12 @@ export default function MyAccount({ navigation, masterState, setMasterState }) {
                         {props => <DeleteAccount {...props} masterState={masterState} setMasterState={setMasterState} />}
                     </Stack.Screen>
 
-                    <Stack.Screen name="ReceiptScreen">
-                        {props => <ReceiptScreen {...props} masterState={masterState} setMasterState={setMasterState} />}
+                    <Stack.Screen name="ReceiptSettings">
+                        {props => <ReceiptSettings {...props} masterState={masterState} setMasterState={setMasterState} />}
                     </Stack.Screen>
 
-                    <Stack.Screen name="SmsScreen">
-                        {props => <SmsScreen {...props} masterState={masterState} setMasterState={setMasterState} />}
+                    <Stack.Screen name="SmsSettings">
+                        {props => <SmsSettings {...props} masterState={masterState} setMasterState={setMasterState} />}
                     </Stack.Screen>
                 </>
 
@@ -138,11 +139,11 @@ const AccountDetail = ({ navigation, masterState, setMasterState }) => {
             </Text>
 
             <View style={{ backgroundColor: '#e6e6e6', borderRadius: 30, margin: 20, padding: 0 }}>
-                <TouchableOpacity onPress={() => navigation.navigate('ReceiptScreen')} style={{ padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <TouchableOpacity onPress={() => navigation.navigate('ReceiptSettings')} style={{ padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Text style={{ fontSize: 16, fontFamily: 'LexendRegular' }}>Receipt Preferences</Text>
                     <AntDesign name="right" size={16} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => comingSoonAlert('driver')} style={{ backgroundColor: '#e6e6e6', padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
+                <TouchableOpacity onPress={() => navigation.navigate('SmsSettings')} style={{ backgroundColor: '#e6e6e6', padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
                     <Text style={{ fontSize: 16, fontFamily: 'LexendRegular', color: '#000', }}>Messaging Preferencess</Text>
                     <AntDesign name="right" size={16} color="#b2b2b2" />
                 </TouchableOpacity>

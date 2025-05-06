@@ -6,21 +6,20 @@ import axios from 'axios';
 
 import { url } from '../url_toggle'
 
-export default ReceiptScreen = ({ navigation, masterState, setMasterState }) => {
+export default SmsSettings = ({ navigation, masterState, setMasterState }) => {
 
-    const [emailAddress, setEmailAddress] = useState(null)
-    const [autoReceipts, setAutoReceipts] = useState(null)
+    const [smsEnabled, setSmsEnabled] = useState(null)
     const [loadingPayForm, setLoadingPayForm] = useState(false)
 
-    const saveEmailPreferences = () => {
+    const saveSmsPreferences = () => {
 
         setLoadingPayForm(true)
 
-        axios.post(`${url}/user/receiptPreferences`, { user: masterState.user, email: emailAddress, autoReceipts })
+        axios.post(`${url}/user/smsPreferences`, { user: masterState.user, email: emailAddress, smsEnabled })
             .then(res => {
                 if (res.data === 'ok') {
                     console.log('receipt preferences saved: ', res.data)
-                    setMasterState({ ...masterState, user: { ...masterState.user, email: emailAddress, autoReceipts } })
+                    setMasterState({ ...masterState, user: { ...masterState.user, email: emailAddress, smsEnabled } })
                     Keyboard.dismiss()
                 }
                 else {
@@ -37,9 +36,7 @@ export default ReceiptScreen = ({ navigation, masterState, setMasterState }) => 
     }
 
     useEffect(() => {
-        //     setMasterState({...masterState, user:{...masterState.user, email:'hello@kitty.com', autoReceipts: true}})
-        setEmailAddress(masterState.user.email)
-        setAutoReceipts(masterState.user.autoReceipts)
+        setSmsEnabled(masterState.user.smsEnabled)
     }, [])
 
     return (
@@ -57,29 +54,24 @@ export default ReceiptScreen = ({ navigation, masterState, setMasterState }) => 
 
 
             <View style={{ backgroundColor: '#fff', textAlign: 'center', paddingTop: 30, borderRadius: 30, marginTop: 68 }}>
-                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 21, textAlign: 'center' }} >
-                    Receipt Preferences
+                <Text style={{ fontFamily: 'LexendMedium', fontSize: 21, textAlign: 'center' }} >
+                    Text Message Preferences
                 </Text>
             </View>
 
             <View style={{ backgroundColor: '#f2f2f2', padding: 20, borderRadius: 30, marginVertical: 20, }}>
-                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 18, textAlign: 'center' }} >
-                    Enable receipts to generate an automatic email after each payment.
+                <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, textAlign: 'center' }} >
+                    Toggle this setting to send a text message to your phone when you receive a driver message.
                 </Text>
             </View>
 
-            <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 18, textAlign: 'left' }} >
-                Email Address
-            </Text>
-            <TextInput style={{ paddingLeft: 10, backgroundColor: null, backgroundColor: '#f2f2f2', padding: 10, marginVertical: 10, borderRadius: 10, fontFamily: 'PointSoftSemiBold', fontSize: 16 }} onChangeText={(text) => { setEmailAddress(text) }} value={emailAddress} />
-
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 18, textAlign: 'left', marginTop: 10 }} >
-                    Receipts Enabled
+                <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, textAlign: 'left', marginTop: 10 }} >
+                    Text Messaging Enabled
                 </Text>
 
-                <TouchableOpacity onPress={() => setAutoReceipts(!autoReceipts)}>
-                    {autoReceipts ? <MaterialIcons name="check-box" size={28} color="black" /> : <MaterialIcons name="check-box-outline-blank" size={28} color="black" />}
+                <TouchableOpacity onPress={() => setSmsEnabled(!smsEnabled)}>
+                    {smsEnabled ? <MaterialIcons name="check-box" size={28} color="black" /> : <MaterialIcons name="check-box-outline-blank" size={28} color="black" />}
                 </TouchableOpacity>
             </View>
 
@@ -88,8 +80,8 @@ export default ReceiptScreen = ({ navigation, masterState, setMasterState }) => 
                     <ActivityIndicator />
                 </View>
                 :
-                <TouchableOpacity onPress={saveEmailPreferences} style={{ alignItems: 'center', backgroundColor: '#ffcf56', borderRadius: 30, marginTop: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 20, marginTop: 0, textAlign: 'center', padding: 20, paddingHorizontal: 16, marginBottom: -8 }} adjustsFontSizeToFit={true} numberOfLines={1}>Save</Text>
+                <TouchableOpacity onPress={saveSmsPreferences} style={{ alignItems: 'center', backgroundColor: '#ffcf56', borderRadius: 30, marginTop: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontFamily: 'LexendRegular', fontSize: 20, marginTop: 0, textAlign: 'center', padding: 20, paddingHorizontal: 16,  }} adjustsFontSizeToFit={true} numberOfLines={1}>Save</Text>
                 </TouchableOpacity>
             }
 
