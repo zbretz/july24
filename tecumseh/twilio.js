@@ -138,16 +138,25 @@ router.post('/sms', async (req, res) => {
   // twiml.message('Hi!');
   // res.type('text/xml').send(twiml.toString());
 
+  // test stop to turn off sms messaging
+  if (req.body.Body == 'STOP' || req.body.Body == 'START') {
+    let smsEnabled = req.body.Body == 'STOP' ? false : true
+    try {
+      let updatedUser = await db__.collection('users').updateOne({ phone: req.body.From.slice(2) }, { $set: { smsEnabled } }, { returnDocument: "after" });
+    } catch (e) {
+      console.log('receipt preferences error: ', e)
+    }
+    return
+  }
 
 
-
-  var io = req.app.get('socketio');
   // console.log('io: ', io)
   let user = await db__.collection('users').findOne({ phone: req.body.From.slice(2) })
 
 
 
   let ride = user.activeRides[0]
+  console.log('active ride: ', ride)
 
   if (!ride) {
     const twiml = new MessagingResponse();
@@ -164,9 +173,10 @@ router.post('/sms', async (req, res) => {
   }
 
 
-  // test stop to turn off sms messaging
 
-  console.log('active ride: ', ride)
+
+  var io = req.app.get('socketio');
+
 
   const messageData = {
     toDriver: true,

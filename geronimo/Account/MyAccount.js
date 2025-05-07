@@ -145,7 +145,7 @@ const AccountDetail = ({ navigation, masterState, setMasterState }) => {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate('SmsSettings')} style={{ backgroundColor: '#e6e6e6', padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
                     <Text style={{ fontSize: 16, fontFamily: 'LexendRegular', color: '#000', }}>Messaging Preferencess</Text>
-                    <AntDesign name="right" size={16} color="#b2b2b2" />
+                    <AntDesign name="right" size={16} color="#black" />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate('DeleteAccount')} style={{ backgroundColor: '#f2f2f2', borderBottomLeftRadius: 30, borderBottomRightRadius: 30, padding: 20, fontSize: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
                     <Text style={{ fontSize: 16, fontFamily: 'LexendRegular', color: '#b2b2b2', }}>Other Settings</Text>
