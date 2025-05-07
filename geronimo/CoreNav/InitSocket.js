@@ -3,6 +3,7 @@ import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LocalRideNav from '../LocalRides/LocalRideNav';
 import ScheduleRide from '../ScheduleRides/ScheduleRide';
+import DriverPages from '../ScheduleRides/DriverPages';
 import Locals from '../Locals/LocalsNav';
 import Childcare from '../Childcare/ChildcareNav';
 
@@ -92,7 +93,7 @@ export default function InitSocket({ masterState, setMasterState }) {
     });
 
     socket.on('scheduled_ride_en_route', (rideRequest) => {
-      console.log('scheduled ride en route: ',rideRequest)
+      console.log('scheduled ride en route: ', rideRequest)
       setMasterState(masterState => {
         console.log('active rides: ', masterState.user.activeRides)
         let activeRides = masterState.user.activeRides.map(ride => { return ride._id === rideRequest._id ? rideRequest : ride })
@@ -166,9 +167,13 @@ export default function InitSocket({ masterState, setMasterState }) {
           {props => <BottomTabs masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} chatLog={chatLog} setChatLog={setChatLog} />}
         </Stack.Screen>
 
+        {/* <Stack.Screen name="ScheduleRide">
+          {props => <ScheduleRide {...props} isConnected={isConnected} masterState={masterState} setMasterState={setMasterState} chatLog={chatLog} setChatLog={setChatLog} />}
+        </Stack.Screen> */}
+
         <Stack.Screen name="ScheduleRide">
-                {props => <ScheduleRide {...props} isConnected={isConnected} masterState={masterState} setMasterState={setMasterState} chatLog={chatLog} setChatLog={setChatLog} />}
-            </Stack.Screen>
+          {props => <DriverPages {...props} isConnected={isConnected} masterState={masterState} setMasterState={setMasterState} chatLog={chatLog} setChatLog={setChatLog} />}
+        </Stack.Screen>
 
         <Stack.Screen name="LocalRide">
           {props => <LocalRideNav {...props} type={'signup'} masterState={masterState} setMasterState={setMasterState} />}
