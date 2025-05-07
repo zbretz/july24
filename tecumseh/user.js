@@ -68,6 +68,28 @@ router.post('/receiptPreferences', async (req, res) => {
 });
 
 
+router.post('/smsPreferences', async (req, res) => {
+
+    let _id = req.body.user._id
+    let { smsEnabled } = req.body
+
+    try {
+        let updatedUser = await db__.collection('users').findOneAndUpdate({ _id: new ObjectId(_id) }, { $set: { smsEnabled } }, { returnDocument: "after" });
+        console.log('receipt user?: ', updatedUser)
+
+        if (updatedUser) {
+            res.status(200).send('ok');
+        } else {
+            res.status(200).send('fail');
+        }
+
+    } catch (e) {
+        console.log('receipt preferences error: ', e)
+    }
+
+});
+
+
 router.post('/driverPreferences', async (req, res) => {
 
     let _id = req.body.user._id

@@ -15,11 +15,11 @@ export default SmsSettings = ({ navigation, masterState, setMasterState }) => {
 
         setLoadingPayForm(true)
 
-        axios.post(`${url}/user/smsPreferences`, { user: masterState.user, email: emailAddress, smsEnabled })
+        axios.post(`${url}/user/smsPreferences`, { user: masterState.user, smsEnabled })
             .then(res => {
                 if (res.data === 'ok') {
                     console.log('receipt preferences saved: ', res.data)
-                    setMasterState({ ...masterState, user: { ...masterState.user, email: emailAddress, smsEnabled } })
+                    setMasterState({ ...masterState, user: { ...masterState.user, smsEnabled } })
                     Keyboard.dismiss()
                 }
                 else {

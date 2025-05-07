@@ -163,8 +163,7 @@ router.post('/sms', async (req, res) => {
     return
   }
 
-  // mayve no notification if text is sent...refer to schedule.js messages -- smsCommsEnabled
-  // also put smsMEssagesEnabled preference on account screen
+
   // test stop to turn off sms messaging
 
   console.log('active ride: ', ride)
