@@ -257,22 +257,22 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
 
                         <View style={{ margin: 10, marginVertical: 20 }}>
-                            <Text style={{ fontSize: 24, marginBottom: 20, fontWeight: 500, textAlign: 'center', fontFamily: 'LexendRegular' }}>What's New</Text>
+                            <Text style={{ fontSize: 24, marginBottom: 20, fontWeight: 500, textAlign: 'center', fontFamily: 'LexendRegular' }}>Feature Spotlight</Text>
 
 
+                            <View style={{ flexDirection: 'row', backgroundColor: '#ecf6f8', borderRadius: 30 }}>
 
-
-                            {/* <View style={{ width:boxDimensions, backgroundColor:'#ecf6f8',borderRadius: 30, padding:10 }}>
-
-
-                                        <Text style={{ fontSize: 18, fontFamily: 'LexendRegular' }}>Local Babysitters</Text>
+                                <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{ flex: 3, height: windowHeight * .22, borderRadius: 30, justifyContent: 'center' }}>
+                                    <View style={{ padding: 10, borderRadius: 10, }}>
+                                        <Text style={{ fontSize: 18, fontFamily: 'LexendRegular' }}>Connect with local babysitters</Text>
                                         <Text style={{ fontSize: 14, marginTop: 4, fontFamily: 'LexendLight' }}>Safe, simple, and reliable.</Text>
-                                 
+                                    </View>
+                                </TouchableOpacity>
 
-                                <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{ backgroundColor: '#f1f1f1', flex: 3, height: boxDimensions/2.5, width:boxDimensions/2.5, borderRadius: 20, marginRight: 10, alignItems: 'center', paddingVertical: 0 }}>
+                                <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{ backgroundColor: '#f1f1f1', flex: 3, height: windowHeight * .22, borderRadius: 30, marginLeft: 10, alignItems: 'center', justifyContent: 'center' }}>
 
                                     <Video
-                                        style={{ height: '100%', width: '100%', zIndex: -1, borderRadius: 20, }} // opacity: .27, 
+                                        style={{ borderRadius: 20, height: windowHeight * .2 - 20, width: windowHeight * .2 - 20, }} // opacity: .27, 
                                         source={require('../assets/cover_tall.mp4')}
                                         resizeMode={Platform.OS === 'ios' ? ResizeMode.COVER : "stretch"}
                                         isLooping
@@ -282,106 +282,41 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                                     />
 
                                 </TouchableOpacity>
-
-                            </View> */}
-
-
-
-
-                        <View style={{ flexDirection: 'row', backgroundColor:'#ecf6f8', borderRadius:30 }}>
-
-
-                            <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{  flex: 3, height: windowHeight * .22, borderRadius: 30, marginRight: 10, justifyContent: 'center' }}>
-                                <View style={{  padding: 10, borderRadius: 10, }}>
-                                    <Text style={{ fontSize: 18, fontFamily: 'LexendRegular' }}>Connect with local babysitters</Text>
-                                    <Text style={{ fontSize: 14, marginTop: 4, fontFamily: 'LexendLight' }}>Safe, simple, and reliable.</Text>
-                                </View>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{  flex: 3, height: windowHeight * .22, borderRadius: 30, marginRight: 0, alignItems: 'center', padding:10 }}>
-                                {/* <Image style={{ flex: 1, width: '100%' }} resizeMode='contain' source={require('../assets/stroller.png')} /> */}
-
-                                <Video
-                                    style={{ height: '100%', width: '100%', zIndex: -1, borderRadius: 30, }} // opacity: .27, 
-                                    source={require('../assets/cover_tall.mp4')}
-                                    resizeMode={Platform.OS === 'ios' ? ResizeMode.COVER : "stretch"}
-                                    isLooping
-                                    shouldPlay
-                                    isMuted
-                                    rate={0.9}
-                                />
-
-                              
-                            </TouchableOpacity>
-                        </View>
-
-
-                    </View>
-
-
-                    <View style={{ margin: 10, marginTop: 30 }}>
-
-                        <View style={{ flexDirection: 'row', }}>
-
-
-                            <TouchableOpacity onPress={() => navigation.navigate('ScheduleRide')} style={{ backgroundColor: '#f1f1f1', flex: 3, padding: 0, borderRadius: 30, marginRight: 10, alignItems: 'center', justifyContent: 'center' }}>
-                                <Image style={{ borderRadius: 20, height: windowHeight * .2 - 20, width: windowHeight * .2 - 20, }} resizeMode='cover' source={require('../assets/drivers_coming.jpeg')} />
-
-                                {/* <Video
-                                        style={{ height: '100%', width: '100%', zIndex: -1, borderRadius: 30, }} // opacity: .27, 
-                                        source={require('../assets/cover_tall.mp4')}
-                                        resizeMode={Platform.OS === 'ios' ? ResizeMode.COVER : "stretch"}
-                                        isLooping
-                                        shouldPlay
-                                        isMuted
-                                        rate={0.9}
-                                    /> */}
-
-
-                            </TouchableOpacity>
-
-                            <TouchableOpacity onPress={() => navigation.navigate('ScheduleRide')} style={{ backgroundColor: '#fff', flex: 3, height: windowHeight * .22, borderRadius: 30, marginRight: 10, justifyContent: 'center' }}>
-                                <View style={{ backgroundColor: '#fff', padding: 10, borderRadius: 10, }}>
-                                    <Text style={{ fontSize: 18, fontFamily: 'LexendRegular' }}>Favorite Drivers</Text>
-                                    <Text style={{ fontSize: 14, marginTop: 4, fontFamily: 'LexendLight' }}>Indicate your favorites and we'll try our best to match you again.</Text>
-                                </View>
-                            </TouchableOpacity>
-
+                            </View>
 
                         </View>
 
 
-                    </View>
+                        <View style={{ margin: 10, marginTop: 0 }}>
 
-                    {/* <View style={{ margin: 10, }}>
-                            <Text style={{ fontSize: 24, marginVertical: 8, fontWeight: 500, textAlign: 'center' }}>Coming Soon</Text>
-                            <Text style={{ fontSize: 20, marginBottom: 10, fontWeight: 500, fontFamily: 'LexendRegular' }}>Ski Services</Text>
-
-                            <LinearGradient colors={['rgba(230,230,230,.15)', 'rgba(230,230,230,.5)', 'rgba(230,230,230,.8)']} style={{ height: '100%', width: '100%', position: 'absolute', borderRadius: 30, zIndex: 2 }} />
+                        <Text style={{ fontSize: 24, marginBottom: 20, fontWeight: 500, textAlign: 'center', fontFamily: 'LexendRegular' }}>What's New</Text>
 
 
-                            <View style={{}}>
-                                <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{ borderRadius: 30, marginRight: 0, paddingVertical: 0, borderWidth: 6, borderColor: '#e6e6e6' }}>
-                                    <Video style={{ height: 210, width: '100%', borderRadius: 20, backgroundColor: 'green' }} shouldPlay isLooping resizeMode='contain' source={require('../assets/tuning_cover.mov')} />
+                            <View style={{ flexDirection: 'row', backgroundColor: '#FDF2E1', borderRadius: 30 }}>
+
+                                <TouchableOpacity onPress={() => null} style={{ backgroundColor: '#f1f1f1', flex: 3, padding: 0, borderRadius: 30, marginRight: 10, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Image style={{ borderRadius: 20, height: windowHeight * .2 - 20, width: windowHeight * .2 - 20, }} resizeMode='cover' source={require('../assets/call-point.png')} />
                                 </TouchableOpacity>
-                                <View style={{ position: 'absolute', bottom: 20, right: 20, padding: 8, borderRadius: 10, zIndex: 3 }}>
-                                    <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendMedium' }}>Emergenskis Mobile Tuning</Text>
-                                </View>
 
-                                <Image style={{ height: 70, width: 70, alignSelf: 'center', position: 'absolute', top: 20, left: 20, zIndex: 3 }} source={require('../assets/emergenskis.webp')} />
-
+                                <TouchableOpacity onPress={() => null} style={{ flex: 3, height: windowHeight * .22, borderRadius: 30, marginRight: 10, justifyContent: 'center' }}>
+                                    <View style={{ padding: 10, borderRadius: 10, }}>
+                                        <Text style={{ fontSize: 18, fontFamily: 'LexendRegular' }}>Phone Calls</Text>
+                                        <Text style={{ fontSize: 14, marginTop: 4, fontFamily: 'LexendLight' }}>Make and receive calls to your driver in the hour before pickup.</Text>
+                                        <View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: 4, }}>
+                                            <Entypo style={{ top: 6 }} name="dot-single" size={24} color="black" />
+                                            <Text style={{ fontSize: 14, fontFamily: 'LexendLight' }}>Phone numbers are 'masked' to preserve privacy.</Text>
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
 
                             </View>
-                        </View> */}
 
+                        </View>
 
-
-                </View>
-
-                <View style={{ height: 100 }} />
-
-            </SafeAreaView >
-        </ScrollView>
+                    </View>
+                    <View style={{ height: 100 }} />
+                </SafeAreaView >
+            </ScrollView>
         </View >
 
     );
