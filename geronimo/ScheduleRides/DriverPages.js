@@ -6,12 +6,34 @@ import axios from 'axios';
 import { url } from '../url_toggle'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-gesture-handler';
+import Carousel from 'react-native-reanimated-carousel';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 let boxDimensions = (windowWidth - 30) / 2
 
 export default DriverPages = ({ navigation, masterState, setMasterState, }) => {
+
+    // const [carouselIndex, setCarouselIndex] = useState(0)
+    const carouselRef = useRef(null)
+    // const nextPage = () => {
+    //     if ((typeSelected == 'arrivals' && destination.length === 0) || (typeSelected == 'departures' && pickupLocation.length === 0)) {
+    //         errorTimeout()
+    //         return
+    //     }
+
+
+    //     setCarouselIndex(carouselIndex => carouselIndex + 1)
+    //     console.log(carouselRef.current.getCurrentIndex());
+    //     carouselRef.current.next()
+    // }
+
+    // const prevPage = () => {
+    //     setCarouselIndex(carouselIndex => carouselIndex - 1)
+    //     console.log(carouselRef.current.getCurrentIndex());
+    //     carouselRef.current.prev()
+    // }
+
 
     return (
 
@@ -109,10 +131,10 @@ export default DriverPages = ({ navigation, masterState, setMasterState, }) => {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 
 
-                        <TouchableOpacity onPress={() => navigation.navigate('ScheduleRide')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions / 2.5, borderRadius: 20, alignItems: 'center', padding: 10, flexDirection: 'row', justifyContent:'space-between' }}>
-                            <View style={{  }}>
-                            <Text style={{ fontFamily: 'Lexend-Regular', fontSize: 18, marginBottom: 0, paddingHorizontal: 0, }}>Airport</Text>
-                            <Text style={{ fontFamily: 'Lexend-Regular', fontSize: 18, marginBottom: 0, paddingHorizontal: 0, }}>Transfers</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('ScheduleRide')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions / 2.5, borderRadius: 20, alignItems: 'center', padding: 10, flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <View style={{}}>
+                                <Text style={{ fontFamily: 'Lexend-Regular', fontSize: 18, marginBottom: 0, paddingHorizontal: 0, }}>Airport</Text>
+                                <Text style={{ fontFamily: 'Lexend-Regular', fontSize: 18, marginBottom: 0, paddingHorizontal: 0, }}>Transfers</Text>
                             </View>
                             <Image style={{ width: '50%', height: '120%', }} resizeMode='contain' source={require('../assets/airplane.png')} />
                         </TouchableOpacity>
@@ -162,13 +184,50 @@ export default DriverPages = ({ navigation, masterState, setMasterState, }) => {
                 </View>
 
 
-                <View style={{ backgroundColor: '#e5faff', margin: 10, width: windowWidth - 20, borderRadius: 30, paddingBottom: 10 }}>
+                {/* <View style={{ backgroundColor: '#e5faff', margin: 10, width: windowWidth - 20, borderRadius: 30, paddingBottom: 10 }}>
                     <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', margin: 10 }}>Meet the Drivers</Text>
 
                     <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{ marginHorizontal: 10, width: windowWidth - 40, height: windowWidth / 1.5, borderRadius: 30, }}>
                         <Image style={{ width: windowWidth - 40, height: windowWidth / 1.5, borderRadius: 30, }} resizeMode='cover' source={require('/Users/zacharybretz/work/july24/geronimo/assets/Screenshot 2025-05-06 at 11.18.35 PM.png')} />
                     </TouchableOpacity>
-                </View>
+                </View> */}
+
+
+
+
+                <View style={{ backgroundColor: '#e5faff', margin: 10, width: windowWidth - 20, borderRadius: 30, paddingBottom: 10 }}>
+
+                    <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', margin: 10 }}>Meet the Drivers</Text>
+
+
+                        <Carousel
+                        autoPlay={true}
+                        	loop={true}
+                            width={430}
+                            height={258}
+                            snapEnabled={true}
+                            pagingEnabled={true}
+                            autoPlayInterval={4000}
+
+                            ref={carouselRef}
+                            enabled={true}
+                         
+                            data={[...new Array(4).keys()]}
+                            scrollAnimationDuration={1000}
+                          
+                            onSnapToItem={(index) => console.log('current index:', index)}
+                            renderItem={({ index }) => {
+                                // console.log('hello: ', index)
+                                return (
+                                    <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{ marginHorizontal: 10, width: windowWidth - 20,  borderRadius: 30, }}>
+                                        <Image style={{ width: windowWidth - 40, height: windowWidth / 1.5, borderRadius: 30, }} resizeMode='cover' source={require('/Users/zacharybretz/work/july24/geronimo/assets/Screenshot 2025-05-06 at 11.18.35 PM.png')} />
+                                    </TouchableOpacity>
+                                )
+
+                            }}
+                        />
+
+                    </View>
 
 
 
