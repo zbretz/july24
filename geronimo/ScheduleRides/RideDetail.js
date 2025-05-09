@@ -147,10 +147,11 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
                                 {type !== "history" &&
                                     <CallDriverButton style={{}}
                                         rideId={rideId}
-                                        pickupDateTime={new Date()}
-                                    />}
+                                        // pickupDateTime={new Date()}
+                                        pickupDateTime={rideDetail.pickupDateTime}
+/>}
                             </>
-                            
+
                         </View>
                     }
 

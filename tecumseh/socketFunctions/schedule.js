@@ -45,16 +45,12 @@ message = async (io, data) => {
         { returnDocument: 'after' }
     )
 
-
-
     let smsEnabled = user_chat_persist.smsEnabled
-    console.log('user chat persist: ', user_chat_persist)
 
-    console.log('smsEnabled: ', user_chat_persist.hasOwnProperty('smsEnabled'))
-
+    // if user was created bwfore the property was automatically applied to user object
     if (!user_chat_persist.hasOwnProperty('smsEnabled')) {
         smsEnabled = true
-        let user_chat_persist = await db__.collection('users').updateOne(
+        await db__.collection('users').updateOne(
             { _id: new ObjectId(String(data.userid)) },
             { $set: { smsEnabled } },
         )
@@ -63,10 +59,16 @@ message = async (io, data) => {
     let first_message_for_ride;
     if (ride_chat_persist.chatLog.length == 1 ) first_message_for_ride = true
 
+    // only send to sms for immediate next ride
+    let is_upcoming_ride;
+    console.log('ride id: ', user_chat_persist.activeRides[0]._id)
+    if (data.rideid == user_chat_persist.activeRides[0]._id){
+        is_upcoming_ride = true
+    }
+
     // return
 
-
-    if (data.toUser && smsEnabled) {
+    if (data.toUser && smsEnabled && is_upcoming_ride) {
         smsMessageUser(user_chat_persist.phone, data.text, first_message_for_ride)
     }
 

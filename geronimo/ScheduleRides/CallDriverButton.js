@@ -4,6 +4,7 @@ import { url } from '../url_toggle'
 import axios from 'axios';
 
 const CallDriverButton = ({ rideId, pickupDateTime }) => {
+    console.log('pickup time: ', pickupDateTime)
     const [canCall, setCanCall] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -70,7 +71,15 @@ const CallDriverButton = ({ rideId, pickupDateTime }) => {
                 <ActivityIndicator />
             ) : (
                 // <Button title="Call Driver" onPress={handleCall} />
-                <TouchableOpacity onPress={handleCall} style={{ borderRadius: 20, padding: 16, alignItems: 'center', backgroundColor: '#e6e6e6' }}>
+                <TouchableOpacity onPress={handleCall} style={{ borderRadius: 20, padding: 16, alignItems: 'center', backgroundColor: '#f2f2f2',
+                    shadowColor: '#000',
+                    shadowOpacity: 0.42,
+                    shadowRadius: 3,
+                    shadowOffset: {
+                        width: 0,
+                        height: 0,
+                    },
+                }}>
                     <Text style={{ fontFamily: 'Aristotelica-SmallCaps', fontSize: 19, marginBottom: -5, }}>Call</Text>
                 </TouchableOpacity>
             )}
