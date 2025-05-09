@@ -89,8 +89,8 @@ android {
         applicationId 'com.zbretz.theparkcityapp'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 42
-        versionName "6.5.0"
+        versionCode 43
+        versionName "6.6.0"
     }
     signingConfigs {
         debug {

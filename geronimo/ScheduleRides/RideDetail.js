@@ -148,7 +148,7 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
                                     <CallDriverButton style={{}}
                                         rideId={rideId}
                                         // pickupDateTime={new Date()}
-                                        pickupDateTime={rideDetail.pickupDateTime}
+                                        pickupDateTime={rideDetail.pickup}
 />}
                             </>
 
