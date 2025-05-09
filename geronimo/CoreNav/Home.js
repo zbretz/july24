@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View, Image, Dimensions, Modal, Animated, Platform } from 'react-native';
+import { Text, TouchableHighlight, TouchableOpacity, View, Image, Dimensions, Modal, Animated, Platform } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Entypo, Feather } from '@expo/vector-icons';
@@ -48,7 +48,6 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
     }
 
     const [translateLogo, setTranslatedLogo] = useState(new Animated.Value(-50))
-
     const animateLogo = (direction) => {
         setLogoVisibile(direction == 'show' ? true : false)
 
@@ -62,9 +61,24 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
     }
 
 
-
+    const [translateRideIndicator, setTranslatedRideIndicator] = useState(new Animated.Value(-190))
+    const animateRideIndicator = (direction) => {
+        Animated.timing(translateRideIndicator, {
+            duration: 700,
+            toValue: -10,
+            useNativeDriver: false,
+        })
+            .start(({ finished }) => {
+            })
+    }
 
     const upcomingRide = masterState.user?.activeRides?.length ? masterState.user.activeRides[0] : null
+
+    useEffect(() => {
+       upcomingRide && setTimeout(animateRideIndicator(), 1000)
+    }, [])
+
+
 
 
     return (
@@ -145,12 +159,12 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                                 </View>
 
 
-                                {masterState.user?.activeRides?.length ?
-                                    <TouchableOpacity onPress={() => { navigation.navigate('ScheduleRide', { screen: 'RideDetail', params: { rideId: upcomingRide._id } }) }}
+                                <Animated.View style={{ position: 'absolute', bottom: 0, left: translateRideIndicator, }}>
+                                    <TouchableHighlight activeOpacity={.8} underlayColor={'rgba(254, 180, 195, 0.9)'}  onPress={() => { navigation.navigate('ScheduleRide', { screen: 'RideDetail', params: { rideId: upcomingRide._id } }) }}
                                         style={{
                                             flexDirection: 'row', justifyContent: 'space-between',
                                             // width: windowWidth * .5 ,
-                                            position: 'absolute', bottom: 0, left: -10,
+                                            // position: 'absolute', bottom: 0, left: -10,
                                             margin: 0,
                                             backgroundColor: '#fff5f7',//'#fff1cc'
                                             borderColor: '#ff99ad',//#ffcf56
@@ -176,11 +190,8 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                                                 <Feather style={{ marginBottom: 0 }} name="arrow-right-circle" size={16} color="black" />
                                             </View>
                                         </View>
-                                    </TouchableOpacity>
-                                    :
-                                    null
-                                }
-
+                                    </TouchableHighlight>
+                                </Animated.View>
 
                             </View>
 
