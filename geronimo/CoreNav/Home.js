@@ -60,30 +60,66 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
             })
     }
 
-
+    const [showRideIndicator, setShowRideIndicator] = useState(false)
     const [translateRideIndicator, setTranslatedRideIndicator] = useState(new Animated.Value(-190))
     const animateRideIndicator = (direction) => {
         Animated.timing(translateRideIndicator, {
             duration: 700,
-            toValue: -10,
+            toValue: 0,
             useNativeDriver: false,
         })
             .start(({ finished }) => {
             })
     }
 
+
     const upcomingRide = masterState.user?.activeRides?.length ? masterState.user.activeRides[0] : null
 
     useEffect(() => {
-       upcomingRide && setTimeout(animateRideIndicator(), 1000)
-    }, [])
-
-
-
+        upcomingRide && setTimeout(animateRideIndicator(), 1300)
+    }, [masterState])
 
     return (
 
         <View>
+
+            <Animated.View style={{ position: 'absolute', top: 0,zIndex:100, left: translateRideIndicator, }}>
+                {/* <SafeAreaView> */}
+                    <TouchableHighlight activeOpacity={.8} underlayColor={'rgba(254, 180, 195, 0.9)'} onPress={() => { navigation.navigate('ScheduleRide', { screen: 'RideDetail', params: { rideId: upcomingRide._id } }) }}
+                        style={{
+                            flexDirection: 'row', justifyContent: 'space-between',
+                            // width: windowWidth * .5 ,
+                            // position: 'absolute', bottom: 0, left: -10,
+                            margin: 0,
+                            backgroundColor: '#fff5f7',//'#fff1cc'
+                            borderColor: '#ff99ad',//#ffcf56
+                            borderBottomWidth: 8,
+                            borderTopRightRadius: 20, borderBottomRightRadius: 20,
+                            alignSelf: 'flex-start',
+                            // borderWidth:1,
+                            padding: 20,
+                            shadowColor: '#000',
+                            shadowOpacity: 0.48,
+                            shadowRadius: 8,
+                            shadowOffset: {
+                                width: 0,
+                                height: 0,
+                            },
+                        }}
+                    >
+                        <View>
+                        <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, marginBottom: 0, paddingHorizontal: 0, textAlign: 'left', }}>Upcoming</Text>
+                        <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, marginBottom: 0, paddingHorizontal: 0, textAlign: 'left', }}>Ride</Text>
+                        <View style={{ flexDirection: 'row', alignSelf: 'flex-start', }}>
+                                <Text style={{ fontFamily: 'LexendLight', fontSize: 14, marginBottom: 0, paddingHorizontal: 0, textAlign: 'left', marginRight: 4 }}>View</Text>
+                                <Feather style={{ marginBottom: 0 }} name="arrow-right-circle" size={16} color="black" />
+                            </View>
+                        </View>
+                    </TouchableHighlight>
+                {/* </SafeAreaView> */}
+            </Animated.View>
+
+
 
             <Animated.View style={{ position: 'absolute', top: translateLogo, right: 20, backgroundColor: '#FFCF56', height: 48, width: 48, zIndex: 98, borderRadius: 30, alignItems: 'center', justifyContent: 'center' }}  >
                 <Image style={{ height: 40, width: 40, borderRadius: 30 }} source={require('../assets/yellow-icon-bold.png')} />
@@ -159,39 +195,9 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                                 </View>
 
 
-                                <Animated.View style={{ position: 'absolute', bottom: 0, left: translateRideIndicator, }}>
-                                    <TouchableHighlight activeOpacity={.8} underlayColor={'rgba(254, 180, 195, 0.9)'}  onPress={() => { navigation.navigate('ScheduleRide', { screen: 'RideDetail', params: { rideId: upcomingRide._id } }) }}
-                                        style={{
-                                            flexDirection: 'row', justifyContent: 'space-between',
-                                            // width: windowWidth * .5 ,
-                                            // position: 'absolute', bottom: 0, left: -10,
-                                            margin: 0,
-                                            backgroundColor: '#fff5f7',//'#fff1cc'
-                                            borderColor: '#ff99ad',//#ffcf56
-                                            borderBottomWidth: 8,
-                                            borderTopRightRadius: 20, borderBottomRightRadius: 20,
-                                            alignSelf: 'flex-start',
-                                            // borderWidth:1,
-                                            padding: 10,
-                                            shadowColor: '#000',
-                                            shadowOpacity: 0.48,
-                                            shadowRadius: 8,
-                                            shadowOffset: {
-                                                width: 0,
-                                                height: 0,
-                                            },
-                                        }}
-                                    >
-                                        {/* <Image style={{ width: 20, height: 20, top: 2 }} resizeMode='contain' source={require('../assets/verified.png')} /> */}
-                                        <View>
-                                            <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, marginBottom: 0, paddingHorizontal: 0, textAlign: 'right', }}>Upcoming Ride</Text>
-                                            <View style={{ flexDirection: 'row', alignSelf: 'flex-end', }}>
-                                                <Text style={{ fontFamily: 'LexendLight', fontSize: 14, marginBottom: 0, paddingHorizontal: 0, textAlign: 'right', marginRight: 4 }}>View</Text>
-                                                <Feather style={{ marginBottom: 0 }} name="arrow-right-circle" size={16} color="black" />
-                                            </View>
-                                        </View>
-                                    </TouchableHighlight>
-                                </Animated.View>
+
+
+
 
                             </View>
 
@@ -362,7 +368,7 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                                 <TouchableOpacity onPress={() => null} style={{ flex: 3, height: windowHeight * .22, borderRadius: 30, marginRight: 10, justifyContent: 'center' }}>
                                     <View style={{ padding: 10, borderRadius: 10, }}>
                                         <Text style={{ fontSize: 18, fontFamily: 'LexendRegular' }}>Phone Calls</Text>
-                                        <Text style={{ fontSize: 14, marginTop: 4, fontFamily: 'LexendLight' }}>Make and receive calls to your driver in the hour before pickup.</Text>
+                                        <Text style={{ fontSize: 14, marginTop: 4, fontFamily: 'LexendLight' }}>Make and receive calls from your driver in the hour before pickup.</Text>
                                         <View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: 4, }}>
                                             <Entypo style={{ top: 6 }} name="dot-single" size={24} color="black" />
                                             <Text style={{ fontSize: 14, fontFamily: 'LexendLight' }}>Phone numbers are 'masked' to preserve privacy.</Text>
