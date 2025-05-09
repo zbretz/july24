@@ -502,10 +502,10 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
                                     }
                                     }
                                 >
-                                    <>
+                                    <View>
                                         <FontAwesome6 name="location-dot" size={14} color="#e6e6e6" />
                                         <Text numberOfLines={2} style={{ marginLeft: 10, padding: 6, fontSize: 16, color: '#000', fontFamily: 'PointSoftSemiBold' }}>{item.description}</Text>
-                                    </>
+                                    </View>
                                 </TouchableHighlight>
                             </View>
                         );

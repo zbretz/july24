@@ -1,7 +1,7 @@
 import { Text, TouchableOpacity, View, Image, Dimensions, Modal, Animated, Platform } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, Feather } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Video, ResizeMode } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -61,6 +61,12 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
             })
     }
 
+
+
+
+    const upcomingRide = masterState.user?.activeRides?.length ? masterState.user.activeRides[0] : null
+
+
     return (
 
         <View>
@@ -73,12 +79,6 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
             <ScrollView style={{ backgroundColor: 'white', paddingTop: 10 }} showsVerticalScrollIndicator={false} onScroll={(e) => handleScroll(e)}>
 
                 <SafeAreaView >
-
-                    {/* {masterState.user?.localRide &&
-                    // <View style={{ height: 100, margin: 20, backgroundColor: 'black', borderRadius: 20 }}></View>
-                    <FlashingView />
-                } */}
-
 
 
                     <Modal
@@ -124,7 +124,7 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
 
                         <View style={{ flexDirection: 'row', marginHorizontal: 10, marginBottom: 10 }}>
-                            <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#ffcf56', width: windowWidth * .5, height: windowWidth * .5, borderRadius: 30, marginRight: 20, alignItems: 'center', justifyContent: 'center', paddingVertical: 20 }}>
+                            <View style={{ backgroundColor: '#ffcf56', width: windowWidth * .5, height: windowWidth * .5, borderRadius: 30, marginRight: 20, alignItems: 'center', justifyContent: 'center', paddingVertical: 20 }}>
                                 <View>
                                     <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: windowWidth * .14, marginVertical: windowHeight < 800 ? 0 : 0, }}
                                         adjustsFontSizeToFit={true}
@@ -143,7 +143,46 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                                     >
                                         City App</Text>
                                 </View>
-                            </TouchableOpacity>
+
+
+                                {masterState.user?.activeRides?.length ?
+                                    <TouchableOpacity onPress={() => { navigation.navigate('ScheduleRide', { screen: 'RideDetail', params: { rideId: upcomingRide._id } }) }}
+                                        style={{
+                                            flexDirection: 'row', justifyContent: 'space-between',
+                                            // width: windowWidth * .5 ,
+                                            position: 'absolute', bottom: 0, left: -10,
+                                            margin: 0,
+                                            backgroundColor: '#fff5f7',//'#fff1cc'
+                                            borderColor: '#ff99ad',//#ffcf56
+                                            borderBottomWidth: 8,
+                                            borderTopRightRadius: 20, borderBottomRightRadius: 20,
+                                            alignSelf: 'flex-start',
+                                            // borderWidth:1,
+                                            padding: 10,
+                                            shadowColor: '#000',
+                                            shadowOpacity: 0.48,
+                                            shadowRadius: 8,
+                                            shadowOffset: {
+                                                width: 0,
+                                                height: 0,
+                                            },
+                                        }}
+                                    >
+                                        {/* <Image style={{ width: 20, height: 20, top: 2 }} resizeMode='contain' source={require('../assets/verified.png')} /> */}
+                                        <View>
+                                            <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, marginBottom: 0, paddingHorizontal: 0, textAlign: 'right', }}>Upcoming Ride</Text>
+                                            <View style={{ flexDirection: 'row', alignSelf: 'flex-end', }}>
+                                                <Text style={{ fontFamily: 'LexendLight', fontSize: 14, marginBottom: 0, paddingHorizontal: 0, textAlign: 'right', marginRight: 4 }}>View</Text>
+                                                <Feather style={{ marginBottom: 0 }} name="arrow-right-circle" size={16} color="black" />
+                                            </View>
+                                        </View>
+                                    </TouchableOpacity>
+                                    :
+                                    null
+                                }
+
+
+                            </View>
 
 
                             <View style={{}}>
@@ -157,8 +196,24 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
 
 
+                        {/* <View
+                    style={{
+                        width: windowWidth / 2,
+                        height: windowHeight * .1,
+                        position: 'absolute', zIndex: 10,
+                        backgroundColor: 'rgba(0,0,0,.4)',
+                        // padding: 20, paddingHorizontal: 0,
+
+                    }}
+                >
+
+                </View> */}
+
+
+
 
                         <Text style={{ fontSize: 20, marginVertical: 10, fontWeight: 500, marginLeft: 10, fontFamily: 'LexendRegular' }}>Quick Menu</Text>
+
 
 
 
@@ -172,11 +227,6 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                                 <TouchableOpacity onPress={() => navigation.navigate('ScheduleRide')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions, borderRadius: 30, alignItems: 'center', padding: 10, }}>
                                     <Image style={{ flex: 1, width: '80%', margin: -28 }} resizeMode='contain' source={require('../assets/car-schedule.png')} />
                                     <Text style={{ fontFamily: 'Lexend-Regular', fontSize: 18, marginBottom: 0, paddingHorizontal: 8 }}>Schedule</Text>
-                                    {masterState.user?.activeRides?.length ?
-                                        <Image style={{ width: '24%', height: '24%', position: 'absolute', top: 20, right: 10, zIndex: 10 }} resizeMode='contain' source={require('../assets/verified.png')} />
-                                        :
-                                        null
-                                    }
                                 </TouchableOpacity>
 
                                 <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions, borderRadius: 30, alignItems: 'center', padding: 10, }}>
@@ -289,7 +339,7 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
                         <View style={{ margin: 10, marginTop: 0 }}>
 
-                        <Text style={{ fontSize: 24, marginBottom: 20, fontWeight: 500, textAlign: 'center', fontFamily: 'LexendRegular' }}>What's New</Text>
+                            <Text style={{ fontSize: 24, marginBottom: 20, fontWeight: 500, textAlign: 'center', fontFamily: 'LexendRegular' }}>What's New</Text>
 
 
                             <View style={{ flexDirection: 'row', backgroundColor: '#FDF2E1', borderRadius: 30 }}>

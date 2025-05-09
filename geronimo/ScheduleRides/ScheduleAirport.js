@@ -301,7 +301,7 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
 }
 
 
-const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, setDestination, addressError, flightNumber, setFlightNumber, typeSelected, setTypeSelected, navigation }) => {
+const Tab0 = ({date, setDate, pickupLocation, setPickupLocation, destination, setDestination, addressError, flightNumber, setFlightNumber, typeSelected, setTypeSelected, navigation }) => {
 
     const [pickupAddressNotRecognized, setPickupAddressNotRecognized] = useState(true)
     const [dropoffAddressNotRecognized, setDropoffAddressNotRecognized] = useState(true)
@@ -397,7 +397,8 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
             <Modal visible={addressModal}
                 animationType='slide'
                 transparent={true}
-                style={{ flex: 1, zIndex: 11 }}>
+                style={{ flex: 1, zIndex: 11 }}
+                >
                 <View style={{ height: '100%', width: '100%', backgroundColor: 'rgba(0,0,0,.2)', alignItems: 'center', justifyContent: 'center' }}>
                     <View style={{ width: '100%', alignItems: 'center', }} onPress={() => setAddressModal(false)}>
                         <View style={{ width: '90%', backgroundColor: '#fff', padding: 10, borderRadius: 20 }}>
@@ -606,10 +607,10 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
                                             setPickupLocation(item.description); setPickupAddressNotRecognized(false); inputRef.current.blur();// setSearchResults([])
                                         }
                                     }}>
-                                    <>
+                                    <View>
                                         <FontAwesome6 name="location-dot" size={14} color="#e6e6e6" />
                                         <Text numberOfLines={2} style={{ marginLeft: 10, padding: 6, fontSize: 16, color: '#000', fontFamily: 'PointSoftSemiBold' }}>{item.description}</Text>
-                                    </>
+                                    </View>
                                 </TouchableHighlight>
                             </View>
                         );

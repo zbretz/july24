@@ -107,9 +107,9 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
                                 // <View style={{ alignItems: 'center', }}>
                                 //     <Text numberOfLines={1} adjustsFontSizeToFit={true} style={{ fontSize: 20, fontFamily: 'LexendRegular', textAlign: 'center' }}>Status: Driver En Route</Text>
                                 // </View>
-                                <View style={{ marginBottom: 0, marginHorizontal: 0, padding:10, backgroundColor:'#ffccd6', borderRadius:16 }}>
-                                    <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'LexendMedium', color:'#99001f' }}>Ride Status</Text>
-                                    <Text style={{ marginVertical: 0, fontSize: 22, fontFamily: 'LexendRegular', color:'#000'}}>Driver En Route</Text>
+                                <View style={{ marginBottom: 0, marginHorizontal: 0, padding: 10, backgroundColor: '#ffccd6', borderRadius: 16 }}>
+                                    <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'LexendMedium', color: '#99001f' }}>Ride Status</Text>
+                                    <Text style={{ marginVertical: 0, fontSize: 22, fontFamily: 'LexendRegular', color: '#000' }}>Driver En Route</Text>
                                 </View>
                                 :
                                 <View style={{ marginBottom: 0, marginHorizontal: 10 }}>
@@ -124,7 +124,7 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
                             <Text style={{ marginVertical: 0, fontSize: 14, fontFamily: 'LexendMedium', }}>{types[rideDetail.rideType][0]}</Text>
 
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ marginVertical: 0, fontSize: 14, fontFamily: 'LexendRegular', color:'#737373'}}>{types[rideDetail.rideType][1]}</Text>
+                                <Text style={{ marginVertical: 0, fontSize: 14, fontFamily: 'LexendRegular', color: '#737373' }}>{types[rideDetail.rideType][1]}</Text>
                                 <Ionicons name="person" size={16} color="#737373" />
                             </View>
                         </View>
@@ -143,11 +143,14 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
                                 </View>
                             </View>
 
-                            <CallDriverButton style={{}}
-                                rideId={rideId}
-                                pickupDateTime={new Date()}
-                            />
-
+                            <>
+                                {type !== "history" &&
+                                    <CallDriverButton style={{}}
+                                        rideId={rideId}
+                                        pickupDateTime={new Date()}
+                                    />}
+                            </>
+                            
                         </View>
                     }
 
