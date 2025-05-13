@@ -208,7 +208,7 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
                 <View style={{ position: 'absolute', height: '100%', width: '100%', backgroundColor: 'transparent' }}>
 
                     <Animatable.View
-                        style={{ zIndex: 1 }}
+                        style={{ zIndex: 2 }}
                         animation={{
                             from: { left: '-150%' }, // Start position
                             to: { left: '0%' }, // End position
@@ -301,7 +301,7 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
 }
 
 
-const Tab0 = ({date, setDate, pickupLocation, setPickupLocation, destination, setDestination, addressError, flightNumber, setFlightNumber, typeSelected, setTypeSelected, navigation }) => {
+const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, setDestination, addressError, flightNumber, setFlightNumber, typeSelected, setTypeSelected, navigation }) => {
 
     const [pickupAddressNotRecognized, setPickupAddressNotRecognized] = useState(true)
     const [dropoffAddressNotRecognized, setDropoffAddressNotRecognized] = useState(true)
@@ -398,7 +398,7 @@ const Tab0 = ({date, setDate, pickupLocation, setPickupLocation, destination, se
                 animationType='slide'
                 transparent={true}
                 style={{ flex: 1, zIndex: 11 }}
-                >
+            >
                 <View style={{ height: '100%', width: '100%', backgroundColor: 'rgba(0,0,0,.2)', alignItems: 'center', justifyContent: 'center' }}>
                     <View style={{ width: '100%', alignItems: 'center', }} onPress={() => setAddressModal(false)}>
                         <View style={{ width: '90%', backgroundColor: '#fff', padding: 10, borderRadius: 20 }}>
@@ -618,14 +618,15 @@ const Tab0 = ({date, setDate, pickupLocation, setPickupLocation, destination, se
                 }
             </View>
 
-
-
             {addressError &&
-                <View style={{ position: 'absolute', bottom: 80, zIndex: 3, backgroundColor: '#ffb3c2', borderRadius: 20, marginHorizontal: 20, alignSelf: 'center', padding: 16, paddingHorizontal: 20, borderWidth: 2, borderColor: '#cc0029' }}>
-                    <Text style={{ fontSize: 20, fontFamily: 'LexendMedium', color: '#cc0029', textAlign: 'center' }}>Address not recognized.</Text>
-                    <Text style={{ fontSize: 18, fontFamily: 'LexendRegular', color: '#cc0029', textAlign: 'center', marginTop:6 }}>Please re-input your location.</Text>
+                <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute', bottom: 80, zIndex: 3, }}>
+                    <View style={{ width: '90%', backgroundColor: '#fff', padding: 20, borderRadius: 20, borderWidth: 1 }}>
+                        <Text style={{ textAlign: 'center', fontFamily: 'LexendMedium', fontSize: 18 }}>Address not recognized.</Text>
+                        <Text style={{ textAlign: 'center', fontFamily: 'LexendMedium', fontSize: 18, marginTop: 8 }}>Please re-input your location.</Text>
+                    </View>
                 </View>
             }
+
         </View>
     )
 }

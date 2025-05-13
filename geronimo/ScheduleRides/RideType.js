@@ -70,7 +70,6 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                 } */}
 
                 {masterState.user &&
-
                     <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity onPress={() => navigation.navigate('FutureRides')} style={{ backgroundColor: '#f2f2f2', marginTop: 10, marginHorizontal: 20, borderRadius: 40, padding: 10, justifyContent: 'flex-start', alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', }} >
                             <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Lexend-Regular', marginRight: 10 }}>Future Rides</Text>
@@ -103,8 +102,8 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                                         <View style={{ backgroundColor: '#fff', borderRadius: 20, padding: 10, paddingHorizontal: 20 }}>
                                             <Text adjustsFontSizeToFit={true} numberOfLines={1} style={{ marginVertical: 0, fontSize: 21, fontFamily: 'PointSoftSemiBold', }}>{formatInTimeZone(upcomingRide.pickupDateTime, 'America/Denver', "eee',' MMMM d")}</Text>
                                             <Text style={{ marginVertical: 0, fontSize: 21, fontFamily: 'PointSoftLight', }}>{formatInTimeZone(upcomingRide.pickupDateTime, 'America/Denver', "h':'mm aa")}</Text>
-                                            <Text numberOfLines={1} style={{ marginTop: 10, fontSize: 12, fontFamily: 'PointSoftLight', }}>{upcomingRide.pickupAddress}</Text>
-                                            <Text numberOfLines={1} style={{ marginVertical: 0, fontSize: 12, fontFamily: 'PointSoftLight', }}>{upcomingRide.dropoffAddress}</Text>
+                                            <Text numberOfLines={1} style={{ marginTop: 10, fontSize: 13, fontFamily: 'PointSoftLight', }}>{upcomingRide.pickupAddress}</Text>
+                                            <Text numberOfLines={1} style={{ marginVertical: 0, fontSize: 13, fontFamily: 'PointSoftLight', }}>{upcomingRide.dropoffAddress}</Text>
 
                                             {upcomingRide.driver ?
                                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
