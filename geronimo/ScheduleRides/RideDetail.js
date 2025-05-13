@@ -101,7 +101,7 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
                 }}>
 
 
-                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', marginBottom:10 }}>
                         <View>
                             {rideDetail.enRoute ?
                                 // <View style={{ alignItems: 'center', }}>
@@ -132,7 +132,7 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
                     </View>
 
                     {rideDetail.driver &&
-                        <View style={{ borderRadius: 30, marginVertical: 10, borderWidth: 7, borderColor: '#e6e6e6', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 16, }}>
+                        <View style={{ borderRadius: 30, marginBottom: 10, borderWidth: 7, borderColor: '#e6e6e6', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 16, }}>
                             <View style={{ backgroundColor: '#fff', borderRadius: 28, }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                                     <Text numberOfLines={1} style={{ fontSize: 18, fontFamily: 'LexendRegular', }}>Driver Assigned  </Text>
@@ -148,7 +148,7 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
                                     <CallDriverButton style={{}}
                                         rideId={rideId}
                                         // pickupDateTime={new Date()}
-                                        pickupDateTime={rideDetail.pickup}
+                                        pickupDateTime={rideDetail.pickupDateTime}
 />}
                             </>
 

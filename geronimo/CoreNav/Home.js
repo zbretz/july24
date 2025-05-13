@@ -83,8 +83,9 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
         <View>
 
-            <Animated.View style={{ position: 'absolute', top: 0,zIndex:100, left: translateRideIndicator, }}>
-                {/* <SafeAreaView> */}
+            {upcomingRide &&
+                <Animated.View style={{ position: 'absolute', top: 0, zIndex: 100, left: translateRideIndicator, }}>
+                    {/* <SafeAreaView> */}
                     <TouchableHighlight activeOpacity={.8} underlayColor={'rgba(254, 180, 195, 0.9)'} onPress={() => { navigation.navigate('ScheduleRide', { screen: 'RideDetail', params: { rideId: upcomingRide._id } }) }}
                         style={{
                             flexDirection: 'row', justifyContent: 'space-between',
@@ -108,17 +109,17 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                         }}
                     >
                         <View>
-                        <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, marginBottom: 0, paddingHorizontal: 0, textAlign: 'left', }}>Upcoming</Text>
-                        <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, marginBottom: 0, paddingHorizontal: 0, textAlign: 'left', }}>Ride</Text>
-                        <View style={{ flexDirection: 'row', alignSelf: 'flex-start', }}>
+                            <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, marginBottom: 0, paddingHorizontal: 0, textAlign: 'left', }}>Upcoming</Text>
+                            <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, marginBottom: 0, paddingHorizontal: 0, textAlign: 'left', }}>Ride</Text>
+                            <View style={{ flexDirection: 'row', alignSelf: 'flex-start', }}>
                                 <Text style={{ fontFamily: 'LexendLight', fontSize: 14, marginBottom: 0, paddingHorizontal: 0, textAlign: 'left', marginRight: 4 }}>View</Text>
                                 <Feather style={{ marginBottom: 0 }} name="arrow-right-circle" size={16} color="black" />
                             </View>
                         </View>
                     </TouchableHighlight>
-                {/* </SafeAreaView> */}
-            </Animated.View>
-
+                    {/* </SafeAreaView> */}
+                </Animated.View>
+            }
 
 
             <Animated.View style={{ position: 'absolute', top: translateLogo, right: 20, backgroundColor: '#FFCF56', height: 48, width: 48, zIndex: 98, borderRadius: 30, alignItems: 'center', justifyContent: 'center' }}  >
