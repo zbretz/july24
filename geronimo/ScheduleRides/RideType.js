@@ -37,7 +37,7 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
             <View style={{ backgroundColor: '#FFCF56', margin: 20, marginBottom: 6, borderRadius: 40, padding: 10, paddingVertical: 20 }}>
 
                 <View style={{ zIndex: 11 }}>
-                    <TouchableOpacity style={{ position: 'absolute', top:7 }} onPress={() => navigation.goBack()}>
+                    <TouchableOpacity style={{ position: 'absolute', top: 7 }} onPress={() => navigation.goBack()}>
                         <MaterialIcons style={{ marginLeft: 10 }} name="arrow-back-ios" size={24} color="black" />
                     </TouchableOpacity>
                 </View>
@@ -69,17 +69,20 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                     </TouchableOpacity>
                 } */}
 
-                <View style={{flexDirection:'row'}}>
-                    <TouchableOpacity onPress={() => navigation.navigate('FutureRides')} style={{ backgroundColor: '#f2f2f2', marginTop: 10, marginHorizontal: 20, borderRadius: 40, padding: 10, justifyContent: 'flex-start', alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', }} >
-                        <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Lexend-Regular', marginRight: 10 }}>Future Rides</Text>
-                        <AntDesign name="rightcircle" size={17} color="#5a5a5a" />
-                    </TouchableOpacity>
+                {masterState.user &&
 
-                    <TouchableOpacity onPress={() => navigation.navigate('RideHistory')} style={{ backgroundColor: '#f2f2f2', marginTop: 10, marginHorizontal: 20, borderRadius: 40, padding: 10, justifyContent: 'flex-start', alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', }} >
-                        <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Lexend-Regular', marginRight: 10 }}>Ride History</Text>
-                        <AntDesign name="rightcircle" size={17} color="#5a5a5a" />
-                    </TouchableOpacity>
-                </View>
+                    <View style={{ flexDirection: 'row' }}>
+                        <TouchableOpacity onPress={() => navigation.navigate('FutureRides')} style={{ backgroundColor: '#f2f2f2', marginTop: 10, marginHorizontal: 20, borderRadius: 40, padding: 10, justifyContent: 'flex-start', alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', }} >
+                            <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Lexend-Regular', marginRight: 10 }}>Future Rides</Text>
+                            <AntDesign name="rightcircle" size={17} color="#5a5a5a" />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={() => navigation.navigate('RideHistory')} style={{ backgroundColor: '#f2f2f2', marginTop: 10, marginHorizontal: 20, borderRadius: 40, padding: 10, justifyContent: 'flex-start', alignItems: 'center', alignSelf: 'flex-start', flexDirection: 'row', }} >
+                            <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'Lexend-Regular', marginRight: 10 }}>Ride History</Text>
+                            <AntDesign name="rightcircle" size={17} color="#5a5a5a" />
+                        </TouchableOpacity>
+                    </View>
+                }
 
                 <View style={{ zIndex: 100, width: '100%', }}>
                     {upcomingRide &&

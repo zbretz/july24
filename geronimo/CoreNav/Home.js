@@ -361,11 +361,11 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
                             <View style={{ flexDirection: 'row', backgroundColor: '#FDF2E1', borderRadius: 30 }}>
 
-                                <TouchableOpacity onPress={() => null} style={{ backgroundColor: '#f1f1f1', flex: 3, padding: 0, borderRadius: 30, marginRight: 10, alignItems: 'center', justifyContent: 'center' }}>
+                                <View onPress={() => null} style={{ backgroundColor: '#f1f1f1', flex: 3, padding: 0, borderRadius: 30, marginRight: 10, alignItems: 'center', justifyContent: 'center' }}>
                                     <Image style={{ borderRadius: 20, height: windowHeight * .2 - 20, width: windowHeight * .2 - 20, }} resizeMode='cover' source={require('../assets/call-point.png')} />
-                                </TouchableOpacity>
+                                </View>
 
-                                <TouchableOpacity onPress={() => null} style={{ flex: 3, height: windowHeight * .22, borderRadius: 30, marginRight: 10, justifyContent: 'center' }}>
+                                <View onPress={() => null} style={{ flex: 3, height: windowHeight * .22, borderRadius: 30, marginRight: 10, justifyContent: 'center' }}>
                                     <View style={{ padding: 10, borderRadius: 10, }}>
                                         <Text style={{ fontSize: 18, fontFamily: 'LexendRegular' }}>Phone Calls</Text>
                                         <Text style={{ fontSize: 14, marginTop: 4, fontFamily: 'LexendLight' }}>Make and receive calls from your driver in the hour before pickup.</Text>
@@ -374,7 +374,7 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                                             <Text style={{ fontSize: 14, fontFamily: 'LexendLight' }}>Phone numbers are 'masked' to preserve privacy.</Text>
                                         </View>
                                     </View>
-                                </TouchableOpacity>
+                                </View>
 
                             </View>
 

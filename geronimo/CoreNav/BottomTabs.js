@@ -17,8 +17,7 @@ export default BottomTabs = ({ isConnected, masterState, setMasterState, chatLog
 
         <Tab.Navigator
             screenOptions={({ route }) => {
-                console.log('route: ', route)
-                console.log('masterstate user', masterState.user)
+                // console.log('route: ', route)
                 return {
                     headerShown: false,
                     tabBarStyle: {
