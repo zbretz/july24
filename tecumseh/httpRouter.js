@@ -96,31 +96,31 @@ router.get('/determineFare', async (req, res) => {
                 distance = api.data.rows[0].elements[0].distance.text
                 distance = distance.slice(0, distance.length - 3)
                 console.log('distance: ', distance)
-                let base_fare = 24 > 2.2 * distance ? 24 : 2.2 * distance
-                base_fare = Math.round(base_fare)//.toString()
+                let base_fare = 24 > 2.1 * distance ? 24 : 2.1 * distance
 
-                if (is_airport_ride) base_fare = base_fare > 65 ? base_fare : 65
+                if (distance > 40) base_fare = 2 * distance
+                if (distance > 46) base_fare = 1.85 * distance
 
-                if (distance > 45) base_fare += 11
-                if (distance > 55) base_fare += 8
+                base_fare = Math.round(base_fare)
 
-                if (timeCharge) base_fare += 30
+                if (is_airport_ride) base_fare = base_fare > 63 ? base_fare : 63
+
+                if (timeCharge) base_fare += 32
 
                 fareObj['1'] = base_fare
-                fareObj['2'] = base_fare + 20
-                fareObj['3'] = base_fare + 36
+                fareObj['2'] = base_fare + 18
+                fareObj['3'] = base_fare + 30
                 fareObj['4'] = base_fare + 45
 
-                if (is_airport_ride) fareObj['4'] = 165
+                if (is_airport_ride) fareObj['4'] = 155
 
+                if (distance < 25.1) {
 
-                if (distance < 15.1) {
-
-                    if (distance > 10) base_fare += 6
+                    if (distance > 10) base_fare += 18
 
                     fareObj['1'] = base_fare
-                    fareObj['2'] = base_fare + 8
-                    fareObj['3'] = base_fare + 20
+                    fareObj['2'] = base_fare + 12
+                    fareObj['3'] = base_fare + 24
                     fareObj['4'] = base_fare + 31
                 }
 
@@ -138,81 +138,6 @@ router.get('/determineFare', async (req, res) => {
     }
 
 });
-
-
-
-router.get('/determineFare', async (req, res) => {
-
-    let pickup = req.query.pickup.replaceAll(' ', '+')
-    let dropoff = req.query.dropoff.replaceAll(' ', '+')
-    let rideType = req.query.rideType
-
-    console.log('ride type & totalPax: ', rideType, dropoff, pickup)
-
-    let combined_locations = pickup.toLowerCase() + dropoff.toLowerCase()
-
-    let is_airport_ride = combined_locations.indexOf('slc') !== -1 || combined_locations.indexOf('airport') !== -1
-
-    let distanceMatrixUrl = `https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${dropoff}&origins=${pickup}&units=imperial&key=AIzaSyBTBjSD9lnO2dmVBCt3Lm8LS3OhDckcrEI`
-
-    let distance;
-
-    let fareObj = {
-        '1': 0,
-        '2': 0,
-        '3': 0,
-        '4': 0
-    }
-
-    try {
-        axios.get(distanceMatrixUrl)
-            .then(api => {
-                // console.log('distance info: ', api.data.rows[0].elements[0].distance)
-                distance = api.data.rows[0].elements[0].distance.text
-                distance = distance.slice(0, distance.length - 3)
-                console.log('distance: ', distance)
-                let base_fare = 24 > 2.2 * distance ? 24 : 2.2 * distance
-                base_fare = Math.round(base_fare)//.toString()
-
-                if (is_airport_ride) base_fare = base_fare > 68 ? base_fare : 68
-                // else base_fare = base_fare > 37 ? base_fare : 37
-
-                if (distance > 45) base_fare += 11
-                if (distance > 55) base_fare += 8
-
-                fareObj['1'] = base_fare
-                fareObj['2'] = base_fare + 25
-                fareObj['3'] = base_fare + 36
-                fareObj['4'] = base_fare + 48
-
-                if (is_airport_ride) fareObj['4'] = 165
-
-
-                if (distance < 15.1) {
-
-                    if (distance > 10) base_fare += 8
-
-                    fareObj['1'] = base_fare
-                    fareObj['2'] = base_fare + 14
-                    fareObj['3'] = base_fare + 22
-                    fareObj['4'] = base_fare + 33
-                }
-
-                res.status(200).send(fareObj);
-
-            })
-            .catch(e => {
-                console.log('error: ', e)
-                res.status(200).send(null);
-            }
-            )
-
-    } catch (e) {
-        console.log('fetchchatlog error: ', e)
-    }
-
-});
-
 
 
 

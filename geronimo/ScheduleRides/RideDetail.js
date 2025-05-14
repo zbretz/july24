@@ -177,9 +177,9 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
                                 {chatLog.length ?
                                     <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId: rideDetail._id }) }} style={{ backgroundColor: '#ffdb80', borderRadius: 20, borderColor: '#c4a73b', padding: 10, paddingVertical: 10, }} >
                                         <Text style={{ marginHorizontal: 10, fontSize: 18, color: "#000", fontFamily: 'LexendRegular' }}>Driver Chat</Text>
-                                        <View style={{ marginHorizontal: 10, backgroundColor: '#fff', borderRadius: 16, padding: 8, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <View style={{ marginHorizontal: 10, backgroundColor: '#fff', borderRadius: 16, padding: 12, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                             <Text style={{ fontFamily: 'PointSoftLight', fontSize: 18, backgroundColor: '#fff', }} numberOfLines={2}>{chatLog[chatLog.length - 1].text}</Text>
-                                            <Entypo name="chat" size={32} color="black" style={{ marginRight: 20 }} />
+                                            <Entypo name="chat" size={32} color="black" style={{ position:'absolute', right:20 }} />
                                         </View>
                                     </TouchableOpacity>
                                     :
@@ -203,7 +203,7 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
                                 <FontAwesome5 name="money-check" size={24} style={{ marginRight: 20 }} color="black" />
                             </TouchableOpacity>
                             :
-                            <View style={{ backgroundColor: '#e6e6e6', padding: 20, borderRadius: 20, borderWidth: 0, margin: 10, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}  >
+                            <View style={{ backgroundColor: '#e6e6e6', padding: 20, borderRadius: 20, borderWidth: 0, marginTop: 10, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}  >
                                 <FontAwesome5 name="check-circle" size={24} style={{ marginRight: 4 }} color="black" />
                                 <Text style={{ color: '#000', fontSize: 18, fontFamily: 'LexendRegular', marginBottom: 0 }}>Ride Paid</Text>
                             </View>

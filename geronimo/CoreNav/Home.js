@@ -76,7 +76,7 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
     const upcomingRide = masterState.user?.activeRides?.length ? masterState.user.activeRides[0] : null
 
     useEffect(() => {
-        upcomingRide && setTimeout(animateRideIndicator(), 1300)
+        upcomingRide && setTimeout(animateRideIndicator, 3300)
     }, [masterState])
 
     return (
