@@ -93,11 +93,10 @@ export default function App() {
 
   return (
     <>
-    {/* <View style={{backgroundColor:'#fff', height:'100%', width:'100%', alignItems:'center', justifyContent:'center'}}><Text>Hello</Text></View> */}
       {masterState.updateAvailable && <UpdateAvailable />}
       <SplashScreen appIsReady={masterState.appIsReady} stopAnim={stopAnim} />
       <InitSocket masterState={masterState} setMasterState={setMasterState} />
-      {masterState.updateAvailable && <UpdateAvailable />}
+      {/* {masterState.updateAvailable && <UpdateAvailable />} */}
     </>
   )
 }
