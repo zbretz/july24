@@ -85,15 +85,16 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
     const setReminder = async () => {
         console.log('setReminder')
         socket.emit('setReminder', (rideid) => {
-            
+
         })
     }
 
-    const disableReminder = async () => {
+    const disableReminder = async (onTime) => {
+
+        onTime = onTime == 'on time'
+
         console.log('disableReminder')
-        socket.emit('disableReminder', (rideid) => {
-            
-        })
+        socket.emit('disableReminder', { onTime })
     }
 
 
@@ -121,8 +122,8 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={disableReminder} style={{
-                position: 'absolute', top: 60, zIndex: 100, right: 0, backgroundColor: '#fff5f7',//'#fff1cc'
+            <TouchableOpacity onPress={() => disableReminder('on time')} style={{
+                position: 'absolute', top: 70, zIndex: 100, right: 0, backgroundColor: '#fff5f7',//'#fff1cc'
                 borderColor: '#ff99ad',//#ffcf56
                 borderBottomWidth: 8,
                 borderTopRightRadius: 20, borderBottomRightRadius: 20,
@@ -136,8 +137,25 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                     height: 0,
                 },
             }}>
-                <Text>Disable Reminder</Text>
+                <Text>Disable Reminder - first</Text>
+            </TouchableOpacity>
 
+            <TouchableOpacity onPress={() => disableReminder('late')} style={{
+                position: 'absolute', top: 140, zIndex: 100, right: 0, backgroundColor: '#e0edde',//'#fff1cc'
+                borderColor: '#83b979',//#ffcf56
+                borderBottomWidth: 8,
+                borderTopRightRadius: 20, borderBottomRightRadius: 20,
+                alignSelf: 'flex-start',
+                padding: 20,
+                shadowColor: '#000',
+                shadowOpacity: 0.48,
+                shadowRadius: 8,
+                shadowOffset: {
+                    width: 0,
+                    height: 0,
+                },
+            }}>
+                <Text>Disable Reminder - second</Text>
             </TouchableOpacity>
 
 

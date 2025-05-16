@@ -118,11 +118,28 @@ const rideCheckIn = (driverPhone) => {
         });
 }
 
+const alertAdmin= (driverPhone) => {
+    // console.log(driverPhone)
+
+    return client.messages
+        .create({
+            body: 'ride is not on track',
+            from: driverChatNumber,
+            to: demoNumber
+        })
+        .then(message => console.log('sms sent: ', message.sid))
+        .catch(e => {
+            console.log('caught error!: ', e)
+            // throw new Error
+        });
+}
+
 module.exports = {
     smsRequestConfirmation,
     smsNotifyUser,
     smsNotifyDriver,
     sendCode,
     smsMessageUser,
-    rideCheckIn
+    rideCheckIn,
+    alertAdmin
 }; 

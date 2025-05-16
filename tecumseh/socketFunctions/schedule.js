@@ -1,7 +1,7 @@
 const { db__, db_locals } = require('../mongoConnection.js')
 var ObjectId = require('mongodb').ObjectId;
 const { notifyUser, notifyDriver, notifyAllDrivers } = require('../notify.js');
-const { smsMessageUser, rideCheckIn } = require("../sms.js");
+const { smsMessageUser, rideCheckIn, alertAdmin } = require("../sms.js");
 
 let stripe_private_key = process.env.STRIPE_PRIVATE_KEY
 const stripe = require('stripe')(stripe_private_key);
@@ -15,7 +15,20 @@ console.log('agewnda start 2')
 const Agenda = require('agenda');
 const agenda = new Agenda({ db: { address: 'mongodb+srv://zach:zach@rideshare.uulxsfp.mongodb.net/agenda', collection: 'jobs' } });
 
-agenda.define('send event reminder', async job => {
+
+agenda.define('alert admin', async job => {
+    const { rideId } = job.attrs.data;
+    
+    // const event = await Event.findById(eventId);
+    // if (!event) return;
+
+    alertAdmin()//include ride data for action by admin
+
+    // console.log(`Sent reminder for event "${event.name}"`);
+});
+
+
+agenda.define('send initial reminder', async job => {
     const { rideId } = job.attrs.data;
     
     // const event = await Event.findById(eventId);
@@ -23,8 +36,17 @@ agenda.define('send event reminder', async job => {
 
     rideCheckIn('+19175751955')
 
+
+    const currentTime = new Date()
+    const scheduleTime = new Date(currentTime.getTime() + 10 * 1000)
+    agenda.schedule(scheduleTime, 'alert admin', { rideId: rideId, is_initial_reminder:false }).then(start => console.log('starting agenda'))
+
+
     // console.log(`Sent reminder for event "${event.name}"`);
 });
+
+
+
 
 
 agenda.start()
@@ -36,18 +58,18 @@ setReminder = async (io, data) => {
     console.log('test')
 
     const currentTime = new Date()
-    const scheduleTime = new Date(currentTime.getTime() + 5 * 1000)
+    const scheduleTime = new Date(currentTime.getTime() + 7 * 1000)
 
     // need control to not trigger if ride is coming up immediately (eg. no reminder needed if ride is in next 20 mins)
 
-    agenda.schedule(scheduleTime, 'send event reminder', { rideId: ride.insertedId }).then(start => console.log('starting agenda'))
+    agenda.schedule(scheduleTime, 'send initial reminder', { rideId: ride.insertedId, is_initial_reminder:true }).then(start => console.log('starting agenda'))
 
 }
 
-disableReminder = async (io, data) => {
+disableReminder = async (io, status) => {
     let ride = { insertedId: 1234 }
     // agenda.cancel({ data: {rideId: ride.insertedId} })
-    agenda.disable({ data: {rideId: ride.insertedId} })
+    agenda.disable({ data: {rideId: ride.insertedId, is_initial_reminder:status.onTime} })
 
 }
 
