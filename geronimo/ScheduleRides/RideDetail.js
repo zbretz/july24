@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import { Entypo, Feather, Octicons, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { formatInTimeZone } from "date-fns-tz";
 import CallDriverButton from './CallDriverButton';
+import { socket } from '../CoreNav/socket';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -20,43 +21,7 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
 
     const chatLog = rideDetail?.chatLog
 
-
-
     const types = { 1: ['Standard', 4], 2: ['Premium', 4], 3: ['XL', 5], 4: ['Premium XL', 6] }
-
-
-    // const cancelRide = () => {
-    //     Alert.alert('Cancel Ride',
-    //         `
-    // Please call or text Zach
-    // 917-575-1955
-    // and he will handle your cancellation.
-    // Thank you!`, [
-    //         {
-    //             text: 'Accept', onPress: () => {
-    //             }
-    //         },
-    //     ])
-    // }
-
-
-    // const cancelRide = () => {
-    //     socket.emit('cancel_scheduled_ride', { ...rideDetail, rideCanceledByRider: true }, (status) => {
-    //         if (status === 'success') {
-    //             console.log('success cancel')
-    //             Alert.alert('Ride Canceled', 'Your ride has been canceled successfully. See you the next time.');
-    //         }
-    //     })
-    // }
-
-
-    // (rideid) => {
-
-    //     rideRequest = { ...rideRequest, _id: rideid }
-    //     let activeRides = masterState.user.activeRides.length ? [...masterState.user.activeRides, rideRequest] : [rideRequest]
-    //     setMasterState(masterState => { return { ...masterState, user: { ...masterState.user, activeRides } } })
-    //     completeAction()
-    // }
 
     const needHelp = () => {
         Alert.alert('Phone Support',
@@ -77,8 +42,38 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
 
     if (!rideDetail) { navigation.goBack(); return null }
 
+
+    const setReminder = async () => {
+        console.log('setReminder')
+        socket.emit('setReminder', rideDetail, (rideid) => {
+
+        })
+    }
+
+
+
     return (
         <SafeAreaView style={{ height: '100%', backgroundColor: '#fff' }}>
+
+
+            <TouchableOpacity onPress={setReminder} style={{
+                position: 'absolute', top: 0, zIndex: 100, right: 0, backgroundColor: '#fff5f7',//'#fff1cc'
+                borderColor: '#ff99ad',//#ffcf56
+                borderBottomWidth: 8,
+                borderTopRightRadius: 20, borderBottomRightRadius: 20,
+                alignSelf: 'flex-start',
+                padding: 20,
+                shadowColor: '#000',
+                shadowOpacity: 0.48,
+                shadowRadius: 8,
+                shadowOffset: {
+                    width: 0,
+                    height: 0,
+                },
+            }}>
+                <Text>Set Reminder</Text>
+
+            </TouchableOpacity>
 
 
 
@@ -101,7 +96,7 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
                 }}>
 
 
-                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', marginBottom:10 }}>
+                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', marginBottom: 10 }}>
                         <View>
                             {rideDetail.enRoute ?
                                 // <View style={{ alignItems: 'center', }}>
@@ -149,7 +144,7 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
                                         rideId={rideId}
                                         // pickupDateTime={new Date()}
                                         pickupDateTime={rideDetail.pickupDateTime}
-/>}
+                                    />}
                             </>
 
                         </View>
@@ -179,7 +174,7 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
                                         <Text style={{ marginHorizontal: 10, fontSize: 18, color: "#000", fontFamily: 'LexendRegular' }}>Driver Chat</Text>
                                         <View style={{ marginHorizontal: 10, backgroundColor: '#fff', borderRadius: 16, padding: 12, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                             <Text style={{ fontFamily: 'PointSoftLight', fontSize: 18, backgroundColor: '#fff', }} numberOfLines={2}>{chatLog[chatLog.length - 1].text}</Text>
-                                            <Entypo name="chat" size={32} color="black" style={{ position:'absolute', right:20 }} />
+                                            <Entypo name="chat" size={32} color="black" style={{ position: 'absolute', right: 20 }} />
                                         </View>
                                     </TouchableOpacity>
                                     :

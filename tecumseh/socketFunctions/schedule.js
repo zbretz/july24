@@ -15,7 +15,6 @@ console.log('agewnda start 2')
 const Agenda = require('agenda');
 const agenda = new Agenda({ db: { address: `${uri}agenda`, collection: 'jobs' } });
 
-console.log('uri: ', uri)
 
 agenda.define('alert admin', async job => {
     const { rideId } = job.attrs.data;
@@ -52,9 +51,10 @@ agenda.define('send initial reminder', async job => {
 
 agenda.start()
 
-setReminder = async (io, data) => {
+setReminder = async (rideDetail) => {
 
-    let ride = { insertedId: 1234 }
+
+    // let ride = { insertedId: 1234 }
 
     console.log('test')
 
@@ -63,7 +63,7 @@ setReminder = async (io, data) => {
 
     // need control to not trigger if ride is coming up immediately (eg. no reminder needed if ride is in next 20 mins)
 
-    agenda.schedule(scheduleTime, 'send initial reminder', { rideId: ride.insertedId, is_initial_reminder: true }).then(start => console.log('starting agenda'))
+    agenda.schedule(scheduleTime, 'send initial reminder', { rideId: rideDetail._id, is_initial_reminder: true }).then(start => console.log('starting agenda'))
 
 }
 
