@@ -5,6 +5,7 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const phoneNumber = process.env.TWILIO_PHONE_NUMBER;
 const demoNumber = process.env.DEMO_NUMBER;
+const driverChatNumber = process.env.TPCA_DRIVER_CHAT_PHONE_NUMBER;
 
 const client = require('twilio')(accountSid, authToken);
 
@@ -91,8 +92,24 @@ const smsMessageUser = (userPhone, text, first_message_for_ride) => {
     return client.messages
         .create({
             body: text,
-            from: '+18016182619',
+            from: driverChatNumber,
             to: userPhone
+        })
+        .then(message => console.log('sms sent: ', message.sid))
+        .catch(e => {
+            console.log('caught error!: ', e)
+            // throw new Error
+        });
+}
+
+const rideCheckIn = (driverPhone) => {
+    console.log(driverPhone)
+
+    return client.messages
+        .create({
+            body: 'are you on track for this upcoming ride',
+            from: driverChatNumber,
+            to: driverPhone
         })
         .then(message => console.log('sms sent: ', message.sid))
         .catch(e => {
@@ -106,5 +123,6 @@ module.exports = {
     smsNotifyUser,
     smsNotifyDriver,
     sendCode,
-    smsMessageUser
+    smsMessageUser,
+    rideCheckIn
 }; 

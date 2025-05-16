@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Video, ResizeMode } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ScrollView } from 'react-native-gesture-handler';
+import { socket } from '../CoreNav/socket';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -79,9 +80,43 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
         upcomingRide && setTimeout(animateRideIndicator, 3300)
     }, [masterState])
 
+
+
+    const socketTest = async () => {
+        console.log('test')
+        socket.emit('socket_test', (rideid) => {
+            
+        })
+
+        
+
+    }
+
+
     return (
 
         <View>
+
+
+            <TouchableOpacity onPress={socketTest} style={{
+                position: 'absolute', top: 0, zIndex: 100, right: 0, backgroundColor: '#fff5f7',//'#fff1cc'
+                borderColor: '#ff99ad',//#ffcf56
+                borderBottomWidth: 8,
+                borderTopRightRadius: 20, borderBottomRightRadius: 20,
+                alignSelf: 'flex-start',
+                padding: 20,
+                shadowColor: '#000',
+                shadowOpacity: 0.48,
+                shadowRadius: 8,
+                shadowOffset: {
+                    width: 0,
+                    height: 0,
+                },
+            }}>
+                <Text>Socket Test</Text>
+
+            </TouchableOpacity>
+
 
             {upcomingRide &&
                 <Animated.View style={{ position: 'absolute', top: 0, zIndex: 100, left: translateRideIndicator, }}>

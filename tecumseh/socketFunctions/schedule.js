@@ -1,12 +1,76 @@
 const { db__, db_locals } = require('../mongoConnection.js')
 var ObjectId = require('mongodb').ObjectId;
 const { notifyUser, notifyDriver, notifyAllDrivers } = require('../notify.js');
-const { smsMessageUser } = require("../sms.js");
+const { smsMessageUser, rideCheckIn } = require("../sms.js");
 
 let stripe_private_key = process.env.STRIPE_PRIVATE_KEY
 const stripe = require('stripe')(stripe_private_key);
 // const stripe = require('stripe')('sk_test_51Nj9WRAUREUmtjLCN8G4QqEEVvYoPpWKX82iY5lDX3dZxnaOGDDhqkyVpIFgg63FvXaAE3FmZ1p0btPM9s1De3m200uOIKI70O'); // pc app test key
 // const stripe = require('stripe')('sk_test_51Ov1U9JhmMKAiBpVczAh3RA7hEZfa4VRmOmyseADv5sY225uLcYlpfH4dYup6tMLkhC8YhUAt754dTmwNsLa23mo00P2T8WqN0'); // pc payments test key
+
+console.log('agewnda start -- move this to separate module')
+// const agenda = require('../rideMonitor');
+console.log('agewnda start 2')
+
+const Agenda = require('agenda');
+const agenda = new Agenda({ db: { address: 'mongodb+srv://zach:zach@rideshare.uulxsfp.mongodb.net/agenda', collection: 'jobs' } });
+
+agenda.define('send event reminder', async job => {
+    const { rideId } = job.attrs.data;
+    // const event = await Event.findById(eventId);
+    // if (!event) return;
+
+    rideCheckIn('+19175751955')
+
+    // console.log(`Sent reminder for event "${event.name}"`);
+});
+
+
+agenda.start()
+
+socketTest = async (io, data) => {
+
+    let ride = { insertedId: 1234 }
+
+    console.log('test')
+
+    const currentTime = new Date()
+    const scheduleTime = new Date(currentTime.getTime() + 10 * 1000)
+
+    agenda.schedule(scheduleTime, 'send event reminder', { rideId: ride.insertedId }).then(start => console.log('starting agenda'))
+
+
+
+
+
+
+}
+
+
+
+// (async function () {
+//     const agenda = new Agenda({ db: { address: 'mongodb+srv://zach:zach@rideshare.uulxsfp.mongodb.net/agenda', collection:'jobs' } });
+
+//     console.log('agewnda start 1')
+
+//     // define job
+//     agenda.define('send event reminder', async job => {
+//         //   const { eventId } = job.attrs.data;
+//         //   const event = await Event.findById(eventId);
+//         //   if (!event) return;
+
+//         return 1//null
+
+//         //   console.log(`Sent reminder for event "${null}"`);
+//     });
+//     await agenda.start()//.then(start=>console.log('starting agenda'))
+
+//     const scheduleTime = new Date() + 30 * 1000
+
+//     agenda.schedule(scheduleTime, 'send event reminder', { eventId: '123' }).then(start=>console.log('starting agenda'))
+// })()
+
+
 
 message = async (io, data) => {
 
@@ -57,12 +121,12 @@ message = async (io, data) => {
     }
 
     let first_message_for_ride;
-    if (ride_chat_persist.chatLog.length == 1 ) first_message_for_ride = true
+    if (ride_chat_persist.chatLog.length == 1) first_message_for_ride = true
 
     // only send to sms for immediate next ride
     let is_upcoming_ride;
     console.log('ride id: ', user_chat_persist.activeRides[0]._id)
-    if (data.rideid == user_chat_persist.activeRides[0]._id){
+    if (data.rideid == user_chat_persist.activeRides[0]._id) {
         is_upcoming_ride = true
     }
 
@@ -84,6 +148,49 @@ message = async (io, data) => {
 
 
 requestScheduledRide = async (io, rideRequest, callback) => {
+
+
+
+
+
+
+
+
+
+
+    (async function () {
+        const agenda = new Agenda({ db: { address: 'mongodb+srv://zach:zach@rideshare.uulxsfp.mongodb.net/agenda', collection: 'jobs' } });
+
+        console.log('agewnda start 1')
+
+        // define job
+        agenda.define('send event reminder', async job => {
+            //   const { eventId } = job.attrs.data;
+            //   const event = await Event.findById(eventId);
+            //   if (!event) return;
+
+            return 1//null
+
+            //   console.log(`Sent reminder for event "${null}"`);
+        });
+        await agenda.start()//.then(start=>console.log('starting agenda'))
+
+        const scheduleTime = new Date() + 30 * 1000
+
+        agenda.schedule(scheduleTime, 'send event reminder', { eventId: '123' }).then(start => console.log('starting agenda'))
+    })()
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // console.log('preferred drivers: ', rideRequest.preferredDrivers)
@@ -497,5 +604,6 @@ module.exports = {
     acceptPayScheduledRide,
     paymentCompleteScheduledRide,
     enRouteScheduledRide,
-    walletTest
+    walletTest,
+    socketTest
 }
