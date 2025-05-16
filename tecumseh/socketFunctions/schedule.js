@@ -17,6 +17,7 @@ const agenda = new Agenda({ db: { address: 'mongodb+srv://zach:zach@rideshare.uu
 
 agenda.define('send event reminder', async job => {
     const { rideId } = job.attrs.data;
+    
     // const event = await Event.findById(eventId);
     // if (!event) return;
 
@@ -28,47 +29,28 @@ agenda.define('send event reminder', async job => {
 
 agenda.start()
 
-socketTest = async (io, data) => {
+setReminder = async (io, data) => {
 
     let ride = { insertedId: 1234 }
 
     console.log('test')
 
     const currentTime = new Date()
-    const scheduleTime = new Date(currentTime.getTime() + 10 * 1000)
+    const scheduleTime = new Date(currentTime.getTime() + 5 * 1000)
+
+    // need control to not trigger if ride is coming up immediately (eg. no reminder needed if ride is in next 20 mins)
 
     agenda.schedule(scheduleTime, 'send event reminder', { rideId: ride.insertedId }).then(start => console.log('starting agenda'))
 
+}
 
-
-
-
+disableReminder = async (io, data) => {
+    let ride = { insertedId: 1234 }
+    // agenda.cancel({ data: {rideId: ride.insertedId} })
+    agenda.disable({ data: {rideId: ride.insertedId} })
 
 }
 
-
-
-// (async function () {
-//     const agenda = new Agenda({ db: { address: 'mongodb+srv://zach:zach@rideshare.uulxsfp.mongodb.net/agenda', collection:'jobs' } });
-
-//     console.log('agewnda start 1')
-
-//     // define job
-//     agenda.define('send event reminder', async job => {
-//         //   const { eventId } = job.attrs.data;
-//         //   const event = await Event.findById(eventId);
-//         //   if (!event) return;
-
-//         return 1//null
-
-//         //   console.log(`Sent reminder for event "${null}"`);
-//     });
-//     await agenda.start()//.then(start=>console.log('starting agenda'))
-
-//     const scheduleTime = new Date() + 30 * 1000
-
-//     agenda.schedule(scheduleTime, 'send event reminder', { eventId: '123' }).then(start=>console.log('starting agenda'))
-// })()
 
 
 
@@ -605,5 +587,6 @@ module.exports = {
     paymentCompleteScheduledRide,
     enRouteScheduledRide,
     walletTest,
-    socketTest
+    setReminder,
+    disableReminder,
 }

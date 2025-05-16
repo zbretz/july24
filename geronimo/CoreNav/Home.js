@@ -82,14 +82,18 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
 
 
-    const socketTest = async () => {
-        console.log('test')
-        socket.emit('socket_test', (rideid) => {
+    const setReminder = async () => {
+        console.log('setReminder')
+        socket.emit('setReminder', (rideid) => {
             
         })
+    }
 
-        
-
+    const disableReminder = async () => {
+        console.log('disableReminder')
+        socket.emit('disableReminder', (rideid) => {
+            
+        })
     }
 
 
@@ -98,7 +102,7 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
         <View>
 
 
-            <TouchableOpacity onPress={socketTest} style={{
+            <TouchableOpacity onPress={setReminder} style={{
                 position: 'absolute', top: 0, zIndex: 100, right: 0, backgroundColor: '#fff5f7',//'#fff1cc'
                 borderColor: '#ff99ad',//#ffcf56
                 borderBottomWidth: 8,
@@ -113,7 +117,26 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
                     height: 0,
                 },
             }}>
-                <Text>Socket Test</Text>
+                <Text>Set Reminder</Text>
+
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={disableReminder} style={{
+                position: 'absolute', top: 60, zIndex: 100, right: 0, backgroundColor: '#fff5f7',//'#fff1cc'
+                borderColor: '#ff99ad',//#ffcf56
+                borderBottomWidth: 8,
+                borderTopRightRadius: 20, borderBottomRightRadius: 20,
+                alignSelf: 'flex-start',
+                padding: 20,
+                shadowColor: '#000',
+                shadowOpacity: 0.48,
+                shadowRadius: 8,
+                shadowOffset: {
+                    width: 0,
+                    height: 0,
+                },
+            }}>
+                <Text>Disable Reminder</Text>
 
             </TouchableOpacity>
 
