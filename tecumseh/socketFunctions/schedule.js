@@ -1,4 +1,4 @@
-const { db__, db_locals } = require('../mongoConnection.js')
+const { db__, uri } = require('../mongoConnection.js')
 var ObjectId = require('mongodb').ObjectId;
 const { notifyUser, notifyDriver, notifyAllDrivers } = require('../notify.js');
 const { smsMessageUser, rideCheckIn, alertAdmin } = require("../sms.js");
@@ -13,12 +13,13 @@ console.log('agewnda start -- move this to separate module')
 console.log('agewnda start 2')
 
 const Agenda = require('agenda');
-const agenda = new Agenda({ db: { address: 'mongodb+srv://zach:zach@rideshare.uulxsfp.mongodb.net/agenda', collection: 'jobs' } });
+const agenda = new Agenda({ db: { address: `${uri}agenda`, collection: 'jobs' } });
 
+console.log('uri: ', uri)
 
 agenda.define('alert admin', async job => {
     const { rideId } = job.attrs.data;
-    
+
     // const event = await Event.findById(eventId);
     // if (!event) return;
 
@@ -30,7 +31,7 @@ agenda.define('alert admin', async job => {
 
 agenda.define('send initial reminder', async job => {
     const { rideId } = job.attrs.data;
-    
+
     // const event = await Event.findById(eventId);
     // if (!event) return;
 
@@ -39,7 +40,7 @@ agenda.define('send initial reminder', async job => {
 
     const currentTime = new Date()
     const scheduleTime = new Date(currentTime.getTime() + 10 * 1000)
-    agenda.schedule(scheduleTime, 'alert admin', { rideId: rideId, is_initial_reminder:false }).then(start => console.log('starting agenda'))
+    agenda.schedule(scheduleTime, 'alert admin', { rideId: rideId, is_initial_reminder: false }).then(start => console.log('starting agenda'))
 
 
     // console.log(`Sent reminder for event "${event.name}"`);
@@ -62,14 +63,33 @@ setReminder = async (io, data) => {
 
     // need control to not trigger if ride is coming up immediately (eg. no reminder needed if ride is in next 20 mins)
 
-    agenda.schedule(scheduleTime, 'send initial reminder', { rideId: ride.insertedId, is_initial_reminder:true }).then(start => console.log('starting agenda'))
+    agenda.schedule(scheduleTime, 'send initial reminder', { rideId: ride.insertedId, is_initial_reminder: true }).then(start => console.log('starting agenda'))
 
 }
 
 disableReminder = async (io, status) => {
+
+    const { checkedIn, rideRequest } = status
+
+
+    let driver = await db__.collection('drivers').updateOne(
+        { _id: new ObjectId(String(rideRequest.driver._id)), "activeRides._id": rideRequest._id },
+        { $set: { "activeRides.$.checkedIn": checkedIn } }, //https://stackoverflow.com/a/10523963
+    )
+
+    console.log('found driver: ', driver)
+
+    db__.collection('rides').updateOne(
+        { _id: new ObjectId(String(rideRequest._id)) },
+        { $set: { checkedIn } },
+    )
+
+
+
+
     let ride = { insertedId: 1234 }
     // agenda.cancel({ data: {rideId: ride.insertedId} })
-    agenda.disable({ data: {rideId: ride.insertedId, is_initial_reminder:status.onTime} })
+    agenda.disable({ data: { rideId: ride.insertedId, is_initial_reminder: status.onTime } })
 
 }
 
@@ -152,44 +172,6 @@ message = async (io, data) => {
 
 
 requestScheduledRide = async (io, rideRequest, callback) => {
-
-
-
-
-
-
-
-
-
-
-    (async function () {
-        const agenda = new Agenda({ db: { address: 'mongodb+srv://zach:zach@rideshare.uulxsfp.mongodb.net/agenda', collection: 'jobs' } });
-
-        console.log('agewnda start 1')
-
-        // define job
-        agenda.define('send event reminder', async job => {
-            //   const { eventId } = job.attrs.data;
-            //   const event = await Event.findById(eventId);
-            //   if (!event) return;
-
-            return 1//null
-
-            //   console.log(`Sent reminder for event "${null}"`);
-        });
-        await agenda.start()//.then(start=>console.log('starting agenda'))
-
-        const scheduleTime = new Date() + 30 * 1000
-
-        agenda.schedule(scheduleTime, 'send event reminder', { eventId: '123' }).then(start => console.log('starting agenda'))
-    })()
-
-
-
-
-
-
-
 
 
 

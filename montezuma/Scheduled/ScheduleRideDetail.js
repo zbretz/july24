@@ -72,29 +72,27 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
         ]);
     }
 
-    // const cancelScheduledRide = async () => {
-    //     socket.emit('cancel_scheduled_ride', { ...rideDetail, rideCanceledByDriver: true }, null)
-    // }
+    const checkIn = async (onTime) => {
 
-    // const acceptPayScheduledRide = async () => {
-    //     socket.emit('accept_pay_scheduled_ride', { ...rideDetail, paid: 'direct_to_driver' })
-    //     setMasterState(masterState => {
-    //         let myScheduledRides = [...masterState.myScheduledRides]
-    //         for (const ride of myScheduledRides) {
-    //             if (ride._id === rideDetail._id) {
-    //                 ride.paid = "direct_to_driver"
-    //             }
-    //         }
-    //         return ({
-    //             ...masterState, myScheduledRides,
-    //         })
-    //     })
-    // }
+        const currentTime = new Date()
 
-    // const reassignScheduledRide = async () => {
-    //     socket.emit('reassign_scheduled_ride', { ...rideDetail, driver: new_driver })
-    // }
+        setMasterState(masterState => {
+            let myScheduledRides = [...masterState.myScheduledRides]
+            for (const ride of myScheduledRides) {
+                if (ride._id === rideDetail._id) {
+                    ride.checkedIn = currentTime
+                }
+            }
+            return ({
+                ...masterState, myScheduledRides,
+            })
+        })
 
+        onTime = onTime == 'on time'
+        console.log('disableReminder')
+        //use a calback and a loading indicator for confidence that this works
+        socket.emit('disableReminder', { onTime, checkedIn: currentTime, rideDetail })
+    }
 
     //if ride canceled, close out of detail view
     useEffect(() => {
@@ -110,6 +108,8 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
     let hoursUntilPickup = Math.floor(timeDiff / 1000 / 60 / 60)
     let displayEnRoute = hoursUntilPickup < 3
 
+    let minutesUntilPickup = Math.floor(timeDiff / 1000 / 60)
+    let displayCheckIn = minutesUntilPickup < 90 && !rideDetail.checkedIn
 
     let request = rideDetail
     let chatLog = rideDetail.chatLog
@@ -128,6 +128,27 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
 
     return (
         <SafeAreaView style={{ height: '100%', backgroundColor: '#fff' }}>
+
+
+            {displayCheckIn &&
+                <View style={{
+                    zIndex: 1, right: 10, top: 10, borderColor: '#ff99ad', borderWidth: 4, position: 'absolute', alignSelf: 'flex-start', alignItems: 'center', padding: 8, backgroundColor: '#fff5f7', borderRadius: 18,
+                    shadowOpacity: 0.38,
+                    shadowRadius: 8,
+                    shadowOffset: {
+                        width: 0,
+                        height: 0,
+                    },
+                }} >
+                    <Text style={{ fontSize: 22, fontWeight: 500, color: '#000', marginLeft: 0 }}>Check-In</Text>
+                    <View style={{ borderBottomWidth: 1, width: '100%', borderBottomColor: '#ff99ad', }} />
+                    <Text style={{ fontSize: 18, fontWeight: 400, color: '#000', margin: 8 }}>Ride is On Track</Text>
+                    <TouchableOpacity onPress={() => { checkIn('on time') }} style={{ backgroundColor: '#d2d2d2', margin: 4, padding: 12, paddingHorizontal: 20, borderRadius: 20 }}>
+                        <Text style={{ fontSize: 18, fontWeight: 500 }}>Yes</Text>
+                    </TouchableOpacity>
+                </View>
+
+            }
 
 
             <Modal
@@ -159,11 +180,14 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
 
             <Text style={{ fontSize: 20, fontWeight: '600', color: "#000", margin: 10, textAlign: 'center' }}>Detail</Text>
 
-            {/* <Text>{request.userName}</Text> */}
-            {/* <Text>Passenger: {request.user.firstName}</Text> */}
-            {/* <Text>From: {request.pickupAddress}</Text> */}
-
             <View style={{ backgroundColor: '#e6e6e6', borderRadius: 20, margin: 10, padding: 20 }}>
+
+                {request.checkedIn &&
+                    <View style={{ position: 'absolute', top: 0, right: 10, padding: 8, borderRadius: 18, marginTop: 10, backgroundColor: '#fff' }} >
+                        <Feather name="check-circle" size={24} color="#ff99ad" />
+                    </View>
+                }
+
                 <Text style={{ fontSize: 18, fontWeight: '600', marginBottom: 6 }}>{request.user.firstName}</Text>
                 <Text style={{ fontSize: 16, fontWeight: '600' }}>{formatInTimeZone(request.pickupDateTime, 'America/Denver', "eee',' MMMM do h':'mm bbb")}</Text>
 
