@@ -54,7 +54,7 @@ router.post('/create-proxy-session', async (req, res) => {
 
     const session = await client.proxy.v1.services(proxySid).sessions.create({
       uniqueName: `ride-${rideId}`,
-      ttl: 20, // 2 hours
+      ttl: 1.5 * 60 * 60, // 1.5 hours
     })
 
     const transformPhone = (num) => {

@@ -85,7 +85,7 @@ const smsMessageUser = (userPhone, text, first_message_for_ride) => {
     console.log(userPhone, text, first_message_for_ride)
 
     if (first_message_for_ride){
-        text = `New message from Driver!\n\nReply here or in The Park City App. (To opt out, reply 'STOP'.)\n\n---------------\n\n${text}`
+        text = `The Park City App: you have a new message!\n\nReply here or in the App. (To opt out, reply 'STOP'.)\n\n---------------\n\n${text}`
     }
 
     return client.messages

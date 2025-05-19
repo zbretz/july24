@@ -309,11 +309,12 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
 
             }
 
-
-            <CallDriverButton style={{ position: 'absolute', borderRadius: 20, bottom: 90, right: 20, }}
-                rideId={rideId}
-                pickupDateTime={rideDetail.pickupDateTime}
-            />
+            {request.driver &&
+                <CallDriverButton style={{ position: 'absolute', borderRadius: 20, bottom: 90, right: 20, }}
+                    rideId={rideId}
+                    pickupDateTime={rideDetail.pickupDateTime}
+                />
+            }
 
         </SafeAreaView>
 

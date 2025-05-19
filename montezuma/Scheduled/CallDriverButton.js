@@ -14,7 +14,7 @@ const CallDriverButton = ({ rideId, pickupDateTime }) => {
             const pickup = new Date(pickupDateTime);
             const minutesUntilPickup = (pickup - now) / 60000;
 
-            setCanCall(minutesUntilPickup <= 60 && minutesUntilPickup >= -30);
+            setCanCall(minutesUntilPickup <= 20 && minutesUntilPickup >= -30);
             // setCanCall(true);
         };
 
@@ -24,6 +24,24 @@ const CallDriverButton = ({ rideId, pickupDateTime }) => {
         return () => clearInterval(interval);
     }, [pickupDateTime]);
 
+
+    const callAlert = () => {
+        Alert.alert(`Critical Calls Only`, `
+     Please use strong discretion when deciding to call the passenger. Calls should only be used to clarify pickup location or similar urgent details.
+        `, [
+            {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            {
+                text: 'Accept', onPress: () => {
+                    handleCall()
+                }
+            },
+        ]);
+
+    }
 
 
 
@@ -72,12 +90,10 @@ const CallDriverButton = ({ rideId, pickupDateTime }) => {
                 <ActivityIndicator />
             ) : (
                 <View>
-                    <TouchableOpacity onPress={handleCall} style={{ borderRadius: 20, padding: 16, alignItems: 'center', backgroundColor: '#e6e6e6' }}>
+                    <TouchableOpacity onPress={callAlert} style={{ borderRadius: 20, padding: 16, alignItems: 'center', backgroundColor: '#e6e6e6' }}>
                         <Text style={{ fontFamily: 'Aristotelica-SmallCaps', fontSize: 19, marginBottom: -5, }}>Call</Text>
                     </TouchableOpacity>
-                    <View>
-                        <Text style={{ fontSize: 12 }}>Critical calls only</Text>
-                    </View>
+                  
                 </View>
             )}
         </View>
