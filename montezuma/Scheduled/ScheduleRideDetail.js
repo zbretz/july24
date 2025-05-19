@@ -72,7 +72,7 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
         ]);
     }
 
-    const checkIn = async (status) => {
+    const checkIn = async () => {
 
         const currentTime = new Date()
 
@@ -88,10 +88,8 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
             })
         })
 
-        // onTime = onTime == 'on time'
-        console.log('disableReminder')
         //use a calback and a loading indicator for confidence that this works
-        socket.emit('disableReminder', { status, checkedIn: currentTime, rideDetail })
+        socket.emit('driver_check_in', { checkedIn: currentTime, rideDetail })
     }
 
     //if ride canceled, close out of detail view
@@ -129,8 +127,7 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
     return (
         <SafeAreaView style={{ height: '100%', backgroundColor: '#fff' }}>
 
-
-            {displayCheckIn &&
+            {request.driver && displayCheckIn &&
                 <View style={{
                     zIndex: 1, right: 10, top: 10, borderColor: '#ff99ad', borderWidth: 4, position: 'absolute', alignSelf: 'flex-start', alignItems: 'center', padding: 8, backgroundColor: '#fff5f7', borderRadius: 18,
                     shadowOpacity: 0.38,
@@ -143,33 +140,12 @@ export default ScheduleRideDetail = ({ navigation, route, isConnected, masterSta
                     <Text style={{ fontSize: 22, fontWeight: 500, color: '#000', marginLeft: 0 }}>Check-In</Text>
                     <View style={{ borderBottomWidth: 1, width: '100%', borderBottomColor: '#ff99ad', }} />
                     <Text style={{ fontSize: 18, fontWeight: 400, color: '#000', margin: 8 }}>Ride is On Track</Text>
-                    <TouchableOpacity onPress={() => { checkIn('early') }} style={{ backgroundColor: '#d2d2d2', margin: 4, padding: 12, paddingHorizontal: 20, borderRadius: 20 }}>
+                    <TouchableOpacity onPress={checkIn} style={{ backgroundColor: '#d2d2d2', margin: 4, padding: 12, paddingHorizontal: 20, borderRadius: 20 }}>
                         <Text style={{ fontSize: 18, fontWeight: 500 }}>Yes</Text>
                     </TouchableOpacity>
                 </View>
 
             }
-
-            {displayCheckIn &&
-                <View style={{
-                    zIndex: 1, right: 10, top: 190, borderColor: '#83b979', borderWidth: 4, position: 'absolute', alignSelf: 'flex-start', alignItems: 'center', padding: 8, backgroundColor: '#e0edde', borderRadius: 18,
-                    shadowOpacity: 0.38,
-                    shadowRadius: 8,
-                    shadowOffset: {
-                        width: 0,
-                        height: 0,
-                    },
-                }} >
-                    <Text style={{ fontSize: 22, fontWeight: 500, color: '#000', marginLeft: 0 }}>Check-In</Text>
-                    <View style={{ borderBottomWidth: 1, width: '100%', borderBottomColor: '#ff99ad', }} />
-                    <Text style={{ fontSize: 18, fontWeight: 400, color: '#000', margin: 8 }}>Ride is On Track</Text>
-                    <TouchableOpacity onPress={() => { checkIn('on-time') }} style={{ backgroundColor: '#d2d2d2', margin: 4, padding: 12, paddingHorizontal: 20, borderRadius: 20 }}>
-                        <Text style={{ fontSize: 18, fontWeight: 500 }}>Yes</Text>
-                    </TouchableOpacity>
-                </View>
-
-            }
-
 
             <Modal
                 transparent={true}

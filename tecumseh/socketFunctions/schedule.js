@@ -18,80 +18,63 @@ const agenda = new Agenda({ db: { address: `${uri}agenda`, collection: 'jobs' } 
 
 agenda.define('alert admin', async job => {
     const { rideId, rideDetail } = job.attrs.data;
-
     // const event = await Event.findById(eventId);
     // if (!event) return;
-
     alertAdmin(rideDetail)//include ride data for action by admin
-
-    // console.log(`Sent reminder for event "${event.name}"`);
 });
 
 
 agenda.define('send initial reminder', async job => {
     const { rideId, rideDetail } = job.attrs.data;
-
     // const event = await Event.findById(eventId);
     // if (!event) return;
-
     rideCheckIn(rideDetail)
-
-
     const currentTime = new Date()
-    const scheduleTime = new Date(currentTime.getTime() + 16 * 1000)
+    const scheduleTime = new Date(currentTime.getTime() + 7 * 60 * 1000) // Alert admin if 7 mins elapse and no driver response.
     agenda.schedule(scheduleTime, 'alert admin', { rideId: rideId, is_admin_alert: true, rideDetail }).then(start => console.log('starting agenda'))
-
-
-    // console.log(`Sent reminder for event "${event.name}"`);
 });
 
 
 agenda.start()
 
-disableReminder = async (data) => {
+driverCheckIn = async (data) => {
 
-    const { status, checkedIn, rideDetail } = data
+    const { checkedIn, rideDetail } = data
 
+    console
 
-    // const agendaJob = {
-    //     rideId: rideDetail._id,//.insertedId,
-    //     ... (status == 'early') && { is_driver_alert: true },
-    //     ... (status == 'on-time') && { is_admin_alert: true },
-    //     // ... (checkin.status == 'late') && {is_driver_alert:true}
-    //     // is_initial_reminder: status.onTime
-    // }
+    let now = new Date().getTime()
+    let pickupTime = new Date(rideDetail.pickupDateTime).getTime()
+
+    let status = pickupTime - 40 * 60 * 1000 > now ? "early" : pickupTime - 7 * 60 * 1000 > now ? "on-time" : "late"
 
     const query = {
         'data.rideId': rideDetail._id,
-      };
-      
-      if (status === 'early') {
+    };
+    if (status === 'early') {
         query['data.is_driver_alert'] = true;
-      }
-      
-      if (status === 'on-time') {
+    }
+    if (status === 'on-time') {
         query['data.is_admin_alert'] = true;
-      }
+    }
 
-    console.log('rideDetail: ', query)
+    console.log('pickup time: ', pickupTime)
+    console.log('status: ', status)
 
+    let driver = await db__.collection('drivers').updateOne(
+        { _id: new ObjectId(String(rideDetail.driver._id)), "activeRides._id": rideDetail._id },
+        { $set: { "activeRides.$.checkedIn": checkedIn } }, //https://stackoverflow.com/a/10523963
+    )
 
-    //     // let driver = await db__.collection('drivers').updateOne(
-    //     //     { _id: new ObjectId(String(rideDetail.driver._id)), "activeRides._id": rideDetail._id },
-    //     //     { $set: { "activeRides.$.checkedIn": checkedIn } }, //https://stackoverflow.com/a/10523963
-    //     // )
+    console.log('found driver: ', driver)
 
-    //     // console.log('found driver: ', driver)
+    db__.collection('rides').updateOne(
+        { _id: new ObjectId(String(rideDetail._id)) },
+        { $set: { checkedIn, checkedInStatus: status } },
+    )
 
-    //     // db__.collection('rides').updateOne(
-    //     //     { _id: new ObjectId(String(rideDetail._id)) },
-    //     //     { $set: { checkedIn } },
-    //     // )
+    if (status == 'late') return
 
-
-
-
-    // console.log('agenda job: ', agendaJob, status)    // agenda.cancel({ data: {rideId: ride.insertedId} })
     agenda.disable(query).then(thing => console.log('thing: ', thing))
 
 }
@@ -176,16 +159,6 @@ message = async (io, data) => {
 
 requestScheduledRide = async (io, rideRequest, callback) => {
 
-
-
-
-
-
-
-    // console.log('preferred drivers: ', rideRequest.preferredDrivers)
-    // return
-
-
     let ride = await db__.collection('rides').insertOne({ ...rideRequest })
     console.log('   RIDE:   ', ride)
     rideRequest = { ...rideRequest, _id: ride.insertedId }
@@ -222,58 +195,51 @@ acceptScheduledRide = async (io, rideRequest) => {
 
     console.log('Scheduled ride accepted:', rideRequest);
 
-    // let rideUpdate = await db__.collection('rides').updateOne(
-    //     { _id: new ObjectId(String(rideRequest._id)), driver: null },
-    //     { $set: { driver: rideRequest.driver } },
-    // )
-    // console.log('rides update: ', rideUpdate)
+    let rideUpdate = await db__.collection('rides').updateOne(
+        { _id: new ObjectId(String(rideRequest._id)), driver: null },
+        { $set: { driver: rideRequest.driver } },
+    )
+    console.log('rides update: ', rideUpdate)
 
-    // //Driver already assigned to this ride
-    // if (rideUpdate.modifiedCount === 0) {
-    //     console.log('ride already taken!')
-    //     socket.emit('ride_taken', rideRequest._id)
-    // }
+    //Driver already assigned to this ride
+    if (rideUpdate.modifiedCount === 0) {
+        console.log('ride already taken!')
+        socket.emit('ride_taken', rideRequest._id)
+    }
 
-    // else {
+    else {
 
-    //     let user_update = await db__.collection('users').findOneAndUpdate(
-    //         { _id: new ObjectId(String(rideRequest.user._id)), "activeRides._id": new ObjectId(String(rideRequest._id)) },
-    //         { $set: { "activeRides.$.driver": rideRequest.driver } }, //https://stackoverflow.com/a/10523963
-    //         { upsert: true, returnDocument: "after" }
-    //     )
+        let user_update = await db__.collection('users').findOneAndUpdate(
+            { _id: new ObjectId(String(rideRequest.user._id)), "activeRides._id": new ObjectId(String(rideRequest._id)) },
+            { $set: { "activeRides.$.driver": rideRequest.driver } }, //https://stackoverflow.com/a/10523963
+            { upsert: true, returnDocument: "after" }
+        )
 
-    //     console.log('user update: ', user_update)
-
-
-    //     db__.collection('drivers').updateOne(
-    //         { _id: new ObjectId(String(rideRequest.driver._id)) },
-    //         {
-    //             $push: {
-    //                 activeRides: {
-    //                     $each: [rideRequest],
-    //                     $sort: { pickupDateTimeEpoch: 1 }
-    //                 }
-    //             },
-    //         },
-    //     )
-
-    //     io.to(rideRequest.user._id).emit('scheduled_ride_accepted', rideRequest);
-    //     io.to('drivers').emit('remove_scheduled_ride', rideRequest);
+        console.log('user update: ', user_update)
 
 
+        db__.collection('drivers').updateOne(
+            { _id: new ObjectId(String(rideRequest.driver._id)) },
+            {
+                $push: {
+                    activeRides: {
+                        $each: [rideRequest],
+                        $sort: { pickupDateTimeEpoch: 1 }
+                    }
+                },
+            },
+        )
 
-    const pickupTime = new Date(rideRequest.pickupDateTime)
-    console.log('current time: ', pickupTime)
-    // const scheduleTime = new Date(pickupTime.getTime() + 7 * 1000)
-    const scheduleTime = new Date(pickupTime.getTime() + 1 * 20 * 1000) // 40 mins before ride
-    console.log('schedule time: ', scheduleTime)
+        io.to(rideRequest.user._id).emit('scheduled_ride_accepted', rideRequest);
+        io.to('drivers').emit('remove_scheduled_ride', rideRequest);
 
-    // need control to not trigger if ride is coming up immediately (eg. no reminder needed if ride is in next 20 mins)
+        //Setup Ride Monitoring
+        const pickupTime = new Date(rideRequest.pickupDateTime)
+        const scheduleTime = new Date(pickupTime.getTime() + 40 * 60 * 1000) // 40 mins before ride
 
-    agenda.schedule(scheduleTime, 'send initial reminder', { rideId: rideRequest._id, is_driver_alert: true, rideDetail:rideRequest}).then(start => console.log('starting agenda'))
-
-
-    // }
+        // need control to not trigger if ride is coming up immediately (eg. no reminder needed if ride is in next 20 mins)
+        agenda.schedule(scheduleTime, 'send initial reminder', { rideId: rideRequest._id, is_driver_alert: true, rideDetail: rideRequest }).then(start => console.log('starting agenda'))
+    }
 
 };
 
@@ -606,5 +572,5 @@ module.exports = {
     paymentCompleteScheduledRide,
     enRouteScheduledRide,
     walletTest,
-    disableReminder,
+    driverCheckIn,
 }

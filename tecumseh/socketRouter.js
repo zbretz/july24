@@ -1,5 +1,5 @@
 
-const { disableReminder, message, requestScheduledRide, acceptScheduledRide, completeScheduledRide, cancelScheduledRide, acceptPayScheduledRide, paymentCompleteScheduledRide, enRouteScheduledRide, walletTest } = require("./socketFunctions/schedule");
+const { driverCheckIn, message, requestScheduledRide, acceptScheduledRide, completeScheduledRide, cancelScheduledRide, acceptPayScheduledRide, paymentCompleteScheduledRide, enRouteScheduledRide, walletTest } = require("./socketFunctions/schedule");
 const { requestLocalRide, acceptLocalRide, completeLocalRide } = require("./socketFunctions/local");
 
 module.exports = function (io) {
@@ -30,8 +30,8 @@ module.exports = function (io) {
         })
 
 
-        socket.on('disableReminder', (data) => {
-            disableReminder(data)
+        socket.on('driver_check_in', (data) => {
+            driverCheckIn(data)
         })
 
 
