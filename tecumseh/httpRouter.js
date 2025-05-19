@@ -99,7 +99,7 @@ router.get('/determineFare', async (req, res) => {
                 let base_fare = 24 > 2.1 * distance ? 24 : 2.1 * distance
 
                 if (distance > 40) base_fare = 2 * distance
-                if (distance > 46) base_fare = 1.85 * distance
+                if (distance > 48) base_fare = 1.85 * distance
 
                 base_fare = Math.round(base_fare)
 

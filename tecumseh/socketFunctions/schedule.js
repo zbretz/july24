@@ -1,12 +1,86 @@
-const { db__, db_locals } = require('../mongoConnection.js')
+const { db__, uri } = require('../mongoConnection.js')
 var ObjectId = require('mongodb').ObjectId;
 const { notifyUser, notifyDriver, notifyAllDrivers } = require('../notify.js');
-const { smsMessageUser } = require("../sms.js");
+const { smsMessageUser, rideCheckIn, alertAdmin } = require("../sms.js");
 
 let stripe_private_key = process.env.STRIPE_PRIVATE_KEY
 const stripe = require('stripe')(stripe_private_key);
 // const stripe = require('stripe')('sk_test_51Nj9WRAUREUmtjLCN8G4QqEEVvYoPpWKX82iY5lDX3dZxnaOGDDhqkyVpIFgg63FvXaAE3FmZ1p0btPM9s1De3m200uOIKI70O'); // pc app test key
 // const stripe = require('stripe')('sk_test_51Ov1U9JhmMKAiBpVczAh3RA7hEZfa4VRmOmyseADv5sY225uLcYlpfH4dYup6tMLkhC8YhUAt754dTmwNsLa23mo00P2T8WqN0'); // pc payments test key
+
+console.log('agewnda start -- move this to separate module')
+// const agenda = require('../rideMonitor');
+console.log('agewnda start 2')
+
+const Agenda = require('agenda');
+const agenda = new Agenda({ db: { address: `${uri}agenda`, collection: 'jobs' } });
+
+
+agenda.define('alert admin', async job => {
+    const { rideId, rideDetail } = job.attrs.data;
+    // const event = await Event.findById(eventId);
+    // if (!event) return;
+    alertAdmin(rideDetail)//include ride data for action by admin
+});
+
+
+agenda.define('send initial reminder', async job => {
+    const { rideId, rideDetail } = job.attrs.data;
+    // const event = await Event.findById(eventId);
+    // if (!event) return;
+    rideCheckIn(rideDetail)
+    const currentTime = new Date()
+    const scheduleTime = new Date(currentTime.getTime() + 7 * 60 * 1000) // Alert admin if 7 mins elapse and no driver response.
+    agenda.schedule(scheduleTime, 'alert admin', { rideId: rideId, is_admin_alert: true, rideDetail }).then(start => console.log('starting agenda'))
+});
+
+
+agenda.start()
+
+driverCheckIn = async (data) => {
+
+    const { checkedIn, rideDetail } = data
+
+    console
+
+    let now = new Date().getTime()
+    let pickupTime = new Date(rideDetail.pickupDateTime).getTime()
+
+    let status = pickupTime - 40 * 60 * 1000 > now ? "early" : pickupTime - 7 * 60 * 1000 > now ? "on-time" : "late"
+
+    const query = {
+        'data.rideId': rideDetail._id,
+    };
+    if (status === 'early') {
+        query['data.is_driver_alert'] = true;
+    }
+    if (status === 'on-time') {
+        query['data.is_admin_alert'] = true;
+    }
+
+    console.log('pickup time: ', pickupTime)
+    console.log('status: ', status)
+
+    let driver = await db__.collection('drivers').updateOne(
+        { _id: new ObjectId(String(rideDetail.driver._id)), "activeRides._id": rideDetail._id },
+        { $set: { "activeRides.$.checkedIn": checkedIn } }, //https://stackoverflow.com/a/10523963
+    )
+
+    console.log('found driver: ', driver)
+
+    db__.collection('rides').updateOne(
+        { _id: new ObjectId(String(rideDetail._id)) },
+        { $set: { checkedIn, checkedInStatus: status } },
+    )
+
+    if (status == 'late') return
+
+    agenda.disable(query).then(thing => console.log('thing: ', thing))
+
+}
+
+
+
 
 message = async (io, data) => {
 
@@ -57,12 +131,12 @@ message = async (io, data) => {
     }
 
     let first_message_for_ride;
-    if (ride_chat_persist.chatLog.length == 1 ) first_message_for_ride = true
+    if (ride_chat_persist.chatLog.length == 1) first_message_for_ride = true
 
     // only send to sms for immediate next ride
     let is_upcoming_ride;
     console.log('ride id: ', user_chat_persist.activeRides[0]._id)
-    if (data.rideid == user_chat_persist.activeRides[0]._id){
+    if (data.rideid == user_chat_persist.activeRides[0]._id) {
         is_upcoming_ride = true
     }
 
@@ -84,11 +158,6 @@ message = async (io, data) => {
 
 
 requestScheduledRide = async (io, rideRequest, callback) => {
-
-
-    // console.log('preferred drivers: ', rideRequest.preferredDrivers)
-    // return
-
 
     let ride = await db__.collection('rides').insertOne({ ...rideRequest })
     console.log('   RIDE:   ', ride)
@@ -164,7 +233,12 @@ acceptScheduledRide = async (io, rideRequest) => {
         io.to(rideRequest.user._id).emit('scheduled_ride_accepted', rideRequest);
         io.to('drivers').emit('remove_scheduled_ride', rideRequest);
 
+        //Setup Ride Monitoring
+        const pickupTime = new Date(rideRequest.pickupDateTime)
+        const scheduleTime = new Date(pickupTime.getTime() + 40 * 60 * 1000) // 40 mins before ride
 
+        // need control to not trigger if ride is coming up immediately (eg. no reminder needed if ride is in next 20 mins)
+        agenda.schedule(scheduleTime, 'send initial reminder', { rideId: rideRequest._id, is_driver_alert: true, rideDetail: rideRequest }).then(start => console.log('starting agenda'))
     }
 
 };
@@ -497,5 +571,6 @@ module.exports = {
     acceptPayScheduledRide,
     paymentCompleteScheduledRide,
     enRouteScheduledRide,
-    walletTest
+    walletTest,
+    driverCheckIn,
 }

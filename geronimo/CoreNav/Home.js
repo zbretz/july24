@@ -7,7 +7,6 @@ import { Video, ResizeMode } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ScrollView } from 'react-native-gesture-handler';
 
-
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -72,9 +71,7 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
             })
     }
 
-
     const upcomingRide = masterState.user?.activeRides?.length ? masterState.user.activeRides[0] : null
-
     useEffect(() => {
         upcomingRide && setTimeout(animateRideIndicator, 3300)
     }, [masterState])
@@ -244,7 +241,7 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
                                 <TouchableOpacity onPress={() => navigation.navigate('ScheduleRide')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions, borderRadius: 30, alignItems: 'center', padding: 10, }}>
                                     <Image style={{ flex: 1, width: '80%', margin: -28 }} resizeMode='contain' source={require('../assets/car-schedule.png')} />
-                                    <Text style={{ fontFamily: 'Lexend-Regular', fontSize: 18, marginBottom: 0, paddingHorizontal: 8 }}>Schedule</Text>
+                                    <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, marginBottom: 0, paddingHorizontal: 8 }}>Schedule</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions, borderRadius: 30, alignItems: 'center', padding: 10, }}>
