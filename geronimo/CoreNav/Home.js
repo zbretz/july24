@@ -82,12 +82,7 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
 
 
-    const setReminder = async () => {
-        console.log('setReminder')
-        socket.emit('setReminder', (rideid) => {
-
-        })
-    }
+ 
 
     const disableReminder = async (onTime) => {
 
@@ -101,26 +96,6 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
     return (
 
         <View>
-
-
-            <TouchableOpacity onPress={setReminder} style={{
-                position: 'absolute', top: 0, zIndex: 100, right: 0, backgroundColor: '#fff5f7',//'#fff1cc'
-                borderColor: '#ff99ad',//#ffcf56
-                borderBottomWidth: 8,
-                borderTopRightRadius: 20, borderBottomRightRadius: 20,
-                alignSelf: 'flex-start',
-                padding: 20,
-                shadowColor: '#000',
-                shadowOpacity: 0.48,
-                shadowRadius: 8,
-                shadowOffset: {
-                    width: 0,
-                    height: 0,
-                },
-            }}>
-                <Text>Set Reminder</Text>
-
-            </TouchableOpacity>
 
             <TouchableOpacity onPress={() => disableReminder('on time')} style={{
                 position: 'absolute', top: 70, zIndex: 100, right: 0, backgroundColor: '#fff5f7',//'#fff1cc'
@@ -320,7 +295,7 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
                                 <TouchableOpacity onPress={() => navigation.navigate('ScheduleRide')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions, borderRadius: 30, alignItems: 'center', padding: 10, }}>
                                     <Image style={{ flex: 1, width: '80%', margin: -28 }} resizeMode='contain' source={require('../assets/car-schedule.png')} />
-                                    <Text style={{ fontFamily: 'Lexend-Regular', fontSize: 18, marginBottom: 0, paddingHorizontal: 8 }}>Schedule</Text>
+                                    <Text style={{ fontFamily: 'LexendRegular', fontSize: 18, marginBottom: 0, paddingHorizontal: 8 }}>Schedule</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity onPress={() => navigation.navigate('LocalRide')} style={{ backgroundColor: '#f2f2f2', width: boxDimensions, height: boxDimensions, borderRadius: 30, alignItems: 'center', padding: 10, }}>

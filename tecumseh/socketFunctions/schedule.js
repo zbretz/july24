@@ -39,7 +39,7 @@ agenda.define('send initial reminder', async job => {
 
     const currentTime = new Date()
     const scheduleTime = new Date(currentTime.getTime() + 10 * 1000)
-    agenda.schedule(scheduleTime, 'alert admin', { rideId: rideId, is_initial_reminder: false }).then(start => console.log('starting agenda'))
+    agenda.schedule(scheduleTime, 'alert admin', { rideId: rideId, is_admin_alert: true }).then(start => console.log('starting agenda'))
 
 
     // console.log(`Sent reminder for event "${event.name}"`);
@@ -63,33 +63,43 @@ setReminder = async (rideDetail) => {
 
     // need control to not trigger if ride is coming up immediately (eg. no reminder needed if ride is in next 20 mins)
 
-    agenda.schedule(scheduleTime, 'send initial reminder', { rideId: rideDetail._id, is_initial_reminder: true }).then(start => console.log('starting agenda'))
+    agenda.schedule(scheduleTime, 'send initial reminder', { rideId: rideDetail._id, is_driver_alert: true }).then(start => console.log('starting agenda'))
 
 }
 
-disableReminder = async (io, status) => {
+disableReminder = async (data) => {
 
-    const { checkedIn, rideRequest } = status
-
-
-    let driver = await db__.collection('drivers').updateOne(
-        { _id: new ObjectId(String(rideRequest.driver._id)), "activeRides._id": rideRequest._id },
-        { $set: { "activeRides.$.checkedIn": checkedIn } }, //https://stackoverflow.com/a/10523963
-    )
-
-    console.log('found driver: ', driver)
-
-    db__.collection('rides').updateOne(
-        { _id: new ObjectId(String(rideRequest._id)) },
-        { $set: { checkedIn } },
-    )
+    const { status, checkedIn, rideDetail } = data
 
 
+    const agendaJob = {
+        rideId: rideDetail._id,//.insertedId,
+        ... (status == 'early') && {is_driver_alert:true},
+        ... (status == 'on-time') && {is_admin_alert:true},
+        // ... (checkin.status == 'late') && {is_driver_alert:true}
+        // is_initial_reminder: status.onTime
+    }
+
+    console.log('rideDetail: ', agendaJob)
 
 
-    let ride = { insertedId: 1234 }
-    // agenda.cancel({ data: {rideId: ride.insertedId} })
-    agenda.disable({ data: { rideId: ride.insertedId, is_initial_reminder: status.onTime } })
+//     // let driver = await db__.collection('drivers').updateOne(
+//     //     { _id: new ObjectId(String(rideDetail.driver._id)), "activeRides._id": rideDetail._id },
+//     //     { $set: { "activeRides.$.checkedIn": checkedIn } }, //https://stackoverflow.com/a/10523963
+//     // )
+
+//     // console.log('found driver: ', driver)
+
+//     // db__.collection('rides').updateOne(
+//     //     { _id: new ObjectId(String(rideDetail._id)) },
+//     //     { $set: { checkedIn } },
+//     // )
+
+
+
+
+// console.log('agenda job: ', agendaJob, status)    // agenda.cancel({ data: {rideId: ride.insertedId} })
+    agenda.disable({ data: agendaJob })
 
 }
 

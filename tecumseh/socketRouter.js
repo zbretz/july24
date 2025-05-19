@@ -34,8 +34,8 @@ module.exports = function (io) {
         socket.on('setReminder', (data) => {
             setReminder(data)
         })
-        socket.on('disableReminder', (status) => {
-            disableReminder(io, status)
+        socket.on('disableReminder', (data) => {
+            disableReminder(data)
         })
 
 
