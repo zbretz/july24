@@ -102,14 +102,14 @@ const smsMessageUser = (userPhone, text, first_message_for_ride) => {
         });
 }
 
-const rideCheckIn = (driverPhone) => {
-    console.log(driverPhone)
+const rideCheckIn = (rideDetail) => {
+    console.log(rideDetail)
 
     return client.messages
         .create({
-            body: 'are you on track for this upcoming ride',
+            body: `Are you on track for this upcoming ride:\n\n${rideDetail.pickupAddress}\n\n${new Date().toString()}}\n\nPlease check-in on the app.`,
             from: driverChatNumber,
-            to: driverPhone
+            to: rideDetail.driver.phone
         })
         .then(message => console.log('sms sent: ', message.sid))
         .catch(e => {
@@ -118,12 +118,12 @@ const rideCheckIn = (driverPhone) => {
         });
 }
 
-const alertAdmin= (driverPhone) => {
+const alertAdmin= (rideDetail) => {
     // console.log(driverPhone)
 
     return client.messages
         .create({
-            body: 'ride is not on track',
+            body: `Driver has not checked in:\n\n${JSON.stringify(rideDetail)}`,
             from: driverChatNumber,
             to: demoNumber
         })

@@ -3,7 +3,6 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import { Entypo, Feather, Octicons, FontAwesome5, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { formatInTimeZone } from "date-fns-tz";
 import CallDriverButton from './CallDriverButton';
-import { socket } from '../CoreNav/socket';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -42,40 +41,8 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
 
     if (!rideDetail) { navigation.goBack(); return null }
 
-
-    const setReminder = async () => {
-        console.log('setReminder')
-        socket.emit('setReminder', rideDetail, (rideid) => {
-
-        })
-    }
-
-
-
     return (
         <SafeAreaView style={{ height: '100%', backgroundColor: '#fff' }}>
-
-
-            <TouchableOpacity onPress={setReminder} style={{
-                position: 'absolute', top: 0, zIndex: 100, right: 0, backgroundColor: '#fff5f7',//'#fff1cc'
-                borderColor: '#ff99ad',//#ffcf56
-                borderBottomWidth: 8,
-                borderTopRightRadius: 20, borderBottomRightRadius: 20,
-                alignSelf: 'flex-start',
-                padding: 20,
-                shadowColor: '#000',
-                shadowOpacity: 0.48,
-                shadowRadius: 8,
-                shadowOffset: {
-                    width: 0,
-                    height: 0,
-                },
-            }}>
-                <Text>Set Reminder</Text>
-
-            </TouchableOpacity>
-
-
 
             <Text style={{ marginTop: 30, fontSize: 18, fontFamily: 'LexendMedium', textAlign: 'center' }}>Ride</Text>
 

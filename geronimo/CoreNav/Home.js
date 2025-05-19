@@ -6,8 +6,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Video, ResizeMode } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ScrollView } from 'react-native-gesture-handler';
-import { socket } from '../CoreNav/socket';
-
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -73,66 +71,14 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
             })
     }
 
-
     const upcomingRide = masterState.user?.activeRides?.length ? masterState.user.activeRides[0] : null
-
     useEffect(() => {
         upcomingRide && setTimeout(animateRideIndicator, 3300)
     }, [masterState])
 
-
-
- 
-
-    const disableReminder = async (onTime) => {
-
-        onTime = onTime == 'on time'
-
-        console.log('disableReminder')
-        socket.emit('disableReminder', { onTime })
-    }
-
-
     return (
 
         <View>
-
-            <TouchableOpacity onPress={() => disableReminder('on time')} style={{
-                position: 'absolute', top: 70, zIndex: 100, right: 0, backgroundColor: '#fff5f7',//'#fff1cc'
-                borderColor: '#ff99ad',//#ffcf56
-                borderBottomWidth: 8,
-                borderTopRightRadius: 20, borderBottomRightRadius: 20,
-                alignSelf: 'flex-start',
-                padding: 20,
-                shadowColor: '#000',
-                shadowOpacity: 0.48,
-                shadowRadius: 8,
-                shadowOffset: {
-                    width: 0,
-                    height: 0,
-                },
-            }}>
-                <Text>Disable Reminder - first</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => disableReminder('late')} style={{
-                position: 'absolute', top: 140, zIndex: 100, right: 0, backgroundColor: '#e0edde',//'#fff1cc'
-                borderColor: '#83b979',//#ffcf56
-                borderBottomWidth: 8,
-                borderTopRightRadius: 20, borderBottomRightRadius: 20,
-                alignSelf: 'flex-start',
-                padding: 20,
-                shadowColor: '#000',
-                shadowOpacity: 0.48,
-                shadowRadius: 8,
-                shadowOffset: {
-                    width: 0,
-                    height: 0,
-                },
-            }}>
-                <Text>Disable Reminder - second</Text>
-            </TouchableOpacity>
-
 
             {upcomingRide &&
                 <Animated.View style={{ position: 'absolute', top: 0, zIndex: 100, left: translateRideIndicator, }}>
