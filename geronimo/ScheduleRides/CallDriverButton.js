@@ -15,7 +15,7 @@ const CallDriverButton = ({ rideId, pickupDateTime }) => {
             const pickup = new Date(pickupDateTime);
             const minutesUntilPickup = (pickup - now) / 60000;
 
-            setCanCall(minutesUntilPickup <= 60 && minutesUntilPickup >= -30);
+            setCanCall(minutesUntilPickup <= 60 && minutesUntilPickup >= -35);
         };
 
         checkTimeWindow();

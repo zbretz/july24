@@ -121,7 +121,10 @@ export default RideDetail = ({ route, isConnected, masterState, navigation, ride
                     <View style={{ borderRadius: 30, justifyContent: 'center', marginVertical: 0, borderWidth: 7, borderColor: '#e6e6e6' }}>
                         <View style={{ backgroundColor: '#fff', borderRadius: 28, padding: 16, }}>
                             <Text style={{ marginTop: 0, fontSize: 18, fontFamily: 'LexendRegular', }}>Pickup</Text>
-                            <Text style={{ marginTop: 0, fontSize: 18, fontFamily: 'PointSoftLight', }}>{rideDetail.pickupAddress}</Text>
+                            <View style={{ flexDirection: 'row', alignItems:'baseline'}}>
+                                <Text style={{ marginTop: 0, fontSize: 18, fontFamily: 'PointSoftLight', }}>{rideDetail.pickupAddress}</Text>
+                                {rideDetail.flightNumber && <Text numberOfLines={1} style={{ fontSize: 16, fontFamily: 'PointDemiBold' }}> Flight {rideDetail.flightNumber}</Text>}
+                            </View>
                             <Text style={{ marginTop: 10, fontSize: 18, fontFamily: 'LexendRegular', }}>Dropoff</Text>
                             <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'PointSoftLight', }}>{rideDetail.dropoffAddress}</Text>
                         </View>

@@ -197,9 +197,6 @@ export default OtherAreas = ({ isConnected, masterState, setMasterState, navigat
                         <View style={{ backgroundColor: 'rgba(255,255,255,1)', height: windowHeight, width: '100%', alignItems: 'center', }}>
 
 
-                            <TouchableOpacity style={{ alignSelf: 'flex-end', paddingRight: 25, position: 'absolute', top: 40, right: 0 }} onPress={() => closeAcceptance()}>
-                                <AntDesign name="closecircleo" size={24} color="#353431" />
-                            </TouchableOpacity>
 
                             <Image style={{ width: windowWidth * .5, height: windowWidth * .5, borderRadius: 30, marginTop: 10 }} resizeMode='contain' source={require('../assets/airplane.png')} />
 
@@ -220,6 +217,20 @@ export default OtherAreas = ({ isConnected, masterState, setMasterState, navigat
                                 </View>
 
                             </View>
+
+
+                            <TouchableOpacity style={{
+                                alignSelf: 'center', top: 40, right: 0, backgroundColor: '#f2f2f2', justifyContent: 'center', alignItems: 'center', padding: 20, borderRadius: 20,
+                                shadowColor: '#000',
+                                shadowOpacity: 0.28,
+                                shadowRadius: 2,
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 0,
+                                },
+                            }} onPress={() => closeAcceptance()}>
+                                <Text style={{ fontFamily: 'LexendRegular', fontSize: 24 }}>Ok</Text>
+                            </TouchableOpacity>
 
                             <Text style={{ position: 'absolute', bottom: windowHeight * .08, fontSize: 18, }}>{countdown}</Text>
 

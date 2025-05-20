@@ -220,9 +220,6 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
                         <View style={{ backgroundColor: 'rgba(255,255,255,1)', height: windowHeight, width: '100%', alignItems: 'center', }}>
 
 
-                            <TouchableOpacity style={{ alignSelf: 'flex-end', paddingRight: 25, position: 'absolute', top: 40, right: 0 }} onPress={() => closeAcceptance()}>
-                                <AntDesign name="closecircleo" size={24} color="#353431" />
-                            </TouchableOpacity>
 
                             <Image style={{ width: windowWidth * .5, height: windowWidth * .5, borderRadius: 30, marginTop: 10 }} resizeMode='contain' source={require('../assets/airplane.png')} />
 
@@ -243,6 +240,20 @@ export default Airport = ({ isConnected, masterState, setMasterState, navigation
                                 </View>
 
                             </View>
+
+
+                            <TouchableOpacity style={{
+                                alignSelf: 'center', top: 40, right: 0, backgroundColor: '#f2f2f2', justifyContent: 'center', alignItems: 'center', padding: 20, borderRadius: 20,
+                                shadowColor: '#000',
+                                shadowOpacity: 0.28,
+                                shadowRadius: 2,
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 0,
+                                },
+                            }} onPress={() => closeAcceptance()}>
+                                <Text style={{ fontFamily: 'LexendRegular', fontSize: 24 }}>Ok</Text>
+                            </TouchableOpacity>
 
                             <Text style={{ position: 'absolute', bottom: windowHeight * .08, fontSize: 18, }}>{countdown}</Text>
 
@@ -422,9 +433,10 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
                         <View style={{ flexDirection: 'row', marginHorizontal: 20, marginBottom: 10, borderRadius: 30, justifyContent: 'center', alignItems: 'center', }}>
                             <Image style={{ marginHorizontal: 0, flex: 1, marginRight: 10, height: windowHeight * .15, width: windowHeight * .15, flex: 2 }} source={require('../assets/airport.png')} />
                             <View style={{ flex: 4, justifyContent: 'center' }}>
-                                <Text style={{ flexWrap: 'wrap', fontSize: 28, padding: 0, fontFamily: 'Aristotelica-Regular', }} adjustsFontSizeToFit={true} numberOfLines={1}>Airport Rides</Text>
-                                <Text style={{ flexWrap: 'wrap', fontSize: 18, padding: 0, fontFamily: 'Aristotelica-Regular', }} adjustsFontSizeToFit={true} numberOfLines={3}>Pickups and Dropoffs to SLC.</Text>
-                                <Text style={{ flexWrap: 'wrap', fontSize: 14, padding: 0, fontFamily: 'Aristotelica-Regular', }} adjustsFontSizeToFit={true} numberOfLines={3}>For Provo and Heber airport, <TouchableOpacity onPress={() => navigation.navigate('OtherAreas')} style={{ backgroundColor: '#55c1ff', borderRadius: 10, padding: 4 }}><Text style={{ color: '#fff', fontFamily: 'Aristotelica-Regular', marginBottom: -3 }}>click here</Text></TouchableOpacity></Text>
+                                <Text style={{ flexWrap: 'wrap', fontSize: 28, padding: 0, fontFamily: 'Aristotelica-Regular', }} >Airport Rides</Text>
+                                <Text style={{ flexWrap: 'wrap', fontSize: 18, padding: 0, fontFamily: 'Aristotelica-Regular', }} >Pickups and Dropoffs to SLC.</Text>
+                                <Text style={{ flexWrap: 'wrap', fontSize: 14, padding: 0, fontFamily: 'Aristotelica-Regular', }} >For Provo and Heber airport,</Text>
+                                <TouchableOpacity onPress={() => navigation.navigate('OtherAreas')} style={{ backgroundColor: '#55c1ff', borderRadius: 10, padding: 4, alignSelf: 'flex-start' }}><Text style={{ color: '#fff', fontFamily: 'Aristotelica-Regular', marginBottom: -3 }}>click here</Text></TouchableOpacity>
                             </View>
                         </View>
                         :
