@@ -13,24 +13,7 @@ const windowHeight = Dimensions.get('window').height;
 const Stack = createStackNavigator();
 
 export default Home = ({ isConnected, masterState, setMasterState, chatLog, setChatLog, navigation }) => {
-    return (
-        <Stack.Navigator
-            screenOptions={{
-                headerShown: false
-            }}
-        >
-            <Stack.Screen name="Menu">
-                {props => <Menu {...props} masterState={masterState} isConnected={isConnected} />}
-            </Stack.Screen>
-
-        </Stack.Navigator>
-    );
-}
-
-const Menu = ({ isConnected, masterState, navigation, }) => {
-
-    const rref = useRef()
-
+    
     const [modalVisible, setModalVisible] = useState(false)
     const [logoVisible, setLogoVisibile] = useState(false)
 
@@ -389,53 +372,3 @@ const Menu = ({ isConnected, masterState, navigation, }) => {
 
 
 
-
-const FlashingView = () => {
-
-    console.log('jasdvcjkbhsdcjkb')
-    const [animatedFlash, setAnimatedFlash] = useState(new Animated.Value(0));
-
-    // let animatedFlash =  new Animated.Value(0)
-
-    const animate = (selection) => {
-
-        Animated.loop(
-            Animated.sequence([
-                Animated.timing(animatedFlash, {
-                    toValue: 1,
-                    duration: 1200,
-                    useNativeDriver: true
-                }),
-                Animated.timing(animatedFlash, {
-                    toValue: 0,
-                    duration: 1200,
-                    useNativeDriver: true
-                })
-
-            ])
-
-        ).start()
-
-    }
-
-
-
-    useEffect(() => {
-        animate()
-    }, [])
-
-
-    return (
-        <View style={{ padding: 0, position: 'relative', width: '100%', marginTop: 20 }}>
-            <Animated.View style={{ marginHorizontal: 20, height: 100, backgroundColor: '#668cff', borderRadius: 20, opacity: animatedFlash }}>
-            </Animated.View>
-            <View style={{ height: 96, backgroundColor: '#99b3ff', position: 'relative', top: -98, zIndex: 99, borderRadius: 18, marginBottom: -100, padding: 10, marginHorizontal: 22 }}>
-                <Text style={{ fontSize: 16 }}>Local Ride in progress</Text>
-            </View>
-
-        </View>
-
-    )
-
-
-}
