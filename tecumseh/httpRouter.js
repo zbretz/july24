@@ -124,6 +124,8 @@ router.get('/determineFare', async (req, res) => {
                     fareObj['4'] = base_fare + 31
                 }
 
+                console.log('fare object: ', fareObj)
+
                 res.status(200).send(fareObj);
 
             })
