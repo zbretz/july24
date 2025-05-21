@@ -461,21 +461,6 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
                         </>
                     }
 
-                    {/* <View style={{ marginTop: 0, marginHorizontal: 20, justifyContent: 'center', backgroundColor: '#e6e6e6', borderRadius: 30, padding: 20 }}>
-                        <Text style={{ marginLeft: 10, fontSize: 24, fontWeight: '600', textAlign: 'left', fontFamily: 'Aristotelica-Regular' }}>Pickup Time</Text>
-                        <View style={{ borderRadius: 20, backgroundColor: '#f2f2f2', }}>
-                            <DateTimePicker
-                                style={{ marginTop: -10, backgroundColor: '#f2f2f2', transform: [{ scale: .84 }], alignSelf: 'center', height: windowHeight < 800 ? 150 : 180 }}
-                                testID="dateTimePicker"
-                                value={date}
-                                mode={'datetime'}
-                                is24Hour={true}
-                                onChange={(event, date) => { setDate(date); console.log(date) }}
-                                display='spinner'
-                                minuteInterval={5}
-                            />
-                        </View>
-                    </View> */}
                 </>
 
             }
