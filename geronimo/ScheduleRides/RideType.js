@@ -12,7 +12,7 @@ const windowHeight = Dimensions.get('window').height;
 export default RideType = ({ isConnected, masterState, navigation }) => {
 
     const upcomingRide = masterState.user?.activeRides?.length ? masterState.user.activeRides[0] : null
-    // console.log('ride type -- active ride: ', upcomingRide)
+    console.log('ride type -- active ride: ', upcomingRide)
 
     const comingSoonAlert = (type) => {
         const text = `This feature is not yet active. We're working on it!`
@@ -51,7 +51,7 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
 
             <View style={{}}>
 
-                {!upcomingRide &&
+                {/* {!upcomingRide && 
                     <View style={{
                         flexDirection: 'row',
                         margin: 24, marginBottom: 0, padding: 0, borderRadius: 30, borderColor: '#666', borderWidth: 0, justifyContent: 'center', alignItems: 'center',
@@ -60,7 +60,7 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                         <Text style={{ flexWrap: 'wrap', flex: 3, fontSize: 16, padding: 0, fontFamily: 'LexendRegular', }}>Park City drivers are dedicated to great service and punctual pickups.</Text>
 
                     </View>
-                }
+                } */}
 
                 {/* {masterState.user &&
                     <TouchableOpacity onPress={() => navigation.navigate('PreferredDrivers')} style={{ borderRadius: 40, padding: 4, paddingHorizontal: 10, marginHorizontal: 20, marginTop: 10, alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffe5ea', justifyContent: 'space-around', alignSelf: 'flex-start', flexDirection: 'row' }} >

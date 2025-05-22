@@ -585,7 +585,7 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType }
                             <Text style={{ fontFamily: 'LexendRegular', fontSize: 20 }}>XL</Text>
                             <Image resizeMode='cover' style={{ width: '100%', height: 200, backgroundColor: '#ecf6f8', padding: 0, borderTopLeftRadius: 10, borderTopRightRadius: 10 }} source={require('../assets/Pacifica.webp')} />
                             <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
-                                <Text style={{ fontFamily: 'LexendRegular', fontSize: 16, marginVertical: 4, marginTop: 0 }}>You'll find a third row of seating in these vehicles. If you have oversized luggage, or a larger group with moderate luggage, this might be the right option.</Text>
+                                <Text style={{ fontFamily: 'LexendRegular', fontSize: 16, marginVertical: 4, marginTop: 0 }}>You'll find a third row of seating in these SUVs and minivans. If you have oversized luggage, or a larger group with moderate luggage, this might be the right option.</Text>
                             </View>
                         </View>
 

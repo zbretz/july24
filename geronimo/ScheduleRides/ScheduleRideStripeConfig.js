@@ -9,6 +9,8 @@ const windowHeight = Dimensions.get('window').height;
 
 export default function ScheduleRideStripeConfig(rideDetail, setLoadingPayForm, masterState, setMasterState, navigation) {
 
+    console.log('____________________ stripe config rideDetail _____________________:\n\n ', rideDetail)
+
     let charge = rideDetail.fare + rideDetail.tipAmount
     charge = charge.toFixed(2)
 
@@ -67,6 +69,7 @@ export default function ScheduleRideStripeConfig(rideDetail, setLoadingPayForm, 
 
         setLoadingPayForm(false)
         console.log('openPaymentSheet - tipAmount: ', tipAmount)
+        console.log('post pay ride detail: ', rideDetail)
 
         const { error } = await presentPaymentSheet();
 
@@ -77,12 +80,11 @@ export default function ScheduleRideStripeConfig(rideDetail, setLoadingPayForm, 
             Alert.alert('Success', 'Your payment was successful. Thank you!');
 
             setMasterState(masterState => {
-                //the approach here is to remove the ride altogether and replace with same ride with single updated property
-                let activeRides = masterState.user.activeRides.filter(ride => ride._id !== rideDetail._id)
-                rideDetail = { ...rideDetail, paid: "card" }
-                activeRides = [...activeRides, rideDetail]
-                return ({ ...masterState, user: { ...masterState.user, activeRides } })
-            })
+                const activeRides = masterState.user.activeRides.map(ride =>
+                    ride._id === rideDetail._id ? { ...ride, paid: "card" } : ride
+                );
+                return ({ ...masterState, user: { ...masterState.user, activeRides } });
+            });
 
             navigation.goBack()
 

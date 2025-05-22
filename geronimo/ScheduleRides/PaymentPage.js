@@ -25,7 +25,8 @@ export default PaymentPage = ({ masterState, setMasterState, navigation, route }
     const [loadingPayForm, setLoadingPayForm] = useState(false)
     const [keyboardFocused, setKeyboardFocused] = useState(false)
 
-    rideDetail = { tipAmount, fare: rideDetail.fare, _id: rideDetail._id, user: rideDetail.user }
+    rideDetail = { tipAmount, fare: rideDetail.fare, _id: rideDetail._id, user: rideDetail.user, driver: rideDetail.driver }
+    // rideDetail = {...rideDetail, tipAmount }
 
     let openPaymentSheet = ScheduleRideStripeConfig(rideDetail, setLoadingPayForm, masterState, setMasterState, navigation)
 

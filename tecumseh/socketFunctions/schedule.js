@@ -73,7 +73,7 @@ driverCheckIn = async (data) => {
         { $set: { checkedIn, checkedInStatus: status } },
     )
 
-    if (status == 'late') return
+    // if (status == 'late') return
 
     agenda.disable(query).then(thing => console.log('thing: ', thing))
 
@@ -531,7 +531,6 @@ paymentCompleteScheduledRide = async (io, rideRequest) => {
         { $set: { "activeRides.$.paid": rideRequest.paid } }, //https://stackoverflow.com/a/10523963
         { returnDocument: "after" }
     )
-    // console.log('found user: ', user)
 
     if (rideRequest.driver) {
         let driver = await db__.collection('drivers').updateOne(
@@ -541,7 +540,6 @@ paymentCompleteScheduledRide = async (io, rideRequest) => {
         )
         io.to(rideRequest.driver._id).emit('scheduled_ride_paid', rideRequest);
     }
-    // console.log('found driver: ', driver)
 
     db__.collection('rides').updateOne(
         { _id: new ObjectId(String(rideRequest._id)) },
