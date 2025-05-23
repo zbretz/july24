@@ -20,7 +20,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
-export default TypeSelect = ({ navigation, route, destination, setDestination, pickupLocation, setPickupLocation, setFare, flightNumber, setFlightNumber }) => {
+export default TypeSelect = ({ navigation, route, destination, setDestination, pickupLocation, setPickupLocation, setFare, flightNumber, setFlightNumber, date, setDate }) => {
 
     const { type } = route.params;
 
@@ -29,10 +29,9 @@ export default TypeSelect = ({ navigation, route, destination, setDestination, p
         if (type == 'Departures') setDestination('SLC Airport')
     }, [type])
 
-    const [pickupDateTime, setPickupDateTime] = useState(new Date())
 
     const [rideType, setRideType] = useState(1)
-    const [date, setDate] = useState(new Date());
+    // const [date, setDate] = useState(new Date());
 
     const [addressError, setAddressError] = useState(false)
     const [modalVisible, setModalVisible] = useState(false)
@@ -44,7 +43,7 @@ export default TypeSelect = ({ navigation, route, destination, setDestination, p
 
 
     const determineFare = () => {
-        axios.get(`${url}/determineFare?pickup=${pickupLocation}&dropoff=${destination}&rideType=${rideType}&dateTime=${pickupDateTime}`)
+        axios.get(`${url}/determineFare?pickup=${pickupLocation}&dropoff=${destination}&rideType=${rideType}&dateTime=${date}`)
             .then(fare => {
                 if (!fare.data) {
                     fare = null

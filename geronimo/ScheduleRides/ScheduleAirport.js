@@ -10,9 +10,9 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
-export default ScheduleAirport = ({ isConnected, masterState, setMasterState, navigation, address, setDestination, setPickupLocation, date, setDate, setFlightNumber }) => {
+export default ScheduleAirport = ({  masterState, setMasterState, navigation, address, setDestination, setPickupLocation, setFlightNumber }) => {
 
-
+    const [date, setDate] = useState(new Date())
     const { user } = masterState
 
     console.log('user: ', user)
@@ -105,7 +105,7 @@ export default ScheduleAirport = ({ isConnected, masterState, setMasterState, na
                                         value={date}
                                         mode={'datetime'}
                                         is24Hour={true}
-                                        onChange={(event, date) => { setDate(date); console.log(date) }}
+                                        onChange={(event, date) => { setDate(date);}}
                                         display='spinner'
                                         minuteInterval={5}
                                     />

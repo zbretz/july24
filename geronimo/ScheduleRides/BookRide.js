@@ -16,6 +16,8 @@ export default BookRide = ({ navigation, masterState, setMasterState, date, dest
     const [infoModal, setInfoModal] = useState(false)
     const [modalVisible, setModalVisible] = useState(false)
 
+    console.log('date: ', date)
+
     let rideRequest = {
         pickupDateTime: date,
         pickupDateTimeEpoch: date.valueOf(),

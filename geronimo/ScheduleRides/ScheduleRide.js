@@ -44,7 +44,7 @@ export default ScheduleRide = ({ isConnected, masterState, setMasterState, chatL
             </Stack.Screen>
 
             <Stack.Screen name="Airport">
-                {props => <ScheduleAirport {...props} masterState={masterState} setMasterState={setMasterState} setDestination={setDestination} setPickupLocation={setPickupLocation} date={date} setDate={setDate} flightNumber={flightNumber} setFlightNumber={setFlightNumber} />}
+                {props => <ScheduleAirport {...props} masterState={masterState} setMasterState={setMasterState} setDestination={setDestination} setPickupLocation={setPickupLocation} flightNumber={flightNumber} setFlightNumber={setFlightNumber} />}
             </Stack.Screen>
 
 

@@ -46,7 +46,7 @@ driverCheckIn = async (data) => {
     let now = new Date().getTime()
     let pickupTime = new Date(rideDetail.pickupDateTime).getTime()
 
-    let status = pickupTime - 40 * 60 * 1000 > now ? "early" : pickupTime - 7 * 60 * 1000 > now ? "on-time" : "late"
+    let status = pickupTime - 35 * 60 * 1000 > now ? "early" : pickupTime - 7 * 60 * 1000 > now ? "on-time" : "late"
 
     const query = {
         'data.rideId': rideDetail._id,
@@ -235,7 +235,7 @@ acceptScheduledRide = async (io, rideRequest) => {
 
         //Setup Ride Monitoring
         const pickupTime = new Date(rideRequest.pickupDateTime)
-        const scheduleTime = new Date(pickupTime.getTime() + 40 * 60 * 1000) // 40 mins before ride
+        const scheduleTime = new Date(pickupTime.getTime() - 35 * 60 * 1000) // 40 mins before ride
 
         // need control to not trigger if ride is coming up immediately (eg. no reminder needed if ride is in next 20 mins)
         agenda.schedule(scheduleTime, 'send initial reminder', { rideId: rideRequest._id, is_driver_alert: true, rideDetail: rideRequest }).then(start => console.log('starting agenda'))
