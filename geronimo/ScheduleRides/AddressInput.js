@@ -17,12 +17,14 @@ export default AddressInput = ({ navigation, route, destination, setDestination,
     const [searchResults, setSearchResults] = useState([])
     const [addressModal, setAddressModal] = useState(false)
 
+    const [inputAddress, setInputAddress] = useState('')
+
     const [address, setAddress] = useState(null)
 
     const API_KEY = 'AIzaSyBTBjSD9lnO2dmVBCt3Lm8LS3OhDckcrEI';
     const searchLocation = async (text) => {
         if (!text.length) { setSearchResults([]); return }
-        console.log(text)
+        // console.log(text)
         axios
             .request({
                 method: 'post',
@@ -94,18 +96,22 @@ export default AddressInput = ({ navigation, route, destination, setDestination,
                     autoFocus
                     autoCapitalize={'none'}
                     placeholderTextColor={'#77756e'}
-                    onFocus={() => setInputFocused('pickup')}
-                    onBlur={() => { setInputFocused(false); setSearchResults([]) }}
+                    onFocus={() => null}
+                    onBlur={() => { ; setSearchResults([]) }}
                     // placeholder={'Pickup Address'}
-                    value={type == 'Arrivals' ? destination : pickupLocation}
+                    value={inputAddress}
                     onChangeText={(text) => {
                         if (type == 'Arrivals') {
-                            console.log('arrivals text: ', text)
-                            searchLocation(text); setDestination(text);
+                            console.log('arrivals text1: ', text)
+                            searchLocation(text);
+                            setInputAddress(text)
+                            // setDestination(text);
                             //  validateAddress(text); 
                             // if (text.length === 0) setDropoffAddressNotRecognized(true)
                         } else {
-                            searchLocation(text); setPickupLocation(text);
+                            searchLocation(text);
+                            setInputAddress(text)
+                            // setPickupLocation(text);
                             // validateAddress(text); 
                             // if (text.length === 0) setPickupAddressNotRecognized(true)
                         }
@@ -128,27 +134,29 @@ export default AddressInput = ({ navigation, route, destination, setDestination,
                 {
                     searchResults.map((item, index) => {
                         return (
-                            <View style={{ borderTopWidth: index == 0 ? 0 : 1, borderTopColor: '#e6e6e6', }} key={item.place_id}>
-                                <TouchableHighlight
-                                    underlayColor="#DDDDDD"
-                                    style={{ zIndex: 10, flexDirection: 'row', paddingVertical: 10, alignItems: 'center', backgroundColor: '#fff' }}
-                                    onPress={() => {
-                                        if (type == 'Arrivals') {
-                                            setDestination(item.description);
-                                            // setDropoffAddressNotRecognized(false);
-                                            inputRef.current.blur(); navigation.goBack()// setSearchResults([])
-                                        } else {
-                                            setPickupLocation(item.description);
-                                            // setPickupAddressNotRecognized(false);
-                                            inputRef.current.blur(); navigation.goBack()// setSearchResults([])
-                                        }
-                                    }}>
-                                    <View style={{ flexDirection: 'row', padding: 6, alignItems: 'center' }}>
-                                        <FontAwesome6 name="location-dot" size={14} color="#e6e6e6" />
-                                        <Text numberOfLines={2} style={{ marginLeft: 10, fontSize: 16, color: '#000', fontFamily: 'PointSoftSemiBold' }}>{item.description}</Text>
-                                    </View>
-                                </TouchableHighlight>
-                            </View>
+                            <TouchableHighlight
+                                key={item.place_id}
+                                underlayColor="#DDDDDD"
+                                style={{ borderTopWidth: index == 0 ? 0 : 1, borderTopColor: '#e6e6e6', zIndex: 10, flexDirection: 'row', paddingVertical: 10, alignItems: 'center', backgroundColor: '#fff' }}
+                                onPress={() => {
+                                    if (type == 'Arrivals') {
+                                        console.log('item descriptttion: ', item.description)
+                                        // setInputAddress(item.description)
+                                        setDestination(item.description);
+                                        // setDropoffAddressNotRecognized(false);
+                                        inputRef.current.blur(); navigation.goBack()
+                                    } else {
+                                        // setInputAddress(item.description)
+                                        setPickupLocation(item.description);
+                                        // setPickupAddressNotRecognized(false);
+                                        inputRef.current.blur(); navigation.goBack()
+                                    }
+                                }}>
+                                <View style={{ flexDirection: 'row', padding: 6, alignItems: 'center' }}>
+                                    <FontAwesome6 name="location-dot" size={14} color="#e6e6e6" />
+                                    <Text numberOfLines={2} style={{ marginLeft: 10, fontSize: 16, color: '#000', fontFamily: 'PointSoftSemiBold' }}>{item.description}</Text>
+                                </View>
+                            </TouchableHighlight>
                         );
                     })
                 }
