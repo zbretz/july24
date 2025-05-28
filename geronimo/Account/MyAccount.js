@@ -344,7 +344,7 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                                                 placeholderTextColor={'#000'}
                                                 value={code}
                                                 onChangeText={enterCode}
-                                                style={{ marginTop: 16, height: 40, backgroundColor: '#fff', borderRadius: 20, textAlign: 'center', fontSize: 20, width: 100, alignSelf: 'center' }}
+                                                style={{ marginTop: 16, height: 44, backgroundColor: '#fff', borderRadius: 20, textAlign: 'center', fontSize: 20, width: 100, alignSelf: 'center' }}
                                             />
                                         </>
                                         {error && <Text style={{ color: '#000', fontSize: 22, fontFamily: 'Aristotelica-Regular', textAlign: 'center', marginTop: 20 }}>Incorrect Code</Text>}

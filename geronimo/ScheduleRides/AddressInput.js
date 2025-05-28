@@ -39,6 +39,15 @@ export default AddressInput = ({ navigation, route, destination, setDestination,
 
     };
 
+    useEffect(() => {
+        if (Platform.OS == 'android') {
+            const timeout = setTimeout(() => {
+                inputRef.current?.focus();
+            }, 100); // small delay
+            return () => clearTimeout(timeout);
+        }
+    }, []);
+
     return (
 
         <View style={{ paddingBottom: 6, backgroundColor: '#fff', flex: 1, }}>
@@ -93,11 +102,10 @@ export default AddressInput = ({ navigation, route, destination, setDestination,
 
                 <TextInput style={{ height: 40, borderRadius: 16, backgroundColor: '#f2f2f2', fontSize: 16, fontFamily: 'PointSoftSemiBold', marginBottom: 10, paddingHorizontal: 20 }}
                     ref={inputRef}
-                    autoFocus
+                    autoFocus={Platform.OS == 'android' ? false : true}
                     autoCapitalize={'none'}
                     placeholderTextColor={'#77756e'}
-                    onFocus={() => null}
-                    onBlur={() => { ; setSearchResults([]) }}
+                    onBlur={() => { setSearchResults([]) }}
                     // placeholder={'Pickup Address'}
                     value={inputAddress}
                     onChangeText={(text) => {

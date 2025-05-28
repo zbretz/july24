@@ -10,7 +10,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
-export default ScheduleAirport = ({  masterState, setMasterState, navigation, address, setDestination, setPickupLocation, setFlightNumber }) => {
+export default ScheduleAirport = ({ masterState, setMasterState, navigation, address, setDestination, setPickupLocation, setFlightNumber }) => {
 
     const [date, setDate] = useState(new Date())
     const { user } = masterState
@@ -105,7 +105,7 @@ export default ScheduleAirport = ({  masterState, setMasterState, navigation, ad
                                         value={date}
                                         mode={'datetime'}
                                         is24Hour={true}
-                                        onChange={(event, date) => { setDate(date);}}
+                                        onChange={(event, date) => { setDate(date); }}
                                         display='spinner'
                                         minuteInterval={5}
                                     />
@@ -119,19 +119,25 @@ export default ScheduleAirport = ({  masterState, setMasterState, navigation, ad
 
                     {Platform.OS == 'android' &&
 
-                        <View style={{ marginTop: 10, marginHorizontal: 20, justifyContent: 'center', backgroundColor: '#e6e6e6', borderRadius: 30, padding: 20, }}>
-                            <Text style={{ marginLeft: 10, fontSize: 20, fontWeight: '600', textAlign: 'left', fontFamily: 'Aristotelica-Regular' }}>Date and Time</Text>
-                            <View style={{ borderRadius: 20, backgroundColor: '#f2f2f2', }}>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', borderRadius: 20, backgroundColor: '#f2f2f2', }}>
-                                    <TouchableOpacity onPress={showDatepicker}>
-                                        <Image style={{ marginHorizontal: 0, marginRight: 0, height: windowHeight * .1, width: windowHeight * .1, }} source={require('../assets/android-calendar.png')} />
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={showTimepicker} >
-                                        <Image style={{ marginHorizontal: 0, marginRight: 0, height: windowHeight * .1, width: windowHeight * .1, }} source={require('../assets/android-clock.png')} />
-                                    </TouchableOpacity>
+                        <View>
+
+                            <View style={{ backgroundColor: 'rgba(255,255,255,.7)', height: '100%', width: '100%', position: 'absolute', borderRadius: 20, zIndex: 1, margin: 0 }} />
+
+                            <View style={{ marginTop: 10, marginHorizontal: 20, justifyContent: 'center', backgroundColor: '#e6e6e6', borderRadius: 30, padding: 20, }}>
+                                <Text style={{ marginLeft: 10, fontSize: 20, fontWeight: '600', textAlign: 'left', fontFamily: 'Aristotelica-Regular' }}>Date and Time</Text>
+                                <View style={{ borderRadius: 20, backgroundColor: '#f2f2f2', }}>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', borderRadius: 20, backgroundColor: '#f2f2f2', }}>
+                                        <TouchableOpacity onPress={showDatepicker}>
+                                            <Image style={{ marginHorizontal: 0, marginRight: 0, height: windowHeight * .1, width: windowHeight * .1, }} source={require('../assets/android-calendar.png')} />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={showTimepicker} >
+                                            <Image style={{ marginHorizontal: 0, marginRight: 0, height: windowHeight * .1, width: windowHeight * .1, }} source={require('../assets/android-clock.png')} />
+                                        </TouchableOpacity>
+                                    </View>
+                                    <Text style={{ fontSize: 18, width: '100%', fontFamily: 'PointSoftSemiBold', textAlign: 'center', marginVertical: 6 }}>{formatInTimeZone(date, 'America/Denver', "eeee',' MMMM do h':'mm aa")}</Text>
                                 </View>
-                                <Text style={{ fontSize: 18, width: '100%', fontFamily: 'PointSoftSemiBold', textAlign: 'center', marginVertical: 6 }}>{formatInTimeZone(date, 'America/Denver', "eeee',' MMMM do h':'mm aa")}</Text>
                             </View>
+
                         </View>
 
                     }

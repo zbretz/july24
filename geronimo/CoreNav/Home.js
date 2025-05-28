@@ -320,9 +320,9 @@ export default Home = ({ isConnected, masterState, setMasterState, chatLog, setC
                                 <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{ backgroundColor: '#f1f1f1', flex: 3, height: windowHeight * .22, borderRadius: 30, marginLeft: 10, alignItems: 'center', justifyContent: 'center' }}>
 
                                     <Video
-                                        style={{ borderRadius: 20, height: windowHeight * .2 - 20, width: windowHeight * .2 - 20, }} // opacity: .27, 
+                                        style={{ borderRadius: 20, height: windowHeight * .2 - 20, width: windowHeight * .2 - 20}} // opacity: .27, 
                                         source={require('../assets/cover_tall.mp4')}
-                                        resizeMode={Platform.OS === 'ios' ? ResizeMode.COVER : "stretch"}
+                                        resizeMode={ResizeMode.COVER}
                                         isLooping
                                         shouldPlay
                                         isMuted
