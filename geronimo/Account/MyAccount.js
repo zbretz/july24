@@ -331,12 +331,12 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
 
                             <TouchableOpacity onPress={() => { console.log('close modal'); setModalVisible(false) }} style={{ position: 'absolute', height: '100%', width: '100%', backgroundColor: 'transparent', }} />
 
-                            <View style={{ backgroundColor: '#f2f2f2', top: windowHeight * .1, alignSelf: 'center', borderRadius: 20, padding: 20, justifyContent: 'center' }}>
+                            <View style={{ backgroundColor: '#f2f2f2', top: windowHeight * .1, alignSelf: 'center', borderRadius: 20, padding: 20, justifyContent: 'center', margin:10}}>
                                 <View style={{ backgroundColor: '#e6e6e6', borderRadius: 20, padding: 20, alignItems: 'center', justifyContent: 'center', }}>
                                     <View style={{ borderRadius: 30, }}>
                                         <>
-                                            <Image style={{ height: 90, width: 90, alignSelf: 'center' }} source={require('../assets/unlock.png')} />
-                                            <Text style={{ fontSize: 20, color: '#353431', textAlign: 'center', fontFamily: 'Aristotelica-Regular', margin: 10 }}>Please enter the verification code sent to your phone.</Text>
+                                            <Image style={{ height: 70, width: 70, alignSelf: 'center' }} source={require('../assets/unlock.png')} />
+                                            <Text style={{ fontSize: 18, color: '#353431', textAlign: 'center', fontFamily: 'LexendRegular', margin: 10 }}>Please enter the verification code sent to your phone.</Text>
                                             <TextInput
                                                 keyboardType='numeric'
                                                 autoCapitalize={'none'}
@@ -344,7 +344,7 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                                                 placeholderTextColor={'#000'}
                                                 value={code}
                                                 onChangeText={enterCode}
-                                                style={{ marginTop: 16, height: 40, backgroundColor: '#fff', borderRadius: 20, textAlign: 'center', fontSize: 20, width: 100, alignSelf: 'center' }}
+                                                style={{ marginTop: 16, height: 44, backgroundColor: '#fff', borderRadius: 20, textAlign: 'center', fontSize: 20, width: 100, alignSelf: 'center' }}
                                             />
                                         </>
                                         {error && <Text style={{ color: '#000', fontSize: 22, fontFamily: 'Aristotelica-Regular', textAlign: 'center', marginTop: 20 }}>Incorrect Code</Text>}
@@ -399,7 +399,11 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
 
                         <View style={{ flex: 1, backgroundColor: '#fff' }}>
 
-                            <View style={{ justifyContent: 'center', flex: 1, }}>
+
+                            <Image style={{ marginHorizontal: 0, position: 'absolute', top: windowHeight * .05, left: -20, height: windowHeight * .65, width: windowWidth * .65, zIndex: 0 }} source={require('../assets/woman-wave.png')} />
+
+
+                            <View style={{ justifyContent: 'center', flex: 1,zIndex:12 }}>
 
                                 <View style={{ paddingHorizontal: 20, paddingVertical: 20, borderRadius: 40, backgroundColor: '#f2f2f2', marginHorizontal: 40, alignItems: 'center', }}>
 
@@ -409,12 +413,12 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                                         placeholder='Phone Number'
                                         value={accountInput.phone}
                                         onChangeText={text => setAccountInput({ ...accountInput, phone: text })}
-                                        style={{ backgroundColor: '#fff', borderRadius: 24, color: '#333', fontWeight: '500', marginVertical: 0, padding: 10, paddingLeft: 6, fontSize: Platform.OS === 'ios' ? '22' : 22, textAlign: 'center', fontFamily: 'PointSoftSemiBold', width: '100%' }}
+                                        style={{ backgroundColor: '#fff', borderRadius: 24, color: '#333', fontWeight: '500', marginVertical: 0, padding: 10, paddingLeft: 6, fontSize: Platform.OS === 'ios' ? '22' : 22, textAlign: 'center', fontFamily: 'LexendRegular', width: '100%' }}
                                     />
 
 
                                     <TouchableOpacity onPress={() => { Keyboard.dismiss(); signIn() }} style={{ marginTop: 10, backgroundColor: '#ffcf56', borderRadius: 24, textAlign: 'center', justifyContent: 'center', width: '100%', padding: 10, }}>
-                                        <Text style={{ lineHeight: 20, textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20' : 20, color: '#000', fontFamily: 'PointSoftSemiBold', }}>Sign In</Text>
+                                        <Text style={{  textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20' : 20, color: '#000', fontFamily: 'LexendRegular', }}>Sign In</Text>
                                     </TouchableOpacity>
 
                                 </View>
@@ -429,7 +433,7 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                                         <Text style={{ textAlign: 'center', fontSize: Platform.OS === 'ios' ? '18' : 18, color: '#000', fontFamily: 'PointSoftSemiBold', margin: 10 }}>Or</Text>
 
                                         <TouchableOpacity onPress={() => navigation.navigate('SignUp')} style={{ backgroundColor: '#ffcf56', borderRadius: 24, textAlign: 'center', padding: 10, paddingHorizontal: 16, marginHorizontal: 60 }}>
-                                            <Text style={{ lineHeight: 20, textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20' : 20, color: '#000', fontFamily: 'PointSoftSemiBold' }}>New Account</Text>
+                                            <Text style={{  textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20' : 20, color: '#000', fontFamily: 'LexendRegular' }}>New Account</Text>
                                         </TouchableOpacity>
                                     </View>
                                 }
@@ -439,9 +443,6 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
 
                             </View>
 
-                            <View style={{ position: 'absolute', bottom: 0, backgroundColor: '#ffcf56', height: windowHeight * .3, width: '100%', zIndex: -1 }}>
-                                <View style={{ position: 'absolute', bottom: 0, backgroundColor: '#fff', height: windowHeight * .5, width: windowWidth, zIndex: -1, borderRadius: 880 }} />
-                            </View>
 
                             <Image style={{ marginHorizontal: 0, position: 'absolute', top: windowHeight * .05, left: -20, height: windowHeight * .65, width: windowWidth * .65, zIndex: -1 }} source={require('../assets/woman-wave.png')} />
 
@@ -452,11 +453,14 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                         :
 
                         <View style={{ flex: 1, backgroundColor: '#fff' }}>
-                            <View style={{ backgroundColor: '#fff', padding: 20, zIndex: -2 }}>
-                                <TouchableOpacity onPress={() => navigation.goBack()}><Ionicons name="chevron-back-outline" size={24} color="black" /></TouchableOpacity>
+
+                            <Image style={{ marginHorizontal: 0, position: 'absolute', top: windowHeight * .05, left: -20, height: windowHeight * .65, width: windowWidth * .65, zIndex: 0 }} source={require('../assets/woman-thumbs.png')} />
+
+                            <View style={{ backgroundColor: '#fff', padding: 20, top: 10, zIndex: 0, position: 'absolute', zIndex:110 }}>
+                                <TouchableOpacity onPress={() => navigation.goBack()}><Ionicons name="chevron-back-outline" size={28} color="black" /></TouchableOpacity>
                             </View>
 
-                            <View style={{ justifyContent: 'center', flex: 1, }}>
+                            <View style={{ justifyContent: 'center', flex: 1, zIndex: 11 }}>
 
                                 <View style={{ paddingHorizontal: 20, paddingVertical: 20, borderRadius: 40, backgroundColor: '#f2f2f2', marginHorizontal: 40, marginTop: -50, alignItems: 'center' }}>
 
@@ -466,7 +470,7 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                                         placeholder='First Name'
                                         value={accountInput.firstName}
                                         onChangeText={text => setAccountInput({ ...accountInput, firstName: text })}
-                                        style={{ backgroundColor: '#fff', borderRadius: 24, color: '#333', fontWeight: '500', marginVertical: 0, padding: 10, paddingLeft: 6, fontSize: Platform.OS === 'ios' ? '22' : 22, textAlign: 'center', fontFamily: 'PointSoftSemiBold', width: '100%' }}
+                                        style={{ backgroundColor: '#fff', borderRadius: 24, color: '#333', fontWeight: '500', marginVertical: 0, padding: 10, paddingLeft: 6, fontSize: Platform.OS === 'ios' ? '22' : 22, textAlign: 'center', fontFamily: 'LexendRegular', width: '100%' }}
                                     />
 
                                     <TextInput
@@ -478,7 +482,7 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                                         value={accountInput.lastName}
                                         // onChangeText={text => setMasterState((masterState) => ({ ...masterState, user: { ...masterState.user, lastName: text } }))}
                                         onChangeText={text => setAccountInput({ ...accountInput, lastName: text })}
-                                        style={{ backgroundColor: '#fff', borderRadius: 24, color: '#333', fontWeight: '500', marginVertical: 10, padding: 10, paddingLeft: 6, fontSize: Platform.OS === 'ios' ? '22' : 22, textAlign: 'center', fontFamily: 'PointSoftSemiBold', width: '100%' }}
+                                        style={{ backgroundColor: '#fff', borderRadius: 24, color: '#333', fontWeight: '500', marginVertical: 10, padding: 10, paddingLeft: 6, fontSize: Platform.OS === 'ios' ? '22' : 22, textAlign: 'center', fontFamily: 'LexendRegular', width: '100%' }}
                                     />
 
                                     <TextInput
@@ -487,12 +491,12 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
                                         placeholder='Phone Number'
                                         value={accountInput.phone}
                                         onChangeText={text => setAccountInput({ ...accountInput, phone: text })}
-                                        style={{ backgroundColor: '#fff', borderRadius: 24, color: '#333', marginVertical: 0, padding: 10, paddingLeft: 6, fontSize: Platform.OS === 'ios' ? '22' : 22, textAlign: 'center', fontFamily: 'PointSoftSemiBold', width: '100%' }}
+                                        style={{ backgroundColor: '#fff', borderRadius: 24, color: '#333', marginVertical: 0, padding: 10, paddingLeft: 6, fontSize: Platform.OS === 'ios' ? '22' : 22, textAlign: 'center', fontFamily: 'LexendRegular', width: '100%' }}
                                     />
 
 
                                     <TouchableOpacity onPress={() => { Keyboard.dismiss(); registerUser() }} style={{ marginTop: 10, backgroundColor: '#ffcf56', borderRadius: 24, textAlign: 'center', justifyContent: 'center', width: '100%' }}>
-                                        <Text style={{ textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20' : 20, color: '#000', fontFamily: 'PointSoftSemiBold', marginBottom: 0, padding: 10, }}>Create Account</Text>
+                                        <Text style={{ textAlign: 'center', fontSize: Platform.OS === 'ios' ? '20' : 20, color: '#000', fontFamily: 'LexendRegular', marginBottom: 0, padding: 10, }}>Create Account</Text>
                                     </TouchableOpacity>
 
 
@@ -508,17 +512,19 @@ const SignUpScreens = ({ navigation, type, masterState, setMasterState }) => {
 
 
 
-                            <View style={{ position: 'absolute', bottom: 0, backgroundColor: '#ffcf56', height: windowHeight * .3, width: '100%', zIndex: -1 }}>
-                                <View style={{ position: 'absolute', bottom: 0, backgroundColor: '#fff', height: windowHeight * .5, width: windowWidth, zIndex: -1, borderRadius: 880 }} />
-                            </View>
-
-                            <Image style={{ marginHorizontal: 0, position: 'absolute', top: windowHeight * .05, left: -20, height: windowHeight * .65, width: windowWidth * .65, zIndex: -1 }} source={require('../assets/woman-thumbs.png')} />
+                            {/* <View style={{ position: 'absolute', bottom: 0, backgroundColor: '#ffcf56', height: windowHeight * .3, width: '100%', zIndex: 11 }}>
+                                <View style={{ position: 'absolute', bottom: 0, backgroundColor: '#fff', height: windowHeight * .5, width: windowWidth, zIndex: 11, borderRadius: 880 }} />
+                            </View> */}
 
 
 
                         </View>
-                    }
 
+
+                    }
+                    <View style={{ position: 'absolute', bottom: 0, backgroundColor: '#ffcf56', height: windowHeight * .3, width: '100%', zIndex: 1 }}>
+                        <View style={{ position: 'absolute', bottom: 100, backgroundColor: '#fff', height: windowHeight * .5, width: windowWidth, zIndex: -1, borderRadius: 880 }} />
+                    </View>
 
                 </>
             </View >
@@ -657,7 +663,7 @@ const InformationScreen = ({ navigation, }) => {
                     <Text style={{ fontFamily: 'Aristotelica-Regular', fontSize: 18, textAlign: 'center' }} >
                         Building the future of local commerce
                     </Text>
-                    <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18, textAlign: 'center', marginTop:2 }} >
+                    <Text style={{ fontFamily: 'PointSoftSemiBold', fontSize: 18, textAlign: 'center', marginTop: 2 }} >
                         v{app_version}
                     </Text>
                 </View>

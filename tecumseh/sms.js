@@ -5,6 +5,7 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const phoneNumber = process.env.TWILIO_PHONE_NUMBER;
 const demoNumber = process.env.DEMO_NUMBER;
+const driverChatNumber = process.env.TPCA_DRIVER_CHAT_PHONE_NUMBER;
 
 const client = require('twilio')(accountSid, authToken);
 
@@ -85,14 +86,46 @@ const smsMessageUser = (userPhone, text, first_message_for_ride) => {
     console.log(userPhone, text, first_message_for_ride)
 
     if (first_message_for_ride){
-        text = `New message from Driver!\n\nReply here or in The Park City App. (To opt out, reply 'STOP'.)\n\n---------------\n\n${text}`
+        text = `The Park City App: you have a new message!\n\nReply here or in the App. (To opt out, reply 'STOP'.)\n\n---------------\n\n${text}`
     }
 
     return client.messages
         .create({
             body: text,
-            from: '+18016182619',
+            from: driverChatNumber,
             to: userPhone
+        })
+        .then(message => console.log('sms sent: ', message.sid))
+        .catch(e => {
+            console.log('caught error!: ', e)
+            // throw new Error
+        });
+}
+
+const rideCheckIn = (rideDetail) => {
+    console.log(rideDetail)
+
+    return client.messages
+        .create({
+            body: `Are you on track for this upcoming ride:\n\n${rideDetail.pickupAddress}\n\n${new Date().toString()}}\n\nPlease check-in on the app.`,
+            from: driverChatNumber,
+            to: rideDetail.driver.phone
+        })
+        .then(message => console.log('sms sent: ', message.sid))
+        .catch(e => {
+            console.log('caught error!: ', e)
+            // throw new Error
+        });
+}
+
+const alertAdmin= (rideDetail) => {
+    // console.log(driverPhone)
+
+    return client.messages
+        .create({
+            body: `Driver has not checked in:\n\n${JSON.stringify(rideDetail)}`,
+            from: driverChatNumber,
+            to: demoNumber
         })
         .then(message => console.log('sms sent: ', message.sid))
         .catch(e => {
@@ -106,5 +139,7 @@ module.exports = {
     smsNotifyUser,
     smsNotifyDriver,
     sendCode,
-    smsMessageUser
+    smsMessageUser,
+    rideCheckIn,
+    alertAdmin
 }; 

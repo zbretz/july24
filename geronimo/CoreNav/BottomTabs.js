@@ -17,13 +17,16 @@ export default BottomTabs = ({ isConnected, masterState, setMasterState, chatLog
 
         <Tab.Navigator
             screenOptions={({ route }) => {
+                // console.log('route: ', route)
                 return {
                     headerShown: false,
                     tabBarStyle: {
                         // paddingTop: 8,
                         // backgroundColor: route.name === 'Account' && !masterState.user ? '#ffcf56' : '#fff',
                         // borderTopWidth: 0,
-                        backgroundColor: 'rgba(255, 255, 255, 0.9)', // Adjust the transparency as needed
+                        // backgroundColor: 'rgba(255, 255, 255, 0.9)', // Adjust the transparency as needed
+                        // backgroundColor: route.name == 'Account' ? '#ffcf56' : 'rgba(255, 255, 255, 0.9)',
+                        backgroundColor:  route.name == 'AppContent' ? 'rgba(255, 255, 255, 0.9)' :  !masterState.user ? '#ffcf56' : 'rgba(255, 255, 255, 0.9)', // Adjust the transparency as needed
                         position: 'absolute', // Important for the translucent effect
                         bottom: 0,
                         left: 0,
@@ -58,7 +61,7 @@ export default BottomTabs = ({ isConnected, masterState, setMasterState, chatLog
                 options={{
                     tabBarLabel: ({ focused }) => {
                         return (
-                            <Text style={{ fontFamily: 'Aristotelica-SmallCaps', marginBottom: -6, color: focused ? '#55c1ff' : '#1E201F', fontWeight: 500, fontSize: 14 }}>Account</Text>
+                            <Text style={{ fontFamily: 'Aristotelica-SmallCaps', marginBottom: -6, color: focused ? masterState.user ? '#55c1ff' :  '#fff' : '#1E201F', fontWeight: 500, fontSize: 14 }}>Account</Text>
                         )
                     }, tabBarIcon: () => {
                         return (

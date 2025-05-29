@@ -1,6 +1,6 @@
 
-const { message, requestScheduledRide, acceptScheduledRide, completeScheduledRide, cancelScheduledRide, acceptPayScheduledRide, paymentCompleteScheduledRide, enRouteScheduledRide, walletTest} = require("./socketFunctions/schedule");
-const {  requestLocalRide, acceptLocalRide, completeLocalRide } = require("./socketFunctions/local");
+const { driverCheckIn, message, requestScheduledRide, acceptScheduledRide, completeScheduledRide, cancelScheduledRide, acceptPayScheduledRide, paymentCompleteScheduledRide, enRouteScheduledRide, walletTest } = require("./socketFunctions/schedule");
+const { requestLocalRide, acceptLocalRide, completeLocalRide } = require("./socketFunctions/local");
 
 module.exports = function (io) {
 
@@ -30,6 +30,11 @@ module.exports = function (io) {
         })
 
 
+        socket.on('driver_check_in', (data) => {
+            driverCheckIn(data)
+        })
+
+
         //Local Rides
         socket.on('request_local_ride', async (rideRequest) => {
             requestLocalRide(io, rideRequest)
@@ -37,10 +42,10 @@ module.exports = function (io) {
 
         socket.on('accept_local_ride', async (rideRequest) => {
             console.log('accepting')
-            acceptLocalRide(io,socket, rideRequest)
+            acceptLocalRide(io, socket, rideRequest)
         })
 
-        socket.on('complete_local_ride',async (rideRequest, callback) => {
+        socket.on('complete_local_ride', async (rideRequest, callback) => {
             completeLocalRide(io, rideRequest, callback)
         })
 
@@ -57,7 +62,7 @@ module.exports = function (io) {
 
         socket.on('en_route_scheduled_ride', async (rideRequest) => {
             console.log('en route')
-           enRouteScheduledRide(io, rideRequest)
+            enRouteScheduledRide(io, rideRequest)
         })
 
         socket.on('complete_scheduled_ride', async (rideRequest) => {
@@ -65,7 +70,7 @@ module.exports = function (io) {
         })
 
         socket.on('wallet_test', async (rideRequest) => {
-           walletTest(io, rideRequest)
+            walletTest(io, rideRequest)
         })
 
         socket.on('cancel_scheduled_ride', async (rideRequest, callback) => {

@@ -32,19 +32,17 @@ export default async function populateData({ masterState, setMasterState, loginU
     // let onDemandActive = true//!res.data[2].includes(app_version)
     // console.log('update version: ', res.data[2], updateAvailable, app_version)
 
-    console.log('populate data user: ', user)
+    // console.log('populate data user: ', user)
 
     axios({
         method: 'get',
-        // url: user ? `${url}/user/populateData?_id=${user._id}` : `${url}/user/populateData?_id=${null}` // no need to fetch 'nothing' data when no user found
         url: user?._id ? `${url}/user/populateData?_id=${user._id}` : `${url}/user/populateData?_id=${null}` // no need to fetch 'nothing' data when no user found
     })
         .then(async res => {
-            console.log('user data: ', res.data)
+            // console.log('user data: ', res.data)
 
             // onDemandActive = !res.data[1]
             const { user, live_versions, onDemandActive, localsDisabled } = res.data
-            console.log('user2: ', user)
 
             const updateAvailable = !live_versions.includes(app_version)
             await AsyncStorage.setItem('User', JSON.stringify(user))

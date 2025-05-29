@@ -30,23 +30,6 @@ export default BottomTabs = ({ navigation, isConnected, masterState, setMasterSt
 
 
 
-            <Tab.Screen name="LocalRides"
-                options={{
-                    tabBarLabel: ({ focused }) => {
-                        return (
-                            <Text style={{ color: focused ? '#fff' : '#666', fontWeight: 500, fontSize: 12 }}>Local</Text>
-                        )
-                    },
-                    tabBarIcon: () => {
-                        return (
-                            <Entypo name="location" size={24} color="#666" />
-                        )
-                    }
-                }}
-            >
-                {props => <LocalRidesStack {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} newLocalRides={newLocalRides} setNewLocalRides={setNewLocalRides} myLocalRides={myLocalRides} setMyLocalRides={setMyLocalRides} removeLocalRide={removeLocalRide} />}
-            </Tab.Screen>
-
 
             <Tab.Screen name="ScheduleRides"
                 options={{
@@ -67,6 +50,24 @@ export default BottomTabs = ({ navigation, isConnected, masterState, setMasterSt
 
 
 
+
+            <Tab.Screen name="LocalRides"
+                options={{
+                    tabBarLabel: ({ focused }) => {
+                        return (
+                            <Text style={{ color: focused ? '#fff' : '#666', fontWeight: 500, fontSize: 12 }}>Local</Text>
+                        )
+                    },
+                    tabBarIcon: () => {
+                        return (
+                            <Entypo name="location" size={24} color="#666" />
+                        )
+                    }
+                }}
+            >
+                {props => <LocalRidesStack {...props} masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} newLocalRides={newLocalRides} setNewLocalRides={setNewLocalRides} myLocalRides={myLocalRides} setMyLocalRides={setMyLocalRides} removeLocalRide={removeLocalRide} />}
+            </Tab.Screen>
+            
 
             <Tab.Screen name="Account"
                 options={{

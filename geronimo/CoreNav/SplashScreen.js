@@ -58,7 +58,7 @@ export default SplashScreen = ({ appIsReady, stopAnim }) => {
 
         <>
             <StatusBar hidden={true} />
-            {showApp
+            {!showApp
                 ?
                 <View style={{ position: 'absolute', zIndex: 2, height: '100%', width: '100%', flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'transparent', }}>
                     <Animated.View style={[{

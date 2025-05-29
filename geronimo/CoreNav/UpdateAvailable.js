@@ -15,7 +15,7 @@ export default UpdateAvailable = ({ }) => {
             <View style={{ width: '90%', backgroundColor: '#e6e6e6', borderRadius: 30, justifyContent: 'space-around', padding: 20, paddingVertical: 20 }}>
 
                 <View style={{ backgroundColor: '#f2f2f2', borderRadius: 20, marginBottom: 20, paddingVertical: 20, paddingHorizontal: 12 }}>
-                    <Text style={{ color: '#000', fontSize: 26, fontFamily: 'Aristotelica-Regular', marginBottom: -8, textAlign: 'center', }}>We've got some updates for you!</Text>
+                    <Text style={{ color: '#000', fontSize: 20, fontFamily: 'LexendRegular', textAlign: 'center', }}>We've got some updates for you!</Text>
                 </View>
                 <Image style={{ zIndex: 99, backgroundColor: null, width: windowWidth * .7, height: windowWidth * .5, alignSelf: 'center' }} source={require('../assets/team-work.png')} autoPlay loop />
 
@@ -29,8 +29,8 @@ export default UpdateAvailable = ({ }) => {
                     :
 
                     <TouchableOpacity onPress={() => Linking.openURL("https://apps.apple.com/us/app/the-park-city-app/id1637586494")}
-                        style={{ backgroundColor: '#ffcf56', borderRadius: 30, padding: 20, marginTop: 20 }} >
-                        <Text style={{ color: '#000', fontSize: 24, fontFamily: 'Aristotelica-Regular', marginBottom: -8, textAlign: 'center' }}>Update Now</Text>
+                        style={{ backgroundColor: '#ffcf56', borderRadius: 30, padding: 18, marginTop: 20 }} >
+                        <Text style={{ color: '#000', fontSize: 20, fontFamily: 'LexendRegular', textAlign: 'center' }}>Update Now</Text>
                     </TouchableOpacity>
 
                 }

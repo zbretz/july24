@@ -25,7 +25,8 @@ export default PaymentPage = ({ masterState, setMasterState, navigation, route }
     const [loadingPayForm, setLoadingPayForm] = useState(false)
     const [keyboardFocused, setKeyboardFocused] = useState(false)
 
-    rideDetail = { tipAmount, fare: rideDetail.fare, _id: rideDetail._id, user: rideDetail.user }
+    rideDetail = { tipAmount, fare: rideDetail.fare, _id: rideDetail._id, user: rideDetail.user, driver: rideDetail.driver }
+    // rideDetail = {...rideDetail, tipAmount }
 
     let openPaymentSheet = ScheduleRideStripeConfig(rideDetail, setLoadingPayForm, masterState, setMasterState, navigation)
 
@@ -90,7 +91,7 @@ export default PaymentPage = ({ masterState, setMasterState, navigation, route }
                                 <View style={{ height: 120, margin: 10, justifyContent: 'center', alignItems: 'center', borderWidth: 0, borderRadius: 10, backgroundColor: '#f2f2f2', }}>
                                     <Text style={{ fontSize: 17, fontFamily: 'Aristotelica-Regular', }}>If you'd like to leave a tip: </Text>
 
-                                    <TextInput style={{ backgroundColor: '#fff', padding: 10, marginTop: 6, borderRadius: 20, width: 60, }} textAlign='center' onChangeText={(text) => { setTipAmount(Number(text)) }}
+                                    <TextInput style={{ backgroundColor: '#fff', color:'#000', fontFamily: 'PointSoftSemiBold', fontSize:16, padding: 10, marginTop: 6, borderRadius: 20, width: 60, }} textAlign='center' onChangeText={(text) => { setTipAmount(Number(text)) }}
                                         placeholderTextColor={'#737373'}
                                         value={tipAmount}
                                         keyboardType='numeric'

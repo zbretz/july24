@@ -185,7 +185,7 @@ export default OtherAreas = ({ isConnected, masterState, setMasterState, navigat
                 <View style={{ position: 'absolute', height: '100%', width: '100%', backgroundColor: 'transparent' }}>
 
                     <Animatable.View
-                        style={{ zIndex: 1 }}
+                        style={{ zIndex: 2 }}
                         animation={{
                             from: { left: '-150%' }, // Start position
                             to: { left: '0%' }, // End position
@@ -197,9 +197,6 @@ export default OtherAreas = ({ isConnected, masterState, setMasterState, navigat
                         <View style={{ backgroundColor: 'rgba(255,255,255,1)', height: windowHeight, width: '100%', alignItems: 'center', }}>
 
 
-                            <TouchableOpacity style={{ alignSelf: 'flex-end', paddingRight: 25, position: 'absolute', top: 40, right: 0 }} onPress={() => closeAcceptance()}>
-                                <AntDesign name="closecircleo" size={24} color="#353431" />
-                            </TouchableOpacity>
 
                             <Image style={{ width: windowWidth * .5, height: windowWidth * .5, borderRadius: 30, marginTop: 10 }} resizeMode='contain' source={require('../assets/airplane.png')} />
 
@@ -220,6 +217,20 @@ export default OtherAreas = ({ isConnected, masterState, setMasterState, navigat
                                 </View>
 
                             </View>
+
+
+                            <TouchableOpacity style={{
+                                alignSelf: 'center', top: 40, right: 0, backgroundColor: '#f2f2f2', justifyContent: 'center', alignItems: 'center', padding: 20, borderRadius: 20,
+                                shadowColor: '#000',
+                                shadowOpacity: 0.28,
+                                shadowRadius: 2,
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 0,
+                                },
+                            }} onPress={() => closeAcceptance()}>
+                                <Text style={{ fontFamily: 'LexendRegular', fontSize: 24 }}>Ok</Text>
+                            </TouchableOpacity>
 
                             <Text style={{ position: 'absolute', bottom: windowHeight * .08, fontSize: 18, }}>{countdown}</Text>
 
@@ -502,10 +513,10 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
                                     }
                                     }
                                 >
-                                    <>
+                                    <View>
                                         <FontAwesome6 name="location-dot" size={14} color="#e6e6e6" />
                                         <Text numberOfLines={2} style={{ marginLeft: 10, padding: 6, fontSize: 16, color: '#000', fontFamily: 'PointSoftSemiBold' }}>{item.description}</Text>
-                                    </>
+                                    </View>
                                 </TouchableHighlight>
                             </View>
                         );
@@ -513,14 +524,15 @@ const Tab0 = ({ date, setDate, pickupLocation, setPickupLocation, destination, s
                 }
             </View>
 
-
-
             {addressError &&
-                <View style={{ position: 'absolute', bottom: 80, zIndex: 3, backgroundColor: '#ffb3c2', borderRadius: 20, marginHorizontal: 20, alignSelf: 'center', padding: 16, paddingHorizontal: 20, borderWidth: 2, borderColor: '#cc0029' }}>
-                    <Text style={{ fontSize: 20, fontFamily: 'LexendMedium', color: '#cc0029', textAlign: 'center' }}>Address not recognized.</Text>
-                    <Text style={{ fontSize: 18, fontFamily: 'LexendRegular', color: '#cc0029', textAlign: 'center', marginTop:6 }}>Please re-input your location.</Text>
+                <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', position: 'absolute', bottom: 80, zIndex: 3, }}>
+                    <View style={{ width: '90%', backgroundColor: '#fff', padding: 20, borderRadius: 20, borderWidth: 1 }}>
+                        <Text style={{ textAlign: 'center', fontFamily: 'LexendMedium', fontSize: 18 }}>Address not recognized.</Text>
+                        <Text style={{ textAlign: 'center', fontFamily: 'LexendMedium', fontSize: 18, marginTop: 8 }}>Please re-input your location.</Text>
+                    </View>
                 </View>
             }
+
         </>
     )
 }
@@ -573,7 +585,7 @@ const Tab3 = ({ rideType, date, destination, pickupLocation, fare, setRideType }
                             <Text style={{ fontFamily: 'LexendRegular', fontSize: 20 }}>XL</Text>
                             <Image resizeMode='cover' style={{ width: '100%', height: 200, backgroundColor: '#ecf6f8', padding: 0, borderTopLeftRadius: 10, borderTopRightRadius: 10 }} source={require('../assets/Pacifica.webp')} />
                             <View style={{ backgroundColor: '#f2f2f2', padding: 10, borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
-                                <Text style={{ fontFamily: 'LexendRegular', fontSize: 16, marginVertical: 4, marginTop: 0 }}>You'll find a third row of seating in these vehicles. If you have oversized luggage, or a larger group with moderate luggage, this might be the right option.</Text>
+                                <Text style={{ fontFamily: 'LexendRegular', fontSize: 16, marginVertical: 4, marginTop: 0 }}>You'll find a third row of seating in these SUVs and minivans. If you have oversized luggage, or a larger group with moderate luggage, this might be the right option.</Text>
                             </View>
                         </View>
 

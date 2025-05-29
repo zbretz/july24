@@ -3,14 +3,33 @@
 import { registerRootComponent } from "expo";
 
 
+import React from 'react';
 import { Text, TextInput } from 'react-native';
 
-Text.defaultProps = Text.defaultProps || {};
-Text.defaultProps.allowFontScaling = false;
+function patchAllowFontScaling(Component, name) {
+  if (!Component?.render) {
+    console.warn(`[FontScaling] ${name} has no render method`);
+    return;
+  }
 
-TextInput.defaultProps = TextInput.defaultProps || {};
-TextInput.defaultProps.allowFontScaling = false;
+  const originalRender = Component.render;
+  Component.render = function (...args) {
+    const rendered = originalRender.call(this, ...args);
+    return React.isValidElement(rendered)
+      ? React.cloneElement(rendered, {
+          ...rendered.props,
+          allowFontScaling: false,
+        })
+      : rendered;
+  };
+}
+
+patchAllowFontScaling(Text, 'Text');
+patchAllowFontScaling(TextInput, 'TextInput');
 
 import App from './CoreNav/App';
+
+console.log("Text defaultProps at runtime:", Text.defaultProps);
+
 
 registerRootComponent(App);

@@ -9,7 +9,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
-console.log('BONG BONG BONG BONG')
+// console.log('BONG BONG BONG BONG')
 
 
 export default function LocalRideStripeConfig({user, fare=0, requestLocal, setLoadingPayForm,}) {
