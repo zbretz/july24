@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, TextInput, Alert, Dimensions, Image } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, TextInput, Alert, Dimensions, Image, Modal } from 'react-native';
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { Feather, Entypo, MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 import { formatInTimeZone } from "date-fns-tz";
@@ -9,6 +9,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { ScrollView } from 'react-native-gesture-handler';
 import Carousel from 'react-native-reanimated-carousel';
 import Booking from '../Childcare/Booking';
+import { socket } from '../CoreNav/socket';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -63,11 +64,12 @@ export default DriverPages = ({ navigation, masterState, setMasterState, }) => {
 
 
 // On the driver side:
-// Review/Accept Booking
+// Review/Accept Booking (if reject, notify zach...respond to user: 'under review')
 // Set Final Price / Finish Ride
 // Improve Driver contract
 
 // Setup calling --> dedicated driver number
+// Driver Book Ride (for client)
 
 const PrivateBookingDetail = ({ navigation }) => {
     return (
@@ -214,9 +216,76 @@ const PrivateBooking1 = ({ navigation }) => {
 }
 
 
-const PrivateBooking2 = ({ navigation }) => {
+const PrivateBooking2 = ({ navigation, masterState, setMasterState }) => {
+
+    const [modalVisible, setModalVisible] = useState(false)
+
+    let rideRequest = {
+        driver: { _id: '655ebd66bcab9f212117fda7' },
+        // pickupDateTime: date,
+        // pickupDateTimeEpoch: date.valueOf(),
+        // driver: null,
+        // pickupAddress: pickupLocation,
+        // dropoffAddress: destination,
+        // rideType: rideType,
+        // fare: fare[rideType],
+        note: 'ride note ride note ride note',
+    }
+
+
+    const requestDirectBooking = async () => {
+
+        console.log('request ride: ', rideRequest)
+
+        // if (!user) {
+        //     // also if directBooking exists
+        //     setModalVisible(true);
+        //     return
+        // }
+
+
+        socket.emit('request_direct_booking', rideRequest, (rideid) => {
+            console.log('booking confirmation: ', rideid)
+            rideRequest = { ...rideRequest, _id: rideid }
+            setMasterState(masterState => { return { ...masterState, user: { ...masterState.user, driverBooking: rideRequest } } })
+            // completeAction()
+        })
+
+    }
+
+
     return (
         <ScrollView style={{ padding: 0 }}>
+
+            <Modal
+                animationType='slide'
+                transparent={true}
+                visible={modalVisible}
+                style={{ height: windowHeight, width: windowWidth, }}>
+                <View style={{ height: windowHeight, width: windowWidth, backgroundColor: 'rgba(0,0,0,.6)', }}>
+
+                    <TouchableOpacity onPress={() => { console.log('close modal'); setModalVisible(false) }} style={{ position: 'absolute', height: '100%', width: '100%', backgroundColor: 'transparent', }} />
+
+                    <View style={{ height: windowHeight * .4, width: windowWidth * .9, backgroundColor: '#e2e2e2', alignItems: 'center', justifyContent: 'center', top: windowHeight * .1, alignSelf: 'center', borderRadius: 40, padding: 20 }}>
+
+                        <View style={{ backgroundColor: '#fff', flex: 1, width: '100%', borderRadius: 30 }}>
+
+                            <View style={{ marginTop: 0, padding: 0, borderRadius: 30, alignItems: 'center', justifyContent: 'center', flex: 1, }}>
+                                <View style={{ height: '30%', width: '100%', flexDirection: 'row', paddingHorizontal: 10, alignItems: 'center', }}>
+                                    <Image style={{ flex: 1, marginRight: 10, }} resizeMode='contain' source={require('../assets/traffic-lights.png')} />
+                                    <Text style={{ color: '#000', fontSize: 25, fontFamily: 'LexendRegular', flexWrap: 'wrap', flex: 3 }} adjustsFontSizeToFit={true} numberOfLines={2}>Please sign in to book this ride. Thanks!</Text>
+                                </View>
+
+                                <TouchableOpacity style={{ padding: 16, borderWidth: 0, borderRadius: 20, marginTop: 20, backgroundColor: '#ffcf56' }} onPress={() => { setModalVisible(false); navigation.navigate('Account') }}><Text style={{ fontFamily: 'LexendRegular', fontSize: 19 }}>Sign In</Text></TouchableOpacity>
+                            </View>
+                        </View>
+
+                    </View>
+
+                </View>
+            </Modal>
+
+
 
             <TouchableOpacity style={{ position: 'absolute', zIndex: 11, padding: 20, alignSelf: 'flex-start' }} onPress={() => navigation.goBack()}>
                 <View style={{ backgroundColor: '#e6e6e6', borderRadius: 30, padding: 10 }}>
@@ -243,7 +312,7 @@ const PrivateBooking2 = ({ navigation }) => {
                     <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', }}>Deposit $100</Text>
                     <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', }}>Final Amount</Text>
 
-                    <TouchableOpacity style={{ zIndex: 11, padding: 20, alignSelf: 'center' }} onPress={() => navigation.navigate('PrivateBooking2')}>
+                    <TouchableOpacity style={{ zIndex: 11, padding: 20, alignSelf: 'center' }} onPress={() => requestDirectBooking()}>
                         <View style={{ backgroundColor: '#e6e6e6', borderRadius: 30, padding: 10 }}>
                             <Text>Book & Pay</Text>
                         </View>

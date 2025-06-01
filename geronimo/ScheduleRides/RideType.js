@@ -12,9 +12,11 @@ const windowHeight = Dimensions.get('window').height;
 export default RideType = ({ isConnected, masterState, navigation }) => {
 
     const upcomingRide = masterState.user?.activeRides?.length ? masterState.user.activeRides[0] : null
-    console.log('ride type -- active ride: ', upcomingRide)
+    // console.log('ride type -- active ride: ', upcomingRide)
 
-    const [driverBooking, setDriverBooking] = useState(true)
+    // const [driverBooking, setDriverBooking] = useState(true)
+    const driverBooking = masterState.user.driverBooking
+    console.log('driver booking: ', driverBooking)
 
     const comingSoonAlert = (type) => {
         const text = `This feature is not yet active. We're working on it!`

@@ -1,6 +1,7 @@
 
 const { driverCheckIn, message, requestScheduledRide, acceptScheduledRide, completeScheduledRide, cancelScheduledRide, acceptPayScheduledRide, paymentCompleteScheduledRide, enRouteScheduledRide, walletTest } = require("./socketFunctions/schedule");
 const { requestLocalRide, acceptLocalRide, completeLocalRide } = require("./socketFunctions/local");
+const { requestDirectBooking } = require("./socketFunctions/directBooking");
 
 module.exports = function (io) {
 
@@ -89,7 +90,10 @@ module.exports = function (io) {
         //     reassignScheduledRide(io, rideRequest)
         // })
 
-
+        // Direct Bookings
+        socket.on('request_direct_booking', async (rideRequest, callback) => {
+            requestDirectBooking(io, rideRequest, callback)
+        })
 
 
     });

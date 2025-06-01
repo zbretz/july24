@@ -43,9 +43,18 @@ export default ScheduleRideOpenRequests = ({ navigation, isConnected, masterStat
             <Text style={{ fontSize: 20, fontWeight: '600', color: "#000", textAlign: 'center',  alignSelf: 'center' }}>Open Requests</Text>
 
             <ScrollView style={{ paddingTop: 0, paddingBottom: 70 }}>
-                {/* {[1].map(request => { */}
+
+            {masterState.directBookings.map((request, idx) => {
+                console.log('direct booking request: ', request)
+                    return (
+                        <TouchableOpacity key={idx} onPress={() => { navigation.navigate('ScheduleRideDetail', { requestType: 'open', rideId: request._id }) }} style={{backgroundColor:'#ffe5ea', borderColor: '#000', borderWidth: 1, borderRadius: 20, margin: 10, padding: 30 }}>
+                            <Text>From: {request.pickupAddress}</Text>
+                            <Text>To: {request.dropoffAddress}</Text>
+                        </TouchableOpacity>
+                    )
+                })}
+
                 {masterState.newScheduledRides.map((request, idx) => {
-                    // console.log('blurgh: ', request)
                     return (
                         <TouchableOpacity key={idx} onPress={() => { navigation.navigate('ScheduleRideDetail', { requestType: 'open', rideId: request._id }) }} style={{ borderColor: '#000', borderWidth: 1, borderRadius: 20, margin: 10, padding: 30 }}>
                             <Text>From: {request.pickupAddress}</Text>

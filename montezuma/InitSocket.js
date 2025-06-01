@@ -144,6 +144,17 @@ export default function InitSocket({ masterState, setMasterState }) {
 
 
 
+    socket.on('direct_booking_request', (data) => {
+      console.log('direct_booking_request: ', data)
+
+      setMasterState(masterState => {
+        return { ...masterState, directBookings: [...masterState.directBookings, data] }
+      })
+
+    });
+
+
+
 
 
 

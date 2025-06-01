@@ -50,10 +50,11 @@ export default async function populateData({ masterState, setMasterState }) {
 
                 let myScheduledRides = user.activeRides
                 let myLocalRides = user.localRides ? user.localRides : []
+                let directBookings = user.directBookings || []
 
 
                 setMasterState(masterState => {
-                    return { ...masterState, user, newScheduledRides, myScheduledRides, newLocalRides, myLocalRides, appIsReady: true }
+                    return { ...masterState, user, newScheduledRides, myScheduledRides, newLocalRides, myLocalRides, directBookings, appIsReady: true }
                 })
 
                 // removing these properties from local storage
