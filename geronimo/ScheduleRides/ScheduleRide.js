@@ -17,6 +17,8 @@ import TypeSelect from './TypeSelect'
 import AddressInput from './AddressInput';
 import BookRide from './BookRide';
 
+import DriverPages from './DriverPages';
+
 const Stack = createStackNavigator();
 
 export default ScheduleRide = ({ isConnected, masterState, setMasterState, chatLog, setChatLog }) => {
@@ -82,6 +84,10 @@ export default ScheduleRide = ({ isConnected, masterState, setMasterState, chatL
             </Stack.Screen>
             <Stack.Screen name="Chat" options={{ presentation: "modal" }}>
                 {props => <Chat {...props} masterState={masterState} setMasterState={setMasterState} chatLog={chatLog} setChatLog={setChatLog} />}
+            </Stack.Screen>
+
+            <Stack.Screen name="DriverPages">
+                {props => <DriverPages {...props} isConnected={isConnected} masterState={masterState} setMasterState={setMasterState} chatLog={chatLog} setChatLog={setChatLog} />}
             </Stack.Screen>
 
         </Stack.Navigator>

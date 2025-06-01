@@ -167,13 +167,13 @@ export default function InitSocket({ masterState, setMasterState }) {
           {props => <BottomTabs masterState={masterState} setMasterState={setMasterState} isConnected={isConnected} chatLog={chatLog} setChatLog={setChatLog} />}
         </Stack.Screen>
 
-        {/* <Stack.Screen name="ScheduleRide">
-          {props => <ScheduleRide {...props} isConnected={isConnected} masterState={masterState} setMasterState={setMasterState} chatLog={chatLog} setChatLog={setChatLog} />}
-        </Stack.Screen> */}
-
         <Stack.Screen name="ScheduleRide">
-          {props => <DriverPages {...props} isConnected={isConnected} masterState={masterState} setMasterState={setMasterState} chatLog={chatLog} setChatLog={setChatLog} />}
+          {props => <ScheduleRide {...props} isConnected={isConnected} masterState={masterState} setMasterState={setMasterState} chatLog={chatLog} setChatLog={setChatLog} />}
         </Stack.Screen>
+
+        {/* <Stack.Screen name="ScheduleRide">
+          {props => <DriverPages {...props} isConnected={isConnected} masterState={masterState} setMasterState={setMasterState} chatLog={chatLog} setChatLog={setChatLog} />}
+        </Stack.Screen> */}
 
         <Stack.Screen name="LocalRide">
           {props => <LocalRideNav {...props} type={'signup'} masterState={masterState} setMasterState={setMasterState} />}

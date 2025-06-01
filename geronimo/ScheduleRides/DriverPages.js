@@ -18,9 +18,9 @@ const Stack = createStackNavigator();
 
 export default DriverPages = ({ navigation, masterState, setMasterState, }) => {
 
-    const [booking, setBooking] = useState(true)
+    // const [booking, setBooking] = useState(true)
 
-    if (booking) return <PrivateBookingDetail navigation={navigation}/>
+    // if (booking) return <PrivateBookingDetail navigation={navigation}/>
 
 
     return (
@@ -61,7 +61,6 @@ export default DriverPages = ({ navigation, masterState, setMasterState, }) => {
 
 }
 
-// Scheduled Ride -> show book private driver option -> if ride, show that as upcoming ride (exists side-by-side with other booking flow upcoming ride?) -> 
 
 // On the driver side:
 // Review/Accept Booking
