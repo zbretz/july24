@@ -14,9 +14,9 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
     const upcomingRide = masterState.user?.activeRides?.length ? masterState.user.activeRides[0] : null
     // console.log('ride type -- active ride: ', upcomingRide)
 
-    // const [driverBooking, setDriverBooking] = useState(true)
-    const driverBooking = masterState.user.driverBooking
-    console.log('driver booking: ', driverBooking)
+    // const [directBooking, setdirectBooking] = useState(true)
+    const directBooking = masterState.user.directBooking
+    console.log('driver booking: ', directBooking)
 
     const comingSoonAlert = (type) => {
         const text = `This feature is not yet active. We're working on it!`
@@ -126,19 +126,17 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
 
 
 
-                        {driverBooking &&
+                        {directBooking &&
                             <>
                                 <View style={{ flexDirection: 'row', padding: 10, paddingHorizontal: 20, }}>
                                     <Text style={{ fontWeight: 600, fontSize: 22, marginBottom: 0, paddingBottom: 0, fontFamily: 'LexendRegular', marginBottom: 0 }}>Driver Booking</Text>
                                 </View>
 
                                 <View style={{ paddingHorizontal: 20, width: '100%', marginBottom: 0, }}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('RideDetail', { rideId: upcomingRide._id })} style={{
+                                    <TouchableOpacity onPress={() => navigation.navigate('DriverPages', { screen: 'PrivateBookingDetail' })} style={{
                                         flexDirection: 'row',
-                                        // backgroundColor: '#e6e6e6',
                                         borderRadius: 30,
                                     }}>
-                                        {/* <View style={{ padding: 10, flex: 1, borderTopRightRadius: 30, borderBottomRightRadius: 30, justifyContent: 'center' }}> */}
                                         <View style={{ backgroundColor: '#f2f2f2', borderRadius: 20, padding: 10, width: '100%' }}>
 
                                             <View style={{ flexDirection: 'row', }}>
@@ -149,22 +147,15 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                                                     <Text adjustsFontSizeToFit={true} numberOfLines={1} style={{ marginVertical: 0, fontSize: 21, fontFamily: 'PointSoftSemiBold', }}>{formatInTimeZone(upcomingRide.pickupDateTime, 'America/Denver', "eee',' MMMM d")}</Text>
                                                     <Text style={{ marginVertical: 0, fontSize: 21, fontFamily: 'PointSoftLight', }}>{formatInTimeZone(upcomingRide.pickupDateTime, 'America/Denver', "h':'mm aa")}</Text>
 
-                                                    {upcomingRide.driver ?
-                                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                                            <Text numberOfLines={1} style={{ marginVertical: 10, marginBottom: 10, fontSize: 12, fontFamily: 'PointSoftSemiBold', marginRight: 6 }}>Booking Confirmed</Text>
-                                                            <Image style={{ height: 20, width: 20, }} source={require('../assets/verified.png')} />
-                                                        </View>
-                                                        :
-                                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                                            <Text numberOfLines={1} style={{ marginVertical: 10, marginBottom: 10, fontSize: 14, fontFamily: 'PointSoftSemiBold', marginRight: 6 }}>View more</Text>
-                                                            <AntDesign name="rightcircle" size={17} color="#00d0ff" />
-                                                        </View>
-                                                    }
+                                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                                        <Text numberOfLines={1} style={{ marginVertical: 10, marginBottom: 10, fontSize: 12, fontFamily: 'PointSoftSemiBold', marginRight: 6 }}>Booking Confirmed</Text>
+                                                        <Image style={{ height: 20, width: 20, }} source={require('../assets/verified.png')} />
+                                                    </View>
+
                                                 </View>
                                             </View>
 
                                         </View>
-                                        {/* </View> */}
                                     </TouchableOpacity>
                                 </View>
                             </>

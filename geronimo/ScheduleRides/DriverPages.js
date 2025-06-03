@@ -10,6 +10,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Carousel from 'react-native-reanimated-carousel';
 import Booking from '../Childcare/Booking';
 import { socket } from '../CoreNav/socket';
+import CallDriverButton from './CallDriverButton';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -19,9 +20,11 @@ const Stack = createStackNavigator();
 
 export default DriverPages = ({ navigation, masterState, setMasterState, }) => {
 
+    console.log('driver pages: ', masterState.user)
+
     // const [booking, setBooking] = useState(true)
 
-    // if (booking) return <PrivateBookingDetail navigation={navigation}/>
+    // if (booking) return <PrivateBookingDetail navigation={navigation} />
 
 
     return (
@@ -55,6 +58,10 @@ export default DriverPages = ({ navigation, masterState, setMasterState, }) => {
                 {props => <PrivateBooking2 {...props} masterState={masterState} setMasterState={setMasterState} />}
             </Stack.Screen>
 
+            <Stack.Screen name="DirectDriverDetail" options={{}}>
+                {props => <DirectDriverDetail {...props} masterState={masterState} setMasterState={setMasterState} />}
+            </Stack.Screen>
+
 
 
         </Stack.Navigator>
@@ -71,53 +78,134 @@ export default DriverPages = ({ navigation, masterState, setMasterState, }) => {
 // Setup calling --> dedicated driver number
 // Driver Book Ride (for client)
 
-const PrivateBookingDetail = ({ navigation }) => {
-    return (
-        <ScrollView style={{ padding: 0 }}>
+const PrivateBookingDetail = ({ navigation, masterState }) => {
 
-            <TouchableOpacity style={{ position: 'absolute', zIndex: 11, padding: 20, alignSelf: 'flex-start' }} onPress={() => navigation.goBack()}>
+    const { user } = masterState
+
+
+
+    // const rideDetail = {
+    //     bookingCompleted: false,
+    //     bookingCanceledByDriver: false,
+    //     bookingCanceledByRider: false,
+    //     bookingId: '123',
+    //     pickupDateTime: new Date(),
+    //     driver: { firstName: "Denette" },
+    //     pickupAddress: "743 Evergreen Terrace",
+    //     dropoffAddress: "123 Main Street",
+    //     chatLog: [],
+    //     user: { _id: user._id, firstName: user.firstName, lastName: user.lastName, phone: user.phone, stripe_customer_id: user.stripe_customer_id, email: user.email, autoReceipts: user.autoReceipts },
+
+    // }
+
+
+    const rideDetail = masterState.user.directBooking
+
+    const needHelp = () => {
+        Alert.alert('Phone Support',
+            `Press "Call" for phone support!`, [
+            {
+                text: 'Back', onPress: () => {
+                }
+            },
+            {
+                text: 'Call', onPress: () => {
+                    Linking.openURL(`tel:${9175751955}`)
+                }
+            },
+        ])
+    }
+
+    if (!rideDetail) { navigation.navigate('RideType'); return null }
+
+    return (
+        <SafeAreaView style={{ height: '100%', backgroundColor: '#fff' }}>
+
+            <TouchableOpacity style={{ position: 'absolute', top: 0, right: 0, zIndex: 11, padding: 20, }} onPress={() => navigation.navigate('RideType')}>
                 <View style={{ backgroundColor: '#e6e6e6', borderRadius: 30, padding: 10 }}>
-                    <Ionicons name="chevron-back-outline" size={24} color="black" />
+                    <Feather style={{ marginBottom: 0 }} name="x" size={24} color="black" />
                 </View>
             </TouchableOpacity>
 
-            <View>
+            <Text style={{ marginTop: 0, fontSize: 18, fontFamily: 'LexendMedium', textAlign: 'center' }}>Direct Booking</Text>
 
-                <View style={{ position: 'absolute', overflow: 'hidden', width: windowWidth * 2, height: 800, top: -500, left: -windowWidth * .5, borderRadius: 5890, backgroundColor: 'rgba(0,0,0,.3)', alignItems: 'center', justifyContent: 'flex-end' }}>
-                    <Image style={{ bottom: 0, width: windowWidth, height: windowWidth - 80 }} resizeMode='cover' source={require('../assets/denette1.webp')} />
-                </View>
-
-
-                <View style={{ width: windowWidth - 20, top: 140, height: 490, alignSelf: 'center', borderRadius: 30, borderWidth: 0, borderColor: '#000', backgroundColor: '#fff', padding: 10, marginTop: 20 }}>
-                    <View style={{ flexDirection: 'row', }}>
-                        <Image style={{ zIndex: 22, width: 100, height: 100, borderRadius: 60, borderWidth: 3, borderColor: '#fff' }} resizeMode='cover' source={require('../assets/denette2.webp')} />
-                        <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', }}>Book Denette</Text>
+            <View style={{ flexDirection: 'row', margin: 10, backgroundColor: '#f2f2f2', padding: 10, borderRadius: 16, borderTopLeftRadius: 70, borderTopRightRadius: 70 }}>
+                <Image style={{ zIndex: 22, width: 120, height: 120, borderRadius: 80, borderWidth: 3, borderColor: '#fff' }} resizeMode='cover' source={require('../assets/denette2.webp')} />
+                <View style={{}}>
+                    <View style={{ marginHorizontal: 10 }}>
+                        <Text style={{ fontSize: 22, color: '#000', fontFamily: 'LexendMedium', }}>Denette</Text>
+                        <Text style={{ fontSize: 16, color: '#000', fontFamily: 'LexendRegular', }}>Ford Expedition Max</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Ionicons name="person" size={16} color="#333333" />
+                            <Text style={{ fontSize: 16, color: '#333333', fontFamily: 'LexendRegular', }}>6</Text>
+                        </View>
                     </View>
-
-                    <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', }}>Type of Booking (optional)</Text>
-                    <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', }}>Date & Time</Text>
-                    <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', }}>Request Information</Text>
-
-
-
-                    <TouchableOpacity style={{ zIndex: 11, padding: 20, alignSelf: 'center' }} onPress={() => navigation.navigate('PrivateBooking2')}>
-                        <View style={{ backgroundColor: '#e6e6e6', borderRadius: 30, padding: 10 }}>
-                            <Text>Call Denette</Text>
-                        </View>
-                    </TouchableOpacity>
-
-
-                    <TouchableOpacity style={{ zIndex: 11, padding: 20, alignSelf: 'center' }} onPress={() => navigation.navigate('PrivateBooking2')}>
-                        <View style={{ backgroundColor: '#e6e6e6', borderRadius: 30, padding: 10 }}>
-                            <Text>Message Denette</Text>
-                        </View>
-                    </TouchableOpacity>
-
                 </View>
-
             </View>
 
-        </ScrollView>
+            <View style={{ paddingHorizontal: 10, width: '100%', marginTop: 0 }}>
+
+                <View style={{}}>
+                    <View style={{ width: '100%', marginBottom: 10, alignItems: 'center' }}>
+
+                        <Text style={{ marginVertical: 0, fontSize: 22, fontFamily: 'LexendMedium', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "eeee, MMMM d")}</Text>
+                        <Text style={{ marginVertical: 0, fontSize: 22, fontFamily: 'PointSoftLight', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "h':'mm aa")}</Text>
+
+                    </View>
+
+
+
+
+                    <View style={{ borderRadius: 30, justifyContent: 'center', marginVertical: 0, borderWidth: 7, borderColor: '#e6e6e6' }}>
+                        <View style={{ backgroundColor: '#fff', borderRadius: 28, padding: 16, }}>
+                            <Text style={{ marginTop: 0, fontSize: 18, fontFamily: 'LexendRegular', }}>Pickup</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+                                <Text style={{ marginTop: 0, fontSize: 18, fontFamily: 'PointSoftLight', }}>{rideDetail.pickupAddress}</Text>
+                                {rideDetail.flightNumber && <Text numberOfLines={1} style={{ fontSize: 16, fontFamily: 'PointDemiBold' }}> Flight {rideDetail.flightNumber}</Text>}
+                            </View>
+                            <Text style={{ marginTop: 10, fontSize: 18, fontFamily: 'LexendRegular', }}>Dropoff</Text>
+                            <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'PointSoftLight', }}>{rideDetail.dropoffAddress}</Text>
+                        </View>
+                    </View>
+
+                    <View style={{ marginTop: 10, marginBottom: 20 }}>
+                        {rideDetail.chatLog.length ?
+                            <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId: rideDetail._id }) }} style={{ backgroundColor: '#ffdb80', borderRadius: 20, borderColor: '#c4a73b', padding: 10, paddingVertical: 10, }} >
+                                <Text style={{ marginHorizontal: 10, fontSize: 18, color: "#000", fontFamily: 'LexendRegular' }}>Driver Chat</Text>
+                                <View style={{ marginHorizontal: 10, backgroundColor: '#fff', borderRadius: 16, padding: 12, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <Text style={{ fontFamily: 'PointSoftLight', fontSize: 18, backgroundColor: '#fff', }} numberOfLines={2}>{chatLog[chatLog.length - 1].text}</Text>
+                                    <Entypo name="chat" size={32} color="black" style={{ position: 'absolute', right: 20 }} />
+                                </View>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId: rideDetail._id }) }} style={{ backgroundColor: '#ffdb80', borderRadius: 20, borderColor: '#c4a73b', padding: 10, paddingVertical: 20, }} >
+                                <Text style={{ marginHorizontal: 10, fontSize: 18, color: "#000", fontFamily: 'LexendRegular' }}>Driver Chat</Text>
+                                <View style={{ marginHorizontal: 10, backgroundColor: '#fff', borderRadius: 20, padding: 8, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <Text style={{ color: '#a1a1a1', fontSize: 18, fontFamily: 'LexendRegular', }}>Message Driver ...</Text>
+                                    <Entypo name="chat" size={32} color="black" style={{ marginRight: 20 }} />
+                                </View>
+                            </TouchableOpacity>
+                        }
+                    </View>
+
+                    <CallDriverButton
+                        rideId={rideDetail.rideId}
+                        pickupDateTime={rideDetail.pickupDateTime}
+                    />
+
+                </View>
+            </View>
+
+            <TouchableOpacity onPress={needHelp} style={{ position: 'absolute', borderRadius: 20, bottom: 30, right: 20, padding: 16, alignItems: 'center', backgroundColor: '#e6e6e6' }}>
+                <Text style={{ fontFamily: 'Aristotelica-SmallCaps', fontSize: 19, marginBottom: -5, }}>Need Help?</Text>
+            </TouchableOpacity>
+
+
+
+
+
+
+        </SafeAreaView>
     )
 }
 
@@ -219,21 +307,52 @@ const PrivateBooking1 = ({ navigation }) => {
 const PrivateBooking2 = ({ navigation, masterState, setMasterState }) => {
 
     const [modalVisible, setModalVisible] = useState(false)
+    const { user } = masterState
+
+    // let rideRequest = {
+    //     driver: { _id: '655ebd66bcab9f212117fda7' },
+    //     // pickupDateTime: date,
+    //     // pickupDateTimeEpoch: date.valueOf(),
+    //     // driver: null,
+    //     // pickupAddress: pickupLocation,
+    //     // dropoffAddress: destination,
+    //     // rideType: rideType,
+    //     // fare: fare[rideType],
+    //     note: 'ride note ride note ride note',
+    // }
+
+
+
+    // rideRequest = {
+    //     ...rideRequest,
+    //     rideId: '123',
+    //     pickupDateTime: new Date(),
+    //     driver: { _id: '655ebd66bcab9f212117fda7', firstName: "Denette" },
+    //     pickupAddress: "743 Evergreen Terrace",
+    //     dropoffAddress: "123 Main Street",
+    //     chatLog: []
+    // }
+
+
 
     let rideRequest = {
-        driver: { _id: '655ebd66bcab9f212117fda7' },
-        // pickupDateTime: date,
-        // pickupDateTimeEpoch: date.valueOf(),
-        // driver: null,
-        // pickupAddress: pickupLocation,
-        // dropoffAddress: destination,
-        // rideType: rideType,
-        // fare: fare[rideType],
         note: 'ride note ride note ride note',
+        bookingCompleted: false,
+        bookingCanceledByDriver: false,
+        bookingCanceledByRider: false,
+        // bookingId: '123',
+        pickupDateTime: new Date(),
+        driver: { firstName: "Denette" },
+        pickupAddress: "743 Evergreen Terrace",
+        dropoffAddress: "123 Main Street",
+        chatLog: [],
+        user: { _id: user._id, firstName: user.firstName, lastName: user.lastName, phone: user.phone, stripe_customer_id: user.stripe_customer_id, email: user.email, autoReceipts: user.autoReceipts },
+
     }
 
 
     const requestDirectBooking = async () => {
+
 
         console.log('request ride: ', rideRequest)
 
@@ -247,8 +366,9 @@ const PrivateBooking2 = ({ navigation, masterState, setMasterState }) => {
         socket.emit('request_direct_booking', rideRequest, (rideid) => {
             console.log('booking confirmation: ', rideid)
             rideRequest = { ...rideRequest, _id: rideid }
-            setMasterState(masterState => { return { ...masterState, user: { ...masterState.user, driverBooking: rideRequest } } })
+            setMasterState(masterState => { return { ...masterState, user: { ...masterState.user, directBooking: rideRequest } } })
             // completeAction()
+            navigation.navigate('PrivateBookingDetail')
         })
 
     }
@@ -325,6 +445,129 @@ const PrivateBooking2 = ({ navigation, masterState, setMasterState }) => {
 
         </ScrollView>
     )
+}
+
+
+const DirectRideDetail = () => {
+
+    const rideDetail = {
+        pickupDateTime: new Date(),
+        driver: { firstName: "Denette" },
+        pickupAddress: "743 Evergreen Terrace",
+        dropoffAddress: "123 Main Street",
+        chatLog: []
+    }
+
+    return (
+        <SafeAreaView style={{ height: '100%', backgroundColor: '#fff' }}>
+
+            <Text style={{ marginTop: 30, fontSize: 18, fontFamily: 'LexendMedium', textAlign: 'center' }}>Ride</Text>
+
+
+            <TouchableOpacity style={{ position: 'absolute', top: 0, right: 0, zIndex: 11, padding: 20, }} onPress={() => navigation.goBack()}>
+                <View style={{ backgroundColor: '#e6e6e6', borderRadius: 30, padding: 10 }}>
+                    <Feather style={{ marginBottom: 0 }} name="x" size={24} color="black" />
+                </View>
+            </TouchableOpacity>
+
+            <View style={{ paddingHorizontal: 10, width: '100%', marginTop: 20 }}>
+
+                <View style={{
+                    marginVertical: 10,
+                    borderRadius: 30,
+                }}>
+                    <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', marginBottom: 10 }}>
+                        <View>
+                            {rideDetail.enRoute ?
+                                <View style={{ marginBottom: 0, marginHorizontal: 0, padding: 10, backgroundColor: '#ffccd6', borderRadius: 16 }}>
+                                    <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'LexendMedium', color: '#99001f' }}>Ride Status</Text>
+                                    <Text style={{ marginVertical: 0, fontSize: 22, fontFamily: 'LexendRegular', color: '#000' }}>Driver En Route</Text>
+                                </View>
+                                :
+                                <View style={{ marginBottom: 0, marginHorizontal: 10 }}>
+                                    <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'LexendMedium', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "eeee")}</Text>
+                                    <Text style={{ marginVertical: 0, fontSize: 22, fontFamily: 'LexendMedium', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "MMMM d")}</Text>
+                                    <Text style={{ marginVertical: 0, fontSize: 22, fontFamily: 'PointSoftLight', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "h':'mm aa")}</Text>
+                                </View>
+                            }
+                        </View>
+                        <View style={{ marginBottom: 0, marginHorizontal: 10, alignItems: 'flex-end', justifyContent: 'center', backgroundColor: '#f2f2f2', padding: 10, borderRadius: 16 }}>
+                            <Text style={{ marginVertical: 0, fontSize: 14, fontFamily: 'LexendMedium', }}>ride type</Text>
+
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={{ marginVertical: 0, fontSize: 14, fontFamily: 'LexendRegular', color: '#737373' }}>ride type</Text>
+                                <Ionicons name="person" size={16} color="#737373" />
+                            </View>
+                        </View>
+                    </View>
+
+                    {rideDetail.driver &&
+                        <View style={{ borderRadius: 30, marginBottom: 10, borderWidth: 7, borderColor: '#e6e6e6', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 16, }}>
+                            <View style={{ backgroundColor: '#fff', borderRadius: 28, }}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                                    <Text numberOfLines={1} style={{ fontSize: 18, fontFamily: 'LexendRegular', }}>Driver Assigned  </Text>
+                                    <Image style={{ height: 26, width: 26, marginTop: 0 }} source={require('../assets/verified.png')} />
+                                </View>
+                                <View style={{}}>
+                                    <Text style={{ fontSize: 18, fontFamily: 'PointSoftLight', }}>{rideDetail.driver.firstName}</Text>
+                                </View>
+                            </View>
+                            <CallDriverButton style={{}}
+                                rideId={rideId}
+                                pickupDateTime={rideDetail.pickupDateTime}
+                            />
+                        </View>
+                    }
+
+
+                    <View style={{ borderRadius: 30, justifyContent: 'center', marginVertical: 0, borderWidth: 7, borderColor: '#e6e6e6' }}>
+                        <View style={{ backgroundColor: '#fff', borderRadius: 28, padding: 16, }}>
+                            <Text style={{ marginTop: 0, fontSize: 18, fontFamily: 'LexendRegular', }}>Pickup</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+                                <Text style={{ marginTop: 0, fontSize: 18, fontFamily: 'PointSoftLight', }}>{rideDetail.pickupAddress}</Text>
+                                {rideDetail.flightNumber && <Text numberOfLines={1} style={{ fontSize: 16, fontFamily: 'PointDemiBold' }}> Flight {rideDetail.flightNumber}</Text>}
+                            </View>
+                            <Text style={{ marginTop: 10, fontSize: 18, fontFamily: 'LexendRegular', }}>Dropoff</Text>
+                            <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'PointSoftLight', }}>{rideDetail.dropoffAddress}</Text>
+                        </View>
+                    </View>
+
+                    <View style={{ marginTop: 10, }}>
+                        {chatLog.length ?
+                            <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId: rideDetail._id }) }} style={{ backgroundColor: '#ffdb80', borderRadius: 20, borderColor: '#c4a73b', padding: 10, paddingVertical: 10, }} >
+                                <Text style={{ marginHorizontal: 10, fontSize: 18, color: "#000", fontFamily: 'LexendRegular' }}>Driver Chat</Text>
+                                <View style={{ marginHorizontal: 10, backgroundColor: '#fff', borderRadius: 16, padding: 12, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <Text style={{ fontFamily: 'PointSoftLight', fontSize: 18, backgroundColor: '#fff', }} numberOfLines={2}>{chatLog[chatLog.length - 1].text}</Text>
+                                    <Entypo name="chat" size={32} color="black" style={{ position: 'absolute', right: 20 }} />
+                                </View>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity onPress={() => { navigation.navigate('Chat', { rideId: rideDetail._id }) }} style={{ backgroundColor: '#ffdb80', borderRadius: 20, borderColor: '#c4a73b', padding: 10, paddingVertical: 20, }} >
+                                <Text style={{ marginHorizontal: 10, fontSize: 18, color: "#000", fontFamily: 'LexendRegular' }}>Driver Chat</Text>
+                                <View style={{ marginHorizontal: 10, backgroundColor: '#fff', borderRadius: 20, padding: 8, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <Text style={{ color: '#a1a1a1', fontSize: 18, fontFamily: 'LexendRegular', }}>Message Driver ...</Text>
+                                    <Entypo name="chat" size={32} color="black" style={{ marginRight: 20 }} />
+                                </View>
+                            </TouchableOpacity>
+                        }
+                    </View>
+                </View>
+            </View>
+
+            <TouchableOpacity onPress={needHelp} style={{ position: 'absolute', borderRadius: 20, bottom: 30, right: 20, padding: 16, alignItems: 'center', backgroundColor: '#e6e6e6' }}>
+                <Text style={{ fontFamily: 'Aristotelica-SmallCaps', fontSize: 19, marginBottom: -5, }}>Need Help?</Text>
+            </TouchableOpacity>
+
+
+
+
+
+
+
+        </SafeAreaView>
+
+    );
+
 }
 
 

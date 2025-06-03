@@ -8,29 +8,37 @@ const stripe = require('stripe')(stripe_private_key);
 // const stripe = require('stripe')('sk_test_51Nj9WRAUREUmtjLCN8G4QqEEVvYoPpWKX82iY5lDX3dZxnaOGDDhqkyVpIFgg63FvXaAE3FmZ1p0btPM9s1De3m200uOIKI70O'); // pc app test key
 
 
-requestDirectBooking = async (io, bookingRequest, callback) => {
+requestDirectBooking = async (io, booking, callback) => {
 
 
-    console.log('bookingRequest: ', bookingRequest)
+    console.log('booking: ', booking)
 
-    // let ride = await db__.collection('directBookings').insertOne({ ...bookingRequest })
+    let ride = await db__.collection('directBookings').insertOne({ ...booking })
     // console.log('   RIDE:   ', ride)
-    // bookingRequest = { ...bookingRequest, _id: ride.insertedId }
+    booking = { ...booking, _id: ride.insertedId }
 
 
-    // let user = await db__.collection('users').findOneAndUpdate(
-    //     { _id: new ObjectId(String(bookingRequest.user._id)) },
-    //     {
-    //         $set: { directBooking: bookingRequest },
-    //     },
-    //     { upsert: true, returnDocument: "after" }
-    // )
+    let user = await db__.collection('users').findOneAndUpdate(
+        // { _id: new ObjectId(String(booking.user._id)) },
+        { _id: new ObjectId(booking.user._id) },
+        // { _id: booking.user._id },
+        {
+            $set: { directBooking: booking },
+        },
+        { upsert: true, returnDocument: "after" }
+    )
+
+    let driver = await db__.collection('drivers').updateOne(
+        { _id: booking.driver._id },
+        { $set: { directBooking: booking } }, //https://stackoverflow.com/a/10523963
+        { returnDocument: "after" }
+    )
 
     // console.log('callback data: ', ride.insertedId)
     // callback(ride.insertedId)
     callback('confirmed')
 
-    io.to(bookingRequest.driver._id).emit('direct_booking_request', bookingRequest);
+    io.to(booking.driver._id).emit('direct_booking_request', booking);
 
 
 
