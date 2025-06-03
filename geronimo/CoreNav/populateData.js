@@ -32,7 +32,7 @@ export default async function populateData({ masterState, setMasterState, loginU
     // let onDemandActive = true//!res.data[2].includes(app_version)
     // console.log('update version: ', res.data[2], updateAvailable, app_version)
 
-    // console.log('populate data user: ', user)
+    console.log('populate data user: ', user._id)
 
     axios({
         method: 'get',

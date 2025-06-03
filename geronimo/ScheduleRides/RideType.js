@@ -133,7 +133,7 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                                 </View>
 
                                 <View style={{ paddingHorizontal: 20, width: '100%', marginBottom: 0, }}>
-                                    <TouchableOpacity onPress={() => navigation.navigate('DriverPages', { screen: 'PrivateBookingDetail' })} style={{
+                                    <TouchableOpacity onPress={() => navigation.navigate('DriverPages', { screen: 'DirectBookingDetail' })} style={{
                                         flexDirection: 'row',
                                         borderRadius: 30,
                                     }}>
@@ -147,11 +147,13 @@ export default RideType = ({ isConnected, masterState, navigation }) => {
                                                     <Text adjustsFontSizeToFit={true} numberOfLines={1} style={{ marginVertical: 0, fontSize: 21, fontFamily: 'PointSoftSemiBold', }}>{formatInTimeZone(upcomingRide.pickupDateTime, 'America/Denver', "eee',' MMMM d")}</Text>
                                                     <Text style={{ marginVertical: 0, fontSize: 21, fontFamily: 'PointSoftLight', }}>{formatInTimeZone(upcomingRide.pickupDateTime, 'America/Denver', "h':'mm aa")}</Text>
 
-                                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                                        <Text numberOfLines={1} style={{ marginVertical: 10, marginBottom: 10, fontSize: 12, fontFamily: 'PointSoftSemiBold', marginRight: 6 }}>Booking Confirmed</Text>
-                                                        <Image style={{ height: 20, width: 20, }} source={require('../assets/verified.png')} />
-                                                    </View>
-
+                                                    {directBooking.accepted &&
+                                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                                            <Text numberOfLines={1} style={{ marginVertical: 10, marginBottom: 10, fontSize: 12, fontFamily: 'PointSoftSemiBold', marginRight: 6 }}>Booking Confirmed</Text>
+                                                            <Image style={{ height: 20, width: 20, }} source={require('../assets/verified.png')} />
+                                                        </View>
+                                                    }
+                                                    
                                                 </View>
                                             </View>
 

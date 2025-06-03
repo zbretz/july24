@@ -25,14 +25,13 @@ export default DirectBookingDetail = ({ navigation, route, masterState, setMaste
 
 
     const acceptBooking = async () => {
-        socket.emit('accept_scheduled_ride', { ...booking, driver: { _id: user._id, firstName: user.firstName, lastName: user.lastName, phone: user.phone, venmo: user.venmo, vehicleMake: user.vehicleMake, vehicleModel: user.vehicleModel, licensePlate: user.licensePlate, expoPushToken: user.expoPushToken, stripe_transfers_enabled: user.stripe_transfers_enabled, stripe_account: user.stripe_account } })
-        setMasterState(masterState => {
-            let newScheduledRides = masterState.newScheduledRides.filter(ride => ride._id !== booking._id)
-            let myScheduledRides = [...masterState.myScheduledRides, { ...booking, driver: user }]
-            return ({
-                ...masterState, myScheduledRides, newScheduledRides
-            })
-        })
+        socket.emit('accept_direct_booking', booking )
+        // setMasterState(masterState => {
+        //     let directBookings = masterState.directBookings.map(booking =>
+        //         booking._id === bookingId ? { ...booking, accepted: true } : booking
+        //     )
+        //     return ({ ...masterState, directBookings })
+        // })
     }
 
     // const completeScheduledRide = async () => {
@@ -130,16 +129,30 @@ export default DirectBookingDetail = ({ navigation, route, masterState, setMaste
 
             <>
 
+                {!booking.accepted ?
 
 
-                <View style={{ borderColor: '#000', borderWidth: 0, borderRadius: 20, margin: 10, padding: 10, alignItems: 'center' }}>
+                    <View style={{ borderColor: '#000', borderWidth: 0, borderRadius: 20, margin: 10, padding: 10, alignItems: 'center' }}>
 
-                    <View style={{}}>
-                        <TouchableOpacity onPress={acceptBooking} style={{ backgroundColor: '#ddd', padding: 10, margin: 10, borderRadius: 10 }}>
-                            <Text>Accept Ride</Text>
-                        </TouchableOpacity>
+                        <View style={{}}>
+                            <TouchableOpacity onPress={acceptBooking} style={{ backgroundColor: '#ddd', padding: 10, margin: 10, borderRadius: 10 }}>
+                                <Text>Accept Booking</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={{}}>
+                            <TouchableOpacity onPress={acceptBooking} style={{ backgroundColor: '#ddd', padding: 10, margin: 10, borderRadius: 10 }}>
+                                <Text>Decline or Modify Booking</Text>
+                            </TouchableOpacity>
+                        </View>
+
                     </View>
-                </View>
+
+                    :
+
+                    null
+                }
+
 
 
                 {chatLog.length ?
@@ -171,8 +184,6 @@ export default DirectBookingDetail = ({ navigation, route, masterState, setMaste
                     </TouchableOpacity>
 
                 }
-
-
 
             </>
 
