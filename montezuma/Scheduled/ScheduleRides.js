@@ -9,6 +9,7 @@ import ScheduleRideOpenRequests from './ScheduleRideOpenRequests';
 import ScheduleRideMyRides from './ScheduleRideMyRides';
 import ScheduleRideHistory from './ScheduleRideHistory';
 import ScheduleRideDetail from './ScheduleRideDetail';
+import DirectBookingDetail from './DirectBookingDetail';
 import { createStackNavigator } from '@react-navigation/stack';
 import Chat from '../Chat';
 
@@ -40,6 +41,14 @@ export default ScheduleRides = ({ navigation, isConnected, masterState, setMaste
                 }}
             >
                 {props => <ScheduleRideDetail {...props} isConnected={isConnected} masterState={masterState} setMasterState={setMasterState} rideTakenModal={rideTakenModal} setRideTakenModal={setRideTakenModal} />}
+            </Stack.Screen>
+
+            <Stack.Screen name="DirectBookingDetail"
+                options={{
+                    presentation: "modal",
+                }}
+            >
+                {props => <DirectBookingDetail {...props} masterState={masterState} setMasterState={setMasterState} />}
             </Stack.Screen>
 
             <Stack.Screen name="Chat"

@@ -28,11 +28,24 @@ requestDirectBooking = async (io, booking, callback) => {
         { upsert: true, returnDocument: "after" }
     )
 
-    let driver = await db__.collection('drivers').updateOne(
-        { _id: booking.driver._id },
-        { $set: { directBooking: booking } }, //https://stackoverflow.com/a/10523963
-        { returnDocument: "after" }
-    )
+    // let driver = await db__.coll ection('drivers').updateOne(
+    //     { _id: new ObjectId(booking.driver._id) },
+    //     { $set: { directBookings: booking } }, //https://stackoverflow.com/a/10523963
+    //     { returnDocument: "after" }
+    // )
+
+      db__.collection('drivers').updateOne(
+                { _id: new ObjectId(String(booking.driver._id)) },
+                {
+                    $push: {
+                        directBookings: {
+                            $each: [booking],
+                            $sort: { pickupDateTimeEpoch: 1 }
+                        }
+                    },
+                },
+            )
+
 
     // console.log('callback data: ', ride.insertedId)
     // callback(ride.insertedId)

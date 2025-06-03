@@ -12,6 +12,13 @@ import Booking from '../Childcare/Booking';
 import { socket } from '../CoreNav/socket';
 import CallDriverButton from './CallDriverButton';
 
+//Disable Carousel 'shared value' warning
+import { configureReanimatedLogger, ReanimatedLogLevel, } from 'react-native-reanimated';
+configureReanimatedLogger({
+    level: ReanimatedLogLevel.warn,
+    strict: !true
+});
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 let boxDimensions = (windowWidth - 30) / 2
@@ -20,7 +27,51 @@ const Stack = createStackNavigator();
 
 export default DriverPages = ({ navigation, masterState, setMasterState, }) => {
 
-    console.log('driver pages: ', masterState.user)
+    // console.log('DRIVER PAGES HOME')
+
+    const [privateDrivers, setPrivateDrivers] = useState([])
+
+    useEffect(() => {
+
+        const drivers = [{
+            "_id": "655ebd66bcab9f212117fda7",
+            "stripe_account": "acct_1P72IPPOLDMBDygj",
+            "stripe_transfers_enabled": true,
+            "firstName": "test",
+            "lastName": "driver",
+            "licensePlate": "321",
+            "vehicleMake": "ford",
+            "vehicleModel": "f150",
+            "expoPushToken": "ExponentPushToken[0PBXuDPTdK7yFvqPt5UeNi]",
+            "venmo": "my-venmo",
+            "phone": "19175751955",
+            "confirmationCode": 6130,
+            "confirmedWithCode": false,
+            "driverIsAuthorized": true
+        },
+        {
+            "_id": "655ebd66bcab9f212117fda7",
+            "stripe_account": "acct_1P72IPPOLDMBDygj",
+            "stripe_transfers_enabled": true,
+            "firstName": "test",
+            "lastName": "driver",
+            "licensePlate": "321",
+            "vehicleMake": "ford",
+            "vehicleModel": "f150",
+            "expoPushToken": "ExponentPushToken[0PBXuDPTdK7yFvqPt5UeNi]",
+            "venmo": "my-venmo",
+            "phone": "19175751955",
+            "confirmationCode": 6130,
+            "confirmedWithCode": false,
+            "driverIsAuthorized": true
+        }
+        ]
+
+        setPrivateDrivers(drivers)
+
+    }, [])
+
+
 
     // const [booking, setBooking] = useState(true)
 
@@ -34,7 +85,7 @@ export default DriverPages = ({ navigation, masterState, setMasterState, }) => {
             }}
         >
             <Stack.Screen name="DriverPagesHome">
-                {props => <DriverPagesHome {...props} masterState={masterState} setMasterState={setMasterState} />}
+                {props => <DriverPagesHome {...props} masterState={masterState} setMasterState={setMasterState} privateDrivers={privateDrivers} />}
             </Stack.Screen>
 
             <Stack.Screen name="PrivateBookingDetail">
@@ -47,15 +98,15 @@ export default DriverPages = ({ navigation, masterState, setMasterState, }) => {
             </Stack.Screen>
 
             <Stack.Screen name="Profile" options={{ presentation: "modal" }}>
-                {props => <Profile {...props} masterState={masterState} setMasterState={setMasterState} />}
+                {props => <Profile {...props} masterState={masterState} setMasterState={setMasterState} privateDrivers={privateDrivers} />}
             </Stack.Screen>
 
             <Stack.Screen name="PrivateBooking1" options={{}}>
-                {props => <PrivateBooking1 {...props} masterState={masterState} setMasterState={setMasterState} />}
+                {props => <PrivateBooking1 {...props} masterState={masterState} setMasterState={setMasterState} privateDrivers={privateDrivers} />}
             </Stack.Screen>
 
             <Stack.Screen name="PrivateBooking2" options={{}}>
-                {props => <PrivateBooking2 {...props} masterState={masterState} setMasterState={setMasterState} />}
+                {props => <PrivateBooking2 {...props} masterState={masterState} setMasterState={setMasterState} privateDrivers={privateDrivers} />}
             </Stack.Screen>
 
             <Stack.Screen name="DirectDriverDetail" options={{}}>
@@ -127,14 +178,20 @@ const PrivateBookingDetail = ({ navigation, masterState }) => {
                 </View>
             </TouchableOpacity>
 
-            <Text style={{ marginTop: 0, fontSize: 18, fontFamily: 'LexendMedium', textAlign: 'center' }}>Direct Booking</Text>
+            <Text style={{ fontSize: 18, fontFamily: 'LexendMedium', textAlign: 'center' }}>Direct Booking</Text>
+
+            <View style={{ width: '100%', margin: 10, alignItems: 'center', justifyContent: 'space-between' }}>
+                <Text style={{ marginVertical: 0, fontSize: 22, fontFamily: 'LexendMedium', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "eeee, MMMM d")}</Text>
+                <Text style={{ marginVertical: 0, fontSize: 22, fontFamily: 'PointSoftLight', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "h':'mm aa")}</Text>
+            </View>
+
 
             <View style={{ flexDirection: 'row', margin: 10, backgroundColor: '#f2f2f2', padding: 10, borderRadius: 16, borderTopLeftRadius: 70, borderTopRightRadius: 70 }}>
                 <Image style={{ zIndex: 22, width: 120, height: 120, borderRadius: 80, borderWidth: 3, borderColor: '#fff' }} resizeMode='cover' source={require('../assets/denette2.webp')} />
                 <View style={{}}>
                     <View style={{ marginHorizontal: 10 }}>
-                        <Text style={{ fontSize: 22, color: '#000', fontFamily: 'LexendMedium', }}>Denette</Text>
-                        <Text style={{ fontSize: 16, color: '#000', fontFamily: 'LexendRegular', }}>Ford Expedition Max</Text>
+                        <Text style={{ fontSize: 22, color: '#000', fontFamily: 'LexendMedium', }}>{rideDetail.driver.firstName}</Text>
+                        <Text style={{ fontSize: 16, color: '#000', fontFamily: 'LexendRegular', }}>{rideDetail.driver.vehicleMake} {rideDetail.driver.vehicleModel}</Text>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Ionicons name="person" size={16} color="#333333" />
                             <Text style={{ fontSize: 16, color: '#333333', fontFamily: 'LexendRegular', }}>6</Text>
@@ -146,15 +203,6 @@ const PrivateBookingDetail = ({ navigation, masterState }) => {
             <View style={{ paddingHorizontal: 10, width: '100%', marginTop: 0 }}>
 
                 <View style={{}}>
-                    <View style={{ width: '100%', marginBottom: 10, alignItems: 'center' }}>
-
-                        <Text style={{ marginVertical: 0, fontSize: 22, fontFamily: 'LexendMedium', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "eeee, MMMM d")}</Text>
-                        <Text style={{ marginVertical: 0, fontSize: 22, fontFamily: 'PointSoftLight', }}>{formatInTimeZone(rideDetail.pickupDateTime, 'America/Denver', "h':'mm aa")}</Text>
-
-                    </View>
-
-
-
 
                     <View style={{ borderRadius: 30, justifyContent: 'center', marginVertical: 0, borderWidth: 7, borderColor: '#e6e6e6' }}>
                         <View style={{ backgroundColor: '#fff', borderRadius: 28, padding: 16, }}>
@@ -165,6 +213,8 @@ const PrivateBookingDetail = ({ navigation, masterState }) => {
                             </View>
                             <Text style={{ marginTop: 10, fontSize: 18, fontFamily: 'LexendRegular', }}>Dropoff</Text>
                             <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'PointSoftLight', }}>{rideDetail.dropoffAddress}</Text>
+                            <Text style={{ marginTop: 10, fontSize: 18, fontFamily: 'LexendRegular', }}>Additional Information</Text>
+                            <Text style={{ marginVertical: 0, fontSize: 18, fontFamily: 'PointSoftLight', }}>{rideDetail.notes}</Text>
                         </View>
                     </View>
 
@@ -209,7 +259,15 @@ const PrivateBookingDetail = ({ navigation, masterState }) => {
     )
 }
 
-const Profile = ({ navigation }) => {
+const Profile = ({ navigation, route, privateDrivers }) => {
+
+
+
+    console.log('route params', route.params)
+    console.log('route params', route.params.driverId)
+    let driverProfile = privateDrivers.find(driver => driver._id === route.params.driverId);
+    console.log('profile page driver: ', driverProfile)
+
     return (
         <ScrollView style={{ padding: 0 }}>
 
@@ -224,30 +282,22 @@ const Profile = ({ navigation }) => {
             </View>
             <Image style={{ zIndex: 22, position: 'absolute', top: windowWidth - 140, width: 100, height: 100, alignSelf: 'center', borderRadius: 60, borderWidth: 3, borderColor: '#fff' }} resizeMode='cover' source={require('../assets/denette2.webp')} />
 
-            {/* <View style={{ marginTop: windowWidth, marginHorizontal: 10 }}>
-                <Text style={{ fontSize: 22, color: '#000', fontFamily: 'LexendMedium', }}>Denette</Text>
-                <Text style={{ fontSize: 24, color: '#000', fontFamily: 'LexendRegular', }}>Ford Expedition Max</Text>
-                <Text style={{ fontSize: 24, color: '#000', fontFamily: 'LexendRegular', }}>2024</Text>
-                <Ionicons name="person" size={16} color="#333333" />
-
-                <Text style={{ fontSize: 24, color: '#333333', fontFamily: 'LexendRegular', }}>Seats 6</Text>
-
-                <Text style={{ fontSize: 17, color: '#000', fontFamily: 'LexendRegular', }}>Denette vDenetteDen ette De nette De net teDe etteD enette Den etteDe ett eDenette Denett eDe etteDe nette D enetteDe  et teDene tte Dene tt eDe et teDe nett e Denette esette DenetteDe nette </Text>
-            </View> */}
 
             <View style={{ marginTop: windowWidth - 34, marginHorizontal: 10 }}>
-                <Text style={{ fontSize: 24, color: '#000', fontFamily: 'PointSoftSemiBold' }}>Denette</Text>
-                <Text style={{ fontSize: 24, color: '#000', fontFamily: 'LexendRegular', }}>Ford Expedition Max</Text>
-                <Text style={{ fontSize: 24, color: '#000', fontFamily: 'LexendRegular', }}>2024</Text>
-                <Ionicons name="person" size={16} color="#333333" />
+                <Text style={{ fontSize: 24, color: '#000', fontFamily: 'PointSoftSemiBold' }}>{driverProfile.firstName}</Text>
+                <Text style={{ fontSize: 24, color: '#000', fontFamily: 'LexendRegular', }}>{driverProfile.vehicleMake} {driverProfile.vehicleModel}</Text>
 
-                <Text style={{ fontSize: 24, color: '#333333', fontFamily: 'LexendRegular', }}>Seats 6</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Ionicons name="person" size={20} color="#333333" />
+                    <Text style={{ fontSize: 24, color: '#333333', fontFamily: 'LexendRegular', }}>6</Text>
+                </View>
+
 
                 <Text style={{ fontSize: 17, color: '#000', fontFamily: 'LexendRegular', }}>Denette vDenetteDen ette De nette De net teDe etteD enette Den etteDe ett eDenette Denett eDe etteDe nette D enetteDe  et teDene tte Dene tt eDe et teDe nett e Denette esette DenetteDe nette </Text>
             </View>
 
 
-            <TouchableOpacity onPress={() => navigation.navigate('PrivateBooking1')} style={{ width: windowWidth - 20, height: 90, alignSelf: 'center', borderRadius: 20, borderWidth: 1, borderColor: '#000', backgroundColor: '#e2e2e2', padding: 10, marginTop: 20 }}>
+            <TouchableOpacity onPress={() => navigation.navigate('PrivateBooking1', { driverId: driverProfile._id })} style={{ width: windowWidth - 20, height: 90, alignSelf: 'center', borderRadius: 20, borderWidth: 1, borderColor: '#000', backgroundColor: '#e2e2e2', padding: 10, marginTop: 20 }}>
                 <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', }}>Airport Transfer</Text>
             </TouchableOpacity>
 
@@ -260,7 +310,10 @@ const Profile = ({ navigation }) => {
 }
 
 
-const PrivateBooking1 = ({ navigation }) => {
+const PrivateBooking1 = ({ navigation, privateDrivers, route }) => {
+
+    let driverProfile = privateDrivers.find(driver => driver._id === route.params.driverId);
+
     return (
         <ScrollView style={{ padding: 0 }}>
 
@@ -289,7 +342,7 @@ const PrivateBooking1 = ({ navigation }) => {
 
 
 
-                    <TouchableOpacity style={{ zIndex: 11, padding: 20, alignSelf: 'center' }} onPress={() => navigation.navigate('PrivateBooking2')}>
+                    <TouchableOpacity style={{ zIndex: 11, padding: 20, alignSelf: 'center' }} onPress={() => navigation.navigate('PrivateBooking2', { driverId: driverProfile._id })}>
                         <View style={{ backgroundColor: '#e6e6e6', borderRadius: 30, padding: 10 }}>
                             <Text>Next</Text>
                         </View>
@@ -304,7 +357,9 @@ const PrivateBooking1 = ({ navigation }) => {
 }
 
 
-const PrivateBooking2 = ({ navigation, masterState, setMasterState }) => {
+const PrivateBooking2 = ({ navigation, masterState, setMasterState, privateDrivers, route }) => {
+
+    let driverProfile = privateDrivers.find(driver => driver._id === route.params.driverId);
 
     const [modalVisible, setModalVisible] = useState(false)
     const { user } = masterState
@@ -342,7 +397,7 @@ const PrivateBooking2 = ({ navigation, masterState, setMasterState }) => {
         bookingCanceledByRider: false,
         // bookingId: '123',
         pickupDateTime: new Date(),
-        driver: { firstName: "Denette" },
+        driver: driverProfile,
         pickupAddress: "743 Evergreen Terrace",
         dropoffAddress: "123 Main Street",
         chatLog: [],
@@ -595,7 +650,7 @@ const QuickIdea = ({ navigation }) => {
 }
 
 
-const DriverPagesHome = ({ navigation }) => {
+const DriverPagesHome = ({ navigation, privateDrivers }) => {
     // const [carouselIndex, setCarouselIndex] = useState(0)
     const carouselRef = useRef(null)
     // const nextPage = () => {
@@ -615,6 +670,11 @@ const DriverPagesHome = ({ navigation }) => {
     //     console.log(carouselRef.current.getCurrentIndex());
     //     carouselRef.current.prev()
     // }
+
+
+
+    console.log('private drivers: ', privateDrivers)
+
 
 
     return (
@@ -762,38 +822,41 @@ const DriverPagesHome = ({ navigation }) => {
 
                     <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', margin: 10 }}>Meet the Drivers</Text>
 
+                    {privateDrivers &&
 
-                    <Carousel
-                        autoPlay={true}
-                        loop={true}
-                        width={430}
-                        height={258}
-                        snapEnabled={true}
-                        pagingEnabled={true}
-                        autoPlayInterval={4000}
+                        <Carousel
+                            autoPlay={true}
+                            loop={true}
+                            width={430}
+                            height={258}
+                            snapEnabled={true}
+                            pagingEnabled={true}
+                            autoPlayInterval={4000}
 
-                        ref={carouselRef}
-                        enabled={true}
+                            ref={carouselRef}
+                            enabled={true}
 
-                        data={[...new Array(4).keys()]}
-                        scrollAnimationDuration={2000}
+                            data={[...new Array(4).keys()]}
+                            scrollAnimationDuration={2000}
 
-                        onSnapToItem={(index) => console.log('current index:', index)}
-                        renderItem={({ index }) => {
-                            // console.log('hello: ', index)
-                            return (
-                                <TouchableOpacity onPress={() => navigation.navigate('Childcare')} style={{ marginHorizontal: 10, width: windowWidth - 20, borderRadius: 30, }}>
-                                    <View style={{ zIndex: 1, position: 'absolute', bottom: 20, left: 20, height: 100, width: 100, borderRadius: 40, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center' }}>
-                                        <Text>Darin</Text>
-                                        <Text>Tesla Y</Text>
-                                        <Text>Seats 6</Text>
-                                    </View>
-                                    <Image style={{ width: windowWidth - 40, height: windowWidth / 1.5, borderRadius: 30, }} resizeMode='cover' source={require('/Users/zacharybretz/work/july24/geronimo/assets/Screenshot 2025-05-06 at 11.18.35 PM.png')} />
-                                </TouchableOpacity>
-                            )
+                            // onSnapToItem={(index) => console.log('current index:', index)}
+                            renderItem={({ index }) => {
+                                // console.log('hello: ', index)
+                                return (
+                                    <TouchableOpacity onPress={() => navigation.navigate('Profile', { driverId: privateDrivers[0]._id })} style={{ marginHorizontal: 10, width: windowWidth - 20, borderRadius: 30, }}>
+                                        <View style={{ zIndex: 1, position: 'absolute', bottom: 20, left: 20, height: 100, width: 100, borderRadius: 40, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center' }}>
+                                            <Text>Darin</Text>
+                                            <Text>Tesla Y</Text>
+                                            <Text>Seats 6</Text>
+                                        </View>
+                                        <Image style={{ width: windowWidth - 40, height: windowWidth / 1.5, borderRadius: 30, }} resizeMode='cover' source={require('/Users/zacharybretz/work/july24/geronimo/assets/Screenshot 2025-05-06 at 11.18.35 PM.png')} />
+                                    </TouchableOpacity>
+                                )
 
-                        }}
-                    />
+                            }}
+                        />
+
+                    }
 
                 </View>
 
