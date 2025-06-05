@@ -184,7 +184,7 @@ const DirectBookingDetail = ({ navigation, masterState }) => {
                     </View>
                 </View>
                 {rideDetail.accepted &&
-                    <View style={{ position: 'absolute', bottom: 10, right: 10, flexDirection: 'row', alignItems:'center' }}>
+                    <View style={{ position: 'absolute', bottom: 10, right: 10, flexDirection: 'row', alignItems: 'center' }}>
                         <Text numberOfLines={1} style={{ marginVertical: 10, marginBottom: 10, fontSize: 16, fontFamily: 'PointSoftSemiBold', marginRight: 6 }}>Confirmed</Text>
                         <Image style={{ height: 20, width: 20, }} source={require('../assets/verified.png')} />
                     </View>
@@ -257,7 +257,7 @@ const Profile = ({ navigation, route, privateDrivers }) => {
     console.log('profile page driver: ', driverProfile)
 
     return (
-        <ScrollView style={{ padding: 0 }}>
+        <ScrollView style={{ padding: 0, backgroundColor: '#fff' }}>
 
             <TouchableOpacity style={{ position: 'absolute', zIndex: 11, padding: 20, alignSelf: 'flex-start' }} onPress={() => navigation.goBack()}>
                 <View style={{ backgroundColor: '#e6e6e6', borderRadius: 30, padding: 10 }}>
@@ -268,30 +268,135 @@ const Profile = ({ navigation, route, privateDrivers }) => {
             <View style={{ position: 'absolute', overflow: 'hidden', width: windowWidth * 2, height: 800, top: -500, left: -windowWidth * .5, borderRadius: 5890, backgroundColor: 'rgba(0,0,0,.3)', alignItems: 'center', justifyContent: 'flex-end' }}>
                 <Image style={{ bottom: 0, width: windowWidth, height: windowWidth - 80 }} resizeMode='cover' source={require('../assets/denette1.webp')} />
             </View>
-            <Image style={{ zIndex: 22, position: 'absolute', top: windowWidth - 140, width: 100, height: 100, alignSelf: 'center', borderRadius: 60, borderWidth: 3, borderColor: '#fff' }} resizeMode='cover' source={require('../assets/denette2.webp')} />
+
+            <View style={{
+                flexDirection: 'row', paddingHorizontal: 14, padding: 10,
+                zIndex: 22, position: 'absolute', top: windowWidth - 200, backgroundColor: '#fff', width: windowWidth - 40, alignSelf: 'center', borderRadius: 30,
+                shadowColor: '#000',
+                shadowOpacity: 0.58,
+                shadowRadius: 10,
+            }}>
+                <Image style={{ width: 100, height: 100, alignSelf: 'center', borderRadius: 80, borderWidth: 3, borderColor: '#fff' }} resizeMode='cover' source={require('../assets/denette2.webp')} />
+                <View style={{ marginLeft: 10 }}>
+                    <Text style={{ fontSize: 24, color: '#000', fontFamily: 'LexendMedium' }}>{driverProfile.firstName}</Text>
+                    <Text style={{ fontSize: 24, color: '#000', fontFamily: 'LexendRegular', }}>{driverProfile.vehicleMake} {driverProfile.vehicleModel}</Text>
+
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Ionicons name="person" size={20} color="#333333" />
+                        <Text style={{ fontSize: 24, color: '#333333', fontFamily: 'LexendRegular', }}>6</Text>
+                    </View>
+
+                </View>
+            </View>
 
 
-            <View style={{ marginTop: windowWidth - 34, marginHorizontal: 10 }}>
-                <Text style={{ fontSize: 24, color: '#000', fontFamily: 'PointSoftSemiBold' }}>{driverProfile.firstName}</Text>
-                <Text style={{ fontSize: 24, color: '#000', fontFamily: 'LexendRegular', }}>{driverProfile.vehicleMake} {driverProfile.vehicleModel}</Text>
+            <View style={{ marginTop: windowWidth - 54, paddingHorizontal: 20 }}>
 
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Ionicons name="person" size={20} color="#333333" />
-                    <Text style={{ fontSize: 24, color: '#333333', fontFamily: 'LexendRegular', }}>6</Text>
+                <View>
+                    <Text style={{ fontFamily: 'LexendMedium', fontSize: 18, marginBottom: 6 }}>About Denette</Text>
+                    <Text style={{ fontSize: 17, color: '#000', fontFamily: 'LexendRegulr', }}>Denette vDenetteDen ette De nette De net teDe etteD enette Den etteDe ett eDenette Denett eDe etteDe nette D enetteDe  et teDene tte Dene tt eDe et teDe nett e Denette esette DenetteDe nette </Text>
+
+                    <View style={{ backgroundColor: '#fff9f3', padding: 10, borderRadius: 8, marginVertical: 8 }}>
+                        <Text style={{ fontFamily: 'LexendMedium', fontSize: 14, marginBottom: 6 }}>Vehicle</Text>
+                        <Text style={{ fontSize: 14, color: '#000', fontFamily: 'LexendRegulr', }}> 1-4 Passengers with Luggage & Skis or 5-6 Passengers with Carry-On Items (No Skis)</Text>
+                    </View>
+                </View>
+
+                <View style={{ marginTop: 20, }}>
+                    <Text style={{ fontFamily: 'LexendMedium', fontSize: 18, marginBottom: 6 }}>Pricing</Text>
+
+                    <View style={{ backgroundColor: '#fff', padding: 8 }}>
+                        <View style={{ marginBottom: 10, flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff6e5', padding: 0, borderRadius: 28, justifyContent: 'space-evenly' }}>
+                            <Image style={{ marginRight: 10, width: 60, height: 60, alignSelf: 'flex-start', borderRadius: 80 }} resizeMode='cover' source={require('../assets/airplane.png')} />
+                            <Text style={{ fontSize: 16, fontFamily: 'LexendMedium', }}>Door-to-Door Airport Service</Text>
+                        </View>
+
+
+                        <View style={{ flexDirection: 'row', marginBottom: 8, justifyContent: 'space-between' }}>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Entypo name="dot-single" size={20} color={"#000"} />
+                                <Text style={{ fontSize: 16 }}>Park City / Deer Valley</Text>
+                            </View>
+                            <Text style={{ fontSize: 16 }}>$185</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginBottom: 8, justifyContent: 'space-between' }}>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Entypo name="dot-single" size={20} color={"#000"} />
+                                <Text style={{ fontSize: 16 }}>Cottonwood Canyons (Ski Areas)</Text>
+                            </View>
+                            <Text style={{ fontSize: 16 }}>$185</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginBottom: 8, justifyContent: 'space-between' }}>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Entypo name="dot-single" size={20} color={"#000"} />
+                                <Text style={{ fontSize: 16 }}>Heber/Midway</Text>
+                            </View>
+                            <Text style={{ fontSize: 16 }}>$235</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Entypo name="dot-single" size={20} color={"#000"} />
+                                <Text style={{ fontSize: 16 }}>Sundance / Snowbasin / Powder </Text>
+                            </View>
+                            <Text style={{ fontSize: 16 }}>$235</Text>
+                        </View>
+
+
+                    </View>
+
+                    <TouchableOpacity onPress={() => navigation.navigate('DirectBooking1', { driverId: driverProfile._id, type: 'airport' })} style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', marginTop: 10 }}>
+                        <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', marginRight: 6 }}>Book Airport Transfer</Text>
+                        <AntDesign name="rightcircleo" size={20} color="black" />
+                    </TouchableOpacity>
+
                 </View>
 
 
-                <Text style={{ fontSize: 17, color: '#000', fontFamily: 'LexendRegular', }}>Denette vDenetteDen ette De nette De net teDe etteD enette Den etteDe ett eDenette Denett eDe etteDe nette D enetteDe  et teDene tte Dene tt eDe et teDe nett e Denette esette DenetteDe nette </Text>
+
+
+
+                <View style={{ marginTop: 20, marginBottom: 60 }}>
+
+                    <View style={{ backgroundColor: '#fff', padding: 8 }}>
+                        <View style={{ marginBottom: 10, flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff6e5', padding: 0, borderRadius: 28, justifyContent: 'space-evenly' }}>
+                            <Image style={{ marginRight: 10, width: 60, height: 60, alignSelf: 'flex-start', borderRadius: 80 }} resizeMode='cover' source={require('../assets/airplane.png')} />
+                            <Text style={{ fontSize: 16, fontFamily: 'LexendMedium', }}>Custom Booking</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginBottom: 8, justifyContent: 'space-between' }}>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Entypo name="dot-single" size={20} color={"#000"} />
+                                <Text style={{ fontSize: 16 }}>Minimum Charge</Text>
+                            </View>
+                            <Text style={{ fontSize: 16 }}>$135</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginBottom: 8, justifyContent: 'space-between' }}>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Entypo name="dot-single" size={20} color={"#000"} />
+                                <Text style={{ fontSize: 16 }}>Hourly Rate</Text>
+                            </View>
+                            <Text style={{ fontSize: 16 }}>$90</Text>
+                        </View>
+
+
+
+                    </View>
+
+                    <TouchableOpacity onPress={() => navigation.navigate('DirectBooking1', { driverId: driverProfile._id, type: 'custom' })} style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', marginTop: 10 }}>
+                        <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', marginRight: 6 }}>Custom Booking</Text>
+                        <AntDesign name="rightcircleo" size={20} color="black" />
+                    </TouchableOpacity>
+
+                </View>
+
+
+
             </View>
 
-
-            <TouchableOpacity onPress={() => navigation.navigate('DirectBooking1', { driverId: driverProfile._id })} style={{ width: windowWidth - 20, height: 90, alignSelf: 'center', borderRadius: 20, borderWidth: 1, borderColor: '#000', backgroundColor: '#e2e2e2', padding: 10, marginTop: 20 }}>
-                <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', }}>Airport Transfer</Text>
-            </TouchableOpacity>
-
-            <View style={{ width: windowWidth - 20, height: 90, alignSelf: 'center', borderRadius: 20, borderWidth: 1, borderColor: '#000', backgroundColor: '#e2e2e2', padding: 10, marginTop: 20 }}>
-                <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', }}>Custom Booking</Text>
-            </View>
 
         </ScrollView>
     )
@@ -302,8 +407,10 @@ const DirectBooking1 = ({ navigation, privateDrivers, route }) => {
 
     let driverProfile = privateDrivers.find(driver => driver._id === route.params.driverId);
 
+    const bookingType = route.params.bookingType
+
     return (
-        <ScrollView style={{ padding: 0 }}>
+        <ScrollView style={{ padding: 0, backgroundColor: '#fff' }}>
 
             <TouchableOpacity style={{ position: 'absolute', zIndex: 11, padding: 20, alignSelf: 'flex-start' }} onPress={() => navigation.goBack()}>
                 <View style={{ backgroundColor: '#e6e6e6', borderRadius: 30, padding: 10 }}>
@@ -311,32 +418,137 @@ const DirectBooking1 = ({ navigation, privateDrivers, route }) => {
                 </View>
             </TouchableOpacity>
 
-            <View>
+            <View style={{ position: 'absolute', overflow: 'hidden', width: windowWidth * 2, height: 800, top: -500, left: -windowWidth * .5, borderRadius: 5890, backgroundColor: 'rgba(0,0,0,.3)', alignItems: 'center', justifyContent: 'flex-end' }}>
+                <Image style={{ bottom: 0, width: windowWidth, height: windowWidth - 80 }} resizeMode='cover' source={require('../assets/denette1.webp')} />
+            </View>
 
-                <View style={{ position: 'absolute', overflow: 'hidden', width: windowWidth * 2, height: 800, top: -500, left: -windowWidth * .5, borderRadius: 5890, backgroundColor: 'rgba(0,0,0,.3)', alignItems: 'center', justifyContent: 'flex-end' }}>
-                    <Image style={{ bottom: 0, width: windowWidth, height: windowWidth - 80 }} resizeMode='cover' source={require('../assets/denette1.webp')} />
-                </View>
+            <View style={{
+                flexDirection: 'row', paddingHorizontal: 14, padding: 10,
+                zIndex: 22, position: 'absolute', top: windowWidth - 200, backgroundColor: '#fff', width: windowWidth - 40, alignSelf: 'center', borderRadius: 30,
+                shadowColor: '#000',
+                shadowOpacity: 0.58,
+                shadowRadius: 10,
+            }}>
+                <Image style={{ width: 100, height: 100, alignSelf: 'center', borderRadius: 80, borderWidth: 3, borderColor: '#fff' }} resizeMode='cover' source={require('../assets/denette2.webp')} />
+                <View style={{ marginLeft: 10 }}>
+                    <Text style={{ fontSize: 24, color: '#000', fontFamily: 'LexendMedium' }}>{driverProfile.firstName}</Text>
+                    <Text style={{ fontSize: 24, color: '#000', fontFamily: 'LexendRegular', }}>{driverProfile.vehicleMake} {driverProfile.vehicleModel}</Text>
 
-
-                <View style={{ width: windowWidth - 20, top: 140, height: 490, alignSelf: 'center', borderRadius: 30, borderWidth: 0, borderColor: '#000', backgroundColor: '#fff', padding: 10, marginTop: 20 }}>
-                    <View style={{ flexDirection: 'row', }}>
-                        <Image style={{ zIndex: 22, width: 100, height: 100, borderRadius: 60, borderWidth: 3, borderColor: '#fff' }} resizeMode='cover' source={require('../assets/denette2.webp')} />
-                        <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', }}>Book Denette</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Ionicons name="person" size={20} color="#333333" />
+                        <Text style={{ fontSize: 24, color: '#333333', fontFamily: 'LexendRegular', }}>6</Text>
                     </View>
 
-                    <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', }}>Type of Booking (optional)</Text>
-                    <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', }}>Date & Time</Text>
-                    <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', }}>Request Information</Text>
+                </View>
+            </View>
 
 
+            <View style={{ marginTop: windowWidth - 54, paddingHorizontal: 20 }}>
 
-                    <TouchableOpacity style={{ zIndex: 11, padding: 20, alignSelf: 'center' }} onPress={() => navigation.navigate('DirectBooking2', { driverId: driverProfile._id })}>
-                        <View style={{ backgroundColor: '#e6e6e6', borderRadius: 30, padding: 10 }}>
-                            <Text>Next</Text>
+                <View style={{ marginTop: 0, }}>
+                    <Text style={{ fontFamily: 'LexendMedium', fontSize: 18, marginBottom: 6 }}>Airport</Text>
+
+                    <View style={{ backgroundColor: '#fff', padding: 8 }}>
+                        <View style={{ marginBottom: 10, flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff6e5', padding: 0, borderRadius: 28, justifyContent: 'space-evenly' }}>
+                            <Image style={{ marginRight: 10, width: 60, height: 60, alignSelf: 'flex-start', borderRadius: 80 }} resizeMode='cover' source={require('../assets/airplane.png')} />
+                            <Text style={{ fontSize: 16, fontFamily: 'LexendMedium', }}>Door-to-Door Airport Service</Text>
                         </View>
+
+
+                        <View style={{ flexDirection: 'row', marginBottom: 8, justifyContent: 'space-between' }}>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Entypo name="dot-single" size={20} color={"#000"} />
+                                <Text style={{ fontSize: 16 }}>Park City / Deer Valley</Text>
+                            </View>
+                            <Text style={{ fontSize: 16 }}>$185</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginBottom: 8, justifyContent: 'space-between' }}>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Entypo name="dot-single" size={20} color={"#000"} />
+                                <Text style={{ fontSize: 16 }}>Cottonwood Canyons (Ski Areas)</Text>
+                            </View>
+                            <Text style={{ fontSize: 16 }}>$185</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginBottom: 8, justifyContent: 'space-between' }}>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Entypo name="dot-single" size={20} color={"#000"} />
+                                <Text style={{ fontSize: 16 }}>Heber/Midway</Text>
+                            </View>
+                            <Text style={{ fontSize: 16 }}>$235</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Entypo name="dot-single" size={20} color={"#000"} />
+                                <Text style={{ fontSize: 16 }}>Sundance / Snowbasin / Powder </Text>
+                            </View>
+                            <Text style={{ fontSize: 16 }}>$235</Text>
+                        </View>
+
+
+                    </View>
+
+                    <TouchableOpacity onPress={() => navigation.navigate('DirectBooking1', { driverId: driverProfile._id, bookingType: 'airport' })} style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', marginTop: 10 }}>
+                        <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', marginRight: 6 }}>Book Airport Transfer</Text>
+                        <AntDesign name="rightcircleo" size={20} color="black" />
                     </TouchableOpacity>
 
                 </View>
+
+
+
+
+
+                <View style={{ marginTop: 20, marginBottom: 60 }}>
+
+                    <View style={{ backgroundColor: '#fff', padding: 8 }}>
+                        <View style={{ marginBottom: 10, flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff6e5', padding: 0, borderRadius: 28, justifyContent: 'space-evenly' }}>
+                            <Image style={{ marginRight: 10, width: 60, height: 60, alignSelf: 'flex-start', borderRadius: 80 }} resizeMode='cover' source={require('../assets/airplane.png')} />
+                            <Text style={{ fontSize: 16, fontFamily: 'LexendMedium', }}>Custom Booking</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginBottom: 8, justifyContent: 'space-between' }}>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Entypo name="dot-single" size={20} color={"#000"} />
+                                <Text style={{ fontSize: 16 }}>Minimum Charge</Text>
+                            </View>
+                            <Text style={{ fontSize: 16 }}>$135</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', marginBottom: 8, justifyContent: 'space-between' }}>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Entypo name="dot-single" size={20} color={"#000"} />
+                                <Text style={{ fontSize: 16 }}>Hourly Rate</Text>
+                            </View>
+                            <Text style={{ fontSize: 16 }}>$90</Text>
+                        </View>
+
+
+
+                    </View>
+
+                    <TouchableOpacity onPress={() => navigation.navigate('DirectBooking1', { driverId: driverProfile._id, bookingType: 'custom' })} style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', marginTop: 10 }}>
+                        <Text style={{ fontSize: 20, color: '#000', fontFamily: 'LexendRegular', marginRight: 6 }}>Custom Booking</Text>
+                        <AntDesign name="rightcircleo" size={20} color="black" />
+                    </TouchableOpacity>
+
+                </View>
+
+
+
+
+
+
+
+
+                <TouchableOpacity style={{ zIndex: 11, padding: 20, alignSelf: 'center' }} onPress={() => navigation.navigate('DirectBooking2', { driverId: driverProfile._id })}>
+                    <View style={{ backgroundColor: '#e6e6e6', borderRadius: 30, padding: 10 }}>
+                        <Text>Next</Text>
+                    </View>
+                </TouchableOpacity>
+
 
             </View>
 
